@@ -4,8 +4,8 @@
 
 ### Logstash ###
 
-1. In `Energy Logservernaemon_beat.conf` set up `ELASTICSEARCH_HOST`, `ES_PORT`, `FILEBEAT_PORT`
-2. Copy `Energy Logservernaemon_beat.conf` to `/etc/logstash/conf.d`
+1. In Energy Logserver `naemon_beat.conf` set up `ELASTICSEARCH_HOST`, `ES_PORT`, `FILEBEAT_PORT`
+2. Copy Energy Logserver `naemon_beat.conf` to `/etc/logstash/conf.d`
 3. Based on "FILEBEAT_PORT" if firewall is running:
 ```bash
 sudo firewall-cmd --zone=public --permanent --add-port=FILEBEAT_PORT/tcp
@@ -17,12 +17,13 @@ index => "Energy Logserver-naemon-%{+YYYY.MM}"
 or
 index => "Energy Logserver-naemon-%{+YYYY.MM.dd}"
 ```
-5. Copy `naemon` file to /etc/logstash/patterns and make sure it is readable by logstash process
+5. Copy `naemon` file to `/etc/logstash/patterns` and make sure it is readable by logstash process
 6. Restart *logstash* configuration e.g.:
 ```bash
 sudo systemct restart logstash
 ```
 ### Elasticsearch ###
+
 1. Connect to Elasticsearch node via SSH and Install index pattern for naemon logs. Note that if you have a default pattern covering *settings* section you should delete/modify that in naemon_template.sh:
 ```json
   "settings": {
@@ -34,7 +35,7 @@ sudo systemct restart logstash
 `./naemon_template.sh`
 
 ### Energy Logserver Monitor ###
- 
+
 1. On Energy Logserver Monitor host install filebeat (for instance via rpm `https://www.elastic.co/downloads/beats/filebeat`)
 1. In `/etc/filebeat/filebeat.yml` add:
 
@@ -174,7 +175,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 		    }
 
 1. In */opt/monitor/etc/naemon.cfg service_perfdata_file_processing_command* and *host_perfdata_file_processing_command* has to be changed to run those custom scripts:
- 
+
 		service_perfdata_file_processing_command=process-service-perfdata-log
 		host_perfdata_file_processing_command=process-host-perfdata-log
 
@@ -203,7 +204,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
 
 	- Restart FileBeat service:
-
+	
 			sudo systemctl restart filebeat # CentOS/RHEL 7.x
 			sudo service filebeat restart # CentOS/RHEL 6.x
 
@@ -229,7 +230,7 @@ If the index has been created, in order to browse and visualize the data “*ind
 1. Performance data logs should be now accessible from Kibana GUI Discovery tab ready to be visualize.
 
 ## The Grafana instalation ##
-	
+
 1. To install the Grafana application you should:
 	- add necessary repository to operating system:
 
@@ -247,7 +248,7 @@ If the index has been created, in order to browse and visualize the data “*ind
 
 
 	- install the Grafana with following commands:
-
+	
 			[root@logserver-6 ~]# yum search grafana
 			Loaded plugins: fastestmirror
 			Loading mirror speeds from cached hostfile
@@ -261,9 +262,9 @@ If the index has been created, in order to browse and visualize the data “*ind
 			  Name and summary matches only, use "search all" for everything.
 			
 			[root@logserver-6 ~]# yum install grafana
-
+	
 	- to run application use following commands:
-
+	
 			[root@logserver-6 ~]# systemctl enable grafana-server
 			Created symlink from /etc/systemd/system/multi-user.target.wants/grafana-server.service to /usr/lib/systemd/system/grafana-server.service.
 			[root@logserver-6 ~]#
@@ -303,7 +304,7 @@ If the index has been created, in order to browse and visualize the data “*ind
 	- Login to Grafana user interface using web browser: *http://ip:3000*
 
 ![](/media/media/image112.png)
- 
+
 	- use login and password that you set in the config file.
 
 
@@ -394,7 +395,7 @@ However, if it is to be run with encryption, you also need to change `proxy_pass
 		bash
 		cp oauth2_proxy /usr/share/oauth2_proxy/
 		cp oauth2_proxy.cfg /etc/oauth2_proxy/
-		
+	
 1. Set directives according to OAuth configuration in Google Cloud project
 
 		cfg
@@ -520,7 +521,7 @@ In the browser enter the address pointing to the server with the Logserver insta
 			hosts = [
 			  {
 			    host = "http://localhost:9200"
-			    name = "energy-logserver"
+			    name = "logserver"
 			    auth = {
 			      username = "username"
 			      password = "password"
@@ -541,7 +542,7 @@ In the browser enter the address pointing to the server with the Logserver insta
 
 
 	- SSL access to cerebro
-
+	
 			http = {
 			  port = "disabled"
 			}

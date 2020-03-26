@@ -15,7 +15,7 @@ The update includes packages:
 scp ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm root@hostname:~/
 ```
 
-2. Check Cluster Status
+1. Check Cluster Status
 
 ```bash
 export CREDENTIAL="logserver:logserver"

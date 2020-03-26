@@ -1,4 +1,5 @@
 # 2FA na przykładzie Google Auth Provider
+
 ## Wykorzystane oprogramowanie (testowane wersje):
 1. NGiNX (1.16.1 - pobrana z repozytorium CentOS)
 2. oauth2_proxy (https://github.com/pusher/oauth2_proxy/releases - 4.0.0)
@@ -26,7 +27,7 @@ email_domains = [
   "*"
 ]
 # poniższe należy ustawić zgodnie z publiczną nazwą hosta:
-cookie_domain = "energy-kibana-host.org"
+cookie_domain = "logserver-kibana-host.org"
 ```
 4. W przypadku jeśli chcemy by istaniały ograniczenia logowania dla konkretnej grupy zdefiniowanej po stronie Google:
 - Stworzyć konto serwisowe: https://developers.google.com/identity/protocols/OAuth2ServiceAccount ; pobrać konfigurację konta w pliku json, skopiować Client ID
@@ -51,4 +52,4 @@ google_service_account_json =
 /usr/share/oauth2_proxy/oauth2_proxy -config="/etc/oauth2_proxy/oauth2_proxy.cfg"
 ```
 
-3. W przeglądarce wpisać adres kierujący do serwera z instalacją Energy
+3. W przeglądarce wpisać adres kierujący do serwera z instalacją Energy Logserver

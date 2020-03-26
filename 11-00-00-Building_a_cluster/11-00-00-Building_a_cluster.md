@@ -33,10 +33,10 @@ Default is `network.host: ["_local_","_site_"]`.
 - **discovery** - Elasticsearch uses a custom discovery implementation called "Zen Discovery".
 There are two important settings:
     - `discovery.zen.ping.unicast.hosts` - specify list of other nodes in the cluster that are 
-    likely to be live and contactable;
+      likely to be live and contactable;
     - `discovery.zen.minimum_master_nodes` - to prevent data loss, you can configure this setting
-    so that each master-eligible node knows the minimum number of master-eligible nodes that must
-    be visible in order to form a cluster.
+      so that each master-eligible node knows the minimum number of master-eligible nodes that must
+      be visible in order to form a cluster.
 - **heap size** - By default, Elasticsearch tells the JVM to use a heap with a minimum (Xms) and maximum (Xmx)
 size of 1 GB. When moving to production, it is important to configure heap size to ensure that 
 Elasticsearch has enough heap available
@@ -89,13 +89,12 @@ Example of the Elasticsearch cluster configuration:
 			10.0.0.7 	 10.0.0.7     45           77         	   0.26 d        m     elk04
     
     - check status of the Elasticsearch cluster via log file:
-     
+    
 			# tail -f /var/log/elasticsearch/tm-lab.log (cluster.name)
-
 
 ## Adding a new node to existing cluster ##
 
-Install the new Energy instance. The description of the installation can be found in the chapter "First configuration steps"
+Install the new Energy Logserver instance. The description of the installation can be found in the chapter "First configuration steps"
 
 Change the following parameters in the configuration file:
 
@@ -109,4 +108,7 @@ If you add a node with the role `data`, delete the contents of the `path.data` d
 
 Restart the Elasticsearch instance of the new node:
 	
-	systemctl restart elasticsearch
+
+```/
+systemctl restart elasticsearch
+```
