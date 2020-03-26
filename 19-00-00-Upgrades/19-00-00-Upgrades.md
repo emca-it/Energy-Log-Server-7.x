@@ -329,9 +329,11 @@ The update includes packages:
     Created symlink from /etc/systemd/system/multi-user.target.wants/kibana.service to /usr/lib/systemd/system/kibana.service.
     Created symlink from /etc/systemd/system/multi-user.target.wants/cerebro.service to /usr/lib/systemd/system/cerebro.service.
     Created symlink from /etc/systemd/system/multi-user.target.wants/alert.service to /usr/lib/systemd/system/alert.service.
-    [root@migration-01 vagrant]#
-    [root@migration-01 vagrant]# systemctl start kibana cerebro alert
-    [root@migration-01 vagrant]# systemctl status kibana cerebro alert
+    ```
+
+    ```bash
+    systemctl start kibana cerebro alert
+    systemctl status kibana cerebro alert
     ● kibana.service - Kibana
        Loaded: loaded (/usr/lib/systemd/system/kibana.service; enabled; vendor preset: disabled)
        Active: active (running) since Thu 2020-03-19 14:46:52 CET; 2s ago
