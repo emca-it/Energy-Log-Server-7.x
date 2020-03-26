@@ -1,6 +1,6 @@
 # Upgrades #
 
-## Upgrade from 7.x
+## Upgrade from 6.x
 
 The update includes packages:
 
