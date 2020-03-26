@@ -64,16 +64,16 @@ time.
 
 The Indexes are built with elementary part called shards. It is good
 practice to create Indexes with the number of shards that is the
-multiple of the Elasticsearch data nodes number. Elasticsearch in 6.x version has a new feature called Sequence IDs that guarantee more successful and efficient shard recovery.
+multiple of the Elasticsearch data nodes number. Elasticsearch in 7.x version has a new feature called Sequence IDs that guarantee more successful and efficient shard recovery.
 
-Elasticsearch use the *mapping* to describes the fields or properties that documents of that type may have. Elasticsearch in 6.x version restrict indices to a single type.# Kibana #
+Elasticsearch use the *mapping* to describes the fields or properties that documents of that type may have. Elasticsearch in 7.x version restrict indices to a single type.# Kibana #
 
 ## Kibana ##
 Kibana lets you visualize your Elasticsearch data and navigate the Elastic Stack. Kibana gives you the freedom to select the way you give
 shape to your data. And you don’t always have to know what you're looking for. Kibana core ships with the classics: histograms, line
 graphs, pie charts, sunbursts, and more. Plus, you can use Vega grammar to design your own visualizations. All leverage the full
 aggregation capabilities of Elasticsearch.  Perform advanced time series analysis on your Elasticsearch data with our curated time series
-UIs. Describe queries, transformations, and visualizations with powerful, easy-to-learn expressions. Kibana 6.x has two new feature - a new "Full-screen" mode to viewing dashboards, and new the "Dashboard-only" mode which enables administrators to share dashboards safely.# Logstash #
+UIs. Describe queries, transformations, and visualizations with powerful, easy-to-learn expressions. Kibana 7.x has two new feature - a new "Full-screen" mode to viewing dashboards, and new the "Dashboard-only" mode which enables administrators to share dashboards safely.# Logstash #
 
 ## Logstash ##
 Logstash is an open source data collection engine with real-time pipelining capabilities. Logstash can dynamically unify data from
@@ -84,7 +84,7 @@ While Logstash originally drove innovation in log collection, its capabilities e
 enriched and transformed with a broad array of input, filter, and output plugins, with many native codecs further simplifying the
 ingestion process. Logstash accelerates your insights by harnessing a greater volume and variety of data.
 
-Logstash 6.x version supports native support for multiple pipelines. These pipelines are defined in a *pipelines.yml* file which is loaded by default.
+Logstash 7.x version supports native support for multiple pipelines. These pipelines are defined in a *pipelines.yml* file which is loaded by default.
 Users will be able to manage multiple pipelines within Kibana. This solution uses Elasticsearch to store pipeline configurations and allows for on-the-fly reconfiguration of Logstash pipelines.# ELK #
 
 ## ELK ##

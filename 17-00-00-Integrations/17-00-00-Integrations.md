@@ -183,7 +183,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 1. Restart naemon service:
 
 		sudo systemctl restart naemon # CentOS/RHEL 7.x
-		sudo service naemon restart # CentOS/RHEL 6.x
+		sudo service naemon restart # CentOS/RHEL 7.x
 
 1. If *FileBeat* has been chosen, append below to *filebeat.conf* (adjust IP and PORT):
 
@@ -206,7 +206,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 	- Restart FileBeat service:
 	
 			sudo systemctl restart filebeat # CentOS/RHEL 7.x
-			sudo service filebeat restart # CentOS/RHEL 6.x
+			sudo service filebeat restart # CentOS/RHEL 7.x
 
 
 ### Kibana ###
