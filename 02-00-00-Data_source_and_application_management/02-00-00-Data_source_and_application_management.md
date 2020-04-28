@@ -40,23 +40,29 @@ For proper operation Energy Logserver requires starting the following system ser
 
 - elasticsearch.service - 
   we can run it with a command:
-
-		systemctl start elasticsearch.service
-
+```bash
+systemctl start elasticsearch.service
+```
   we can check its status with a command:
-  	
-	systemctl status elasticsearch.service
+
+  ```bash  	
+systemctl status elasticsearch.service
+```
 
 ![](/media/media/image86.PNG)
 
 - kibana.service - 
   we can run it with a command:
- 	
-		systemctl start kibana.service
+
+```bash  
+systemctl start kibana.service
+```
 
   we can check its status with a command:
 
-	systemctl status kibana.service
+```bash
+systemctl status kibana.service
+```
 
 ![](/media/media/image87.PNG)
 
