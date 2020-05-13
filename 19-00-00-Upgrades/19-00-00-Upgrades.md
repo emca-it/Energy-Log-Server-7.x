@@ -144,15 +144,13 @@ The update includes packages:
      Main PID: 17195 (java)
        CGroup: /system.slice/elasticsearch.service
                └─17195 /etc/alternatives/jre/bin/java -Xms512m -Xmx512m -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/plugins/elasticsearch_auth/plugin-securi...
-
+    
     Mar 18 16:50:15 migration-01 systemd[1]: Started Elasticsearch.
     Mar 18 16:50:25 migration-01 elasticsearch[17195]: SSL not activated for http and/or transport.
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Defaulting to no-operation (NOP) logger implementation
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
     ```
-
-
 1. Check cluster/indices status and Elasticsearch version
 
     Invoke curl command to check the status of Elasticsearch:
@@ -199,7 +197,13 @@ The update includes packages:
     }
     ```
 
-    If everything went correctly, we should see 100% allocated shards in cluster health. However, while connection on port 9200/TCP we  can observe a new version of Elasticsearch.
+1. Install new version of default base template
+
+```bash
+curl -k -XPUT -H 'Content-Type: application/json' -u logserver:logserver 'http://127.0.0.1:9200/_template/default-base-template-0' -d@/usr/share/elasticsearch/default-base-template-0.json
+```
+
+If everything went correctly, we should see 100% allocated shards in cluster health. However, while connection on port 9200/TCP we  can observe a new version of Elasticsearch.
 
 ### Upgrade Energy Logserver client Node
 
@@ -376,9 +380,9 @@ To update Logstash, follow the steps below:
 
 1. Back up the following files
 	
-- /etc/logstash/logstash.yml
-- /etc/logstash/piplines.yml
-- /etc/logstash/conf.d
+    - /etc/logstash/logstash.yml 
+    - /etc/logstash/piplines.yml
+    - /etc/logstash/conf.d
 
 2. Use the command to check custom Logstash plugins:
 
