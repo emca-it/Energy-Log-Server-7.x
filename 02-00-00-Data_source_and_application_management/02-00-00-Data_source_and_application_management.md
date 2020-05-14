@@ -325,6 +325,21 @@ During installation you will be ask about following tasks:
     ```bash
     setcap 'CAP_NET_BIND_SERVICE=+eip' /usr/share/kibana/node/bin/node
     ```
+    
+- Cookie TTL and Cookie Keep Alive - for better work comfort, you can set two new variables in the Kibana configuration file `/etc/kibana/kibana.yml`:
+
+    ```bash
+    login.cookiettl: 10
+    login.cookieKeepAlive: true
+    ```
+
+    CookieTTL is the value in minutes of the cookie's lifetime. The cookieKeepAlive renews this time with every valid query made by browser clicks.
+
+    After saving changes in the configuration file, you must restart the service:
+
+    ```bash
+    systemctl restart kibana
+    ```
 
 ## First login ##
 
