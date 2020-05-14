@@ -43,9 +43,9 @@ alert rule", manage alerts in „Alert rules List" and check alert
 status „Alert Status".
 
  In the alert creation windows we have an alert creation form:
- 
+
  ![](/media/media/image92.PNG)
- 
+
  - **Name** - the name of the alert, after which we will recognize and
 search for it.
 - **Index pattern** - a pattern of indexes after which the alert will be
@@ -95,7 +95,11 @@ a time frame is higher or lower than a threshold.
 - ***Metric Aggregation*** - This rule matches when the value of a metric within the calculation window 
 is higher or lower than a threshold.
 - ***Percentage Match*** - This rule matches when the percentage of document in the match bucket within 
-a calculation window is higher or lower than a threshold.
+  a calculation window is higher or lower than a threshold.
+- ***Unique Long Term*** - This rule matches when there are values of compare_key in each checked timeframe.
+- ***Find Match*** - Rule match when in defined period of time, two correlated documents match certain strings.
+- ***Difference*** - Rule matches for value difference between two aggregations calculated for different periods in time.
+- ***ConsecutiveGrowth*** - Rule matches for value difference between two aggregations calculated for different periods in time.
 ## Example of rules ##
 
 ### Unix - Authentication Fail ###
