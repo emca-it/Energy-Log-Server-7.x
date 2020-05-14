@@ -139,6 +139,7 @@ The table below contains built-in user accounts and default passwords:
 	|                       |intelligence |intelligece  |intelligence |A built-in account for the Intelligence module  | authorizing communication with elasticsearch server | 
 	|                       |scheduler    |scheduler    |scheduler    |A built-in account for the Scheduler module     |
 	|                       |logstash     |logstash     |logstash     |A built-in account for authorized comuunication form Logstash |
+	|                       |cerebro     |logstash     |system acconut only     |A built-in account for authorized comuunication from Cerebro moudule |
 
 ## Changing password for the system account ##
 
@@ -148,41 +149,50 @@ After you change password for one of the system account ( alert, intelligence, l
 		
 	- Update */etc/kibana/kibana.yml*:
 		
-			vi /etc/kibana/kibana.yml
-			
-			elasticsearch.password: new_logserver_passowrd
-			elastfilter.password: "new_logserver_password"
+			```bash
+		vi /etc/kibana/kibana.yml
+		elasticsearch.password: new_logserver_passowrd
+		elastfilter.password: "new_logserver_password"
+		```
 
 
 1. Account **Intelligence**
 
-	- Update */opt/ai/bin/conf.cfg*
+  - Update */opt/ai/bin/conf.cfg*
 
-			vi /opt/ai/bin/conf.cfg
-			password=new_intelligence_password
+  		```bash
+  	vi /opt/ai/bin/conf.cfg
+  	password=new_intelligence_password
+  	```
 
 1. Account **Alert**
-		
 	- Update file /opt/alert/config.yaml
-
-			vi /opt/alert/config.yaml
-			es_password: alert
-
+	
+		```bash
+		vi /opt/alert/config.yaml
+		es_password: alert
+		```
+	```
+	
+	```
+	
 1. Account **Scheduler**
-		
 	- Update */etc/kibana/kibana.yml*:
-
-			vi /etc/kibana/kibana.yml	
-			elastscheduler.password: "new_scheduler_password"
-
+	
+		```bash
+		vi /etc/kibana/kibana.yml	
+		elastscheduler.password: "new_scheduler_password"
+		```
+	
 1. Account **Logstash**
 	- Update the Logstash pipeline configuration files (*.conf) in output sections:
-			
-			vi /etc/logstash/conf.d/*.conf
-
-			elasticsearch {
-				hosts => ["localhost:9200"]
-				index => "syslog-%{+YYYY.MM}"
-				user => "logstash"
-				password => "new_password"
-			}
+		
+	```bash
+	vi /etc/logstash/conf.d/*.conf
+	elasticsearch {
+		hosts => ["localhost:9200"]
+		index => "syslog-%{+YYYY.MM}"
+		user => "logstash"
+		password => "new_password"
+	}
+	```

@@ -401,7 +401,7 @@ To update Logstash, follow the steps below:
     ```bash
     /usr/share/bin/logstash-plugin list --verbose
     ```
-and note the result
+    and note the result
 
 3. Install a newer version of Logstash according to the instructions:
 
