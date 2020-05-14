@@ -311,6 +311,20 @@ During installation you will be ask about following tasks:
     ```bash
     0 1 * * * /path/to/script/small_backup.sh
     ```
+    
+- Redirect Kibana port 5601/TCP to 443/TCP
+
+    ```bash
+    firewall-cmd --zone=public --add-masquerade --permanent
+    firewall-cmd --zone=public --add-forward-port=port=443:proto=tcp:toport=5601 --permanent
+    firewall-cmd --reload
+    ```
+
+     \# NOTE: Kibana on 443 tcp port *without* redirection needs additional permissions:
+
+    ```bash
+    setcap 'CAP_NET_BIND_SERVICE=+eip' /usr/share/kibana/node/bin/node
+    ```
 
 ## First login ##
 
