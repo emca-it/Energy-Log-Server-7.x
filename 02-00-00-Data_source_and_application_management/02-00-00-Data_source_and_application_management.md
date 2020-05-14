@@ -47,7 +47,7 @@ systemctl start elasticsearch.service
 
   ```bash  	
 systemctl status elasticsearch.service
-```
+  ```
 
 ![](/media/media/image86.PNG)
 
@@ -79,7 +79,158 @@ systemctl status kibana.service
 ## First configuration steps ##
 
 ### Run the instalation ###
-To install and configure Energy Logserver on the CentOS Linux system you should:
+
+The Energy Logserver installer is delivered as:
+
+- RPM package energy-logserver-data-node and energy-logserver-client-node
+- "install.sh" installation script
+
+#### Installation using the RPM package
+
+1. Install OpenJDK / Oracle JDK  version 11:
+
+    ```bash
+    yum -y -q install java-11-openjdk-headless.x86_64
+    ```
+
+1. Select default command for OpenJDK /Oracle JDK:
+
+    ```bash
+    alternatives --config java
+    ```
+
+1. Upload Package
+
+    ```bash
+    scp ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm root@hostname:~/
+    scp ./energy-logserver-client-node-7.0.1-1.el7.x86_64.rpm root@hostname:~/
+    ```
+
+1. Install Energy Logserver Data Node
+
+    ```bash
+    yum install ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm
+    ```
+
+1. Verification of Configuration Files
+
+    Please, verify your Elasticsearch configuration and JVM configuration in files:
+
+    - /etc/elasticsearch/jvm.options – check JVM HEAP settings and another parameters
+
+    ```bash
+    ## -Xms4g
+    ## -Xmx4g
+    # Xms represents the initial size of total heap space
+    # Xmx represents the maximum size of total heap space
+    -Xms600m
+    -Xmx600m
+    ```
+
+    - /etc/elasticsearch/elasticsearch.yml – verify elasticsearch configuration file
+    
+1. Start and enable Elasticsearch service
+    If everything went correctly, we will start the Elasticsearch instance:
+
+    ```bash
+    systemctl start elasticsearch
+    ```
+    
+    ```bash
+    systemctl status elasticsearch
+    ● elasticsearch.service - Elasticsearch
+       Loaded: loaded (/usr/lib/systemd/system/elasticsearch.service; enabled; vendor preset: disabled)
+       Active: active (running) since Wed 2020-03-18 16:50:15 CET; 57s ago
+         Docs: http://www.elastic.co
+     Main PID: 17195 (java)
+       CGroup: /system.slice/elasticsearch.service
+               └─17195 /etc/alternatives/jre/bin/java -Xms512m -Xmx512m -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/plugins/elasticsearch_auth/plugin-securi...
+    
+    Mar 18 16:50:15 migration-01 systemd[1]: Started Elasticsearch.
+    Mar 18 16:50:25 migration-01 elasticsearch[17195]: SSL not activated for http and/or transport.
+    Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+    Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Defaulting to no-operation (NOP) logger implementation
+    Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+    ```
+1. Check cluster/indices status and Elasticsearch version
+
+    Invoke curl command to check the status of Elasticsearch:
+
+    ```bash
+    curl -s -u $CREDENTIAL localhost:9200/_cluster/health?pretty
+    {
+      "cluster_name" : "elasticsearch",
+      "status" : "green",
+      "timed_out" : false,
+      "number_of_nodes" : 1,
+      "number_of_data_nodes" : 1,
+      "active_primary_shards" : 25,
+      "active_shards" : 25,
+      "relocating_shards" : 0,
+      "initializing_shards" : 0,
+      "unassigned_shards" : 0,
+      "delayed_unassigned_shards" : 0,
+      "number_of_pending_tasks" : 0,
+      "number_of_in_flight_fetch" : 0,
+      "task_max_waiting_in_queue_millis" : 0,
+      "active_shards_percent_as_number" : 100.0
+    }
+    ```
+
+    ```bash
+    curl -s -u $CREDENTIAL localhost:9200
+    {
+      "name" : "node-1",
+      "cluster_name" : "elasticsearch",
+      "cluster_uuid" : "igrASEDRRamyQgy-zJRSfg",
+      "version" : {
+        "number" : "7.3.2",
+        "build_flavor" : "oss",
+        "build_type" : "rpm",
+        "build_hash" : "1c1faf1",
+        "build_date" : "2019-09-06T14:40:30.409026Z",
+        "build_snapshot" : false,
+        "lucene_version" : "8.1.0",
+        "minimum_wire_compatibility_version" : "6.8.0",
+        "minimum_index_compatibility_version" : "6.0.0-beta1"
+      },
+      "tagline" : "You Know, for Search"
+    }
+    ```
+
+    If everything went correctly, we should see 100% allocated shards in  cluster health.
+
+1. Install Energy Logserver Client Node 
+
+    ```bash
+    yum install ./energy-logserver-client-node-7.0.1-1.el7.x86_64.rpm
+    ```
+
+1. Start Energy Logserver GUI
+   
+    Add service:
+    - Kibana
+    - Cerebro
+    - Alert
+    
+    to autostart and add port ( 5602/TCP ) for Cerebro. 
+    Run them and check status:
+    
+    ```bash
+    firewall-cmd –permanent –add-port 5602/tcp
+    firewall-cmd –reload
+    ```
+
+    ```bash
+    systemctl enable kibana cerebro alert
+    ```
+    
+    ```bash
+    systemctl start kibana cerebro alert
+    systemctl status kibana cerebro alert
+    ```
+
+Below is a description of the installation procedure for each of these methods.
 
 - copy archive Energy Logserver tar.bz2 to the hosted server;
 - extract archive Energy Logserver tar.bz2 contain application:
@@ -92,50 +243,84 @@ To install and configure Energy Logserver on the CentOS Linux system you should:
 		cd /root/insatll
 		./install.sh
 
-### Installation steps ###
+#### Installation using "install.sh" scritp
 
 During installation you will be ask about following tasks:
 
-- add firewall exception on ports 22(ssh), 5044, 5514 (Logstash), 5601 (Kibana), 9200 (Elastisearch), 9300 (ES cross-JVM);
-- installation of Java environment (Open-JDK), if you use your own Java environment - answer "N";
-- installation of Logstash application;
-- configuration of Logstash with custom Energy Logserver configuration;
-- connect to the Energy Logserver CentOS repository, which provides Python libraries, and some fonts;
-- installation of Kibana, the Energy Logserver GUI;
-- installation of Python dependencies;
-- installation of mail components for Energy Logserver notification;
-- installation of data-node of Elasticsearch;
-- configuration of Elasticsearch as Data Node;
-- configuration of Elasticsearch as Master Node.
+-  install & configure Logstash with custom Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;
+- install the Energy Logserver Client Node, as well as the other client-node dependencies;
+- install the Energy Logserver Data Node, as well as the other data-node dependencies;
+- load the Energy Logserver custom dashboards, alerts and configs;
 
-### Optional installation steps: ###
-Optionally you can:
+#### Post installation steps
 
-- install and configure the filebeat agent;
-- install and configure the winlogbeat agent;
-- configure Energy Logserver perf_data to integrated with the Energy Logserver Monitor;
-- configure naemonLogs to integrated with the Naemon;
-- configure integration with Active Directory and SSO servers. You can find necessary information in [12-00-00-Integration_with_AD](/12-00-00-Integration_with_AD/12-00-00-Integration_with_AD.md) and [13-00-00-Windows-SSO](/13-00-00-Windows-SSO/13-00-00-Windows-SSO.md);
-- install and configure monitoring with Marvel:
+- copy license files to Elasticsearch directory
 
-		cd /usr/share/elasticsearch
-		sudo bin/plugin install license
-		sudo bin/plugin install marvel-agent
-		systemctl restart elasticsearch
+   ```bash
+   cp es.* /ust/share/elasticsearch/bin/
+   ```
+   
+- configure  Elasticsearch cluster settings
 
-- enable predictive functionality in Intelligence module:
+    ```bash
+    vi /etc/elaticserach/elasticsearch.yml
+    
+    add all IPs of Elasticsearch node in the following directive:
+    discovery.zen.ping.unicast.hosts: [ "172.10.0.1:9300", "172.10.0.2:9300" ]
+    ```
+    
+- start Elasticsearch service
 
-		curl -XPOST 'http://localhost:9200/_aliases' -d '{
-		 		"actions" : [
-		     	{ "add" : { "index" : "intelligence", "alias" : "predictive" } },
-		    	 { "add" : { "index" : "perfdata-linux", "alias" : "predictive" } }
-		 		]}'
+    ```bash
+    systemc	start elasticsearch
+    ```
 
-- generate writeback index for Alert service:
-	
-		*/opt/alert/bin/elastalert-create-index --config /opt/alert/config.yaml*
+- start Logstash service
+
+    ```bash
+    systemctl start logstash
+    ```
+
+- start Cerebro service
+
+    ```bash
+    systemctl start cerebro
+    ```
+
+- start  Kibana service
+
+    ```bash
+    systemctl start kibana
+    ```
+
+- start Alert service
+
+    ```bash
+    systemctl start alert
+    ```
+
+- start Skimmer service
+
+    ```bash
+    systemctl start skimmer
+    ```
+
+- Example agent configuration files and additional documentation can be found in the Agents directory:
+
+    - filebeat
+    - winlogbeat
+    - op5 naemon logs
+    - op5 perf_data
+
+- For blacklist creation, you can use crontab or kibana scheduler, but the most preferable method is logstash input. Instructions to set it up can be found at `logstash/lists/README.md`
+
+- It is recomended to make small backup of system indices - copy "small_backup.sh" script from Agents directory to desired location, and change `backupPath=` to desired location. Then set up a crontab: 
+
+    ```bash
+    0 1 * * * /path/to/script/small_backup.sh
+    ```
+
 ## First login ##
-
 
 If you log in to Energy Logserver for the first time, you must
 specify the Index to be searched. We have the option of entering the

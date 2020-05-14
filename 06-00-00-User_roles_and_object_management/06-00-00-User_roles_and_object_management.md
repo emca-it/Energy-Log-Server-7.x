@@ -141,7 +141,7 @@ The table below contains built-in user accounts and default passwords:
 	|                       |intelligence |intelligece  |intelligence |A built-in account for the Intelligence module  | authorizing communication with elasticsearch server | 
 	|                       |scheduler    |scheduler    |scheduler    |A built-in account for the Scheduler module     |
 	|                       |logstash     |logstash     |logstash     |A built-in account for authorized comuunication form Logstash |
-	|                       |cerebro     |logstash     |system acconut only     |A built-in account for authorized comuunication from Cerebro moudule |
+	|                       |cerebro      |     |system acconut only     |A built-in account for authorized comuunication from Cerebro moudule |
 
 ## Changing password for the system account ##
 
@@ -161,7 +161,7 @@ After you change password for one of the system account ( alert, intelligence, l
 
 1. Account **Intelligence**
 
-  - Update */opt/ai/bin/conf.cfg*
+	- Update */opt/ai/bin/conf.cfg*
 
 	```bash
 	vi /opt/ai/bin/conf.cfg
