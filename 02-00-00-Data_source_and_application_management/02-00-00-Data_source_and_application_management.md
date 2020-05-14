@@ -129,6 +129,8 @@ The Energy Logserver installer is delivered as:
 
     - /etc/elasticsearch/elasticsearch.yml – verify elasticsearch configuration file
     
+      
+    
 1. Start and enable Elasticsearch service
     If everything went correctly, we will start the Elasticsearch instance:
 
@@ -152,6 +154,7 @@ The Energy Logserver installer is delivered as:
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Defaulting to no-operation (NOP) logger implementation
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
     ```
+    
 1. Check cluster/indices status and Elasticsearch version
 
     Invoke curl command to check the status of Elasticsearch:
@@ -200,6 +203,8 @@ The Energy Logserver installer is delivered as:
 
     If everything went correctly, we should see 100% allocated shards in  cluster health.
 
+    
+
 1. Install Energy Logserver Client Node 
 
     ```bash
@@ -229,19 +234,6 @@ The Energy Logserver installer is delivered as:
     systemctl start kibana cerebro alert
     systemctl status kibana cerebro alert
     ```
-
-Below is a description of the installation procedure for each of these methods.
-
-- copy archive Energy Logserver tar.bz2 to the hosted server;
-- extract archive Energy Logserver tar.bz2 contain application:
-
-	cd /root/
-	tar xvfj archive.tar.bz2
-
-- go to the application directory and run installation script as a root user:
-
-		cd /root/insatll
-		./install.sh
 
 #### Installation using "install.sh" scritp
 
