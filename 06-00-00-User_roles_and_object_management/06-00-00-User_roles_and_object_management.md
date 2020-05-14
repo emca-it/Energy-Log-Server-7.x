@@ -14,6 +14,7 @@ From the „User Management" level we have access to the following
 possibilities: Creating a user in „Create User", displaying users in
 „User List", creating new roles in „Create roles" and displaying
 existing roles in „List Role".
+
 ## Creating a User (Create User) ##
 
 ### Creating user ###
@@ -55,6 +56,7 @@ The introduced changes are confirmed with the Submit button.
 
 We can also see current user setting and clicking the Update button 
 collapses the previously expanded menu.
+
 ## Create, modify and delete a role (Create Role), (Role List)  ##
 
 In the Create Role tab we can define a new role with permissions that 
@@ -95,7 +97,6 @@ the application
 - alert - a role for users who want to see the Alert module
 - kibana - a role for users who want to see the application GUI
 - Intelligence - a role for users who are to see the Intelligence moduleObject access permissions (Objects permissions)
------------------------------------------------
 
 In the User Manager tab we can parameterize access to the newly 
 created role as well as existing roles. In this tab we can indicate 
@@ -128,6 +129,7 @@ with saved previously documents in the sections Dashboard, Index pattern,
 Search and Visualization. 
 By buttons ![](/media/media/image59.png) we have the ability to add or remove or
 object, and Save button to save the selection.
+
 ## Default user and passwords ##
 
 The table below contains built-in user accounts and default passwords:
@@ -149,40 +151,38 @@ After you change password for one of the system account ( alert, intelligence, l
 		
 	- Update */etc/kibana/kibana.yml*:
 		
-			```bash
-		vi /etc/kibana/kibana.yml
-		elasticsearch.password: new_logserver_passowrd
-		elastfilter.password: "new_logserver_password"
-		```
+	```bash
+	vi /etc/kibana/kibana.yml
+	elasticsearch.password: new_logserver_passowrd
+	elastfilter.password: "new_logserver_password"
+	cerebro.password: "new_logserver_password"
+	```
 
 
 1. Account **Intelligence**
 
   - Update */opt/ai/bin/conf.cfg*
 
-  		```bash
-  	vi /opt/ai/bin/conf.cfg
-  	password=new_intelligence_password
-  	```
+	```bash
+	vi /opt/ai/bin/conf.cfg
+	password=new_intelligence_password
+	```
 
 1. Account **Alert**
 	- Update file /opt/alert/config.yaml
 	
-		```bash
-		vi /opt/alert/config.yaml
-		es_password: alert
-		```
-	```
-	
+	```bash
+	vi /opt/alert/config.yaml
+	es_password: alert
 	```
 	
 1. Account **Scheduler**
 	- Update */etc/kibana/kibana.yml*:
 	
-		```bash
-		vi /etc/kibana/kibana.yml	
-		elastscheduler.password: "new_scheduler_password"
-		```
+	```bash
+	vi /etc/kibana/kibana.yml	
+	elastscheduler.password: "new_scheduler_password"
+	```
 	
 1. Account **Logstash**
 	- Update the Logstash pipeline configuration files (*.conf) in output sections:
