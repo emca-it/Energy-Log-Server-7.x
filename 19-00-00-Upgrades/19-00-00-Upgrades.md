@@ -7,6 +7,18 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/license
 
 ## Upgrade from 6.x
 
+Before upgrading to Energy  Logserver from 6.x  OpenJDK / Oracle JDK  version 11:
+
+```bash
+yum -y -q install java-11-openjdk-headless.x86_64
+```
+
+And select default command for OpenJDK /Oracle JDK:
+
+```bash
+alternatives --config java
+```
+
 The update includes packages:
 
 - energy-logserver-data-node
@@ -205,7 +217,7 @@ curl -k -XPUT -H 'Content-Type: application/json' -u logserver:logserver 'http:/
 
 If everything went correctly, we should see 100% allocated shards in cluster health. However, while connection on port 9200/TCP we  can observe a new version of Elasticsearch.
 
-### Upgrade Energy Logserver client Node
+### Upgrade Energy Logserver Client Node
 
 1. Upload packages
 
@@ -333,14 +345,14 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
     ```
 
 
-    ```bash
+```bash
     systemctl enable kibana cerebro alert
     Created symlink from /etc/systemd/system/multi-user.target.wants/kibana.service to /usr/lib/systemd/system/kibana.service.
     Created symlink from /etc/systemd/system/multi-user.target.wants/cerebro.service to /usr/lib/systemd/system/cerebro.service.
     Created symlink from /etc/systemd/system/multi-user.target.wants/alert.service to /usr/lib/systemd/system/alert.service.
-    ```
-    
-    ```bash
+```
+
+```bash
     systemctl start kibana cerebro alert
     systemctl status kibana cerebro alert
     ● kibana.service - Kibana
@@ -369,7 +381,7 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
                └─12401 /opt/alert/bin/python /opt/alert/bin/elastalert
     
     Mar 19 14:46:52 migration-01 systemd[1]: Started Alert.
-    ```
+```
 ## Changing OpenJDK version
 
 ### Logstash
