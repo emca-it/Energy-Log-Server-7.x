@@ -277,6 +277,12 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
 
 1. Install new version
 
+    - Install dependencies:
+
+      ```bash
+      yum install net-tools mailx gtk3 libXScrnSaver ImageMagick ghostscript
+      ```
+      
     - Install new package:
 
       ```bash
