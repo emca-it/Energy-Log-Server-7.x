@@ -188,7 +188,9 @@ To do this use *pass-encrypter.sh* script that is located in the *Utils* directo
 
 1. Installation of *pass-encrypter*
 
-		cp -pr /instalation_folder/elasticsearch/pass-encrypter /usr/share/elasticsearch/
+    cp -pr /instalation_folder/elasticsearch/pass-en00
+
+    000crypter /usr/share/elasticsearch/
 
 1. Use *pass-encrypter*
 
@@ -215,3 +217,65 @@ Use appropriate secret based on config file in Radius server. The secret is conf
 In this case, since the plugin will try to do Radius auth then client IP address should be the IP address where the Elasticsearch is deployed.
 
 Every user by default at present get the admin role.
+
+# Integration with Open LDAP (version 7.0.2 and newer)
+
+To use Open LDAP authorization, install or update Energy Logserver 7.0.2.
+
+## Configuration
+
+The default configuration file is located at `/etc/elasticsearch/properties.yml`:
+
+- ldap_groups_search  - Enable Open LDAP authorization. The `ldap_groups_search` switch with true / false values.
+
+- search filter - you can define `search_filter` for each domain. When polling the LDAP / AD server, the placeholder is changed to `userId` (everything before @domain) of the user who is trying to login. Sample search_filter:
+
+  ```bash
+  search_filter: "(&(objectClass=inetOrgPerson)(cn=%s))"
+  ```
+
+  If no search_filter is given, the default will be used:
+
+  ```bash
+  (&(&(objectCategory=Person)(objectClass=User))(samaccountname=%s))
+  ```
+
+- max_connections - for each domain (must be> = 1), this is the maximum number of connections that will be created with the LDAP / AD server for a given domain. Initially, one connection is created, if necessary another, up to the maximum number of connections set. If max_connections is not given, the default value = 10 will be used.
+
+- ldap_groups_search - filter will be used to search groups on the AD / LDAP server of which the user is trying to login. An example of groups_search_filter that works quite universally is:
+
+  ```bash
+  groups_search_filter: "(|(uniqueMember=%s)(member=%s))"
+  ```
+
+  Sample configuration:
+
+  ```bash
+  licenseFilePath: /usr/share/elasticsearch/
+  
+  ldaps:
+      
+      - name: "dev.it.example.com"
+        host: "192.168.0.1"
+        port: 389                                                  # optional, default 389
+        #ssl_enabled: false                                        # optional, default true
+        #ssl_trust_all_certs: true                                 # optional, default false
+        bind_dn: "Administrator@dev2.it.example.com"                     
+        bind_password: "Buspa#mexaj1"                                 
+        search_user_base_DN: "OU=lab,DC=dev,DC=it,DC=example,DC=pl"
+        search_filter: "(&(objectClass=inetOrgperson)(cn=%s))"     # optional, default "(&(&(objectCategory=Person)(objectClass=User))(samaccountname=%s))"
+        user_id_attribute: "uid"                                   # optional, default "uid"
+        search_groups_base_DN: "OU=lab,DC=dev,DC=it,DC=example,DC=pl" # base DN, which will be used for searching user's groups in LDAP tree
+        groups_search_filter: "(member=%s)"                        # optional, default (member=%s), if ldap_groups_search is set to true, this filter will be used for searching user's membership of LDAP groups
+        ldap_groups_search: false                                  # optional, default false - user groups will be determined basing on user's memberOf attribute
+        unique_member_attribute: "uniqueMember"                    # optional, default "uniqueMember"
+        max_connections: 10                                        # optional, default 10
+        connection_timeout_in_sec: 10                              # optional, default 1
+        request_timeout_in_sec: 10                                 # optional, default 1
+        cache_ttl_in_sec: 60                                       # optional, default 0 - cache disabled
+  
+  ```
+
+  
+
+  When the password is longer than 20 characters, we recommend using our pass-encrypter, otherwise backslash must be escaped with another backslash. Endpoint `role-mapping/_reload` has been changed to `_role-mapping/reload`. This is a unification of API conventions, in accordance with Elasticsearch conventions.
