@@ -152,7 +152,7 @@ It is recommended to run the Agent as a service in a given operating system.
   - The Agent is started by the `java -jar MasterBeatAgent.jar` command.
 
   - Configuration of the `/etc/systemd/system/masteragent.service` file:
-
+      ```bash
       	[Unit]
             	Description=Manage MasterAgent service
             	Wants=network-online.target
@@ -169,15 +169,13 @@ It is recommended to run the Agent as a service in a given operating system.
             	[Install]
             	WantedBy=multi-user.target
       ```
-      
-      ```
 
   -	After creating the file, run the following commands:
-
+      ```bash
   		systemctl daemon-reload
   		systemctl enable  masteragent
   		systemctl start masteragent
-
+      ```
 3. Windows host configuration
 
   - Download the latest version of MasterAgnet, which includes: 
