@@ -593,3 +593,234 @@ In the browser enter the address pointing to the server with the Logserver insta
 		curl -k -XPOST 'https://127.0.0.1:5602/auth/login' -H 'mimeType: application/x-www-form-urlencoded' -d 'user=logserver&password=logserver' -c cookie.txt
 		curl -k -XGET 'https://127.0.0.1:5602' -b cookie.txt
 
+## Curator - Elasticsearch index management tool
+
+Curator is a tool that allows you to perform index management tasks, such as:
+
+- Close Indices
+- Delete Indices
+- Delete Snapshots
+- Forcemerge segments
+- Changing Index Settings
+- Open Indices
+- Reindex data
+
+And other.
+
+### Curator installation
+
+Curator is delivered with the client node installer. 
+
+### Curator configuration
+
+Create directory for configuration:
+
+```bash
+mkdir /etc/curator
+```
+
+Create directory for Curator logs file:
+
+```bash
+mkdir /var/log/curator
+```
+
+### Running Curator
+
+The curator executable is located in the directory:
+
+```bash
+/usr/share/kibana/curator/bin/curator
+```
+
+Curator requires two parameters:
+
+- config - path to configuration file for Curator
+- path to action file for Curator
+
+Example running command:
+
+```bash
+/usr/share/kibana/curator/bin/curator --config /etc/curator/curator.conf /etc/curator/close_indices.yml
+```
+
+### Sample configuration file
+
+```bash
+---
+# Remember, leave a key empty if there is no value.  None will be a string,
+# not a Python "NoneType"
+client:
+  hosts:
+    - 127.0.0.1
+  port: 9200
+#  url_prefix:
+#  use_ssl: False
+#  certificate:
+  client_cert:
+  client_key:
+  ssl_no_validate: False
+  http_auth: $user:$passowrd
+  timeout: 30
+  master_only: True
+
+logging:
+  loglevel: INFO
+  logfile: /var/log/curator/curator.log
+  logformat: default
+  blacklist: ['elasticsearch', 'urllib3']
+```
+
+### Sample action file
+
+- close indices
+
+  ```bash
+  actions:
+    1:
+      action: close
+      description: >-
+        Close indices older than 30 days (based on index name), for logstash-
+        prefixed indices.
+      options:
+        delete_aliases: False
+        timeout_override:
+        continue_if_exception: False
+        disable_action: True
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: logstash-
+        exclude:
+      - filtertype: age
+        source: name
+        direction: older
+        timestring: '%Y.%m.%d'
+        unit: days
+        unit_count: 30
+        exclude:
+  ```
+
+- delete indices
+
+  ```bash
+  actions:
+    1:
+      action: delete_indices
+      description: >-
+        Delete indices older than 45 days (based on index name), for logstash-
+        prefixed indices. Ignore the error if the filter does not result in an
+        actionable list of indices (ignore_empty_list) and exit cleanly.
+      options:
+        ignore_empty_list: True
+        timeout_override:
+        continue_if_exception: False
+        disable_action: True
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: logstash-
+        exclude:
+      - filtertype: age
+        source: name
+        direction: older
+        timestring: '%Y.%m.%d'
+        unit: days
+        unit_count: 45
+        exclude:
+  ```
+
+- forcemerge segments
+
+  ```bash
+  actions:
+    1:
+      action: forcemerge
+      description: >-
+        forceMerge logstash- prefixed indices older than 2 days (based on index
+        creation_date) to 2 segments per shard.  Delay 120 seconds between each
+        forceMerge operation to allow the cluster to quiesce.
+        This action will ignore indices already forceMerged to the same or fewer
+        number of segments per shard, so the 'forcemerged' filter is unneeded.
+      options:
+        max_num_segments: 2
+        delay: 120
+        timeout_override:
+        continue_if_exception: False
+        disable_action: True
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: logstash-
+        exclude:
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 2
+        exclude:
+  ```
+
+- open indices
+
+  ```bash
+  actions:
+    1:
+      action: open
+      description: >-
+        Open indices older than 30 days but younger than 60 days (based on index
+        name), for logstash- prefixed indices.
+      options:
+        timeout_override:
+        continue_if_exception: False
+        disable_action: True
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: logstash-
+        exclude:
+      - filtertype: age
+        source: name
+        direction: older
+        timestring: '%Y.%m.%d'
+        unit: days
+        unit_count: 30
+        exclude:
+      - filtertype: age
+        source: name
+        direction: younger
+        timestring: '%Y.%m.%d'
+        unit: days
+        unit_count: 60
+        exclude:
+  ```
+
+- replica reduce
+
+  ```bash
+  actions:
+    1:
+      action: replicas
+      description: >-
+        Reduce the replica count to 0 for logstash- prefixed indices older than
+        10 days (based on index creation_date)
+      options:
+        count: 0
+        wait_for_completion: False
+        timeout_override:
+        continue_if_exception: False
+        disable_action: True
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: logstash-
+        exclude:
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 10
+        exclude:
+  ```
+
+  
