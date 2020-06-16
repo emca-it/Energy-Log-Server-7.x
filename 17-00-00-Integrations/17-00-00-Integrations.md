@@ -869,7 +869,7 @@ curl -u user:password -X GET "localhost:9200/cluster_one:twitter/_search?pretty"
 
 ```
 
-3. To search data in index ``twitter` located on multiple clusters, use following command:
+3. To search data in index `twitter` located on multiple clusters, use following command:
 
 ```bash
 curl -u user:password -X GET "localhost:9200/twitter,cluster_one:twitter,cluster_two:twitter/_search?pretty" -H 'Content-Type: application/json' -d'
