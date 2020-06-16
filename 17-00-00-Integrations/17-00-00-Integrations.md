@@ -824,3 +824,89 @@ logging:
   ```
 
   
+
+## Cross-cluster Search
+
+**Cross-cluster search** lets you run a single search request against one or more remote clusters. For example, you can use a cross-cluster search to filter and analyze log data stored on clusters in different data centers.
+
+### Configuration
+
+1. Use `_cluster` API to add least one remote cluster:
+
+```bash
+curl -u user:password -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d'
+{
+  "persistent": {
+    "cluster": {
+      "remote": {
+        "cluster_one": {
+          "seeds": [
+            "192.168.0.1:9300"
+          ]
+        },
+        "cluster_two": {
+          "seeds": [
+            "192.168.0.2:9300"
+          ]
+        }
+      }
+    }
+  }
+}'
+```
+
+2. To search data in index `twitter` located on the `cluster_one` use following command:
+
+```bash
+curl -u user:password -X GET "localhost:9200/cluster_one:twitter/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "match": {
+      "user": "kimchy"
+    }
+  }
+}'
+
+```
+
+3. To search data in index ``twitter` located on multiple clusters, use following command:
+
+```bash
+curl -u user:password -X GET "localhost:9200/twitter,cluster_one:twitter,cluster_two:twitter/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "match": {
+      "user": "kimchy"
+    }
+  }
+}'
+```
+
+4. Configure index pattern in Kibana GUI to discover data from multiple clusters:
+
+```
+cluster_one:logstash-*,cluster_two:logstash-*
+```
+
+![](/media/media/image133.png)
+
+### Security
+
+Cross-cluster search uses the Elasticsearch transport layer (default 9300/tcp port) to exchange data.  To secure the transmission, encryption must be enabled for the transport layer. 
+
+Configuration is in the `/etc/elasticsearch/elastisearch.yml` file:
+
+```bash
+# Transport layer encryption
+logserverguard.ssl.transport.enabled: true
+logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/certificate.crt"
+logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/certificate.key"
+logserverguard.ssl.transport.pemkey_password: ""
+logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+
+logserverguard.ssl.transport.enforce_hostname_verification: false
+logserverguard.ssl.transport.resolve_hostname: false
+
+```
+
+ Encryption must be enabled on each cluster.
