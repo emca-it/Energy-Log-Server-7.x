@@ -76,7 +76,7 @@ how many event sit found and how many times it worked.
 
 Also, on this tab, you can recover the alert dashboard, by clicking the "Recovery Alert Dashboard" button.# Type of the Alert module rules #
 
-The various RuleType classes, defined in Energy Logserver-Log-Aalytics. 
+The various RuleType classes, defined in Energy Logserver. 
 An instance is held in memory for each rule, passed all of the data returned by querying Elasticsearch 
 with a given filter, and generates matches based on that data.
 
@@ -385,3 +385,62 @@ A loop is made on this array and a value is collected for the categories in the 
 
 Based on, for example, Risk_key, you can multiply the value of the value field by the appropriate weight.
 The value field value is then added to the table on which the risk calculation algorithms are executed.
+
+## Indicators of compromise (IoC)
+
+Energy Logserver has the Indicators of compromise (IoC) functionality, which is based on the Malware Information Sharing Platform (MISP).
+IoC observes the logs sent to the system and marks documents if their content is in MISP signature.
+Based on IoC markings, you can build alert rules or track incident behavior.
+
+### Configuration
+
+#### Scheduling bad IP lists update
+
+Make sure you have Logstash 6.4 or newer.
+
+To update bad reputation lists and to create `.blacklists` index, you have to run `badreputation_iplists.sh and misp_threat_lists.sh script (best is to put in schedule).
+
+1. This can be done in cron (host with logstash installed):
+
+```bash
+0 1 * * * logstash /etc/logstash/lists/bin/badreputation_iplists.sh
+0 6 * * * logstash /etc/logstash/lists/bin/misp_threat_lists.sh
+```
+
+2. Or with Kibana Scheduller app (**only if logstash is running on the same host**).
+
+- Prepare script path:
+
+```bash
+/bin/ln -sfn /etc/logstash/lists/bin /opt/ai/bin/lists
+chown logstash:kibana /etc/logstash/lists/
+chmod g+w /etc/logstash/lists/
+```
+
+- Log in to EnergyLogserver GUI and go to **Scheduler** app. Set it up with below options and push "Submit" button:
+
+```bash
+Name:           BadReputationList
+Cron pattern:   0 1 * * *
+Command:        lists/badreputation_iplists.sh
+Category:       logstash
+```
+
+and second:
+
+```bash
+Name:           MispThreatList
+Cron pattern:   0 1 * * *
+Command:        lists/misp_threat_lists.sh
+Category:       logstash
+```
+
+3. After a couple of minutes check for blacklists index:
+
+```bash
+curl -sS -u user:password -XGET '127.0.0.1:9200/_cat/indices/.blacklists?s=index&v'
+health status index       uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
+```
+
+#### Configuration alert rule
