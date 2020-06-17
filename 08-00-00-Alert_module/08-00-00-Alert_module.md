@@ -388,26 +388,31 @@ The value field value is then added to the table on which the risk calculation a
 
 ## Indicators of compromise (IoC)
 
-Energy Logserver has the Indicators of compromise (IoC) functionality, which is based on the Malware Information Sharing Platform (MISP).
+ITRS Log-Analytics has the Indicators of compromise (IoC) functionality, which is based on the Malware Information Sharing Platform (MISP).
 IoC observes the logs sent to the system and marks documents if their content is in MISP signature.
 Based on IoC markings, you can build alert rules or track incident behavior.
 
 ### Configuration
 
+#### Bad IP list update
+
+To update bad reputation lists and to create `.blacklists` index, you have to run following scripts:
+
+```bash
+/etc/logstash/lists/bin/badreputation_iplists.sh
+/etc/logstash/lists/bin/misp_threat_lists.sh
+```
+
 #### Scheduling bad IP lists update
 
-Make sure you have Logstash 6.4 or newer.
-
-To update bad reputation lists and to create `.blacklists` index, you have to run `badreputation_iplists.sh and misp_threat_lists.sh script (best is to put in schedule).
-
-1. This can be done in cron (host with logstash installed):
+This can be done in `cron` (host with Logstash installed):
 
 ```bash
 0 1 * * * logstash /etc/logstash/lists/bin/badreputation_iplists.sh
 0 6 * * * logstash /etc/logstash/lists/bin/misp_threat_lists.sh
 ```
 
-2. Or with Kibana Scheduller app (**only if logstash is running on the same host**).
+or with Kibana Scheduller app (**only if Logstash is running on the same host**).
 
 - Prepare script path:
 
@@ -435,7 +440,7 @@ Command:        lists/misp_threat_lists.sh
 Category:       logstash
 ```
 
-3. After a couple of minutes check for blacklists index:
+After a couple of minutes check for blacklists index:
 
 ```bash
 curl -sS -u user:password -XGET '127.0.0.1:9200/_cat/indices/.blacklists?s=index&v'
