@@ -910,3 +910,87 @@ logserverguard.ssl.transport.resolve_hostname: false
 ```
 
  Encryption must be enabled on each cluster.
+
+## Sync/Copy
+
+The Sync/Copy module allows you to synchronize or copy data between two Elasticsearch clusters.
+You can copy or synchronize selected indexes or indicate index pattern.
+
+### Configuration
+
+Before starting Sync/Copy, complete the source and target cluster data in the `Profile` and `Create profile`tab:
+
+- Protocol - http or https;
+- Host - IP address ingest node;
+- Port - communication port (default 9200);
+- Username - username that has permission to get data and save data to the cluster;
+- Password - password of the above user
+- Cluster name
+
+![](/media/media/image134.png)
+
+You can view or delete the profile in the `Profile List` tab.
+
+### Synchronize data
+
+To perform data synchronization, follow the instructions:
+
+- go to the `Sync` tab;
+- select `Source Profile`
+- select `Destination Profile`
+- enter the index pattern name in `Index pattern to sync`
+- or use switch `Toggle to select between Index pattern or name` and enter indices name.
+- to create synchronization task, press `Submit` button
+
+![](/media/media/image135.png)
+
+### Copy data
+
+To perform data copy, follow the instructions:
+
+- go to the `Copy` tab;
+- select `Source Profile`
+- select `Destination Profile`
+- enter the index pattern name in `Index pattern to sync`
+- or use switch `Toggle to select between Index pattern or name` and enter indices name.
+- to start copying data press the `Submit` button
+
+![](/media/media/image136.png)
+
+### Running Sync/Copy
+
+Prepared Copy/Sync tasks can be run on demand or according to a set schedule.
+To do this, go to the `Jobs` tab. With each task you will find the `Action` button that allows:
+
+- running the task;
+- scheduling task in Cron format;
+- deleting task;
+- download task logs.
+
+![](/media/media/image137.png)
+
+## XLSX Import
+
+The XLSX Import module allow to import your `xlsx` and `csv` file to indices.
+
+### Importing steps
+
+1. Go to XLSX Import module and select your file and sheet:
+
+![](/media/media/image138.png)
+
+After the data has been successfully loaded, you will see a preview of your data at the bottom of the window. 
+
+Press `Next` button.
+
+2. In the next step, enter the index name in the `Index name` field, you can also change the pattern for the document ID and select the columns that the import will skip.
+
+![](/media/media/image139.png)
+
+3. Select the `Configure your own mapping` for every field. You can choose the type and apply more options with the advanced JSON.
+   The list of parameters can be found here, https://www.elastic.co/guide/en/elasticsearch/reference/7.x/mapping-params.html
+
+4.  After the import configuration is complete, select the `Import` button to start the import process.
+5. After the import process is completed, a summary will be displayed. Now you can create a new index pattern to view your data in the Discovery module.
+
+![](/media/media/image140.png)

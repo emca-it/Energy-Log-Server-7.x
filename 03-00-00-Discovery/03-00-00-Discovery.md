@@ -156,3 +156,19 @@ will be saved in .JSON format. If you then want to import such a file to
 Energy Logserver, click on button
 ![](/media/media/image26.png), at the top of the page and select the
 desired file.
+
+## Manual incident
+
+The `Discovery` module allows you to manually create incidents that are saved in the `Incidents` tab of the `Alerts` module. Manual incidents are based on search results or filtering.
+For a manual incident, you can save the following parameters:
+
+- Rule name
+- Time
+- Risk
+- Message
+
+![](/media/media/image141.png)
+
+After saving the manual incident, you can go to the Incident tab in the Alert module to perform the incident handling procedure.
+
+![](/media/media/image142.png)
