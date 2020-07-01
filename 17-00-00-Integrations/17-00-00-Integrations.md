@@ -229,6 +229,62 @@ If the index has been created, in order to browse and visualize the data “*ind
 1. After logging in to Kibana GUI go to *Settings* tab and add *Energy Logserver-perflogs-** pattern. Chose *@timestamp* time field and click *Create*. 
 1. Performance data logs should be now accessible from Kibana GUI Discovery tab ready to be visualize.
 
+## OP5 Beat
+
+The op5beat is small agent for collecting metrics from op5 Monitor.
+
+The op5beat  is located in the installation directory: `utils/op5integration/op5beat`
+
+### Installation for Centos7 and newer
+
+1. Copy the necessary files to the appropriate directories:
+
+```bash
+cp -rf etc/* /etc/
+cp -rf usr/* /usr/
+cp -rf var/* /var/
+```
+
+2. Configure and start  op5beat service (systemd):
+
+```bash
+cp -rf op5beat.service /usr/lib/systemd/system/
+systemctl daemon-reload
+systemctl enable op5beat
+systemctl start op5beat
+```
+
+
+
+### Installation for Centos6 and older
+
+1. Copy the necessary files to the appropriate directories:
+
+```bash
+cp -rf etc/* /etc/
+cp -rf usr/* /usr/
+cp -rf var/* /var/
+```
+
+2. Configure and start  op5beat service:
+
+   - sysV init:
+
+     ```bash
+     cp -rf op5beat.service /etc/rc.d/init.d/op5beat
+     chkconfig op5beat on
+     service op5beat start
+     ```
+
+   - supervisord (optional):
+
+     ```bash
+     yum install supervisor
+     cp -rf supervisord.conf /etc/supervisord.conf
+     ```
+
+     
+
 ## The Grafana instalation ##
 
 1. To install the Grafana application you should:
