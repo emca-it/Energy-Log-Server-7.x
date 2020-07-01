@@ -218,7 +218,7 @@ In this case, since the plugin will try to do Radius auth then client IP address
 
 Every user by default at present get the admin role.
 
-# Integration with OpenLDAP (version 7.0.2 and newer)
+# Integration with LDAP
 
 To use OpenLDAP authorization, install or update Energy Logserver 7.0.2.
 
