@@ -74,7 +74,7 @@ You may to recover it from default installation folder with following steps:
 
 		systemctl start logstash
 
-## To many open files
+## Too many open files
 
 If you have a problem with too many open files by the Elasticsearch process, modify the values in the following configuration files:
 
