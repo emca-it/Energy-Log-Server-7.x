@@ -597,19 +597,19 @@ chown -R cerebro:cerebro /opt/cerebro && chmod -R 700 /opt/cerebro
 4. Install Cerbero service ([cerebro.service](/files/cerebro.service)):
 
 ```bash
-		[Unit]
-		Description=Cerebro
-		
-		[Service]
-		Type=simple
-		User=cerebro
-		Group=cerebro
-		ExecStart=/opt/cerebro/bin/cerebro "-Dconfig.file=/opt/cerebro/conf/application.conf"
-		Restart=always
-		WorkingDirectory=/opt/cerebro
-		
-		[Install]
-		WantedBy=multi-user.target
+[Unit]
+Description=Cerebro
+
+[Service]
+Type=simple
+User=cerebro
+Group=cerebro
+ExecStart=/opt/cerebro/bin/cerebro "-Dconfig.file=/opt/cerebro/conf/application.conf"
+Restart=always
+WorkingDirectory=/opt/cerebro
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ```bash
