@@ -371,6 +371,7 @@ cp -rf var/* /var/
 ## The Beats configuration ##
 
 ### Kibana API ###
+
 Reference link: [https://www.elastic.co/guide/en/kibana/master/api.html](https://www.elastic.co/guide/en/kibana/master/api.html "https://www.elastic.co/guide/en/kibana/master/api.html")
 
 After installing any of beats package you can use ready to use dashboard related to this beat package. For instance dashboard and index pattern are available in */usr/share/filebeat/kibana/6/* directory on Linux.
@@ -442,35 +443,35 @@ However, if it is to be run with encryption, you also need to change `proxy_pass
 
 1. Create a directory in which the program will be located and its configuration:
 
-```bash
-mkdir -p /usr/share/oauth2_proxy/
-mkdir -p /etc/oauth2_proxy/
-```
+    ```bash
+    mkdir -p /usr/share/oauth2_proxy/
+    mkdir -p /etc/oauth2_proxy/
+    ```
 
 2. Copy files to directories:
 
-```bash
-cp oauth2_proxy /usr/share/oauth2_proxy/
-cp oauth2_proxy.cfg /etc/oauth2_proxy/
-```
+    ```bash
+    cp oauth2_proxy /usr/share/oauth2_proxy/
+    cp oauth2_proxy.cfg /etc/oauth2_proxy/
+    ```
 
 3. Set directives according to OAuth configuration in Google Cloud project
 
-```bash
-		cfg
-		client_id =
-		client_secret =
-		# the following limits domains for authorization (* - all)
-	​	email_domains = [
-	​	  "*"
-	​	]
-```
+    ```bash
+            cfg
+            client_id =
+            client_secret =
+            # the following limits domains for authorization (* - all)
+        ​	email_domains = [
+        ​	  "*"
+        ​	]
+    ```
 
 4. Set the following according to the public hostname:
 
-```bash
-cookie_domain = "kibana-host.org"
-```
+    ```bash
+    cookie_domain = "kibana-host.org"
+    ```
 
 5. In case 	og-in restrictions for a specific group defined on the Google side:
 	- Create administrative account: https://developers.google.com/identity/protocols/OAuth2ServiceAccount ; 
@@ -488,9 +489,9 @@ cookie_domain = "kibana-host.org"
 	- Copy the previously downloaded JSON file to `/etc/oauth2_proxy/`.
 	- In file [oauth2_proxy](/files/oauth2_proxy.cfg) set the appropriate path:
 
-```bash
-google_service_account_json =
-```
+    ```bash
+    google_service_account_json =
+    ```
 
 ### Service start up
 
@@ -510,7 +511,7 @@ In the browser enter the address pointing to the server with the Energy Logserve
 1. Cerebro v0.8.4
 
 ```bash
-		wget 'https://github.com/lmenezes/cerebro/releases/download/v0.8.4/cerebro-0.8.4.tgz'
+wget 'https://github.com/lmenezes/cerebro/releases/download/v0.8.4/cerebro-0.8.4.tgz'
 ```
 
 2. Java 11+ [for basic-auth setup]
