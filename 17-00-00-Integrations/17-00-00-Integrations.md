@@ -376,33 +376,37 @@ cp -rf var/* /var/
 
 1. To connect the Grafana application you should:
 
-	- define the default login/password (line 151;154 in config file)
+  - define the default login/password (line 151;154 in config file)
 
-			[root@localhost ~]# cat /etc/grafana/grafana.ini
-			.....
-			148 #################################### Security ####################################
-			149 [security]
-			150 # default admin user, created on startup
-			151 admin_user = admin
-			152
-			153 # default admin password, can be changed before first start of grafana,  or in profile settings
-			154 admin_password = admin
-			155
-.....
-	- restart *grafana-server* service:
+    ```bash
+    [root@localhost ~]# cat /etc/grafana/grafana.ini
+    148 #################################### Security ####################################
+    149 [security]
+    150 # default admin user, created on startup
+    151 admin_user = admin
+    152
+    153 # default admin password, can be changed before first start of grafana,  or in profile settings
+    154 admin_password = admin
+    155
+    ```
+    
+    
+    
+  - restart *grafana-server* service:
 
-			[root@localhost ~]# systemctl restart grafana-server
+```bash
+[root@localhost ~]# systemctl restart grafana-server
+```
 
-	- Login to Grafana user interface using web browser: *http://ip:3000*
+- Login to Grafana user interface using web browser: *http://ip:3000*
 
 ![](/media/media/image112.png)
 
-	- use login and password that you set in the config file.
+  - use login and password that you set in the config file.
 
+- Use below example to set conection to Elasticsearch server:
 
-1. Use below example to set conection to Elasticsearch server:
-
-	![](/media/media/image113.png)
+![](/media/media/image113.png)
 
 ## The Beats configuration ##
 
