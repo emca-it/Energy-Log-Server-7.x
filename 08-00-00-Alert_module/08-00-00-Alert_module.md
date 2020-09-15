@@ -114,11 +114,11 @@ The following alert methods have been predefined in the system:
 
 ### Email 
 
-Method that sends information about an alert to defined email addresses
+Method that sends information about an alert to defined email addresses.
 
 ### User
 
-Method that sends information about an alert to defined system users;
+Method that sends information about an alert to defined system users.
 
 ### Command
 
