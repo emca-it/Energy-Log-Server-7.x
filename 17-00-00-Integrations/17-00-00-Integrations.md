@@ -112,89 +112,128 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
 1. In the input section comment/uncomment *“beats”* or *“tcp”* depending on preference (beats if *Filebeat* will be used and tcp if *NetCat*). The port and the type has to be adjusted as well:
 
-		port => PORT_NUMBER
-		type => "Energy Logserverperflogs"
+    ```
+    port => PORT_NUMBER
+    type => "Energy Logserverperflogs"
+    ```
 
 1. In a filter section type has to be changed if needed to match the input section and Elasticsearch mapping.
+
 1. In an output section type should match with the rest of a *config*. host should point to your elasticsearch node. index name should correspond with what has been set in elasticsearch template to allow mapping application. The date for index rotation in its name is recommended and depending on the amount of data expecting to be transferred should be set to daily (+YYYY.MM.dd) or monthly (+YYYY.MM) rotation:
 
-		hosts => ["127.0.0.1:9200"]
-		index => "Energy Logserver-perflogs-%{+YYYY.MM.dd}"
+    ```yaml
+    hosts => ["127.0.0.1:9200"]
+    index => "Energy Logserver-perflogs-%{+YYYY.MM.dd}"
+    ```
 
 1. Port has to be opened on a firewall:
 
-		sudo firewall-cmd --zone=public --permanent --add-port=PORT_NUMBER/tcp
-		sudo firewall-cmd --reload
+    ```bash
+    sudo firewall-cmd --zone=public --permanent --add-port=PORT_NUMBER/tcp
+    sudo firewall-cmd --reload
+    ```
+
+    
 
 1. Logstash has to be reloaded:	
 
-		sudo systemctl restart logstash
+		```bash
+sudo systemctl restart logstash
+	```
 
 	or
-
-		sudo kill -1 LOGSTASH_PID
+	
+	```bash
+	sudo kill -1 LOGSTASH_PID
+	```
 
 ### Energy Logserver Monitor ###
 
 1.	You have to decide wether FileBeat or NetCat will be used. In case of Filebeat - skip to the second step. Otherwise:
 	- Comment line:
 
-			54    open(my $logFileHandler, '>>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #FileBeat
-			•	Uncomment lines:
-			55 #    open(my $logFileHandler, '>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #NetCat
-			...
-			88 #    my $logstashIP = "LOGSTASH_IP";
-			89 #    my $logstashPORT = "LOGSTASH_PORT";
-			90 #    if (-e $hostPerfLogs) {
-			91 #        my $pid1 = fork();
-			92 #        if ($pid1 == 0) {
-			93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
-			94 #        }
-			95 #    }
+			```bash
+		54    open(my $logFileHandler, '>>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #FileBeat
+		•	Uncomment lines:
+		55 #    open(my $logFileHandler, '>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #NetCat
+		...
+		88 #    my $logstashIP = "LOGSTASH_IP";
+		89 #    my $logstashPORT = "LOGSTASH_PORT";
+		90 #    if (-e $hostPerfLogs) {
+		91 #        my $pid1 = fork();
+		92 #        if ($pid1 == 0) {
+		93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
+		94 #        }
+		95 #    }
+	```
+		
+		
+	
 	- In process-service-perfdata-log.pl and process-host-perfdata-log.pl: change logstash IP and port:
-
-			92 my $logstashIP = "LOGSTASH_IP";
-			93 my $logstashPORT = "LOGSTASH_PORT";
-
+	
+			```bash
+		92 my $logstashIP = "LOGSTASH_IP";
+		93 my $logstashPORT = "LOGSTASH_PORT";
+		```
+		
+		
+	
 1. In case of running single Energy Logserver node, there is no problem with the setup. In case of a peered environment *$do_on_host* variable has to be set up and the script *process-service-perfdata-log.pl/process-host-perfdata-log.pl* has to be propagated on all of Energy Logserver nodes:
 
-		16 $do_on_host = "EXAMPLE_HOSTNAME"; # Energy Logserver node name to run the script on
-		17 $hostName = hostname; # will read hostname of a node running the script
+    ```bash
+    16 $do_on_host = "EXAMPLE_HOSTNAME"; # Energy Logserver node name to run the script on
+    17 $hostName = hostname; # will read hostname of a node running the script
+    ```
+
+    
 
 1. Example of command definition (*/opt/monitor/etc/checkcommands.cfg*) if scripts have been copied to */opt/plugins/custom/*:
 
-		# command 'process-service-perfdata-log'
-		define command{
-		    command_name                   process-service-perfdata-log
-		    command_line                   /opt/plugins/custom/process-service-perfdata-log.pl $TIMET$
-		    }
-		# command 'process-host-perfdata-log'
-		define command{
-		    command_name                   process-host-perfdata-log
-		    command_line                   /opt/plugins/custom/process-host-perfdata-log.pl $TIMET$
-		    }
+    
+
+    ```bash
+    # command 'process-service-perfdata-log'
+    define command{
+        command_name                   process-service-perfdata-log
+        command_line                   /opt/plugins/custom/process-service-perfdata-log.pl $TIMET$
+        }
+    # command 'process-host-perfdata-log'
+    define command{
+        command_name                   process-host-perfdata-log
+        command_line                   /opt/plugins/custom/process-host-perfdata-log.pl $TIMET$
+        }
+    ```
 
 1. In */opt/monitor/etc/naemon.cfg service_perfdata_file_processing_command* and *host_perfdata_file_processing_command* has to be changed to run those custom scripts:
 
-		service_perfdata_file_processing_command=process-service-perfdata-log
-		host_perfdata_file_processing_command=process-host-perfdata-log
+    
 
-1. In addition *service_perfdata_file_template* and *host_perfdata_file_template* can be changed to support sending more data to Elasticsearch. For instance, by adding *$HOSTGROUPNAMES$* and *$SERVICEGROUPNAMES$* macros logs can be separated better (it requires changes to Logstash filter config as well)
+    ```bash
+    service_perfdata_file_processing_command=process-service-perfdata-log
+    host_perfdata_file_processing_command=process-host-perfdata-log
+    ```
+
+    In addition *service_perfdata_file_template* and *host_perfdata_file_template* can be changed to support sending more data to Elasticsearch. For instance, by adding *$HOSTGROUPNAMES$* and *$SERVICEGROUPNAMES$* macros logs can be separated better (it requires changes to Logstash filter config as well)
+
 1. Restart naemon service:
 
-		sudo systemctl restart naemon # CentOS/RHEL 7.x
-		sudo service naemon restart # CentOS/RHEL 7.x
+    
 
-1. If *FileBeat* has been chosen, append below to *filebeat.conf* (adjust IP and PORT):
+    ```bash
+    sudo systemctl restart naemon # CentOS/RHEL 7.x
+    sudo service naemon restart # CentOS/RHEL 7.x
+    ```
 
-		filebeat.inputs:
-		- type: log
-		  enabled: true
-		  paths:
-		    - /opt/monitor/var/service_performance.log
-		    - /opt/monitor/var/host_performance.log
+    If *FileBeat* has been chosen, append below to *filebeat.conf* (adjust IP and PORT):
 
-			tags: ["Energy Logserverperflogs"]
+    filebeat.inputs:
+    	- type: log
+    	  enabled: true
+    	  paths:
+    	    - /opt/monitor/var/service_performance.log
+    	        - /opt/monitor/var/host_performance.log
+
+    		tags: ["Energy Logserverperflogs"]
 
 
 		output.logstash:
@@ -204,7 +243,6 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
 
 	- Restart FileBeat service:
-	
 			sudo systemctl restart filebeat # CentOS/RHEL 7.x
 			sudo service filebeat restart # CentOS/RHEL 7.x
 
