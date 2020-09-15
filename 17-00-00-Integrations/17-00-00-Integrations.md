@@ -162,27 +162,28 @@ chmod 664 /etc/logstash/conf.d/Energy Logserverperflogs.conf
 
 - Comment line:
 
-```bash
-54    open(my $logFileHandler, '>>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #FileBeat
-•	Uncomment lines:
-55 #    open(my $logFileHandler, '>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #NetCat
-...
-88 #    my $logstashIP = "LOGSTASH_IP";
-89 #    my $logstashPORT = "LOGSTASH_PORT";
-90 #    if (-e $hostPerfLogs) {
-91 #        my $pid1 = fork();
-92 #        if ($pid1 == 0) {
-93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
-94 #        }
-95 #    }
-```
+  ```bash
+  54    open(my $logFileHandler, '>>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #FileBeat
+  •	Uncomment lines:
+  55 #    open(my $logFileHandler, '>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #NetCat
+  ...
+  88 #    my $logstashIP = "LOGSTASH_IP";
+  89 #    my $logstashPORT = "LOGSTASH_PORT";
+  90 #    if (-e $hostPerfLogs) {
+  91 #        my $pid1 = fork();
+  92 #        if ($pid1 == 0) {
+  93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
+  94 #        }
+  95 #    }
+  ```
 
 - In process-service-perfdata-log.pl and process-host-perfdata-log.pl: change logstash IP and port:
 	
-```bash
-92 my $logstashIP = "LOGSTASH_IP";
-93 my $logstashPORT = "LOGSTASH_PORT";
-```
+  ```bash
+  92 my $logstashIP = "LOGSTASH_IP";
+  93 my $logstashPORT = "LOGSTASH_PORT";
+  ```
+
 
 2. In case of running single Energy Logserver node, there is no problem with the setup. In case of a peered environment *$do_on_host* variable has to be set up and the script *process-service-perfdata-log.pl/process-host-perfdata-log.pl* has to be propagated on all of Energy Logserver nodes:
 
@@ -206,48 +207,43 @@ define command{
     }
 ```
 
-1. In */opt/monitor/etc/naemon.cfg service_perfdata_file_processing_command* and *host_perfdata_file_processing_command* has to be changed to run those custom scripts:
+4. In */opt/monitor/etc/naemon.cfg service_perfdata_file_processing_command* and *host_perfdata_file_processing_command* has to be changed to run those custom scripts:
 
-    
+```bash
+service_perfdata_file_processing_command=process-service-perfdata-log
+host_perfdata_file_processing_command=process-host-perfdata-log
+```
 
-    ```bash
-    service_perfdata_file_processing_command=process-service-perfdata-log
-    host_perfdata_file_processing_command=process-host-perfdata-log
-    ```
+In addition *service_perfdata_file_template* and *host_perfdata_file_template* can be changed to support sending more data to Elasticsearch. For instance, by adding *$HOSTGROUPNAMES$* and *$SERVICEGROUPNAMES$* macros logs can be separated better (it requires changes to Logstash filter config as well)
 
-    In addition *service_perfdata_file_template* and *host_perfdata_file_template* can be changed to support sending more data to Elasticsearch. For instance, by adding *$HOSTGROUPNAMES$* and *$SERVICEGROUPNAMES$* macros logs can be separated better (it requires changes to Logstash filter config as well)
+5. Restart naemon service:
 
-1. Restart naemon service:
+```bash
+sudo systemctl restart naemon # CentOS/RHEL 7.x
+sudo service naemon restart # CentOS/RHEL 7.x
+```
 
-    
+6. If *FileBeat* has been chosen, append below to *filebeat.conf* (adjust IP and PORT):
 
-    ```bash
-    sudo systemctl restart naemon # CentOS/RHEL 7.x
-    sudo service naemon restart # CentOS/RHEL 7.x
-    ```
+```yaml
+filebeat.inputs:
+type: log
+enabled: true
+paths:
+  - /opt/monitor/var/service_performance.log
+  - /opt/monitor/var/host_performance.log
+tags: ["Energy Logserverperflogs"]
+  output.logstash:
+# The Logstash hosts
+  hosts: ["LOGSTASH_IP:LOGSTASH_PORT"]
+```
 
-    If *FileBeat* has been chosen, append below to *filebeat.conf* (adjust IP and PORT):
+7. Restart FileBeat service:
 
-    filebeat.inputs:
-    	- type: log
-    	  enabled: true
-    	  paths:
-    	    - /opt/monitor/var/service_performance.log
-    	        - /opt/monitor/var/host_performance.log
-
-    		tags: ["Energy Logserverperflogs"]
-
-
-		output.logstash:
-		  # The Logstash hosts
-		  hosts: ["LOGSTASH_IP:LOGSTASH_PORT"]
-
-
-
-	- Restart FileBeat service:
-			sudo systemctl restart filebeat # CentOS/RHEL 7.x
-			sudo service filebeat restart # CentOS/RHEL 7.x
-
+```bash
+sudo systemctl restart filebeat # CentOS/RHEL 7.x
+sudo service filebeat restart # CentOS/RHEL 7.x
+```
 
 ### Kibana ###
 
