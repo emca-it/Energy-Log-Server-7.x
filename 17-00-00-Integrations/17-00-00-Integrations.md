@@ -159,60 +159,52 @@ chmod 664 /etc/logstash/conf.d/Energy Logserverperflogs.conf
 ### Energy Logserver Monitor ###
 
 1.	You have to decide wether FileBeat or NetCat will be used. In case of Filebeat - skip to the second step. Otherwise:
-	- Comment line:
 
-			```bash
-		54    open(my $logFileHandler, '>>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #FileBeat
-		•	Uncomment lines:
-		55 #    open(my $logFileHandler, '>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #NetCat
-		...
-		88 #    my $logstashIP = "LOGSTASH_IP";
-		89 #    my $logstashPORT = "LOGSTASH_PORT";
-		90 #    if (-e $hostPerfLogs) {
-		91 #        my $pid1 = fork();
-		92 #        if ($pid1 == 0) {
-		93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
-		94 #        }
-		95 #    }
-		```
-	```
-		
-		
+- Comment line:
+
+```bash
+54    open(my $logFileHandler, '>>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #FileBeat
+•	Uncomment lines:
+55 #    open(my $logFileHandler, '>', $hostPerfLogs) or die "Could not open $hostPerfLogs"; #NetCat
+...
+88 #    my $logstashIP = "LOGSTASH_IP";
+89 #    my $logstashPORT = "LOGSTASH_PORT";
+90 #    if (-e $hostPerfLogs) {
+91 #        my $pid1 = fork();
+92 #        if ($pid1 == 0) {
+93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
+94 #        }
+95 #    }
+```
+
+- In process-service-perfdata-log.pl and process-host-perfdata-log.pl: change logstash IP and port:
 	
-	- In process-service-perfdata-log.pl and process-host-perfdata-log.pl: change logstash IP and port:
-	
-			```bash
-		92 my $logstashIP = "LOGSTASH_IP";
-		93 my $logstashPORT = "LOGSTASH_PORT";
-	```
-	
-	​	
-	
-1. In case of running single Energy Logserver node, there is no problem with the setup. In case of a peered environment *$do_on_host* variable has to be set up and the script *process-service-perfdata-log.pl/process-host-perfdata-log.pl* has to be propagated on all of Energy Logserver nodes:
+```bash
+92 my $logstashIP = "LOGSTASH_IP";
+93 my $logstashPORT = "LOGSTASH_PORT";
+```
 
-    ```bash
-    16 $do_on_host = "EXAMPLE_HOSTNAME"; # Energy Logserver node name to run the script on
-    17 $hostName = hostname; # will read hostname of a node running the script
-    ```
+2. In case of running single Energy Logserver node, there is no problem with the setup. In case of a peered environment *$do_on_host* variable has to be set up and the script *process-service-perfdata-log.pl/process-host-perfdata-log.pl* has to be propagated on all of Energy Logserver nodes:
 
-    
+```bash
+16 $do_on_host = "EXAMPLE_HOSTNAME"; # Energy Logserver node name to run the script on
+17 $hostName = hostname; # will read hostname of a node running the script
+```
 
-1. Example of command definition (*/opt/monitor/etc/checkcommands.cfg*) if scripts have been copied to */opt/plugins/custom/*:
+3. Example of command definition (*/opt/monitor/etc/checkcommands.cfg*) if scripts have been copied to */opt/plugins/custom/*:
 
-    
-
-    ```bash
-    # command 'process-service-perfdata-log'
-    define command{
-        command_name                   process-service-perfdata-log
-        command_line                   /opt/plugins/custom/process-service-perfdata-log.pl $TIMET$
-        }
-    # command 'process-host-perfdata-log'
-    define command{
-        command_name                   process-host-perfdata-log
-        command_line                   /opt/plugins/custom/process-host-perfdata-log.pl $TIMET$
-        }
-    ```
+```bash
+# command 'process-service-perfdata-log'
+define command{
+    command_name                   process-service-perfdata-log
+    command_line                   /opt/plugins/custom/process-service-perfdata-log.pl $TIMET$
+    }
+# command 'process-host-perfdata-log'
+define command{
+    command_name                   process-host-perfdata-log
+    command_line                   /opt/plugins/custom/process-host-perfdata-log.pl $TIMET$
+    }
+```
 
 1. In */opt/monitor/etc/naemon.cfg service_perfdata_file_processing_command* and *host_perfdata_file_processing_command* has to be changed to run those custom scripts:
 
