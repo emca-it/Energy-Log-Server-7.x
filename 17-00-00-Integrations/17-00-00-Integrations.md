@@ -619,77 +619,77 @@ systemctl enable cerebro
 ```
 
 5. Customize configuration file: [/opt/cerebro/conf/application.conf](/files/application.conf)
-```bash
-	- Authentication
 
-			auth = {
-			  type: basic
-			    settings: {
-			      username = "user"
-			      password = "password"
-			    }
-			}
+```bash
+- Authentication
+auth = {
+  type: basic
+   settings: {
+      username = "user"
+      password = "password"
+    }
+}
 ```
 
 	- A list of known Elasticsearch hosts
 
 ```bash
-			hosts = [
-			  {
-			    host = "http://localhost:9200"
-			    name = "user"
-			    auth = {
-			      username = "username"
-			      password = "password"
-			    }
-			  }
-			]
+hosts = [
+  {
+    host = "http://localhost:9200"
+    name = "user"
+    auth = {
+      username = "username"
+      password = "password"
+    }
+  }
+]
 ```
 
-	If needed uses secure connection (SSL) with Elasticsearch, set the following section that contains path to certificate. And change the host definition from `http` to `https`:
+If needed uses secure connection (SSL) with Elasticsearch, set the following section that contains path to certificate. And change the host definition from `http` to `https`:
 
 ```bash
-			play.ws.ssl {
-			  trustManager = {
-			    stores = [
-			      { type = "PEM", path = "/etc/elasticsearch/ssl/rootCA.crt" }
-			    ]
-			  }
-			} 
-			play.ws.ssl.loose.acceptAnyCertificate=true
+play.ws.ssl {
+  trustManager = {
+    stores = [
+      { type = "PEM", path = "/etc/elasticsearch/ssl/rootCA.crt" }
+    ]
+  }
+} 
+play.ws.ssl.loose.acceptAnyCertificate=true
 ````
 
-	- SSL access to cerebro
-```bash
-			http = {
-			  port = "disabled"
-			}
-			https = {
-			  port = "5602"
-			}
-			
-			# SSL access to cerebro - no self signed certificates
-			#play.server.https {
-			#  keyStore = {
-			#    path = "keystore.jks",
-			#    password = "SuperSecretKeystorePassword"
-			#  }
-			#}
-			
-			#play.ws.ssl {
-			#  trustManager = {
-			#    stores = [
-			#      { type = "JKS", path = "truststore.jks", password = "SuperSecretTruststorePassword"  }
-			#    ]
-			#  }
-			#}
-```
+- SSL access to cerebro
+
+    ```bash
+    http = {
+      port = "disabled"
+    }
+    https = {
+      port = "5602"
+    }
+    #SSL access to cerebro - no self signed certificates
+    #play.server.https {
+    #  keyStore = {
+    #    path = "keystore.jks",
+    #    password = "SuperSecretKeystorePassword"
+    #  }
+    #}
+
+    #play.ws.ssl {
+    #  trustManager = {
+    #    stores = [
+    #      { type = "JKS", path = "truststore.jks", password = "SuperSecretTruststorePassword"  }
+    #    ]
+    #  }
+    #}
+    ```
 
 6. Start the service
 
 ```bash
-		systemctl start cerebro
-		goto: https://127.0.0.1:5602
+systemctl start cerebro
+goto: https://127.0.0.1:5602
 ```
 
 ### Optional configuration
@@ -709,8 +709,8 @@ systemctl enable cerebro
 2. Login using curl/kibana
 
 ```bash
-		curl -k -XPOST 'https://127.0.0.1:5602/auth/login' -H 'mimeType: application/x-www-form-urlencoded' -d 'user=user&password=passwrd' -c cookie.txt
-		curl -k -XGET 'https://127.0.0.1:5602' -b cookie.txt
+curl -k -XPOST 'https://127.0.0.1:5602/auth/login' -H 'mimeType: application/x-www-form-urlencoded' -d 'user=user&password=passwrd' -c cookie.txt
+curl -k -XGET 'https://127.0.0.1:5602' -b cookie.txt
 ```
 
 ## Curator - Elasticsearch index management tool
@@ -766,9 +766,8 @@ Example running command:
 
 ### Sample configuration file
 
-
 ---
- Remember, leave a key empty if there is no value.  None will be a string, not a Python "NoneType"
+Remember, leave a key empty if there is no value.  None will be a string, not a Python "NoneType"
 
 ```bash
 client:
