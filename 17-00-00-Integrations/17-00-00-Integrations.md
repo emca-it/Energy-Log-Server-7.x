@@ -96,37 +96,44 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 			}
 
 1. In URL *Energy Logserverperfdata* is a name for the template - later it can be search for or modify with it.
+
 1. The "*template*" is an index pattern. New indices matching it will have the settings and mapping applied automatically (change it if you index name for *Energy Logserver perfdata* is different).
+
 1. Mapping name should match documents type:
 
-		"mappings": {
-		  "Energy Logserverperflogs"
+    ```
+    "mappings": {
+    	  "Energy Logserverperflogs"
+    ```
 
-1. Running Energy Logservertemplate.sh will create a template (not index) for Energy Logserver perf data documents.
+    Running Energy Logservertemplate.sh will create a template (not index) for Energy Logserver perf data documents.
 
 ### Logstash ###
 
 1.	The *Energy Logserverperflogs.conf* contains example of *input/filter/output* configuration. It has to be copied to */etc/logstash/conf.d/*. Make sure that the *logstash* has permissions to read the configuration files:
 	
-		chmod 664 /etc/logstash/conf.d/Energy Logserverperflogs.conf
 
-1. In the input section comment/uncomment *“beats”* or *“tcp”* depending on preference (beats if *Filebeat* will be used and tcp if *NetCat*). The port and the type has to be adjusted as well:
+chmod 664 /etc/logstash/conf.d/Energy Logserverperflogs.conf
 
-    ```
-    port => PORT_NUMBER
-    type => "Energy Logserverperflogs"
-    ```
+2. In the input section comment/uncomment *“beats”* or *“tcp”* depending on preference (beats if *Filebeat* will be used and tcp if *NetCat*). The port and the type has to be adjusted as well:
 
-1. In a filter section type has to be changed if needed to match the input section and Elasticsearch mapping.
+   ```
+   port => PORT_NUMBER
+   type => "Energy Logserverperflogs"
+   ```
 
-1. In an output section type should match with the rest of a *config*. host should point to your elasticsearch node. index name should correspond with what has been set in elasticsearch template to allow mapping application. The date for index rotation in its name is recommended and depending on the amount of data expecting to be transferred should be set to daily (+YYYY.MM.dd) or monthly (+YYYY.MM) rotation:
+   
+
+3. In a filter section type has to be changed if needed to match the input section and Elasticsearch mapping.
+
+4. In an output section type should match with the rest of a *config*. host should point to your elasticsearch node. index name should correspond with what has been set in elasticsearch template to allow mapping application. The date for index rotation in its name is recommended and depending on the amount of data expecting to be transferred should be set to daily (+YYYY.MM.dd) or monthly (+YYYY.MM) rotation:
 
     ```yaml
     hosts => ["127.0.0.1:9200"]
     index => "Energy Logserver-perflogs-%{+YYYY.MM.dd}"
     ```
 
-1. Port has to be opened on a firewall:
+5. Port has to be opened on a firewall:
 
     ```bash
     sudo firewall-cmd --zone=public --permanent --add-port=PORT_NUMBER/tcp
@@ -135,17 +142,19 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
     
 
-1. Logstash has to be reloaded:	
+6. Logstash has to be reloaded:	
 
-		```bash
-sudo systemctl restart logstash
-	```
+   ```bash
+   sudo systemctl restart logstash
+   ```
 
-	or
-	
-	```bash
-	sudo kill -1 LOGSTASH_PID
-	```
+   or
+
+   ```bash
+   sudo kill -1 LOGSTASH_PID
+   ```
+
+   
 
 ### Energy Logserver Monitor ###
 
@@ -165,6 +174,7 @@ sudo systemctl restart logstash
 		93 #            exec("/bin/cat $hostPerfLogs | /usr/bin/nc -w 30 $logstashIP $logstashPORT");
 		94 #        }
 		95 #    }
+		```
 	```
 		
 		
@@ -174,9 +184,9 @@ sudo systemctl restart logstash
 			```bash
 		92 my $logstashIP = "LOGSTASH_IP";
 		93 my $logstashPORT = "LOGSTASH_PORT";
-		```
-		
-		
+	```
+	
+	​	
 	
 1. In case of running single Energy Logserver node, there is no problem with the setup. In case of a peered environment *$do_on_host* variable has to be set up and the script *process-service-perfdata-log.pl/process-host-perfdata-log.pl* has to be propagated on all of Energy Logserver nodes:
 
