@@ -73,16 +73,21 @@ downloaded as a PDF file.
 
 ## Scheduler Report (Schedule Export Dashboard) ##
 
-
 In the Report selection, we have the option of setting the Scheduler
 which from Dashboard template can generate a report at time intervals. 
 To do this goes to the Schedule Export Dashboard tab.
 
 ![](/media/media/image48_js.png)
 
+Scheduler Report (Schedule Export Dashboard)
+
 In this tab mark the saved Dashboard.
 
 ![](/media/media/image49_js.png)
+
+*Note: The default time period of the dashboard is last 15 minutes.*
+
+*Please refer to **Discovery > Time settings and refresh** to change the time period of your dashboard.*
 
 In the Email Topic field, enter the Message title, in the Email field
 enter the email address to which the report should be sent. From

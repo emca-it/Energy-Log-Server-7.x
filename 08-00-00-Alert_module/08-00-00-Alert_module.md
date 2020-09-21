@@ -103,11 +103,13 @@ is higher or lower than a threshold.
 - ***Find Match*** - Rule match when in defined period of time, two correlated documents match certain strings.
 - ***Difference*** - Rule matches for value difference between two aggregations calculated for different periods in time.
 - ***ConsecutiveGrowth*** - Rule matches for value difference between two aggregations calculated for different periods in time.
-- 
+- ***Logical*** - Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
+- ***Chain*** - Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
 ## Alert Type ##
 
 When the alert rule is fulfilled, the defined action is performed - the alert method.
 The following alert methods have been predefined in the system:
+
 - email;
 - commands;
 - user;
