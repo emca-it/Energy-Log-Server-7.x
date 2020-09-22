@@ -86,17 +86,17 @@ with a given filter, and generates matches based on that data.
 - ***Any*** - The any rule will match everything. Every hit that the query returns will generate an alert.
 - ***Blacklist*** - The blacklist rule will check a certain field against a blacklist, and match if it is in the blacklist.
 - ***Whitelist*** - Similar to blacklist, this rule will compare a certain field to a whitelist, 
-and match if the list does not contain the term.
+  and match if the list does not contain the term.
 - ***Change*** - This rule will monitor a certain field and match if that field changes. 
 - ***Frequency*** - his rule matches when there are at least a certain number of events in a given time frame. 
 - ***Spike*** - This rule matches when the volume of events during a given time period is spike_height times 
-larger or smaller than during the previous time period.
+  larger or smaller than during the previous time period.
 - ***Flatline*** - This rule matches when the total number of events is under a given threshold for a time period.
 - ***New Term*** - This rule matches when a new value appears in a field that has never been seen before.
 - ***Cardinality*** - This rule matches when a the total number of unique values for a certain field within 
-a time frame is higher or lower than a threshold.
+  a time frame is higher or lower than a threshold.
 - ***Metric Aggregation*** - This rule matches when the value of a metric within the calculation window 
-is higher or lower than a threshold.
+  is higher or lower than a threshold.
 - ***Percentage Match*** - This rule matches when the percentage of document in the match bucket within 
   a calculation window is higher or lower than a threshold.
 - ***Unique Long Term*** - This rule matches when there are values of compare_key in each checked timeframe.
@@ -105,6 +105,35 @@ is higher or lower than a threshold.
 - ***ConsecutiveGrowth*** - Rule matches for value difference between two aggregations calculated for different periods in time.
 - ***Logical*** - Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
 - ***Chain*** - Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
+
+### Logical
+
+An example of using the Logical rule type.
+
+![](/media/media/image148.png)
+
+Alerts that must occur for the rule to be triggered:
+
+- Switch - Port is off-line - the alert must appear 5 times.
+  - OR
+- Switch - Port is on-line - the alert must appear 5 times.
+
+If both of the above alerts are met within no more than 5 minutes and the values of the "port_number" field are related to each other, the alert rule is triggered. It is possible to use logical connectives such as: OR, AND, NOR, NAND, XOR.
+
+### Chain
+
+An example of using the Chain rule type.
+
+![](/media/media/image148.png)
+
+Alerts that must occur for the rule to be triggered:
+
+- Linux - Login Failure - the alert must appear 10 times.
+- AND
+- Linux - Login Success - 1 time triggered alert.
+
+If the sequence of occurrence of the above alerts is met within 5 minutes and the values of the "username" field are related to each other, the alert rule is triggered. The order in which the component alerts occur is important.
+
 ## Alert Type ##
 
 When the alert rule is fulfilled, the defined action is performed - the alert method.
