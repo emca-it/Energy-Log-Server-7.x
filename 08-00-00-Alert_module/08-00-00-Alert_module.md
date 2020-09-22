@@ -110,7 +110,7 @@ with a given filter, and generates matches based on that data.
 
 An example of using the Logical rule type.
 
-![](/media/media/image148.png)
+![](/media/media/image149.png)
 
 Alerts that must occur for the rule to be triggered:
 
