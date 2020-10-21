@@ -2,7 +2,7 @@
 
 ## v7.0.3
 
-### New  Features
+### New  Features 
 
 - Alert: new type - Chain - create alert from underlying rules triggered in defined order
 - Alert: new type - Logical - create alert from underlying rules triggered with defined logic (OR,AND,NOR)
