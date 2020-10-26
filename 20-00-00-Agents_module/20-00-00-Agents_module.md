@@ -297,32 +297,82 @@ After changing or adding the agent configuration, restart the agent by clicking 
 
 The Agents module works with Beats agents in the following versions:
 
-| Nr   | Agent Name | Beats Version | Link to download                                             |
-| ---- | ---------- | ------------- | ------------------------------------------------------------ |
-| 1    | Filebeat   | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/filebeat-oss-6-8-13 |
-| 2    | Packetbeat | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/packetbeat-oss-6-8-13 |
-| 3    | Winlogbeat | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/winlogbeat-oss-6-8-13 |
-| 4    | Metricbeat | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/metricbeat-oss-6-8-13 |
-| 5    | Heartbeat  | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/heartbeat-oss-6-8-13 |
-| 6    | Auditbeat  | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/auditbeat-oss-6-8-13 |
-| 7    | Logstash   | OSS 6.8.13    | https://www.elastic.co/downloads/past-releases/logstash-oss-6-8-13 |
-
-
-
-+--- +--------- +------------ +----------------------------------------------------------- |
-| Nr   | Agent Name | Beats Version | Link to download                                             |
-+=== +========= +============ +=========================================================== |
-| 1    | Filebeat   | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/filebeat=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
-| 2    | Packetbeat | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/packetbeat=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
-| 3    | Winlogbeat | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/winlogbeat=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
-| 4    | Metricbeat | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/metricbeat=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
-| 5    | Heartbeat  | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/heartbeat=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
-| 6    | Auditbeat  | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/auditbeat=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
-| 7    | Logstash   | OSS 6.8.13    | https://www.elastic.co/downloads/past=releases/logstash=oss=6=8=13 |
-+--- +--------- +------------ +----------------------------------------------------------- |
+  <table border="1" class="docutils" id="id1">
+<colgroup>
+<col width="3%" />
+<col width="12%" />
+<col width="13%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr</th>
+<th class="head">Agent Name</th>
+<th class="head">Beats Version</th>
+<th class="head">Link to download</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">Filebeat</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/filebeat-oss-6-8-13</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">Packetbeat</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/packetbeat-oss-6-8-13</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">3</p>
+</td>
+<td><p class="first last">Winlogbeat</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/winlogbeat-oss-6-8-13</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">4</p>
+</td>
+<td><p class="first last">Metricbeat</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/metricbeat-oss-6-8-13</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">5</p>
+</td>
+<td><p class="first last">Heartbeat</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/heartbeat-oss-6-8-13</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">6</p>
+</td>
+<td><p class="first last">Auditbeat</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/auditbeat-oss-6-8-13</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">7</p>
+</td>
+<td><p class="first last">Logstash</p>
+</td>
+<td><p class="first last">OSS 6.8.13</p>
+</td>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/logstash-oss-6-8-13</p>
+</td>
+</tr>
+</table>
