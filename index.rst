@@ -58,7 +58,7 @@ Energy Logserver 7.x User Guide
 	   
 .. toctree::
         :maxdepth: 2
-        :caption: SIEM
+        :caption: Archive
 
        25-00-00-Archive/25-00-00-Archive.md
 
