@@ -1341,3 +1341,13 @@ Below is the search and options bar.
 
 It allows you to search for event logs, define the systems from which events will be displayed, define the time range for events and define the index pattern.
 
+## Tenable.sc
+
+
+
+### Configuration
+
+## Qualys Guard
+
+### Configuration
+
