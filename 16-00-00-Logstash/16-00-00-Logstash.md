@@ -1111,6 +1111,7 @@ filter {
 
 Here is a list of all parameters, with their default value, if any, and their description.
 
+```
 |      Option name      | Type    | Required | Default value  | Description                                                  | Example                                   |
 | :-------------------: | ------- | -------- | -------------- | ------------------------------------------------------------ | ----------------------------------------- |
 |   identifier_value    | string  | yes      | n/a            | Identifier of the value to search. If identifier type is uid, then the value should be the uid to search for. | "123456"                                  |
@@ -1133,6 +1134,7 @@ Here is a list of all parameters, with their default value, if any, and their de
 |   cache_memory_size   | number  | no       | 20000          | Number of object max that the buffer can contains            | 100                                       |
 |  disk_cache_filepath  | string  | no       | nil            | Where the cache will periodically be dumped                  | "/tmp/my-memory-backup"                   |
 |  disk_cache_schedule  | string  | no       | 10m            | Cron period of when the dump of the cache should occured. See [here](https://github.com/floraison/fugit) for the syntax. | "10m", "1h", "every day at five", "3h10m" |
+```
 
 #### Buffer
 
