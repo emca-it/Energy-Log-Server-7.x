@@ -804,6 +804,40 @@ filter {
 
 More configuration options you can find: https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-xml.html#plugins-filters-xml-options
 
+## Logstash - Input WMI
+
+The Logstash input **wmi** allow to collect data from WMI query. This is useful for collecting performance metrics and other data which is accessible via WMI on a Windows host.
+
+### Installation
+
+For plugins not bundled by default, it is easy to install by running: 
+
+`/usr/share/logstash/bin/logstash-plugin install logstash-input-wmi`
+
+### Configuration
+
+Configuration example:
+
+```ruby
+input {
+      wmi {
+        query => "select * from Win32_Process"
+        interval => 10
+      }
+      wmi {
+        query => "select PercentProcessorTime from Win32_PerfFormattedData_PerfOS_Processor where name = '_Total'"
+      }
+      wmi { # Connect to a remote host
+        query => "select * from Win32_Process"
+        host => "MyRemoteHost"
+        user => "mydomain\myuser"
+        password => "Password"
+      }
+    }
+```
+
+More about parameters: [https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-wmi.html#plugins-inputs-wmi-options](https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-wmi.html#plugins-inputs-wmi-options)
+
 ## Logstash - Filter "beats syslog" ##
 
 
