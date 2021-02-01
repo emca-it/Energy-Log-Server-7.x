@@ -1052,6 +1052,41 @@ This filter processing an events data with IP address and check localization:
 	     }
 	
 	}
+## Logstash  avoiding duplicate documents
+
+To avoid duplicating the same documents, e.g. if the collector receives the entire event log file on restart, prepare the Logstash filter as follows:
+
+1. Use the **fingerprint** Logstash filter to create consistent hashes of one or more fields whose values are unique for the document and store the result in a new field, for example:
+
+```bash
+fingerprint {
+                        source => [ "log_name", "record_number" ]
+                        target => "generated_id"
+                        method => "SHA1"
+                }
+
+```
+
+- source - The name(s) of the source field(s) whose contents will be used to create the fingerprint
+- target - The name of the field where the generated fingerprint will be stored. Any current contents of that field will be overwritten.
+- method - If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` and a key is set, the cryptographic hash function with the same name will be used to generate the fingerprint. When a key set, the keyed-hash (HMAC) digest function will be used.
+
+2. In the **elasticsearch** output set the **document_id** as the value of the **generated_id** field:
+
+```bash
+elasticsearch {
+                hosts => ["http://localhost:9200"]
+                user => "logserver"
+                password => "logserver"
+                index => "syslog_wec-%{+YYYY.MM.dd}"
+                document_id => "%{generated_id}"
+        }
+```
+
+- document_id - The document ID for the index. Useful for overwriting existing entries in Elasticsearch with the same ID.
+
+Documents having the same document_id will be indexed only once.
+
 ## Logstash data enrichment
 
 It is possible to enrich the events that go to the logstash filters with additional fields, the values of which come from the following sources:
