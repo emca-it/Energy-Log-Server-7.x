@@ -270,8 +270,10 @@ During interactive installation you will be ask about following tasks:
 
 With the help of an install script, installation is possible without questions that require user interaction, which can be helpful with automatic deployment. In this case, you should provide options which components (data, client node) should be installed.
 
-Example:  
-`./install.sh -n -d` - will install only data node components.  
+Example: 
+
+`./install.sh -n -d` - will install only data node components. 
+
 `./install.sh -n -c -d` - will install both - data and client node components.
 
 ###### Generating basic system information report
