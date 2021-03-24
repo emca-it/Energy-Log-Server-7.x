@@ -277,8 +277,12 @@ vim server-certopts.cnf
 
 ```bash
 mkdir /etc/logstash/conf.d/syslog_wec
-vim /etc/logstash/conf.d/syslog_wec/syslog_wec.conf
 ```
+#### Logstash INPUT
+
+vim /etc/logstash/conf.d/syslog_wec/syslog_wec.conf
+
+
 
 ```bash
 input {

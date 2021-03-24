@@ -226,7 +226,7 @@ The Energy Logserver installer is delivered as:
    
     Add service:
     - Kibana
-    - Cerebro
+      - Cerebro
     - Alert
     
     to autostart and add port ( 5602/TCP ) for Cerebro. 
@@ -246,38 +246,60 @@ The Energy Logserver installer is delivered as:
     systemctl status kibana cerebro alert
     ```
 
-#### Installation using "install.sh"
+#### Interactive installation using "install.sh"
+
+The Energy Logserver comes with simple installation script called `install.sh`. It is designed to facilitate the installation and deployment process of our product. After running (execute) the script, it will detect supported distribution and by default it will ask incl. about the components we want to install. The script is located in the `"install"`directory.
+
+The installation process:
 
 - unpack the archive containing the installer
+`tar xjf energy-logserver-${product-version}.x.x86_64.tar.bz2`
+- copy license to installation directory
+`cp es_*.license install/`
+- go to the installation directory (you can run install.sh script from any location)
+- run installation script with interactive install command
+`./install.sh -i`
 
-  ```bash
-  tar xjf energy-logserver-7.0.x.x86_64.tar.bz2
-  ```
+During interactive installation you will be ask about following tasks:  
+- install & configure Logstash with custom  Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;  
+- install the  Energy Logserver Client Node, as well as the other client-node dependencies;  
+- install the  Energy Logserver Data Node, as well as the other data-node dependencies;  
+- load the  Energy Logserver custom dashboards, alerts and configs;  
 
-- copy license files to installation directory
+#### Non-interactive installation mode using "install.sh"
 
-  ```bash
-  cp es_*.license install/
-  ```
+With the help of an install script, installation is possible without questions that require user interaction, which can be helpful with automatic deployment. In this case, you should provide options which components (data, client node) should be installed.
 
-- go to the installation directory
+Example:  
+`./install.sh -n -d` - will install only data node components.  
+`./install.sh -n -c -d` - will install both - data and client node components.
 
-  ```bash
-  cd install/
-  ```
+###### Generating basic system information report
 
-- run the installer
+The `install.sh` script also contains functions for collecting basic information about the system environment - such information can be helpful in the support process or troubleshooting. Note that you can redirect output (`STDOUT`) to external file.
 
-  ```bash
-  ./install.sh -i
-  ```
+Example:  
 
-During installation you will be ask about following tasks:
+`./install.sh -s > system_report.txt`
 
--  install & configure Logstash with custom Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;
-- install the Energy Logserver Client Node, as well as the other client-node dependencies;
-- install the Energy Logserver Data Node, as well as the other data-node dependencies;
-- load the Energy Logserver custom dashboards, alerts and configs;
+#### "install.sh" command list:
+
+Run `install.sh --help` to see information about builtin commands and options.
+
+```bash
+Usage: install.sh {COMMAND} {OPTIONS}  
+
+COMMAND is one of:  
+    -i|install                  Run Energy Logserver installation wizard.  
+    -n|noninteractive           Run Energy Logserver installation in non interactive mode.  
+    -u|upgrade                  Update Energy Logserver packages.  
+    -s|systeminfo               Get basic system information report.  
+
+OPTIONS if one of:  
+    -v|--verbose                Run commands with verbose flag.  
+    -d|--data                   Select data node installation for   non interactive mode.  
+    -c|--client                 Select client node installation for non interactive mode.  
+```
 
 #### Post installation steps
 
