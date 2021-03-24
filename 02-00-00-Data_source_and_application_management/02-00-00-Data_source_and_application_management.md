@@ -254,10 +254,10 @@ The Energy Logserver installer is delivered as:
   tar xjf energy-logserver-7.0.x.x86_64.tar.bz2
   ```
 
-- copy license to installation directory
+- copy license files to installation directory
 
   ```bash
-  cp es_*.licnse install/
+  cp es_*.license install/
   ```
 
 - go to the installation directory
