@@ -249,8 +249,8 @@ The configuration of the **Hive Alert** should be done in the definition of the 
 
 - `hive_alert_config_type: classic` - allows the use of variables to build The Hive alert
 - `hive_alert_config`:
-  - `title` (text) : title of the alert
-  - `description` (text) : description of the alert
+  - `title` (text) : title of the alert (ignored in `classic` config type)
+  - `description` (text) : description of the alert (ignored in `classic` config type)
   - `severity` (number) : severity of the alert (1: low; 2: medium; 3: high) **default=2**
   - `date` (date) : date and time when the alert was raised **default=now**
   - `tags` (multi-string) : case tags **default=empty**
@@ -262,6 +262,21 @@ The configuration of the **Hive Alert** should be done in the definition of the 
   - `artifacts` (multi-artifact) : artifact of the alert. It is a array of JSON object containing artifact attributes **default=empty**
   - `follow` (boolean) : if true, the alert becomes active when updated **default=true**
 - `hive_observable_data_mapping` - mapping field values to the The Hive alert.
+
+**Note:** When use: `hive_alert_config_type: classic` the following parameters are ignored:
+
+```yaml
+hive_alert_config:
+    title: title of the alert
+    description: description of the alert
+```
+
+and you should use:
+
+```yaml
+alert_subject: "title of the alert"
+alert_text: "description of the alert"
+```
 
 Example of configuration:
 
