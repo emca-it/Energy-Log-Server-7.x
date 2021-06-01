@@ -10,7 +10,7 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/_license
 1. Indices *.agents, audit, alert* indices currently uses rollover for rotation, after upgrade please use dedicated API for migration: 
 
 ```bash
-curl -u $USER:$PASSWORD -X POST http://localhost:9200/license_logserver/prepareindex/$indexname
+curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$indexname
 ```
 
 2. Wiki plugin require open port *tcp/5603*
@@ -114,7 +114,7 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/license_logserver/preparei
 1. The following indices `.agents`, `audit`, `alert` currently uses rollover for rotation, after upgrade please use dedicated AIP for migration:
 
    ```bash
-   curl -u $USER:$PASSWORD -X POST http://localhost:9200/license_logserver/prepareindex/$indexname
+   curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$indexname
    ```
 
 2. The Wiki plugin require open port `tcp/5603`
