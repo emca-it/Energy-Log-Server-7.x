@@ -106,36 +106,72 @@ how many event sit found and how many times it worked.
 
 Also, on this tab, you can recover the alert dashboard, by clicking the "Recovery Alert Dashboard" button.
 
-## Alert rules ##
+## Alert Types
 
-The various RuleType classes, defined in Energy Logserver. 
+The various Rule Type classes, defined in Energy Logserver. 
 An instance is held in memory for each rule, passed all of the data returned by querying Elasticsearch 
 with a given filter, and generates matches based on that data.
 
-- ***Any*** - The any rule will match everything. Every hit that the query returns will generate an alert.
-- ***Blacklist*** - The blacklist rule will check a certain field against a blacklist, and match if it is in the blacklist.
-- ***Whitelist*** - Similar to blacklist, this rule will compare a certain field to a whitelist, 
-  and match if the list does not contain the term.
-- ***Change*** - This rule will monitor a certain field and match if that field changes. 
-- ***Frequency*** - his rule matches when there are at least a certain number of events in a given time frame. 
-- ***Spike*** - This rule matches when the volume of events during a given time period is spike_height times 
-  larger or smaller than during the previous time period.
-- ***Flatline*** - This rule matches when the total number of events is under a given threshold for a time period.
-- ***New Term*** - This rule matches when a new value appears in a field that has never been seen before.
-- ***Cardinality*** - This rule matches when a the total number of unique values for a certain field within 
-  a time frame is higher or lower than a threshold.
-- ***Metric Aggregation*** - This rule matches when the value of a metric within the calculation window 
-  is higher or lower than a threshold.
-- ***Percentage Match*** - This rule matches when the percentage of document in the match bucket within 
-  a calculation window is higher or lower than a threshold.
--  ***Difference*** - Rule matches for value difference between two aggregations calculated for different periods in time.
-- ***Unique Long Term*** - This rule matches when there are values of compare_key in each checked timeframe.
-- ***Find Match*** - Rule match when in defined period of time, two correlated documents match certain strings.
-- ***ConsecutiveGrowth*** - Rule matches for value difference between two aggregations calculated for different periods in time.
-- ***Logical*** - Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
-- ***Chain*** - Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
+### Any
+
+The any rule will match everything. Every hit that the query returns will generate an alert.
+
+### Blacklist
+
+The blacklist rule will check a certain field against a blacklist, and match if it is in the blacklist.
+
+### Whitelist
+
+Similar to blacklist, this rule will compare a certain field to a whitelist, and match if the list does not contain the term.
+
+### Change
+
+This rule will monitor a certain field and match if that field changes.
+
+### Frequency
+
+This rule matches when there are at least a certain number of events in a given time frame.
+
+### Spike
+
+This rule matches when the volume of events during a given time period is spike_height times larger or smaller than during the previous time period.
+
+### Flatline
+
+This rule matches when the total number of events is under a given threshold for a time period.
+
+### New Term
+
+This rule matches when a new value appears in a field that has never been seen before.
+
+### Cardinality
+
+This rule matches when a the total number of unique values for a certain field within
+a time frame is higher or lower than a threshold.
+
+### Metric Aggregation
+
+This rule matches when the value of a metric within the calculation window is higher or lower than a threshold.
+
+### Percentage Match
+
+This rule matches when the percentage of document in the match bucket within a calculation window is higher or lower than a threshold.
+
+### Unique Long Term
+
+This rule matches when there are values of compare_key in each checked timeframe.
+
+### Find Match
+
+Rule match when in defined period of time, two correlated documents match certain strings.
+
+### Consecutive Growth
+
+Rule matches for value difference between two aggregations calculated for different periods in time.
 
 ### Logical
+
+Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
 
 An example of using the Logical rule type.
 
@@ -150,6 +186,8 @@ Alerts that must occur for the rule to be triggered:
 If both of the above alerts are met within no more than 5 minutes and the values of the "port_number" field are related to each other, the alert rule is triggered. It is possible to use logical connectives such as: OR, AND, NOR, NAND, XOR.
 
 ### Chain
+
+Rule matches when a complex, logical criteria is met. Rule can be use for alert data correlation.
 
 An example of using the Chain rule type.
 
@@ -197,7 +235,7 @@ Optional parameters:
 If present, for each unique `query_key` aggregation is calculated (it needs to be of type keyword).
 `query_key: hostname`
 
-## Alert Type ##
+## Alert Methods
 
 When the alert rule is fulfilled, the defined action is performed - the alert method.
 The following alert methods have been predefined in the system:
@@ -206,7 +244,7 @@ The following alert methods have been predefined in the system:
 - commands;
 - user;
 
-### Email 
+### Email
 
 Method that sends information about an alert to defined email addresses.
 
