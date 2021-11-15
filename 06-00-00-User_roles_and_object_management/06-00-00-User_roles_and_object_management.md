@@ -219,16 +219,16 @@ The system allows you to manage, create and delete API access keys from the leve
 
 1. List of active keys:
 
-![](/media/media/image209.png)
+	![](/media/media/image209.png)
 
 2. Details of a single key:
 
-![](/media/media/image210.png)
+	![](/media/media/image210.png)
 
 3. Create a new key:
 
-![](/media/media/image211.png)
+	![](/media/media/image211.png)
 
 4. Deleting the key:
 
-![](/media/media/image212.png)
+	![](/media/media/image212.png)
