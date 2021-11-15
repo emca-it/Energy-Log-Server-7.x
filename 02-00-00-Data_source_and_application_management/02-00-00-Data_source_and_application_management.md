@@ -459,6 +459,85 @@ health status index       uuid                   pri rep docs.count docs.deleted
 green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
 ```
 
+## Docker support
+
+To get system cluster up and running in Docker, you can use Docker Compose.
+
+Sample a `docker-compose.yml` file:
+
+```bash
+version: '7.1.0'
+services:
+  energy-logserver-client-node:
+    image: docker.emca.pl/energy-logserver-client-node:7.1.0
+    container_name: energy-logserver-client-node
+    environment:
+      - node.name=energy-logserver-client-node
+      - cluster.name=logserver
+      - discovery.seed_hosts=energy-logserver-client-node,energy-logserver-data-node,energy-logserver-collector-node
+      - cluster.initial_master_nodes=energy-logserver-client-node,energy-logserver-data-node,energy-logserver-collector-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - logserver
+  energy-logserver-data-node:
+    image: docker.emca.pl/energy-logserver-client-node:7.1.0
+    container_name: energy-logserver-data-node
+    environment:
+      - node.name=energy-logserver-data-node
+      - cluster.name=logserver
+      - discovery.seed_hosts=energy-logserver-client-node,energy-logserver-data-node,energy-logserver-collector-node
+      - cluster.initial_master_nodes=energy-logserver-client-node,energy-logserver-data-node,energy-logserver-collector-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data02:/usr/share/elasticsearch/data
+    networks:
+      - logserver
+  energy-logserver-collector-node:
+    image: docker.emca.pl/energy-logserver-collector-node:7.1.0
+    container_name: energy-logserver-collector-node
+    environment:
+      - node.name=energy-logserver-collector-node
+      - cluster.name=logserver
+      - discovery.seed_hosts=energy-logserver-client-node,energy-logserver-data-node,energy-logserver-collector-node
+      - cluster.initial_master_nodes=energy-logserver-client-node,energy-logserver-data-node,energy-logserver-collector-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data03:/usr/share/elasticsearch/data
+    networks:
+      - logserver
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge
+```
+
 ## First login ##
 
 If you log in to Energy Logserver for the first time, you must
