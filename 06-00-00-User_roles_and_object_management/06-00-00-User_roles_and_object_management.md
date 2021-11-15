@@ -221,14 +221,14 @@ The system allows you to manage, create and delete API access keys from the leve
 
 ![](/media/media/image209.png)
 
-3. Details of a single key:
+2. Details of a single key:
 
 ![](/media/media/image210.png)
 
-5. Create a new key:
+3. Create a new key:
 
 ![](/media/media/image211.png)
 
-7. Deleting the key:
+4. Deleting the key:
 
 ![](/media/media/image212.png)
