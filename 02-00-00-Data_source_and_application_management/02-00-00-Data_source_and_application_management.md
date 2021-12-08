@@ -1041,9 +1041,10 @@ chmod 644 /etc/elasticsearch/ssl/*
 ### Setting up configuration files
 
 1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
-​```yaml
-## Transport layer encryption
 
+#### Transport layer encryption
+
+```yaml
 logserverguard.ssl.transport.enabled: true
 logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
 logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
@@ -1057,9 +1058,10 @@ logserverguard.ssl.transport.enabled_ciphers:
  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
 logserverguard.ssl.transport.enabled_protocols:
  - "TLSv1.2"
+```
+#### HTTP layer encryption
 
-## HTTP layer encryption
-
+```yml
 logserverguard.ssl.http.enabled: true
 logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
 logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
@@ -1072,11 +1074,11 @@ logserverguard.ssl.http.enabled_ciphers:
 
 logserverguard.ssl.http.enabled_protocols:
  - "TLSv1.2"
-```yml
+```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
 
-​```yaml
+```yaml
 # For below two, both IP or HOSTNAME (https://loganalytics-node.test:PORT) can be used because IP has been supplied in "alt_names"
 elasticsearch.url: "https://10.4.3.185:8000" # Default is "http://localhost:8000"
 ---
