@@ -1042,7 +1042,7 @@ chmod 644 /etc/elasticsearch/ssl/*
 
 1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
 
-#### Transport layer encryption
+- Transport layer encryption
 
 ```yaml
 logserverguard.ssl.transport.enabled: true
@@ -1059,7 +1059,7 @@ logserverguard.ssl.transport.enabled_ciphers:
 logserverguard.ssl.transport.enabled_protocols:
  - "TLSv1.2"
 ```
-#### HTTP layer encryption
+- HTTP layer encryption
 
 ```yml
 logserverguard.ssl.http.enabled: true
