@@ -116,14 +116,14 @@ The Energy Logserver installer is delivered as:
 1. Upload Package
 
     ```bash
-    scp ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm root@hostname:~/
-    scp ./energy-logserver-client-node-7.0.1-1.el7.x86_64.rpm root@hostname:~/
+    scp ./energy-logserver-data-node-7.1.0-1.el7.x86_64.rpm root@hostname:~/
+    scp ./energy-logserver-client-node-7.1.0-1.el7.x86_64.rpm root@hostname:~/
     ```
 
 1. Install Energy Logserver Data Node
 
     ```bash
-    yum install ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm
+    yum install ./energy-logserver-data-node-7.1.0-1.el7.x86_64.rpm
     ```
 
 1. Verification of Configuration Files
@@ -222,7 +222,7 @@ The Energy Logserver installer is delivered as:
 1. Install Energy Logserver Client Node 
 
     ```bash
-    yum install ./energy-logserver-client-node-7.0.1-1.el7.x86_64.rpm
+    yum install ./energy-logserver-client-node-7.1.0-1.el7.x86_64.rpm
     ```
 
 1. Start Energy Logserver GUI
@@ -371,10 +371,10 @@ OPTIONS if one of:
 
 - For blacklist creation, you can use crontab or kibana scheduler, but the most preferable method is logstash input. Instructions to set it up can be found at `logstash/lists/README.md`
 
-- It is recomended to make small backup of system indices - copy "small_backup.sh" script from Agents directory to desired location, and change `backupPath=` to desired location. Then set up a crontab: 
+- It is recomended to make small backup of system indices - copy "configuration-backup.sh" script from Agents directory to desired location, and change `backupPath=` to desired location. Then set up a crontab: 
 
   ```bash
-  0 1 * * * /path/to/script/small_backup.sh
+  0 1 * * * /path/to/script/configuration-backup.sh
   ```
 
 - Redirect Kibana port 5601/TCP to 443/TCP
