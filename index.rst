@@ -22,7 +22,7 @@ Energy Logserver 7.x User Guide
 
 .. toctree::
         :maxdepth: 2
-        :caption: User-Manual
+        :caption: User Manual
 
        04-User_Manual/04-User_Manual.md
 
