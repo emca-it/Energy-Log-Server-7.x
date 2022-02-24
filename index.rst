@@ -34,9 +34,9 @@ Energy Logserver 7.x User Guide
 
 .. toctree::
         :maxdepth: 2
-        :caption: Siem Plan
+        :caption: SIEM Plan
 
-       06-Siem_Plan/06-Siem_Plan.md
+       06-SIEM_Plan/06-SIEM_Plan.md
 
 .. toctree::
         :maxdepth: 2
