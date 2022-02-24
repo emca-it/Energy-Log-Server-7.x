@@ -3,152 +3,73 @@ Energy Logserver 7.x User Guide
 
 .. toctree::
         :maxdepth: 2
-        :caption: Introduction
+        :caption: Installation
 
        00-00-00-About.md
-       01-00-00-Introduction/01-00-00-Introduction.md
+       01-Installation/01-Installation.md
 
 .. toctree::
         :maxdepth: 2
-        :caption: Data_source_and_application_management
+        :caption: Configuration
 
-       02-00-00-Data_source_and_application_management/02-00-00-Data_source_and_application_management.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Discovery
-
-       03-00-00-Discovery/03-00-00-Discovery.md
+       02-Configuration/02-Configuration.md
 
 .. toctree::
         :maxdepth: 2
-        :caption: Visualizations
+        :caption: Upgrade
 
-       04-00-00-Visualizations/04-00-00-Visualizations.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Reports
-
-       05-00-00-Reports/05-00-00-Reports.md
+       03-Upgrade/03-Upgrade.md
 
 .. toctree::
         :maxdepth: 2
-        :caption: User_roles_and_object_management
+        :caption: User Manual
 
-       06-00-00-User_roles_and_object_management/06-00-00-User_roles_and_object_management.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Setting
-
-       07-00-00-Setting/07-00-00-Setting.md
+       04-User_Manual/04-User_Manual.md
 
 .. toctree::
         :maxdepth: 2
-        :caption: Alert_module
+        :caption: Log Management Plan
 
-       08-00-00-Alert_module/08-00-00-Alert_module.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: SIEM
-
-       23-00-00-SIEM/23-00-00-SIEM.md
-	   
-.. toctree::
-        :maxdepth: 2
-        :caption: Archive
-
-       25-00-00-Archive/25-00-00-Archive.md
+       05-Log_Management_Plan/05-Log_Management_Plan.md
 
 .. toctree::
         :maxdepth: 2
-        :caption: Intelligence_Module
+        :caption: Siem Plan
 
-       09-00-00-Intelligence_Module/09-00-00-Intelligence_Module.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Verification_steps_and_logs
-
-       10-00-00-Verification_steps_and_logs/10-00-00-Verification_steps_and_logs.md
+       06-Siem_Plan/06-Siem_Plan.md
 
 .. toctree::
         :maxdepth: 2
-        :caption: Building_a_cluster
+        :caption: Network Probe
 
-       11-00-00-Building_a_cluster/11-00-00-Building_a_cluster.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Integration_with_AD
-
-       12-00-00-Integration_with_AD/12-00-00-Integration_with_AD.md
-	   
-.. toctree::
-        :maxdepth: 2
-        :caption: Windows
-
-       13-00-00-Windows-SSO/13-00-00-Windows-SSO.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Configure_email_delivery
-
-       14-00-00-Configure_email_delivery/14-00-00-Configure_email_delivery.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Wiki
-
-       27-00-00-Wiki/27-00-00-Wiki.md
-	   
-.. toctree::
-        :maxdepth: 2
-        :caption: API
-
-       15-00-00-API/15-00-00-API.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Logstash
-
-       16-00-00-Logstash/16-00-00-Logstash.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Integrations
-
-       17-00-00-Integrations/17-00-00-Integrations.md
+       07-Network_Probe/07-Network_Probe.md
 
 .. toctree::
         :maxdepth: 2
         :caption: Troubleshooting
 
-       18-00-00-Troubleshooting/18-00-00-Troubleshooting.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Upgrades
-
-       19-00-00-Upgrades/19-00-00-Upgrades.md
-
-.. toctree::
-        :maxdepth: 2
-        :caption: Agents_module
-
-       20-00-00-Agents_module/20-00-00-Agents_module.md
+       08-Troubleshooting/08-Troubleshooting.md
 
 .. toctree::
         :maxdepth: 2
         :caption: Monitoring
 
-       21-00-00-Monitoring/21-00-00-Monitoring.md
+       09-Monitoring/09-Monitoring.md
 	   
 .. toctree::
         :maxdepth: 2
-        :caption: Kafka
+        :caption: API
 
-       22-00-00-Kafka/22-00-00-Kafka.md
-       CHANGELOG.md
+       10-API/10-API.md
+
+.. toctree::
+        :maxdepth: 2
+        :caption: Integration
+
+       11-Integration/11-Integration.md
+
+.. toctree::
+        :maxdepth: 2
+        :caption: Relase Notes
+
+       12-Relase_Notes/12-Relase_Notes.md
