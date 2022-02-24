@@ -1,5 +1,7 @@
 # User Manual #
 
+Energy Logserver User Manual.
+
 ## Introduction
 
 Energy Logserver is innovation solution allowing for centralize IT
