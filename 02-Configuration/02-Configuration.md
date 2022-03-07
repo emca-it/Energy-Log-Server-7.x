@@ -462,67 +462,6 @@ Restart the Elasticsearch instance of the new node:
 ```bash
 systemctl restart elasticsearch
 ```
-### Cluster HOT-WARM-COLD architecture
-
-Let's assume we have 3 zones **hot, warm, cold**, with three servers in each zone.
-
-Each of the servers in all zones must have an active Data Node license.
-
-1. We have 3 shards for each index.
-
-2. When indexes are created, they stay in the HOT zone for 3 days.
-
-3. After 3 days, the "rollower" mechanism is activated and the indexes are moved to the "WARM" zone, for example `logs_write` index:
-
-   ```json
-   POST /logs_write/_rollover
-   {
-     "conditions" : {
-       "max_age": "3d",
-       "max_docs": 100000000,
-       "max_size": "5gb"
-     },
-     "settings": {
-       "index.number_of_shards": 3
-       "index.routing.allocation.require._name": "server-warm-1"
-     }
-   }
-   ```
-
-4. After the next 7 days, the indexes are moved to the COLD zone as follows:
-
-   - write in index is blocked and relocation to COLD zone is set:
-
-      ```json
-      PUT active-logs-1/_settings
-      {
-        "index.blocks.write": true,
-        "index.routing.allocation.require._name": "serwer-cold-1"
-      }
-      ```
-
-   - the number of shards is reduced to 1:
-
-      ```bash
-      POST active-logs-1/_shrink/inactive-logs-1
-      ```
-
-   - the number of segments is reduced to 1:
-
-      ```bash
-      POST inactive-logs-1/_forcemerge?max_num_segments=1
-      ```
-
-5. As a result, after 10 days, the `inactive-logs-1` index is on the server in the COLD zone and has 1 shard and 1 segment.# Integration with AD #
-
-
-You can configure the Energy Logserver to communicate with Active Directory to authenticate users. 
-To integrate with Active Directory, you configure an Active Directory realm and assign Active Directory 
-users and groups to the Energy Logserver roles in the role mapping file.
-
-To protect passwords, communications between the Energy Logserver and the LDAP server should be encrypted 
-using SSL/TLS. Clients and nodes that connect via SSL/TLS to the LDAP server need to have the LDAP 
-server’s certificate or the server’s root CA certificate installed in their keystore or truststore.
 
 ## Authentication with Active Directory ##
 
