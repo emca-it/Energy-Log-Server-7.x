@@ -1182,7 +1182,7 @@ The Index Management module allows you to manage indexes and perform activities 
  - Shrink index shards,
  - Index rollover.
 
-The "Index Management" module is accessible through the main menu tab.
+The *Index Management* module is accessible through the main menu tab.
 
 The main module window allows you to create new *Create Task* tasks, view and manage created tasks, that is:
  - Update,
@@ -1191,7 +1191,7 @@ The main module window allows you to create new *Create Task* tasks, view and ma
  - Start now,
  - Disable / Enable.
 
-![](/media/media/image226.png)
+![](/media/media/image227.png)
 
 ### Close action
 
