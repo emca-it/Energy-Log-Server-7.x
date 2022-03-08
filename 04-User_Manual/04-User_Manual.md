@@ -1200,7 +1200,7 @@ This action closes the selected indices, and optionally deletes associated alias
 Settings required:
 
 - Action Name
-- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: [https://crontab.guru](https://crontab.guru),
 - Pattern filter kind  - it sets the index filtertype for the task,
 - Pattern filter value - it sets value for the index filter,
 - Index age - it sets index age for the task.
@@ -1222,7 +1222,7 @@ This action deletes the selected indices.
 Settings required:
 
 - Action Name
-- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: [https://crontab.guru](https://crontab.guru)/,
 - Pattern filter kind  - it sets the index filtertype for the task,
 - Pattern filter value - it sets value for the index filter,
 - Index age - it sets index age for the task.
@@ -1243,7 +1243,7 @@ This action performs a forceMerge on the selected indices, merging them in speci
 Settings required:
 
 - Action Name
-- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: [https://crontab.guru](https://crontab.guru)/,
 - Max Segments - it sets the number of segments for the shard,
 - Pattern filter kind  - it sets the index filtertype for the task,
 - Pattern filter value - it sets value for the index filter,
@@ -1276,7 +1276,7 @@ Task will try to meet these conditions. If it is unable to meet them all, it wil
 Settings required:
 
 - Action Name
-- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: [https://crontab.guru](https://crontab.guru)/,
 - Number of primary shards in the target indexs - it sets the number of shared for the target index,
 - Pattern filter kind  - it sets the index filtertype for the task,
 - Pattern filter value - it sets value for the index filter,
@@ -1299,7 +1299,7 @@ This action uses the Elasticsearch Rollover API to create a new index, if any of
 Settings required:
 
 - Action Name
-- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: [https://crontab.guru](https://crontab.guru)/,
 - Alias Name - it sets alias for index,
 - Set max age (hours) - it sets age for index after then index will rollover,
 - Set max docs - it sets number of documents for index after which index will rollover,
