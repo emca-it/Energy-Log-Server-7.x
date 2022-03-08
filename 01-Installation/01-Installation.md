@@ -13,9 +13,6 @@
    -  Centos 8
    -  Oracle Linux 8.3 - Unbreakable Enterprise Kernel (UEK)
    -  Centos Stream
-   -  SUSE
-   -  Debian
-   -  Ubuntu
 
 ## Installation method 
 
