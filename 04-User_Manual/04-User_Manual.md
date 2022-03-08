@@ -1169,6 +1169,304 @@ Intelligence chapter)
 - **Scheduler Account** - the scheduler module is associated with this
 account, which corresponds to, among others for generating reports
 
+##  Index management
+
+Note: 
+Before use *Index Management* module is necessary to set appropriate password for *Log Server* user in the following file: ```/usr/share/kibana/curator/curator.yml```
+
+The Index Management module allows you to manage indexes and perform activities such as:
+
+ - Closing indexes,
+ - Delete indexes,
+ - Performing a merge operation for index,
+ - Shrink index shards,
+ - Index rollover.
+
+The "Index Management" module is accessible through the main menu tab.
+
+The main module window allows you to create new *Create Task* tasks, view and manage created tasks, that is:
+ - Update,
+ - Custom update,
+ - Delete,
+ - Start now,
+ - Disable / Enable.
+
+![](/media/media/image226.png)
+
+### Close action
+
+This action closes the selected indices, and optionally deletes associated aliases beforehand.
+
+Settings required:
+
+- Action Name
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Pattern filter kind  - it sets the index filtertype for the task,
+- Pattern filter value - it sets value for the index filter,
+- Index age - it sets index age for the task.
+
+Optional settings:
+
+ - Timeout override
+ - Ignore Empty List
+ - Continue if exception
+ - Closed indices filter
+ - Empty indices filter
+
+![](/media/media/image221.png)
+
+### Delete action
+
+This action deletes the selected indices.
+
+Settings required:
+
+- Action Name
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Pattern filter kind  - it sets the index filtertype for the task,
+- Pattern filter value - it sets value for the index filter,
+- Index age - it sets index age for the task.
+
+Optional settings:
+
+ - Delete Aliases
+ - Skip Flush
+ - Ignore Empty List
+ - Ignore Sync Failures
+
+![](/media/media/image222.png)
+
+### Force Merge action
+
+This action performs a forceMerge on the selected indices, merging them in specific number of segments per shard.
+
+Settings required:
+
+- Action Name
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Max Segments - it sets the number of segments for the shard,
+- Pattern filter kind  - it sets the index filtertype for the task,
+- Pattern filter value - it sets value for the index filter,
+- Index age - it sets index age for the task.
+
+Optional settings:
+
+ - Ignore Empty List
+ - Ignore Sync Failures
+
+![](/media/media/image223.png)
+
+### Shrink action
+
+Shrinking an index is a good way to reduce the total shard count in your cluster. 
+
+Several conditions need to be met in order for index shrinking to take place:
+
+ - The index must be marked as read-only
+ - A (primary or replica) copy of every shard in the index must be relocated to the same node
+ - The cluster must have health green
+ - The target index must not exist
+ - The number of primary shards in the target index must be a factor of the number of primary shards in the source index.
+ - The source index must have more primary shards than the target index.
+ - The index must not contain more than 2,147,483,519 documents in total across all shards that will be shrunk into a single shard on the target index as this is the maximum number of docs that can fit into a single shard.
+ - The node handling the shrink process must have sufficient free disk space to accommodate a second copy of the existing index.
+
+Task will try to meet these conditions. If it is unable to meet them all, it will not perform a shrink operation.
+
+Settings required:
+
+- Action Name
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Number of primary shards in the target indexs - it sets the number of shared for the target index,
+- Pattern filter kind  - it sets the index filtertype for the task,
+- Pattern filter value - it sets value for the index filter,
+- Index age - it sets index age for the task.
+
+Optional settings:
+
+ - Ignore Empty List
+ - Continue if exception
+ - Delete source index after operation
+ - Closed indices filter
+ - Empty indices filter
+
+![](/media/media/image224.png)
+
+### Rollover action
+
+This action uses the Elasticsearch Rollover API to create a new index, if any of the described conditions are met.
+
+Settings required:
+
+- Action Name
+- Schedule Cron Pattern - it sets when the task is to be executed, to decode cron format use on-line tool: https://crontab.guru/,
+- Alias Name - it sets alias for index,
+- Set max age (hours) - it sets age for index after then index will rollover,
+- Set max docs - it sets number of documents for index after which index will rollover,
+- Set max size (GiB) - it sets index size in GB after which index will rollover.
+
+Optional settings:
+ - New index name (optional)
+
+![](/media/media/image225.png)
+
+### Custom action
+
+Additionally, the module allows you to define your own actions in line with the Curator documentation: https://www.elastic.co/guide/en/elasticsearch/client/curator/current/actions.html
+
+To create a Custom action, select *Custom* from *Select Action*, enter a name in the *Action Name* field and set the schedule in the *Schedule Cron Pattern* field. In the edit field, enter the definition of a custom action:
+
+![](/media/media/image226.png)
+
+Custom Action examles:
+
+#### Open index
+
+```
+actions:
+  1:
+    action: open
+    description: >-
+      Open indices older than 30 days but younger than 60 days (based on index
+      name), for logstash- prefixed indices.
+    options:
+      timeout_override:
+      continue_if_exception: False
+      disable_action: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: logstash-
+      exclude:
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: 30
+      exclude:
+    - filtertype: age
+      source: name
+      direction: younger
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: 60
+      exclude:
+
+```
+#### Replica reduce
+
+```
+actions:
+  1:
+    action: replicas
+    description: >-
+      Reduce the replica count to 0 for logstash- prefixed indices older than
+      10 days (based on index creation_date)
+    options:
+      count: 0
+      wait_for_completion: False
+      timeout_override:
+      continue_if_exception: False
+      disable_action: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: logstash-
+      exclude:
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: days
+      unit_count: 10
+      exclude:
+```
+
+#### Index allocation
+
+```
+actions:
+  1:
+    action: allocation
+    description: >-
+      Apply shard allocation routing to 'require' 'tag=cold' for hot/cold node
+      setup for logstash- indices older than 3 days, based on index_creation
+      date
+    options:
+      key: tag
+      value: cold
+      allocation_type: require
+      disable_action: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: logstash-
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: days
+      unit_count: 3
+
+```
+
+#### Cluster routing
+
+```actions:
+  1:
+    action: cluster_routing
+    description: >-
+      Disable shard routing for the entire cluster.
+    options:
+      routing_type: allocation
+      value: none
+      setting: enable
+      wait_for_completion: True
+      disable_action: True
+  2:
+    action: (any other action details go here)
+    ...
+  3:
+    action: cluster_routing
+    description: >-
+      Re-enable shard routing for the entire cluster.
+    options:
+      routing_type: allocation
+      value: all
+      setting: enable
+      wait_for_completion: True
+      disable_action: True
+```
+
+#### Index freeze
+
+```
+actions:
+  1:
+    action: freeze
+    description: >-
+      Freeze indices older than 30 days but younger than 60 days (based on index
+      name), for logstash- prefixed indices.
+    options:
+      disable_action: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: logstash-
+      exclude:
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: 30
+    - filtertype: age
+      source: name
+      direction: younger
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: 60
+```
+
 ## Intelligence Module
 
 A dedicated artificial intelligence module has been built in the 
