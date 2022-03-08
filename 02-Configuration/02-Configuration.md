@@ -171,128 +171,114 @@ openssl x509 -in ${DOMAIN}.crt -text -noout
 3. Right now you should have these files:
 
   ```bash
-$ ls -1 | sort
-loganalytics-node.test.crt
-loganalytics-node.test.csr
-loganalytics-node.test.key
-loganalytics-node.test.pre
-rootCA.crt
-rootCA.key
-rootCA.srl
+  $ ls -1 | sort
+  loganalytics-node.test.crt
+  loganalytics-node.test.csr
+  loganalytics-node.test.key
+  loganalytics-node.test.pre
+  rootCA.crt
+  rootCA.key
+  rootCA.srl
   ```
 4. Create a directory to store required files (users: elasticsearch, kibana and logstash have to be able to read these files):
 
-```bash
-mkdir /etc/elasticsearch/ssl
-cp {loganalytics-node.test.crt,loganalytics-node.test.key,rootCA.crt} /etc/elasticsearch/ssl
-chown -R elasticsearch:elasticsearch /etc/elasticsearch/ssl
-chmod 755 /etc/elasticsearch/ssl
-chmod 644 /etc/elasticsearch/ssl/*
-```
+  ```bash
+  mkdir /etc/elasticsearch/ssl
+  cp {loganalytics-node.test.crt,loganalytics-node.test.key,rootCA.crt} /etc/elasticsearch/ssl
+  chown -R elasticsearch:elasticsearch /etc/elasticsearch/ssl
+  chmod 755 /etc/elasticsearch/ssl
+  chmod 644 /etc/elasticsearch/ssl/*
+  ```
 #### Setting up configuration files
 
 1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
 
-- Transport layer encryption
+ - Transport layer encryption
 
-```yaml
-logserverguard.ssl.transport.enabled: true
-logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
-logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
-logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+  ```yaml
+  logserverguard.ssl.transport.enabled: true
+  logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
+  logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
+  logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+  logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-logserverguard.ssl.transport.enforce_hostname_verification: true
-logserverguard.ssl.transport.resolve_hostname: true
+  logserverguard.ssl.transport.enforce_hostname_verification: true
+  logserverguard.ssl.transport.resolve_hostname: true
 
-logserverguard.ssl.transport.enabled_ciphers:
- - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-logserverguard.ssl.transport.enabled_protocols:
- - "TLSv1.2"
-```
-- HTTP layer encryption
+  logserverguard.ssl.transport.enabled_ciphers:
+  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+  logserverguard.ssl.transport.enabled_protocols:
+  - "TLSv1.2"
+  ```
+ - HTTP layer encryption
 
-```yml
-logserverguard.ssl.http.enabled: true
-logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
-logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
-logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+  ```yml
+  logserverguard.ssl.http.enabled: true
+  logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
+  logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
+  logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+  logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-logserverguard.ssl.http.clientauth_mode: OPTIONAL
-logserverguard.ssl.http.enabled_ciphers:
- - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+  logserverguard.ssl.http.clientauth_mode: OPTIONAL
+  logserverguard.ssl.http.enabled_ciphers:
+  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
 
-logserverguard.ssl.http.enabled_protocols:
- - "TLSv1.2"
-```
+  logserverguard.ssl.http.enabled_protocols:
+  - "TLSv1.2"
+  ```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
 
-```yaml
-# For below two, both IP or HOSTNAME (https://loganalytics-node.test:PORT) can be used because IP has been supplied in "alt_names"
-elasticsearch.url: "https://10.4.3.185:8000" # Default is "http://localhost:8000"
----
-elastfilter.url: "https://10.4.3.185:9200" # Default is"http://localhost:9200"
----
-# Elasticsearch trafic encryption
-# There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
-elasticsearch.ssl.verificationMode: full
-elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
-elasticsearch.ssl.key: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
-elasticsearch.ssl.keyPassphrase: "password_for_pemkey" # this line is not required if there is no password
-elasticsearch.ssl.certificateAuthorities: "/etc/elasticsearch/ssl/rootCA.crt"
-```
+  ```yaml
+  # For below two, both IP or HOSTNAME (https://loganalytics-node.test:PORT) can be used because IP has been supplied in "alt_names"
+  elasticsearch.url: "https://10.4.3.185:8000" # Default is "http://localhost:8000"
+  ---
+  elastfilter.url: "https://10.4.3.185:9200" # Default is"http://localhost:9200"
+  ---
+  # Elasticsearch trafic encryption
+  # There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
+  elasticsearch.ssl.verificationMode: full
+  elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
+  elasticsearch.ssl.key: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
+  elasticsearch.ssl.keyPassphrase: "password_for_pemkey" # this line is not required if there is no password
+  elasticsearch.ssl.certificateAuthorities: "/etc/elasticsearch/ssl/rootCA.crt"
+  ```
 3. Append or uncomment below lines in `/opt/alert/config.yaml` and change paths to proper values:
 
-```yaml
-# Connect with TLS to Elasticsearch
-use_ssl: True
+  ```yaml
+  # Connect with TLS to Elasticsearch
+  use_ssl: True
 
-# Verify TLS certificates
-verify_certs: True
+  # Verify TLS certificates
+  verify_certs: True
 
-# Client certificate:
-client_cert: /etc/elasticsearch/ssl/loganalytics-node.test.crt
-client_key: /etc/elasticsearch/ssl/loganalytics-node.test.key
-ca_certs: /etc/elasticsearch/ssl/rootCA.crt
-```
+  # Client certificate:
+  client_cert: /etc/elasticsearch/ssl/loganalytics-node.test.crt
+  client_key: /etc/elasticsearch/ssl/loganalytics-node.test.key
+  ca_certs: /etc/elasticsearch/ssl/rootCA.crt
+  ```
 4. For CSV/HTML export to work properly rootCA.crt generated in first step has to be "installed" on the server. Below example for CentOS 7:
 
-```bash
-# Copy rootCA.crt and update CA trust store
-cp /etc/elasticsearch/ssl/rootCA.crt /etc/pki/ca-trust/source/anchors/rootCA.crt
-update-ca-trust
-```
+  ```bash
+  # Copy rootCA.crt and update CA trust store
+  cp /etc/elasticsearch/ssl/rootCA.crt /etc/pki/ca-trust/source/anchors/rootCA.crt
+  update-ca-trust
+  ```
 5. Intelligence module. Generate pkcs12 keystore/cert:
 
-```bash
-DOMAIN=loganalytics-node.test
-keytool -import -file /etc/elasticsearch/ssl/rootCA.crt -alias root -keystore root.jks
-openssl pkcs12 -export -in /etc/elasticsearch/ssl/${DOMAIN}.crt -inkey /etc/elasticsearch/ssl/${DOMAIN}.key -out ${DOMAIN}.p12 -name "${DOMAIN}" -certfile /etc/elasticsearch/ssl/rootCA.crt
-```
-```conf
-# Configure /opt/ai/bin/conf.cfg
-https_keystore=/path/to/pk12/loganalytics-node.test.p12
-https_truststore=/path/to/root.jks
-https_keystore_pass=bla123
-https_truststore_pass=bla123
-```
-6. Set HTTPS in configuration file for the License server:
+  ```bash
+  DOMAIN=loganalytics-node.test
+  keytool -import -file /etc/elasticsearch/ssl/rootCA.crt -alias root -keystore root.jks
+  openssl pkcs12 -export -in /etc/elasticsearch/ssl/${DOMAIN}.crt -inkey /etc/elasticsearch/ssl/${DOMAIN}.key -out ${DOMAIN}.p12 -name "${DOMAIN}" -certfile /etc/elasticsearch/ssl/rootCA.crt
+  ```
 
-```bash
-vi /opt/license-service/license-service.conf
-```
-
-```bash
-elasticsearch_connection:
-  hosts: ["els_host_IP:9200"]
-
-  username: logserver
-  password: "logserver_password"
-
-  https: true
-```
+  ```bash
+  # Configure /opt/ai/bin/conf.cfg
+  https_keystore=/path/to/pk12/loganalytics-node.test.p12
+  https_truststore=/path/to/root.jks
+  https_keystore_pass=bla123
+  https_truststore_pass=bla123
+  ```
 
 #### Logstash/Beats
 
@@ -300,32 +286,35 @@ You can eather install CA to allow Logstash and Beats traffic or you can supply 
 
 1. Logstash:
 
-```yml
-output {
-  elasticsearch {
-    hosts => "https://loganalytics-node.test:9200"
-    ssl => true
-    index => "winlogbeat-%{+YYYY.MM}"
-    user => "logstash"
-    password => "logstash"
-    cacert => "/path/to/cacert/rootCA.crt"
+  ```yml
+  output {
+    elasticsearch {
+      hosts => "https://loganalytics-node.test:9200"
+      ssl => true
+      index => "winlogbeat-%{+YYYY.MM}"
+      user => "logstash"
+      password => "logstash"
+      cacert => "/path/to/cacert/rootCA.crt"
+    }
   }
-}
-```
+  ```
 
 2. Beats:
 
-```yaml
-output.elasticsearch.hosts: ["https://loganalytics-node.test:9200"]
-output.elasticsearch.protocol: "https"
-output.elasticsearch.ssl.enabled: true
-output.elasticsearch.ssl.certificate_authorities: ["/path/to/cacert/rootCA.crt"]
-```
+  ```yaml
+  output.elasticsearch.hosts: ["https://loganalytics-node.test:9200"]
+  output.elasticsearch.protocol: "https"
+  output.elasticsearch.ssl.enabled: true
+  output.elasticsearch.ssl.certificate_authorities: ["/path/to/cacert/rootCA.crt"]
+  ```
+
 Additionally, for any beats program to be able to write to elasticsearch, you will have to make changes to "enabled_ciphers" directive in "/etc/elasticsearch/elasticsearch.yml". This is done by commenting:
-```yaml
-logserverguard.ssl.http.enabled_ciphers:
- - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-```
+  
+  ```yaml
+  logserverguard.ssl.http.enabled_ciphers:
+  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+  ```
+
 Otherwise, the beat will not be able to send documents directly and if you want to avoid it you can send a document with Logstash first.
 
 ## Browser layer encryption
@@ -350,6 +339,22 @@ Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption
    server.ssl.certificate: "/path/to/kibana-server.crt"
    server.ssl.key: "/path/to/kibana-server.key"
    ```
+
+3. Set HTTPS in configuration file for the License server:
+
+  ```bash
+  vi /opt/license-service/license-service.conf
+  ``` 
+
+  ```bash
+  elasticsearch_connection:
+    hosts: ["els_host_IP:9200"]
+
+    username: logserver
+    password: "logserver_password"
+
+    https: true
+  ```
 
 ## Building a cluster #
 ### Node roles ##
