@@ -970,13 +970,14 @@ The table below contains built-in user accounts and default passwords:
 After you change password for one of the system account ( alert, intelligence, logserver, scheduler), you must to do appropriate changes in the application files.
 
 1. Account **Logserver**
+
 	- Update */etc/kibana/kibana.yml*
-	
-	  ```bash
-	  vi /etc/kibana/kibana.yml
-	  elasticsearch.password: new_logserver_passowrd
-	  elastfilter.password: "new_logserver_password"
-	  cerebro.password: "new_logserver_password"
+    
+    ```bash
+    vi /etc/kibana/kibana.yml
+    elasticsearch.password: new_logserver_passowrd
+    elastfilter.password: "new_logserver_password"
+    cerebro.password: "new_logserver_password"
     ```
 
   - Update passowrd in */opt/license-service/license-service.conf* file:
@@ -991,11 +992,11 @@ After you change password for one of the system account ( alert, intelligence, l
     https: true
     ```
 
-	- Update password in *curator* configuration file: */usr/share/kibana/curator/curator.yml*
-	
-	  ```yml
-	  http_auth: logserver:"new_logserver_password
-	  ```
+  - Update password in *curator* configuration file: */usr/share/kibana/curator/curator.yml*
+
+    ```yml
+    http_auth: logserver:"new_logserver_password
+    ```
 
 2. Account **Intelligence**
 
