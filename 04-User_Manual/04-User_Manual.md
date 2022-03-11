@@ -1172,8 +1172,8 @@ account, which corresponds to, among others for generating reports
 
 ##  Index management
 
-**Note** 
-Before use *Index Management* module is necessary to set appropriate password for *Log Server* user in the following file: ```/usr/share/kibana/curator/curator.yml```
+**Note**
+***Before use *Index Management* module is necessary to set appropriate password for *Log Server* user in the following file: ```/usr/share/kibana/curator/curator.yml```***
 
 The Index Management module allows you to manage indexes and perform activities such as:
 
@@ -1195,11 +1195,11 @@ The main module window allows you to create new *Create Task* tasks, view and ma
 ![](/media/media/image227.png)
 
 
-**Note**
+**Note** ***Use the `Help` button***
 
 ![](/media/media/image229.png)
 
-By using the HELP button you can get a detailed description of the current action
+***By using the `Help` button you can get a detailed description of the current action***s
 
 ![](/media/media/image228.png)
 
