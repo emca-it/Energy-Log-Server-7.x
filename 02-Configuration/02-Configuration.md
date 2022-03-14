@@ -768,28 +768,27 @@ In order to enable SSO on your system follow below steps. The configuration is m
    `chmod 640 /etc/elasticsearch/esauth.keytab` \
    `chown elasticsearch: /etc/elasticsearch/esauth.keytab`
 
-
 3.  Create a file named *krb5Login.conf*:
 
-   ```
-   com.sun.security.jgss.initiate{
-       com.sun.security.auth.module.Krb5LoginModule required
-       principal="esauth@DEV.EXAMPLE.COM" useKeyTab=true
-       keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
-       };
-   com.sun.security.jgss.krb5.accept {
-       com.sun.security.auth.module.Krb5LoginModule required
-       principal="esauth@DEV.EXAMPLE.COM" useKeyTab=true
-       keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
-       };
-   ```
-   Principal user and keyTab location should be changed as per the values created in the step 2. Make sure the domain is in UPPERCASE as shown above.
-   The `krb5Login.conf` file should be placed on your elasticsearch node, for instance `/etc/elasticsearch/` with read permissions for elasticsearch user:
+    ```bash
+    com.sun.security.jgss.initiate{
+        com.sun.security.auth.module.Krb5LoginModule required
+        principal="esauth@DEV.EXAMPLE.COM" useKeyTab=true
+        keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
+        };
+    com.sun.security.jgss.krb5.accept {
+        com.sun.security.auth.module.Krb5LoginModule required
+        principal="esauth@DEV.EXAMPLE.COM" useKeyTab=true
+        keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
+        };
+    ```
+    Principal user and keyTab location should be changed as per the values   created in the step 2. Make sure the domain is in UPPERCASE as shown above.
+    The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance `/etc/elasticsearch/` with read permissions for elasticsearch  user:
    
-   ```
-   sudo chmod 640 /etc/elasticsearch/krb5Login.conf
-   sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
-   ```
+    ```
+    Ssudo chmod 640 /etc/elasticsearch/krb5Login.conf
+    sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
+    ```
 
 4. Append the following JVM arguments (on Elasticsearch node in */etc/sysconfig/elasticsearch*)
    
