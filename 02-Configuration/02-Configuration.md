@@ -759,7 +759,10 @@ Create User in AD. Set "Password never expires" and "Other encryption options" a
 2. Define Service Principal Name (SPN) and Create a Keytab file for it
 
 Use the following command to create the keytab file and SPN:
-> C:> ktpass -out c:\Users\Administrator\\**esauth.keytab** -princ **HTTP/loggui.com@DEV.EXAMPLE.COM** -mapUser **esauth** -mapOp set -pass '**Sprint$123**' -crypto ALL -pType KRB5_NT_PRINCIPAL
+
+```cmd
+C:> ktpass -out c:\Users\Administrator\esauth.keytab -princ HTTP/loggui.com@DEV.EXAMPLE.COM -mapUser esauth -mapOp set -pass 'Sprint$123' -crypto ALL -pType KRB5_NT_PRINCIPAL
+```
 
 Values highlighted in bold should be adjusted for your system. The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with read permissions for elasticsearch user: \
 `chmod 640 /etc/elasticsearch/esauth.keytab` \
