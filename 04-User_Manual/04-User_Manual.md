@@ -1447,36 +1447,6 @@ actions:
       disable_action: True
 ```
 
-#### Index freeze
-
-```
-actions:
-  1:
-    action: freeze
-    description: >-
-      Freeze indices older than 30 days but younger than 60 days (based on index
-      name), for logstash- prefixed indices.
-    options:
-      disable_action: True
-    filters:
-    - filtertype: pattern
-      kind: prefix
-      value: logstash-
-      exclude:
-    - filtertype: age
-      source: name
-      direction: older
-      timestring: '%Y.%m.%d'
-      unit: days
-      unit_count: 30
-    - filtertype: age
-      source: name
-      direction: younger
-      timestring: '%Y.%m.%d'
-      unit: days
-      unit_count: 60
-```
-
 ## Intelligence Module
 
 A dedicated artificial intelligence module has been built in the 
