@@ -2055,7 +2055,7 @@ Possible values for *isSameSite* are: **"None", "Lax", "Strict", false**
 
 For *isSecure*: **false or true**
 
-# Logstash #
+## Logstash #
 
 
 The Energy Logserver use Logstash service to dynamically unify data
@@ -2078,7 +2078,7 @@ Energy Logserver default plugins:
 - `100-output-elasticsearch.conf`
 - `naemon_beat.example`
 - `perflogs.example`
-## Logstash - Input "beats" ##
+### Logstash - Input "beats" ##
 
 This plugin wait for receiving data from remote beats services. It use tcp
 /5044 port for communication:
@@ -2140,7 +2140,7 @@ Connection to remote resources should be done as follows:
 		mount -t cifs //remoate.host.or.ip/freigabe /mnt -o username=testuser
 
 
-## Logstash - Input "network" ##
+### Logstash - Input "network" ##
 
 This plugin read events over a TCP or UDP socket assigns the appropriate tags:
 
@@ -2173,7 +2173,7 @@ systemctl restart firewalld
 
 
 
-## Logstash - Input SNMP
+### Logstash - Input SNMP
 
 The SNMP input polls network devices using Simple Network Management Protocol (SNMP) to gather information related to the current state of the devices operation:
 
@@ -2185,7 +2185,7 @@ The SNMP input polls network devices using Simple Network Management Protocol (S
 		}
 
 
-## Logstash - Input HTTP / HTTPS
+### Logstash - Input HTTP / HTTPS
 
 Using this input you can receive single or multiline events over http(s). Applications can send an HTTP request to the endpoint started by this input and Logstash will convert it into an event for subsequent processing. Sample definition:
 
@@ -2209,7 +2209,7 @@ Events are by default sent in plain text. You can enable encryption by setting s
 		  }
 		}
 
-## Logstash - Input File
+#### Logstash - Input File
 
 This plugin stream events from files, normally by tailing them in a manner similar to tail -0F but optionally reading them from the beginning. Sample definition:
 
@@ -2218,11 +2218,11 @@ This plugin stream events from files, normally by tailing them in a manner simil
 		    start_position => "beginning"
 		  }
 
-## Logstash - Input database
+### Logstash - Input database
 
 This plugin can read data in any database with a JDBC interface into Logstash. You can periodically schedule ingestion using a cron syntax (see schedule setting) or run the query one time to load data into Logstash. Each row in the resultset becomes a single event. Columns in the resultset are converted into fields in the event.
 
-### Logasth input - MySQL
+#### Logasth input - MySQL
 
 Download jdbc driver: [https://dev.mysql.com/downloads/connector/j/](https://dev.mysql.com/downloads/connector/j/)
 
@@ -2241,7 +2241,7 @@ Sample definition:
 	  }
 	}
 
-### Logasth input - MSSQL
+#### Logasth input - MSSQL
 
 Download jdbc driver: [https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15](https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15)
 
@@ -2263,7 +2263,7 @@ Sample definition:
 	  }
 	}
 
-### Logstash input - Oracle
+#### Logstash input - Oracle
 Download jdbc driver: [https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
 
 Sample definition:
@@ -2281,7 +2281,7 @@ Sample definition:
 	  }
 	}
 
-### Logstash input - PostgreSQL
+#### Logstash input - PostgreSQL
 Download jdbc driver: [https://jdbc.postgresql.org/download.html](https://jdbc.postgresql.org/download.html)
 
 Sample definition:
@@ -2297,7 +2297,7 @@ Sample definition:
 	    }
 	}
 
-## Logstash - Input CEF
+### Logstash - Input CEF
 
 The common event format (CEF) is a standard for the interoperability of event or log generating devices and applications. The standard defines a syntax for log records. It comprises of a standard prefix and a variable extension that is formatted as key-value pairs.
 
@@ -2315,11 +2315,11 @@ This setting allows the following character sequences to have special meaning:
 - `\r` (backslash "r") - means carriage return (ASCII 0x0D)
 - `\n` (backslash "n") - means newline (ASCII 0x0A)
 
-## Logstash - Input OPSEC
+### Logstash - Input OPSEC
 
 FW1-LogGrabber is a Linux command-line tool to grab logfiles from remote Checkpoint devices. It makes extensive use of OPSEC Log Export APIs (LEA) from Checkpoint's [OPSEC SDK 6.0 for Linux 50](http://supportcontent.checkpoint.com/file_download?id=48148).
 
-### Build FW1-LogGrabber
+#### Build FW1-LogGrabber
 
 FW1-LogGrabber v2.0 and above can be built on Linux x86/amd64 platforms only.
 
@@ -2355,7 +2355,7 @@ make
 
 If the build process complains, you might need to tweak some variables inside the `Makefile` (e.g. `CC`, `LD` and `OPSEC_PKG_DIR`) according to your environment.
 
-### Install FW1-LogGrabber
+#### Install FW1-LogGrabber
 
 To install FW1-LogGrabber into its default location `/usr/local/fw1-loggrabber` (defined by `INSTALL_DIR` variable), please run
 
@@ -2433,7 +2433,7 @@ This paragraph deals with the options that can be set within the configuration f
 
 * `AUDIT_FILTER_RULE="<filterexpression1>[;<filterexpression2>]"` defines filters for `audit` log mode; you can find a more detailed description of filter rules, along with some examples, [in a separate chapter below](#filtering).
 
-### Command line options
+#### Command line options
 
 In the following section, all available command line options are described in detail. Most of the options can also be configured using the file `fw1-loggrabber.conf` (see `--configfile` option to use a different configuration file). The precedence of given options is as follows: command line, configuration file, default value. E.g. if you set the resolve-mode to be used in the configuration file, this can be overwritten by command line option `--noresolve`; only if an option isn't set neither on command line nor in the configuration file, the default value will be used.
 
@@ -2589,7 +2589,7 @@ Display all log entries starting from `2004/03/02 14:00:00`:
 --filter "starttime=20040302140000"
 ```
 
-### Checkpoint device configuration
+#### Checkpoint device configuration
 
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for authenticated LEA connections (e.g. 18184):
 
@@ -2624,7 +2624,7 @@ Add a rule to the policy to allow the port defined above as well as port 18210/t
 
 Finally, install the policy.
 
-### FW1-LogGrabber configuration
+#### FW1-LogGrabber configuration
 
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) as well as port (e.g. `18184`), authentication type and SIC names for authenticated LEA
 connections. You can get the SIC names from the object properties of your LEA client object, respectively the
@@ -2795,23 +2795,23 @@ lea_server ip 10.1.1.1
 lea_server port 50001
 ```
 
-## Logstash - Input SDEE
+### Logstash - Input SDEE
 
 This [Logstash](https://github.com/elasticsearch/logstash) input plugin allows you to call a Cisco SDEE/CIDEE HTTP API, decode the output of it into event(s), and send them on their merry way. The idea behind this plugins came from a need to gather events from Cisco security devices and feed them to ELK stack	
 
-### Download
+#### Download
 
 Only support for Logstash core 5.6.4.
 
 Download link: https://rubygems.org/gems/logstash-input-sdee
 
-### Installation
+#### Installation
 
 ```bash
 gem install logstash-input-sdee-0.7.8.gem
 ```
 
-### Configuration
+#### Configuration
 
 You need to import host SSL certificate in Java trust store to be able to connect to Cisco IPS device.
 
@@ -2851,7 +2851,7 @@ You need to import host SSL certificate in Java trust store to be able to connec
   }
   ```
 
-## Logstash - Input XML
+### Logstash - Input XML
 
 To download xml files via Logstash use input "file", and set the location of the files in the configuration file:
 
@@ -2874,17 +2874,17 @@ filter {
 
 More configuration options you can find: https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-xml.html#plugins-filters-xml-options
 
-## Logstash - Input WMI
+### Logstash - Input WMI
 
 The Logstash input **wmi** allow to collect data from WMI query. This is useful for collecting performance metrics and other data which is accessible via WMI on a Windows host.
 
-### Installation
+#### Installation
 
 For plugins not bundled by default, it is easy to install by running: 
 
 `/usr/share/logstash/bin/logstash-plugin install logstash-input-wmi`
 
-### Configuration
+#### Configuration
 
 Configuration example:
 
@@ -2908,7 +2908,7 @@ input {
 
 More about parameters: [https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-wmi.html#plugins-inputs-wmi-options](https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-wmi.html#plugins-inputs-wmi-options)
 
-## Logstash - Filter "beats syslog" ##
+### Logstash - Filter "beats syslog" ##
 
 
 This filter processing an event data with syslog type:
@@ -2970,7 +2970,7 @@ This filter processing an event data with syslog type:
 		  }
 		}
 
-## Logstash - Filter "network" ##
+### Logstash - Filter "network" ##
 
 This filter processing an event data with network type:
 
@@ -3079,7 +3079,7 @@ This filter processing an event data with network type:
 	 }
 	}
 
-## Logstash - Filter "geoip" ##
+### Logstash - Filter "geoip" ##
 
 This filter processing an events data with IP address and check localization:
 
@@ -3122,7 +3122,8 @@ This filter processing an events data with IP address and check localization:
 	     }
 	
 	}
-## Logstash  avoiding duplicate documents
+
+### Logstash - avoiding duplicate documents
 
 To avoid duplicating the same documents, e.g. if the collector receives the entire event log file on restart, prepare the Logstash filter as follows:
 
@@ -3157,7 +3158,7 @@ To avoid duplicating the same documents, e.g. if the collector receives the enti
 
 Documents having the same document_id will be indexed only once.
 
-## Logstash data enrichment
+### Logstash data enrichment
 
 It is possible to enrich the events that go to the logstash filters with additional fields, the values of which come from the following sources:
 - databases, using the `jdbc` plugin;
@@ -3165,7 +3166,7 @@ It is possible to enrich the events that go to the logstash filters with additio
 - dictionary files, using the `translate` plugin;
 - external systems using their API, e.g. OP5 Monitor/Nagios
 
-### Filter `jdbc`
+#### Filter `jdbc`
 
 This filter executes a SQL query and store the result set in the field specified as `target`. It will cache the results locally in an LRU cache with expiry.
 
@@ -3188,7 +3189,7 @@ filter {
 
 More about `jdbc` plugin parameters: [(https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html](https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html#plugins-filters-jdbc_streaming-prepared_statements)
 
-### Filter `logstash-filter-ldap`
+#### Filter `logstash-filter-ldap`
 
 #### Download and installation
 
@@ -3305,7 +3306,7 @@ Two parameters are required:
   - *disk_cache_filepath*: path on disk of this backup
   - *disk_cache_schedule*: schedule (every X time unit) of this backup. Please check [here](https://github.com/floraison/fugit) for the syntax of this parameter. 
 
-### Filter `translate`
+#### Filter `translate`
 
 A general search and replace tool that uses a configured hash and/or a file to determine replacement values. Currently supported are YAML, JSON, and CSV files. Each dictionary item is a key value pair.
 
@@ -3372,7 +3373,7 @@ filter {
 "t3.medium": "2"
 ```
 
-### External API
+#### External API
 
 A simple filter that checks if an IP (from **PublicIpAddress** field) address exists in an external system. The result is written to the **op5exists** field. Then, using a grok filter, the number of occurrences is decoded and put into the **op5count** field.
 
@@ -3389,7 +3390,7 @@ grok {
 }
 ```
 
-## Logstash - Output to Elasticsearch
+### Logstash - Output to Elasticsearch
 
 This output plugin sends all data to the local Elasticsearch instance and create indexes:	
 
@@ -3403,7 +3404,8 @@ This output plugin sends all data to the local Elasticsearch instance and create
 		   password => "logstash"
 		}
 	}
-## Logstash plugin for "naemon beat"
+
+### Logstash plugin for "naemon beat"
 
 This Logstash plugin has example of complete configuration for integration with *naemon* application:
 
@@ -3454,7 +3456,8 @@ This Logstash plugin has example of complete configuration for integration with 
             }
         }
     }
-## Logstash plugin for "perflog" ##
+
+### Logstash plugin for "perflog"
 
 This Logstash plugin has example of complete configuration for integration with perflog:
 
@@ -3506,7 +3509,7 @@ This Logstash plugin has example of complete configuration for integration with 
       }
     }
 
-## Single password in all Logstash outputs
+### Single password in all Logstash outputs
 
 You can set passwords and other Logstash pipeline settings as environment variables. This can be useful if the password was changed for the `logastash` user and it must be to update in the configuration files.
 
@@ -3534,142 +3537,6 @@ Configuration steps:
 		    password => "${ELASTICSEARCH_ES_PASSWD:changeme}"
 		  }
 		}
-
-## Secrets keystore for secure settings
-
-When you configure Logstash, you can use the Logstash keystore to securely store secret values for use in configuration settings (passwords, usernames, other settings).
-
-Configuration steps:
-
-1. Set the keystore password
-
-		vi /etc/sysconfi/logstash
-		LOGSTASH_KEYSTORE_PASS=keystorepass
-
-1. Create the new keystore:
-
-   	/usr/share/logstash/bin/logstash-keystore create --path.settings /etc/logstash
-
-   During createation keystore you can provide the keysore passowrd
-
-1. Add new entry to keystore:
-
-		usr/share/logstash/bin/logstash-keystore add ES_PWD --path.settings /etc/logstash
-
-	When adding an entry to the keystore, set the value of the entry.
-
-1. Listing added entries:
-
-		/usr/share/logstash/bin/logstash-keystore list --path.settings /etc/logstash
-
-1. Removing entries:
-
-		/usr/share/logstash/bin/logstash-keystore remove ES_PWD --path.settings /etc/logstash
-
-Sample definition of Logstash output pipline seciotn:
-
-		output  {
-		  elasticsearch {
-		    index => "test-%{+YYYY.MM.dd}"
-		    user => "${ES_PWD}"
-		    password => "${ES_PWD}"
-		  }
-		}
-
-## Enabling encryption for Apache Kafka clients ##
-
-Kafka allows you to distribute the load between nodes receiving data and encrypts communication.
-
-Architecture example:
-
-![](/media/media/image124.PNG)
-
-### The Kafka installation ###
-
-Documentation during creation.
-
-### Enabling encryption in Kafka ###
-
-Generate SSL key and certificate for each Kafka broker
-
-	keytool -keystore server.keystore.jks -alias localhost -validity {validity} -genkey -keyalg RSA
-
-
-Configuring Host Name In Certificates
-
-	keytool -keystore server.keystore.jks -alias localhost -validity {validity} -genkey -keyalg RSA -ext SAN=DNS:{FQDN}
-
-Verify content of the generated certificate:
-	
-	keytool -list -v -keystore server.keystore.jks
-
-Creating your own CA
-
-	openssl req -new -x509 -keyout ca-key -out ca-cert -days 365
-	keytool -keystore client.truststore.jks -alias CARoot -import -file ca-cert
-	keytool -keystore server.truststore.jks -alias CARoot -import -file ca-cert
-
-Signing the certificate
-
-
-	keytool -keystore server.keystore.jks -alias localhost -certreq -file cert-file
-	openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days {validity} -CAcreateserial -passin pass:{ca-password}
-
-Import both the certificate of the CA and the signed certificate into the keystore
-
-	keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
-	keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed
-
-### Configuring Kafka Brokers ###
-
-In `/etc/kafka/server.properties` file set the following options:
-
-	listeners=PLAINTEXT://host.name:port,SSL://host.name:port
-	
-	ssl.keystore.location=/var/private/ssl/server.keystore.jks
-	ssl.keystore.password=test1234
-	ssl.key.password=test1234
-	ssl.truststore.location=/var/private/ssl/server.truststore.jks
-	ssl.truststore.password=test1234
-
-and restart the Kafka service
-
-	systemctl restart kafka
-
-### Configuring Kafka Clients ###
-
-Logstash
-
-Configure the output section in Logstash based on the following example:
-
-	output {
-	  kafka {
-	    bootstrap_servers => "host.name:port"
-	    security_protocol => "SSL"
-	    ssl_truststore_type => "JKS"
-	    ssl_truststore_location => "/var/private/ssl/client.truststore.jks"
-	    ssl_truststore_password => "test1234"
-	    client_id => "host.name"
-	    topic_id => "Topic-1"
-	    codec => json
-	  }
-	}
-
-Configure the input section in Logstash based on the following example:
-
-	input {
-	  kafka {
-	    bootstrap_servers => "host.name:port"
-	    security_protocol => "SSL"
-	    ssl_truststore_type => "JKS"
-	    ssl_truststore_location => "/var/private/ssl/client.truststore.jks"
-	    ssl_truststore_password => "test1234"
-	    consumer_threads => 4
-	    topics => [ "Topic-1" ]
-	    codec => json
-	    tags => ["kafka"]
-	   }
-	}# 2FA na przykładzie Google Auth Provider
 
 
 
@@ -3973,4 +3840,3 @@ The following views have been placed in the Gateways section:
    - [AWS] Internet Gateway - details table of configured AWS Internet Gateways;
    - [AWS] Transit Gateways - details table of configured AWS Transit Gateways;
    - [AWS] Nat Gateway - details table of configured AWS Nat Gateways;
-
