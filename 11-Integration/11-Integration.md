@@ -3546,15 +3546,15 @@ Cerebro is the Elasticsearch administration tool that allows you to perform the 
 
 - monitoring and management of indexing nodes, indexes and shards:
 
-![](/media/media/image217.PNG)
+![](/media/media/image217.png)
 
 - monitoring and management of index shapshoots :
 
-![](/media/media/image220.PNG)
+![](/media/media/image220.png)
 
 - informing about problems with indexes and shards:
 
-![](/media/media/image219.PNG)
+![](/media/media/image219.png)
 
 To configure cerebro see to *Configuration* section.
 
