@@ -136,37 +136,36 @@ listing currently available core plugins:
 
 2. Example certificate configuration (Certificates will be valid for 10 years based on this example):
 
-  ```bash
+    ```bash
+    # To make this process easier prepare some variables:
+    DOMAIN=mylocal.domain
+    DOMAIN_IP=10.4.3.185 # This is required if certificate validation is used on trasport layer
+    COUNTRYNAME=PL
+    STATE=Poland
+    COMPANY=LOGTEST
 
-  # To make this process easier prepare some variables:
-  DOMAIN=mylocal.domain
-  DOMAIN_IP=10.4.3.185 # This is required if certificate validation is used on trasport layer
-  COUNTRYNAME=PL
-  STATE=Poland
-  COMPANY=LOGTEST
+    # Generate CA key:
+    openssl genrsa -out rootCA.key 4096
 
-  # Generate CA key:
-  openssl genrsa -out rootCA.key 4096
+    # Create and sign root certificate:
+    echo -e "${COUNTRYNAME}\n${STATE}\n\n${COMPANY}\n\n\n\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
 
-  # Create and sign root certificate:
-  echo -e "${COUNTRYNAME}\n${STATE}\n\n${COMPANY}\n\n\n\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
+    # Crete RSA key for domain:
+    openssl genrsa -out ${DOMAIN}.pre 2048
 
-  # Crete RSA key for domain:
-  openssl genrsa -out ${DOMAIN}.pre 2048
+    # Convert generated key to pkcs8 RSA key for domain hostname
+    # (if you do not want to encrypt the key add "-nocrypt" at the end of the command; otherwise it will be necessary to add this password later in every config file):
+    openssl pkcs8 -topk8 -inform pem -in ${DOMAIN}.pre -outform pem -out ${DOMAIN}.key
 
-  # Convert generated key to pkcs8 RSA key for domain hostname
-  # (if you do not want to encrypt the key add "-nocrypt" at the end of the command; otherwise it will be necessary to add this password later in every config file):
-  openssl pkcs8 -topk8 -inform pem -in ${DOMAIN}.pre -outform pem -out ${DOMAIN}.key
+    # Create a Certificate Signing Request (openssl.cnf can be in a different location; this is the default for CentOS 7.7):
+    openssl req -new -sha256 -key ${DOMAIN}.key -subj "/C=PL/ST=Poland/O=EMCA/CN=${DOMAIN}" -reqexts SAN -config <(cat /etc/pki/tls/openssl.cnf <(printf "[SAN] \nsubjectAltName=DNS:${DOMAIN},IP:${DOMAIN_IP}")) -out ${DOMAIN}.csr
 
-  # Create a Certificate Signing Request (openssl.cnf can be in a different location; this is the default for CentOS 7.7):
-  openssl req -new -sha256 -key ${DOMAIN}.key -subj "/C=PL/ST=Poland/O=EMCA/CN=${DOMAIN}" -reqexts SAN -config <(cat /etc/pki/tls/openssl.cnf <(printf "[SAN] \nsubjectAltName=DNS:${DOMAIN},IP:${DOMAIN_IP}")) -out ${DOMAIN}.csr
+    # Generate Domain Certificate
+    openssl x509 -req -in ${DOMAIN}.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out ${DOMAIN}.crt -sha256 -extfile <(printf "[req]  \ndefault_bits=2048\ndistinguished_name=req_distinguished_name\nreq_extensions=req_ext\n[req_distinguished_name]\ncountryName=${COUNTRYNAME}\nstateOrProvinceName=${STATE}  \norganizationName=${COMPANY}\ncommonName=${DOMAIN}\n[req_ext]\nsubjectAltName=@alt_names\n[alt_names]\nDNS.1=${DOMAIN}\nIP=${DOMAIN_IP}\n") -days 3650 -extensions req_ext
 
-  # Generate Domain Certificate
-  openssl x509 -req -in ${DOMAIN}.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out ${DOMAIN}.crt -sha256 -extfile <(printf "[req]  \ndefault_bits=2048\ndistinguished_name=req_distinguished_name\nreq_extensions=req_ext\n[req_distinguished_name]\ncountryName=${COUNTRYNAME}\nstateOrProvinceName=${STATE}  \norganizationName=${COMPANY}\ncommonName=${DOMAIN}\n[req_ext]\nsubjectAltName=@alt_names\n[alt_names]\nDNS.1=${DOMAIN}\nIP=${DOMAIN_IP}\n") -days 3650 -extensions req_ext
-
-  # Verify the validity of the generated certificate
-  openssl x509 -in ${DOMAIN}.crt -text -noout
-  ```
+    # Verify the validity of the generated certificate
+    openssl x509 -in ${DOMAIN}.crt -text -noout
+    ```
 
 3. Right now you should have these files:
 
@@ -193,7 +192,7 @@ listing currently available core plugins:
 
 1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
 
- - Transport layer encryption
+  - Transport layer encryption
 
     ```yaml
     logserverguard.ssl.transport.enabled: true
@@ -210,7 +209,7 @@ listing currently available core plugins:
     logserverguard.ssl.transport.enabled_protocols:
     - "TLSv1.2"
     ```
- - HTTP layer encryption
+  - HTTP layer encryption
 
     ```yml
     logserverguard.ssl.http.enabled: true
