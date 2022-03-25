@@ -932,7 +932,7 @@ chown logstash:kibana /etc/logstash/lists/
 chmod g+w /etc/logstash/lists/
 ```
 
-- Log in to EnergyLogserver GUI and go to **Scheduler** app. Set it up with below options and push "Submit" button:
+- Log in to Energy Logserver GUI and go to **Scheduler** app. Set it up with below options and push "Submit" button:
 
 ```bash
 Name:           MispThreatList

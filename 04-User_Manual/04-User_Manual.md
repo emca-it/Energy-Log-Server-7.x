@@ -1124,7 +1124,7 @@ These fields contain information:
 
 #### Renew license
 
-To change the Energy LogServer license files on a running system, do the following steps.
+To change the Energy Logserver license files on a running system, do the following steps.
 
 1. Copy the current license files to the backup folder:
 

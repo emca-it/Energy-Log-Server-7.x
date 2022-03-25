@@ -130,155 +130,155 @@ listing currently available core plugins:
 
 1. Requirements for certificate configuration:
 
-- **To encrypt traffic (HTTP and transport layer) of Elasticsearch you have to generate certificate authority which will be used to sign each node certificate of a cluster.**
+  - **To encrypt traffic (HTTP and transport layer) of Elasticsearch you have to generate certificate authority which will be used to sign each node certificate of a cluster.**
 
-- **Elasticsearch certificate has to be generated in pkcs8 RSA format.**
+  - **Elasticsearch certificate has to be generated in pkcs8 RSA format.**
 
 2. Example certificate configuration (Certificates will be valid for 10 years based on this example):
 
-```bash
+  ```bash
 
-# To make this process easier prepare some variables:
-DOMAIN=loganalytics-node.test
-DOMAIN_IP=10.4.3.185 # This is required if certificate validation is used on trasport layer
-COUNTRYNAME=PL
-STATE=Poland
-COMPANY=LOGTEST
+  # To make this process easier prepare some variables:
+  DOMAIN=mylocal.domain
+  DOMAIN_IP=10.4.3.185 # This is required if certificate validation is used on trasport layer
+  COUNTRYNAME=PL
+  STATE=Poland
+  COMPANY=LOGTEST
 
-# Generate CA key:
-openssl genrsa -out rootCA.key 4096
+  # Generate CA key:
+  openssl genrsa -out rootCA.key 4096
 
-# Create and sign root certificate:
-echo -e "${COUNTRYNAME}\n${STATE}\n\n${COMPANY}\n\n\n\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
+  # Create and sign root certificate:
+  echo -e "${COUNTRYNAME}\n${STATE}\n\n${COMPANY}\n\n\n\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
 
-# Crete RSA key for domain:
-openssl genrsa -out ${DOMAIN}.pre 2048
+  # Crete RSA key for domain:
+  openssl genrsa -out ${DOMAIN}.pre 2048
 
-# Convert generated key to pkcs8 RSA key for domain hostname
-# (if you do not want to encrypt the key add "-nocrypt" at the end of the command; otherwise it will be necessary to add this password later in every config file):
-openssl pkcs8 -topk8 -inform pem -in ${DOMAIN}.pre -outform pem -out ${DOMAIN}.key
+  # Convert generated key to pkcs8 RSA key for domain hostname
+  # (if you do not want to encrypt the key add "-nocrypt" at the end of the command; otherwise it will be necessary to add this password later in every config file):
+  openssl pkcs8 -topk8 -inform pem -in ${DOMAIN}.pre -outform pem -out ${DOMAIN}.key
 
-# Create a Certificate Signing Request (openssl.cnf can be in a different location; this is the default for CentOS 7.7):
-openssl req -new -sha256 -key ${DOMAIN}.key -subj "/C=PL/ST=Poland/O=EMCA/CN=${DOMAIN}" -reqexts SAN -config <(cat /etc/pki/tls/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:${DOMAIN},IP:${DOMAIN_IP}")) -out ${DOMAIN}.csr
+  # Create a Certificate Signing Request (openssl.cnf can be in a different location; this is the default for CentOS 7.7):
+  openssl req -new -sha256 -key ${DOMAIN}.key -subj "/C=PL/ST=Poland/O=EMCA/CN=${DOMAIN}" -reqexts SAN -config <(cat /etc/pki/tls/openssl.cnf <(printf "[SAN] \nsubjectAltName=DNS:${DOMAIN},IP:${DOMAIN_IP}")) -out ${DOMAIN}.csr
 
-# Generate Domain Certificate
-openssl x509 -req -in ${DOMAIN}.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out ${DOMAIN}.crt -sha256 -extfile <(printf "[req]\ndefault_bits=2048\ndistinguished_name=req_distinguished_name\nreq_extensions=req_ext\n[req_distinguished_name]\ncountryName=${COUNTRYNAME}\nstateOrProvinceName=${STATE}\norganizationName=${COMPANY}\ncommonName=${DOMAIN}\n[req_ext]\nsubjectAltName=@alt_names\n[alt_names]\nDNS.1=${DOMAIN}\nIP=${DOMAIN_IP}\n") -days 3650 -extensions req_ext
+  # Generate Domain Certificate
+  openssl x509 -req -in ${DOMAIN}.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out ${DOMAIN}.crt -sha256 -extfile <(printf "[req]  \ndefault_bits=2048\ndistinguished_name=req_distinguished_name\nreq_extensions=req_ext\n[req_distinguished_name]\ncountryName=${COUNTRYNAME}\nstateOrProvinceName=${STATE}  \norganizationName=${COMPANY}\ncommonName=${DOMAIN}\n[req_ext]\nsubjectAltName=@alt_names\n[alt_names]\nDNS.1=${DOMAIN}\nIP=${DOMAIN_IP}\n") -days 3650 -extensions req_ext
 
-# Verify the validity of the generated certificate
-openssl x509 -in ${DOMAIN}.crt -text -noout
-```
+  # Verify the validity of the generated certificate
+  openssl x509 -in ${DOMAIN}.crt -text -noout
+  ```
 
 3. Right now you should have these files:
 
-  ```bash
-  $ ls -1 | sort
-  loganalytics-node.test.crt
-  loganalytics-node.test.csr
-  loganalytics-node.test.key
-  loganalytics-node.test.pre
-  rootCA.crt
-  rootCA.key
-  rootCA.srl
-  ```
+    ```bash
+    $ ls -1 | sort
+    mylocal.domain.test.crt
+    mylocal.domain.test.csr
+    mylocal.domain.test.key
+    mylocal.domain.test.pre
+    rootCA.crt
+    rootCA.key
+    rootCA.srl
+    ```
 4. Create a directory to store required files (users: elasticsearch, kibana and logstash have to be able to read these files):
 
-  ```bash
-  mkdir /etc/elasticsearch/ssl
-  cp {loganalytics-node.test.crt,loganalytics-node.test.key,rootCA.crt} /etc/elasticsearch/ssl
-  chown -R elasticsearch:elasticsearch /etc/elasticsearch/ssl
-  chmod 755 /etc/elasticsearch/ssl
-  chmod 644 /etc/elasticsearch/ssl/*
-  ```
+    ```bash
+    mkdir /etc/elasticsearch/ssl
+    cp {mylocal.domain.test.crt,mylocal.domain.test.key,rootCA.crt} /etc/elasticsearch/ssl
+    chown -R elasticsearch:elasticsearch /etc/elasticsearch/ssl
+    chmod 755 /etc/elasticsearch/ssl
+    chmod 644 /etc/elasticsearch/ssl/*
+    ```
 #### Setting up configuration files
 
 1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
 
  - Transport layer encryption
 
-  ```yaml
-  logserverguard.ssl.transport.enabled: true
-  logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
-  logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
-  logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-  logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+    ```yaml
+    logserverguard.ssl.transport.enabled: true
+    logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+    logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+    logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+    logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-  logserverguard.ssl.transport.enforce_hostname_verification: true
-  logserverguard.ssl.transport.resolve_hostname: true
+    logserverguard.ssl.transport.enforce_hostname_verification: true
+    logserverguard.ssl.transport.resolve_hostname: true
 
-  logserverguard.ssl.transport.enabled_ciphers:
-  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-  logserverguard.ssl.transport.enabled_protocols:
-  - "TLSv1.2"
-  ```
+    logserverguard.ssl.transport.enabled_ciphers:
+    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+    logserverguard.ssl.transport.enabled_protocols:
+    - "TLSv1.2"
+    ```
  - HTTP layer encryption
 
-  ```yml
-  logserverguard.ssl.http.enabled: true
-  logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
-  logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
-  logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-  logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+    ```yml
+    logserverguard.ssl.http.enabled: true
+    logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+    logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+    logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+    logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-  logserverguard.ssl.http.clientauth_mode: OPTIONAL
-  logserverguard.ssl.http.enabled_ciphers:
-  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+    logserverguard.ssl.http.clientauth_mode: OPTIONAL
+    logserverguard.ssl.http.enabled_ciphers:
+    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
 
-  logserverguard.ssl.http.enabled_protocols:
-  - "TLSv1.2"
-  ```
+    logserverguard.ssl.http.enabled_protocols:
+    - "TLSv1.2"
+    ```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
 
-  ```yaml
-  # For below two, both IP or HOSTNAME (https://loganalytics-node.test:PORT) can be used because IP has been supplied in "alt_names"
-  elasticsearch.url: "https://10.4.3.185:8000" # Default is "http://localhost:8000"
-  ---
-  elastfilter.url: "https://10.4.3.185:9200" # Default is"http://localhost:9200"
-  ---
-  # Elasticsearch trafic encryption
-  # There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
-  elasticsearch.ssl.verificationMode: full
-  elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/loganalytics-node.test.crt"
-  elasticsearch.ssl.key: "/etc/elasticsearch/ssl/loganalytics-node.test.key"
-  elasticsearch.ssl.keyPassphrase: "password_for_pemkey" # this line is not required if there is no password
-  elasticsearch.ssl.certificateAuthorities: "/etc/elasticsearch/ssl/rootCA.crt"
-  ```
+    ```yaml
+    # For below two, both IP or HOSTNAME (https://mylocal.domain.test:PORT) can be used because IP has been supplied in "alt_names"
+    elasticsearch.url: "https://10.4.3.185:8000" # Default is "http://localhost:8000"
+    ---
+    elastfilter.url: "https://10.4.3.185:9200" # Default is"http://localhost:9200"
+    ---
+    # Elasticsearch trafic encryption
+    # There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
+    elasticsearch.ssl.verificationMode: full
+    elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+    elasticsearch.ssl.key: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+    elasticsearch.ssl.keyPassphrase: "password_for_pemkey" # this line is not required if there is no password
+    elasticsearch.ssl.certificateAuthorities: "/etc/elasticsearch/ssl/rootCA.crt"
+    ```
 3. Append or uncomment below lines in `/opt/alert/config.yaml` and change paths to proper values:
 
-  ```yaml
-  # Connect with TLS to Elasticsearch
-  use_ssl: True
+    ```yaml
+    # Connect with TLS to Elasticsearch
+    use_ssl: True
 
-  # Verify TLS certificates
-  verify_certs: True
+    # Verify TLS certificates
+    verify_certs: True
 
-  # Client certificate:
-  client_cert: /etc/elasticsearch/ssl/loganalytics-node.test.crt
-  client_key: /etc/elasticsearch/ssl/loganalytics-node.test.key
-  ca_certs: /etc/elasticsearch/ssl/rootCA.crt
-  ```
+    # Client certificate:
+    client_cert: /etc/elasticsearch/ssl/mylocal.domain.test.crt
+    client_key: /etc/elasticsearch/ssl/mylocal.domain.test.key
+    ca_certs: /etc/elasticsearch/ssl/rootCA.crt
+    ```
 4. For CSV/HTML export to work properly rootCA.crt generated in first step has to be "installed" on the server. Below example for CentOS 7:
 
-  ```bash
-  # Copy rootCA.crt and update CA trust store
-  cp /etc/elasticsearch/ssl/rootCA.crt /etc/pki/ca-trust/source/anchors/rootCA.crt
-  update-ca-trust
-  ```
+    ```bash
+    # Copy rootCA.crt and update CA trust store
+    cp /etc/elasticsearch/ssl/rootCA.crt /etc/pki/ca-trust/source/anchors/rootCA.crt
+    update-ca-trust
+    ```
 5. Intelligence module. Generate pkcs12 keystore/cert:
 
-  ```bash
-  DOMAIN=loganalytics-node.test
-  keytool -import -file /etc/elasticsearch/ssl/rootCA.crt -alias root -keystore root.jks
-  openssl pkcs12 -export -in /etc/elasticsearch/ssl/${DOMAIN}.crt -inkey /etc/elasticsearch/ssl/${DOMAIN}.key -out ${DOMAIN}.p12 -name "${DOMAIN}" -certfile /etc/elasticsearch/ssl/rootCA.crt
-  ```
+    ```bash
+    DOMAIN=mylocal.domain.test
+    keytool -import -file /etc/elasticsearch/ssl/rootCA.crt -alias root -keystore root.jks
+    openssl pkcs12 -export -in /etc/elasticsearch/ssl/${DOMAIN}.crt -inkey /etc/elasticsearch/ssl/${DOMAIN}.key -out ${DOMAIN}.p12 -name "${DOMAIN}" -certfile /etc/elasticsearch/ssl/rootCA.crt
+    ```
 
-  ```bash
-  # Configure /opt/ai/bin/conf.cfg
-  https_keystore=/path/to/pk12/loganalytics-node.test.p12
-  https_truststore=/path/to/root.jks
-  https_keystore_pass=bla123
-  https_truststore_pass=bla123
-  ```
+    ```bash
+    # Configure /opt/ai/bin/conf.cfg
+    https_keystore=/path/to/pk12/mylocal.domain.test.p12
+    https_truststore=/path/to/root.jks
+    https_keystore_pass=bla123
+    https_truststore_pass=bla123
+    ```
 
 #### Logstash/Beats
 
@@ -286,27 +286,27 @@ You can eather install CA to allow Logstash and Beats traffic or you can supply 
 
 1. Logstash:
 
-  ```yml
-  output {
-    elasticsearch {
-      hosts => "https://loganalytics-node.test:9200"
-      ssl => true
-      index => "winlogbeat-%{+YYYY.MM}"
-      user => "logstash"
-      password => "logstash"
-      cacert => "/path/to/cacert/rootCA.crt"
+    ```yml
+    output {
+      elasticsearch {
+        hosts => "https://mylocal.domain.test:9200"
+        ssl => true
+        index => "winlogbeat-%{+YYYY.MM}"
+        user => "logstash"
+        password => "logstash"
+        cacert => "/path/to/cacert/rootCA.crt"
+      }
     }
-  }
-  ```
+    ```
 
 2. Beats:
 
-  ```yaml
-  output.elasticsearch.hosts: ["https://loganalytics-node.test:9200"]
-  output.elasticsearch.protocol: "https"
-  output.elasticsearch.ssl.enabled: true
-  output.elasticsearch.ssl.certificate_authorities: ["/path/to/cacert/rootCA.crt"]
-  ```
+    ```yaml
+    output.elasticsearch.hosts: ["https://mylocal.domain.test:9200"]
+    output.elasticsearch.protocol: "https"
+    output.elasticsearch.ssl.enabled: true
+    output.elasticsearch.ssl.certificate_authorities: ["/path/to/cacert/rootCA.crt"]
+    ```
 
 Additionally, for any beats program to be able to write to elasticsearch, you will have to make changes to "enabled_ciphers" directive in "/etc/elasticsearch/elasticsearch.yml". This is done by commenting:
   
@@ -1139,7 +1139,7 @@ The mechanism of *personalization of notification at the workstation* will be im
 The notifications will use the specific script, which has the ability to inform all logged in users or the selected one about the detection of individual incidents.
 
 Configuration steps
-1. Create a new alert rule or edit an existing one according to the instruction: [Creating Alerts](https://kb.energylogserver.com/en/latest/08-00-00-Alert_module/08-00-00-Alert_module.html#creating-alerts),
+1. Create a new alert rule or edit an existing one according to the instruction: [Creating Alerts](https://kb.energylogserver.com/en/latest/06-SIEM_Plan/06-SIEM_Plan.html#creating-alerts),
 2. In `Alert Method` field select the `Command` method,
 3. Add the following scritp name to `Path to script/command` filed:
 

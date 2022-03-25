@@ -1,5 +1,5 @@
 
-# Installation
+# Installation1
 
 ## First steps 
 
@@ -332,37 +332,37 @@ To update bad reputation lists and to create `.blacklists` index, you have to ru
 
 1. This can be done in cron (host with logstash installed) in /etc/crontab:
 
-```bash
-0 2 * * * logstash /etc/logstash/lists/bin/misp_threat_lists.sh
-```
+  ```bash
+  0 2 * * * logstash /etc/logstash/lists/bin/misp_threat_lists.sh
+  ```
 
 2. Or with Kibana Scheduller app (**only if logstash is running on the same host**).
 
-- Prepare script path:
+  - Prepare script path:
 
-```bash
-/bin/ln -sfn /etc/logstash/lists/bin /opt/ai/bin/lists
-chown logstash:kibana /etc/logstash/lists/
-chmod g+w /etc/logstash/lists/
-```
+  ```bash
+  /bin/ln -sfn /etc/logstash/lists/bin /opt/ai/bin/lists
+  chown logstash:kibana /etc/logstash/lists/
+  chmod g+w /etc/logstash/lists/
+  ```
 
-- Log in to GUI and go to **Scheduler** app. Set it up with below options and push "Submit" button:
+  - Log in to GUI and go to **Scheduler** app. Set it up with below options and push "Submit" button:
 
-```
-Name:           MispThreatList
-Cron pattern:   0 2 * * *
-Command:        lists/misp_threat_lists.sh
-Category:       logstash
+  ```bash
+  Name:           MispThreatList
+  Cron pattern:   0 2 * * *
+  Command:        lists/misp_threat_lists.sh
+  Category:       logstash
 
-```
+  ```
 
 3. After a couple of minutes check for blacklists index:
 
-```bash
-curl -sS -u logserver:logserver -XGET '127.0.0.1:9200/_cat/indices/.blacklists?s=index&v'
-health status index       uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
-```
+  ```bash
+  curl -sS -u logserver:logserver -XGET '127.0.0.1:9200/_cat/indices/.blacklists?s=index&v'
+  health status index       uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+  green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
+  ```
 
 ## Docker support
 
@@ -711,9 +711,9 @@ To configure Energy Logserver so its services can be managed without root access
 3. Add a user to groups defined earlier
 
 
-```bash
-usermod -a -G kibana,alert,elasticsearch,logstash service_user
-```
+    ```bash
+    usermod -a -G kibana,alert,elasticsearch,logstash service_user
+    ```
 
 
-From now on this user should be able to start/stop/restart services and modify configurations files.
+    From now on this user should be able to start/stop/restart services and modify configurations files.

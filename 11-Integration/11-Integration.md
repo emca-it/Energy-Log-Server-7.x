@@ -3624,14 +3624,14 @@ Configuration file containing the list of AWS accounts that are included in the 
 
 #### Configuration of AWS profiles
 
-AWS profiles allow you to navigate to different AWS accounts using the defined AWS role  for example : "EnergyLogReadOnly". Profiles are defined in the configuration file:
+AWS profiles allow you to navigate to different AWS accounts using the defined AWS role  for example : "LogserverReadOnly". Profiles are defined in the configuration file:
 
 `/home/logstash/.aws/config`
 
 ```
 Profile configuration example:
 [profile 111111111222]
-role_arn = arn: aws: iam :: 111111111222: role / EnergyLogReadOnly
+role_arn = arn: aws: iam :: 111111111222: role / LogserverReadOnly
 source_profile = default
 region = eu-west-1
 output = json
@@ -3648,6 +3648,7 @@ The above section includes
 
 The configuration of scanning buckets and S3 objects for the "s3" dashboard was placed in the following configuration files:
 - /etc/logstash/lists/bucket_s3.txt - configuration of buckets that are included in the scan;
+
 - /etc/logstash/lists/account_s3.txt - configuration of accounts that are included in the scan;
 
 #### Configuration of AWS Cost & Usage reports
@@ -3683,7 +3684,7 @@ Integration mechanisms are managed by the Logstash process, which is responsible
 
 #### Configuration of AWS permissions and access
 
-To enable the correct implementation of the integration assumptions in the configuration of the IAM area, an EnergyLogserver-ReadOnly account was created with programming access with the following policies assigned:
+To enable the correct implementation of the integration assumptions in the configuration of the IAM area, an Logserver-ReadOnly account was created with programming access with the following policies assigned:
 
 ```
 {
@@ -3710,7 +3711,7 @@ To enable the correct implementation of the integration assumptions in the confi
             "Resource": "*"
         },
         {
-            "Sid": "AllowSpecificS3ForEnergyLogServer",
+            "Sid": "AllowSpecificS3ForLogServer",
             "Effect": "Allow",
             "Action": [
                 "s3:Get*",

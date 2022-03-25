@@ -419,7 +419,7 @@ and complete the configuration in `elasticsearch.yml` with additional lines.
 
 ## Upgrade from 6.x
 
-Before upgrading to Energy  Logserver from 6.x  OpenJDK / Oracle JDK  version 11:
+Before upgrading to Energy Logserver from 6.x  OpenJDK / Oracle JDK  version 11:
 
 ```bash
 yum -y -q install java-11-openjdk-headless.x86_64
