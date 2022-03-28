@@ -194,45 +194,42 @@ listing currently available core plugins:
 
   - Transport layer encryption
 
-    ```yaml
-    logserverguard.ssl.transport.enabled: true
-    logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-    logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
-    logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-    logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+      ```yaml
+      logserverguard.ssl.transport.enabled: true
+      logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+      logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+      logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+      logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-    logserverguard.ssl.transport.enforce_hostname_verification: true
-    logserverguard.ssl.transport.resolve_hostname: true
+      logserverguard.ssl.transport.enforce_hostname_verification: true
+      logserverguard.ssl.transport.resolve_hostname: true
 
-    logserverguard.ssl.transport.enabled_ciphers:
-    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-    logserverguard.ssl.transport.enabled_protocols:
-    - "TLSv1.2"
-    ```
+      logserverguard.ssl.transport.enabled_ciphers:
+      - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+      logserverguard.ssl.transport.enabled_protocols:
+      - "TLSv1.2"
+      ```
   - HTTP layer encryption
 
-    ```yml
-    logserverguard.ssl.http.enabled: true
-    logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-    logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
-    logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-    logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+      ```yml
+      logserverguard.ssl.http.enabled: true
+      logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+      logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+      logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+      logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-    logserverguard.ssl.http.clientauth_mode: OPTIONAL
-    logserverguard.ssl.http.enabled_ciphers:
-    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+      logserverguard.ssl.http.clientauth_mode: OPTIONAL
+      logserverguard.ssl.http.enabled_ciphers:
+      - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
 
-    logserverguard.ssl.http.enabled_protocols:
-    - "TLSv1.2"
-    ```
+      logserverguard.ssl.http.enabled_protocols:
+      - "TLSv1.2"
+      ```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
 
     ```yaml
-    # For below two, both IP or HOSTNAME (https://mylocal.domain.test:PORT) can be used because IP has been supplied in "alt_names"
-    elasticsearch.url: "https://10.4.3.185:8000" # Default is "http://localhost:8000"
-    ---
-    elastfilter.url: "https://10.4.3.185:9200" # Default is"http://localhost:9200"
+    elasticsearch.hosts: ["https://127.0.0.1:8000"]
     ---
     # Elasticsearch trafic encryption
     # There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
@@ -251,7 +248,7 @@ listing currently available core plugins:
     # Verify TLS certificates
     verify_certs: True
 
-    # Client certificate:
+    # Client certificate
     client_cert: /etc/elasticsearch/ssl/mylocal.domain.test.crt
     client_key: /etc/elasticsearch/ssl/mylocal.domain.test.key
     ca_certs: /etc/elasticsearch/ssl/rootCA.crt
