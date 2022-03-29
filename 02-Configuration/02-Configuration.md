@@ -211,20 +211,20 @@ listing currently available core plugins:
       ```
   - HTTP layer encryption
 
-      ```yml
-      logserverguard.ssl.http.enabled: true
-      logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-      logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
-      logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-      logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+    ```yml
+    logserverguard.ssl.http.enabled: true
+    logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+    logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+    logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+    logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-      logserverguard.ssl.http.clientauth_mode: OPTIONAL
-      logserverguard.ssl.http.enabled_ciphers:
-      - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+    logserverguard.ssl.http.clientauth_mode: OPTIONAL
+    logserverguard.ssl.http.enabled_ciphers:
+    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
 
-      logserverguard.ssl.http.enabled_protocols:
-      - "TLSv1.2"
-      ```
+    logserverguard.ssl.http.enabled_protocols:
+    - "TLSv1.2"
+    ```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
 

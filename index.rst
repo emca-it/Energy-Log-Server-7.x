@@ -1,4 +1,4 @@
-${PROD_NAME} 7.x User Guide
+EMCA_PROD_NAME 7.x User Guide
 ------------------------------
 
 .. toctree::

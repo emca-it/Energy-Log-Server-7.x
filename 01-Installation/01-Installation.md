@@ -1,5 +1,4 @@
-
-# Installation1
+# Installation
 
 ## First steps 
 
