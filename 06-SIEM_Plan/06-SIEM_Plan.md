@@ -311,6 +311,78 @@ hive_observable_data_mapping:
   - source: "{match[field2]}"
 ```
 
+#### RSA Archer
+
+The alert module can forward information about the alert to the risk management platfrorm **RSA Archer**.
+
+The alert rule must be configure to use **Command** alert method witch execute the following scripts `ucf.sh` or `ucf2.sh`
+
+Configuration steps:
+
+1. Copy and save on the Energy Logserver server the following scripts to appropriate location, for example `/opt/alert/bin`:
+
+- ucf.sh - for SYSLOG
+
+    ```bash
+    #!/usr/bin/env bash
+    base_url = "http://localhost/Archer" ##set the appropriate Archer URL
+    
+    logger -n $base_url -t logger -p daemon.alert -T "CEF:0|EnergyLogServer|EnergyLogServer|${19}|${18}| TimeStamp=$1 DeviceVendor/Product=$2-$3 Message=$4 TransportProtocol=$5 Aggregated:$6 AttackerAddress=$7 AttackerMAC=$8 AttackerPort=$9 TargetMACAddress=${10} TargetPort=${11} TargetAddress=${12} FlexString1=${13} Link=${14} ${15} $1 ${16} $7 ${17}"
+    ```
+
+- ucf2.sh - for REST API
+
+    ```bash
+    #!/usr/bin/env bash
+    base_url = "http://localhost/Archer" ##set the appropriate Archer URL
+    instance_name = "Archer"
+    username = "apiuser"
+    password = "Archer"
+
+    curl -k -u $username:$password -H "Content-Type: application/xml" -X POST "$base_url:50105/$instance_name" -d {
+    "CEF":"0","Server":"EnergyLogServer","Version":"${19}","NameEvent":"${18}","TimeStamp":"$1","DeviceVendor/Product":"$2-$3","Message""$4","TransportProtocol":"$5","Aggregated":"$6","AttackerAddress":"$7","AttackerMAC":"$8","AttackerPort":"$9","TargetMACAddress":"${10}","TargetPort":"${11}","TargetAddress":"${12}","FlexString1":"${13}","Link":"${14}","EventID":"${15}","EventTime":"${16}","RawEvent":"${17}"
+    }
+    ```
+ 
+2. Alert rule definition: 
+
+ - Index Pattern: alert*
+ - Name: alert-sent-to-rsa
+ - Rule Type: any
+ - Rule Definition:
+    
+    ```bash
+    filter:
+    - query:
+        query_string:
+          query: "_exists_: endTime AND _exists_: deviceVendor AND _exists_: deviceProduct AND _exists_: message AND _exists_: transportProtocol AND _exists_: correlatedEventCount AND _exists_: attackerAddress AND _exists_: attackerMacAddress AND _exists_: attackerPort AND _exists_: targetMacAddress AND _exists_: targetPort AND _exists_: targetAddress AND _exists_: flexString1 AND _exists_: deviceCustomString4 AND _exists_: eventId AND _exists_: applicationProtocol AND _exists_: rawEvent"
+
+    include:
+    - endTime
+    - deviceVendor
+    - deviceProduct
+    - message
+    - transportProtocol
+    - correlatedEventCount
+    - attackerAddress
+    - attackerMacAddress
+    - attackerPort
+    - targetMacAddress
+    - targetPort
+    - targetAddress
+    - flexString1
+    - deviceCustomString4
+    - eventId
+    - applicationProtocol
+    - rawEvent
+
+    realert:
+      minutes: 0
+    ```
+
+  - Alert Method: "command"
+  - Path to script/command: "/opt/alert/bin/ucf.sh"
+
 ### Alert Content
 
 There are several ways to format the body text of the various types of events. In EBNF::
