@@ -321,7 +321,7 @@ Configuration steps:
 
 1. Copy and save on the Energy Logserver server the following scripts to appropriate location, for example `/opt/alert/bin`:
 
-  - ucf.sh - for SYSLOG
+   - ucf.sh - for SYSLOG
 
       ```bash
       #!/usr/bin/env bash
@@ -330,7 +330,7 @@ Configuration steps:
       logger -n $base_url -t logger -p daemon.alert -T "CEF:0|EnergyLogServer|EnergyLogServer|${19}|${18}| TimeStamp=$1 DeviceVendor/Product=$2-$3 Message=$4 TransportProtocol=$5 Aggregated:$6 AttackerAddress=$7 AttackerMAC=$8 AttackerPort=$9 TargetMACAddress=${10} TargetPort=${11} TargetAddress=${12} FlexString1=${13} Link=${14} ${15} $1 ${16} $7 ${17}"
       ```
 
-  - ucf2.sh - for REST API
+   - ucf2.sh - for REST API
 
       ```bash
       #!/usr/bin/env bash
@@ -346,10 +346,10 @@ Configuration steps:
  
 2. Alert rule definition: 
 
-  - Index Pattern: `alert*`
-  - Name: `alert-sent-to-rsa`
-  - Rule Type: `any`
-  - Rule Definition:
+   - Index Pattern: `alert*`
+   - Name: `alert-sent-to-rsa`
+   - Rule Type: `any`
+   - Rule Definition:
       
       ```bash
       filter:
@@ -380,8 +380,8 @@ Configuration steps:
         minutes: 0
       ```
 
-    - Alert Method: `command`
-    - Path to script/command: `/opt/alert/bin/ucf.sh`
+   - Alert Method: `command`
+   - Path to script/command: `/opt/alert/bin/ucf.sh`
 
 ### Alert Content
 
