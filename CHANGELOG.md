@@ -11,7 +11,7 @@
 - es2csv - Breakthrough (50%) performance boost
 - es2csv - Renamed to els2csv
 - diagnostic-tool.sh - Added logs encryption 
-- diagnostic-tool.sh - Renamed to support-tool.sh
+- diagnostic-tool.sh - Renamed to `support-tool.sh`
 - Skimmer: Indices_stats: run only on master node
 - Skimmer: Added two metrics: indices_stats_patterns and indices_stats_regex
 - Skimmer: Added cached info about nodes when poll errors out
