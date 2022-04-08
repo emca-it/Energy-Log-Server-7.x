@@ -1,5 +1,82 @@
 # **CHANGELOG**
 
+## v7.1.1
+
+### NewFeatures
+
+- Elasticsearch Join support - API level query
+
+### Improvements
+
+- es2csv - Breakthrough (50%) performance boost
+- es2csv - Renamed to els2csv
+- diagnostic-tool.sh - Added logs encryption 
+- diagnostic-tool.sh - Renamed to support-tool.sh
+- Skimmer: Indices_stats: run only on master node
+- Skimmer: Added two metrics: indices_stats_patterns and indices_stats_regex
+- Skimmer: Added cached info about nodes when poll errors out
+- Logtrail: Disabled ratelimit in rsyslog for logtrail source files
+- Logtrail: Parsing in pipeline for alert,kibana,elasticearch,logstash [added standardized log_level field]
+- Logtrail: Added default filter showing only errors ["NOT log_level: INFO"]
+- Index Management: Added built-in index policies for common actions
+- Discovery: Default QueryLanguage changed to Lucene
+- Cerebro updated to v0.9.4
+- Curator updated to v5.8.4
+- Elasticdump updated to v6.79.4
+- Wiki.js updated to v2.5.274
+
+### BugFixes
+
+- Login: In case of unsuccessful login information about "redirection" is lost when using link sharing
+- Login: When logging using SSO auth, it doesn't redirect when using link sharing
+- Login: Fixed "unable to parse url" when using link sharing
+- Login: Corrected Session expired message
+- Login: gui-access role added to role-mappings.yml
+- Login: When logging using SSO auth, sending the entered password as a default action 
+- Skimmer: Index store value of _cat/shards in bytes
+- Skimmer: Disabled ssl handshake on logstash api
+- Logtrail: Corrected syntax highlighting
+- Logtrail: Fixed filter selector on columns
+- Discovery: Fixed timeout handling
+- Wiki: Removed gui-access group
+- Index Management: Wait for updates before refreshing the list
+- Index Management: Fixed id problem during custom update
+
+
+### Integrations
+
+- windows-ad/beats: fixed error in ruby{} filter
+- netflow - Fixes from 7.1.0
+- netflow - network_vis - Fixed incorrect filtering
+- netflow - network_vis - Added new option "skip null values"
+- syslog-mail - Fixes from 7.1.0
+
+### SIEM Plan
+
+- Added Log4j RCE attacks to Detection Rules ["Wazuh alert [HIGH] - rule group: custom - Log4j RCE"]
+- Alert: Fixed problem with modifying alertrulemethod
+- Alert: Fixed malfunction of Test Rule in case of "verify_certs: false" setting
+- Alert: Simplified Discovery URL
+- Alert: Logtrail - Cluster Services Error Logs added to Cluster-Health group
+
+### Security related
+
+- http-proxy - CVE-2022-0155
+- xlsx - CVE-2021-32013 
+- json-schema - CVE-2021-3918
+- lodash - CVE-2021-23337
+- json-schema - CVE-2021-3918
+- pdf-image - CVE-2020-8132
+- angular-chart.js - CVE-2020-7746
+- pyyaml - CVE-2020-14343
+- cryptography - CVE-2020-25659
+- aws-sdk - CVE-2020-28472
+- pyyaml - CVE-2020-14343
+- nodemailer - CVE-2020-7769
+- objection - CVE-2021-3766
+- socket.io - CVE-2020-28481
+- nodejs - CVE-2021-44531
+
 ## v7.1.0
 
 ### NewFeatures

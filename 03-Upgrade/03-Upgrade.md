@@ -6,6 +6,26 @@
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
 
+## Upgrade from version 7.1.0
+
+### Preferred Upgrade steps
+
+Run upgrade script:
+
+   ```bash
+   ./install.sh -u
+   ```
+   
+### Required post upgrade
+
+- (SIEM only) Update user in license-service to `license`,
+- Update logtrail pipeline in Logstash configuration,
+- Migrate logtrail-* indices to new format (the next call will display the current status of the task):
+   
+   ```bash
+   for index in logtrail-kibana logtrail-alert logtrail-elasticsearch logtrail-logstash; do curl -XPOST "127.0.0.1:9200/_logserver/prepareindex/$index" -u logserver;done
+   ```
+
 ## Upgrade from version 7.0.6
 
 ### **Breaking and major changes**
