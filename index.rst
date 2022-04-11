@@ -73,5 +73,4 @@ Energy Logserver 7.x User Guide
         :caption: Relase Notes
 
        12-Relase_Notes/12-Relase_Notes.md
-       CHANGELOG.md
 
