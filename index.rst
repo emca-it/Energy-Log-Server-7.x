@@ -5,6 +5,7 @@ Energy Logserver 7.x User Guide
         :maxdepth: 2
         :caption: Installation
 
+       00-00-00-About.md
        01-Installation/01-Installation.md
 
 .. toctree::
@@ -72,3 +73,5 @@ Energy Logserver 7.x User Guide
         :caption: Relase Notes
 
        12-Relase_Notes/12-Relase_Notes.md
+       CHANGELOG.md
+
