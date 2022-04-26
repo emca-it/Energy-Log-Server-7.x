@@ -2975,7 +2975,7 @@ Configuration file: `/opt/cerebro/conf/application.conf`
    ```bash
 			hosts = [
 			  {
-			    host = "https://192.168.3.11:9200"
+			    host = "https://localhost:9200"
 			    name = "energy-logserver"
 			    auth = {
 			      username = "logserver"
