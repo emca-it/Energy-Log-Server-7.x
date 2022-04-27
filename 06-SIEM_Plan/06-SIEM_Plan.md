@@ -7853,4 +7853,4 @@ Qualys Guard and Tenable.sc is vulnerability management tools, which make a scan
 
 ![](/media/media/image166.png)
 
-To configure Qulays or Tenable.sc see the *Integations* section.
+To configure Qulays or Tenable.sc see the *Configuration* section.
