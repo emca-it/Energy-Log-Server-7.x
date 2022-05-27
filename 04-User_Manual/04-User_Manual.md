@@ -4974,3 +4974,681 @@ Configuration steps:
 		    password => "${ELASTICSEARCH_ES_PASSWD:changeme}"
 		  }
 		}
+
+## Join
+**Note**
+***Before use *Join* upgrade *Log Server* to at least v7.1.1***
+
+This plugin extends Elasticsearch with new search actions which enables possibility to perform a "Join" between two set of documents (in the same index or in different indexes).
+
+Join is basically a inner join between two set of documents based on a common attribute, where the result only contains the attributes of one of the joined set of documents. 
+
+Current implementation of Join, includes:
+ - Inner join 
+ - API extended with the _join method
+ - Full support for query dsl
+ - Possibility of use on the graphic interface (Dev Tools plugin)
+
+![](/media/media/image231.png)
+
+### Query Syntax 
+#### Simple query
+```
+POST index-1,index-2/_join
+{
+  "left": {
+    "field":"field-1",
+    "query": {"match_all":{}}
+  },
+  "right": {
+    "field":"field-2",
+    "query": {"match_all":{}}
+  },
+  "out": {
+    "field":"joined",
+    "scroll_time": "1m",
+    "batch":1000
+  }
+}
+```
+#### Complex query
+```
+POST index-1,index-2/_join
+{
+  "left": {
+    "field":"field-1",
+        "query": {
+            "bool": {
+              "should": [
+                {"wildcard":{"field-1":{"value":"10.*"}}}
+              ]
+            }
+          },
+    "size": 100,
+    "source": {
+      "includes": [ "field-A", "field-B" ]
+    }
+  },
+  "right": {
+    "field":"field-2",
+        "query": {
+            "bool": {
+              "must": [
+                {"wildcard":{"field-2":{"value":"10.*"}}},
+                {"term":{"field-3":{"value":"XXX"}}}
+              ]
+            }
+          },
+    "size": 1,
+    "source": {
+      "includes": [ "field-C", "field-D" ]
+    }
+  },
+  "out": {
+    "field":"joined",
+    "scroll_time": "1m",
+    "batch":1000
+  }
+}
+```
+### Filter interface
+
+You can use "source_left" and/or "source_right" or neither in join query.
+source fields can be:
+
+* true, false, {} -- empty object, "*", or omitted -- means return everything
+* "" -- empty string, return empty object for the hit
+* "fieldPattern" -- string with patter
+* ["fieldPattern1", "fieldPattern2"] -- list of field patterns
+* {
+        "includes": [ "tags", "re*" ],
+        "excludes": [ "referer" ]
+    } -- object with "includes" and/or "excludes" fields or neither
+
+Patterns examples:
+"tags", "*.lon", "*.lat", "Flight*", "*ht*", "g*o.l*"
+
+by default all sources are returned:
+```
+
+POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+{
+  "left": {
+    "field": "DestCountry",
+    "query": {"term": {"DestCountry": {"value": "AE"}}}
+  }
+
+  "right": {
+    "field": "geo.dest",
+    "query": {"term": {"geo.dest": {"value": "AE"}}}
+  }
+
+  "out": {
+    "field": "joined_field",
+    "scroll_time": "1m",
+    "batch": 100
+  }
+}
+>>
+{
+  "hits" : {
+    "total" : {
+      "value" : 92,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_flights",
+        "_type" : "_doc",
+        "_id" : "rvy5qXwBqY4c6J5A_fe7",
+        "_score" : 5.637857,
+        "_source" : {
+          "Cancelled" : false,
+          "joined_field" : [
+            {
+              "referer" : "http://www.elastic-elastic-elastic.com/success/thomas-d-jones",
+              "request" : "/beats/metricbeat/metricbeat-6.3.2-amd64.deb",
+              "agent" : "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)",
+              "extension" : "deb",
+              "ip" : "17.86.191.67",
+```
+
+
+Same effect will be if we specify "source_left/right":"true" as source value:
+
+```
+POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+{
+  "left": {
+    "field": "DestCountry",
+    "query": {"term": {"DestCountry": {"value": "AE"}}},
+    "source": true
+  }
+
+  "right": {
+    "field": "geo.dest",
+    "query": {"term": {"geo.dest": {"value": "AE"}}},
+    "source": true
+  }
+
+  "out": {
+    "field": "joined_field",
+    "scroll_time": "1m",
+    "batch": 100
+  }
+}
+```
+
+"source_left/right":"false" will be ignored, if you really want to ignore source of parent or children
+use empty string "source_left/right":
+
+```
+POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+{
+  "left": {
+    "field": "DestCountry",
+    "query": {"term": {"DestCountry": {"value": "AE"}}},
+    "source": ""
+  }
+
+  "right": {
+    "field": "geo.dest",
+    "query": {"term": {"geo.dest": {"value": "AE"}}},
+    "source": ""
+  }
+
+  "out": {
+    "field": "joined_field",
+    "scroll_time": "1m",
+    "batch": 100
+  }
+}
+>>>
+{
+  "hits" : {
+    "total" : {
+      "value" : 92,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_flights",
+        "_type" : "_doc",
+        "_id" : "rvy5qXwBqY4c6J5A_fe7",
+        "_score" : 5.637857,
+        "_source" : {
+          "joined_field" : [
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { }
+          ]
+        }
+      },
+```
+
+You can use simple string patterns:
+
+```
+POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+{
+  "left": {
+    "field": "DestCountry",
+    "query": {"term": {"DestCountry": {"value": "AE"}}},
+    "source": "Flight*"
+  }
+
+  "right": {
+    "field": "geo.dest",
+    "query": {"term": {"geo.dest": {"value": "AE"}}},
+    "source": "client*"
+  }
+
+  "out": {
+    "field": "joined_field",
+    "scroll_time": "1m",
+    "batch": 100
+  }
+}
+>>>
+{
+  "hits" : {
+    "total" : {
+      "value" : 92,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_flights",
+        "_type" : "_doc",
+        "_id" : "rvy5qXwBqY4c6J5A_fe7",
+        "_score" : 5.637857,
+        "_source" : {
+          "FlightNum" : "BPD98PD",
+          "FlightDelay" : false,
+          "FlightTimeHour" : 4.603366103053058,
+          "FlightTimeMin" : 276.20196618318346,
+          "FlightDelayMin" : 0,
+          "joined_field" : [
+            {
+              "clientip" : "17.86.191.67"
+            },
+            {
+              "clientip" : "154.128.131.34"
+            },
+            {
+              "clientip" : "239.67.210.53"
+            },
+```
+
+
+You can combine different ways of specifying filters:
+
+```
+POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+{
+  "left": {
+    "field": "DestCountry",
+    "query": {"term": {"DestCountry": {"value": "AE"}}},
+    "source": {
+      "includes": "Orig*",
+      "excludes": [ "*.lat" ]
+    }
+  }
+
+  "right": {
+    "field": "geo.dest",
+    "query": {"term": {"geo.dest": {"value": "AE"}}},
+    "source": {
+      "includes": [ "tags", "re*" ],
+      "excludes": "*onse"
+    }
+  }
+
+  "out": {
+    "field": "joined_field",
+    "scroll_time": "1m",
+    "batch": 100
+  }
+}
+>>>
+{
+  "hits" : {
+    "total" : {
+      "value" : 92,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_flights",
+        "_type" : "_doc",
+        "_id" : "rvy5qXwBqY4c6J5A_fe7",
+        "_score" : 5.637857,
+        "_source" : {
+          "Origin" : "Cologne Bonn Airport",
+          "OriginLocation" : {
+            "lon" : "7.142739773"
+          },
+          "OriginWeather" : "Thunder & Lightning",
+          "OriginCityName" : "Cologne",
+          "OriginCountry" : "DE",
+          "joined_field" : [
+            {
+              "referer" : "http://www.elastic-elastic-elastic.com/success/thomas-d-jones",
+              "request" : "/beats/metricbeat/metricbeat-6.3.2-amd64.deb",
+              "tags" : [
+                "success",
+                "info"
+              ]
+            },
+            {
+              "referer" : "http://twitter.com/success/steven-r-nagel",
+              "request" : "/elasticsearch",
+              "tags" : [
+                "success",
+                "security"
+              ]
+            },
+```
+
+### Scroll interface
+
+List all active join scrolls:
+
+```
+GET _join/_all
+>>>
+{
+  "keys" : [
+    "ruzwsksdbhyxcgikljiaogrdozttswwpfqbmrrrlgbtgbqdxpg",
+    "gtqviwpmhowdlkmustlqenegfpucojiewlvuxtdmhemdkixmrz",
+    "fhrsfecirojrmjtwzwlsyfbnhgqeizjbawwmqryguvtdmtefgy",
+    "sgimqhproexwcnlskdggvowqwbyhborrczqajculpzjtjbznbo",
+    "ekdtmyomzwjmmhdrcnznuebqgtpcrrfvfdjnphnzdmmtmdbaic",
+    "dycswnigareojnngyudjbddzcnawyoqyvlmhwcwfwwszwgckxh"
+  ]
+}
+```
+
+Request with batch size smaller than number of hits
+
+```
+POST /kibana_sample_data_ecommerce,kibana_sample_data_flights/_join
+{
+  "left": {
+    "field": "geoip.city_name",
+    "query": {
+      "term": {
+        "geoip.city_name": {
+          "value": "Istanbul"
+        }
+      }
+    }
+  },
+
+  "right": {
+    "field": "DestCityName",
+    "query": {
+      "term": {
+        "DestWeather": {
+          "value": "Sunny"
+        }
+      }
+    }
+  },
+
+  "out": {
+    "field": "flights",
+    "scroll_time": "30m",
+    "batch":100
+  }
+}
+>>>
+{
+  "_scroll_id" : "qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp",
+  "hits" : {
+    "total" : {
+      "value" : 100,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_ecommerce",
+        "_type" : "_doc",
+        "_id" : "B_0WbXwBixBDsVfntYZX",
+        "_score" : 2.881619,
+        "_source" : {
+          "geoip" : {
+            "continent_name" : "Asia",
+```
+
+Pagination using scroll_id:
+
+```
+POST /_join
+{
+  "scroll_id":"qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp"
+}
+>>>
+{
+  "scroll_id" : "qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp",
+  "hits" : {
+    "total" : {
+      "value" : 100,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_ecommerce",
+        "_type" : "_doc",
+        "_id" : "W_0WbXwBixBDsVfnt4yV",
+        "_score" : 2.881619,
+        "_source" : {
+          "geoip" : {
+            "continent_name" : "Asia",
+```
+
+Last page will have no scroll_id:
+
+```
+POST /_join
+{
+  "scroll_id":"qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp"
+}
+>>>
+{
+  "hits" : {
+    "total" : {
+      "value" : 29,
+      "relation" : "eq"
+    },
+    "max_score" : 0.0,
+    "hits" : [
+      {
+        "_index" : "kibana_sample_data_ecommerce",
+        "_type" : "_doc",
+        "_id" : "o_0WbXwBixBDsVfnu5Uc",
+        "_score" : 2.881619,
+        "_source" : {
+          "geoip" : {
+            "continent_name" : "Asia",
+```
+
+If you try to scroll more it will raise an error:
+
+```
+POST /_join
+{
+  "scroll_id":"qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp"
+}
+>>>
+{
+  "error": {
+    "root_cause": [
+      {
+        "type": "illegal_argument_exception",
+        "reason": "scroll_id is not known or expired"
+      }
+    ],
+    "type": "illegal_argument_exception",
+    "reason": "scroll_id is not known or expired"
+  },
+  "status": 400
+}
+```
+
+### Examples
+
+
+This chapter contains examples of how to use the plugin join. For proper work, Logserver should be feeded with sample indexes with data
+
+Action required:
+```
+curl -s -k -X POST -ulogserver:logserver "https://127.0.0.1:5601/api/sample_data/ecommerce" -H 'kbn-xsrf: true' -H 'Content-Type: application/json'
+curl -s -k -X POST -ulogserver:logserver "https://127.0.0.1:5601/api/sample_data/flights" -H 'kbn-xsrf: true' -H 'Content-Type: application/json'
+curl -s -k -X POST -ulogserver:logserver "https://127.0.0.1:5601/api/sample_data/logs" -H 'kbn-xsrf: true' -H 'Content-Type: application/json'
+```
+#### Example 1
+
+Left query:
+```
+POST kibana_sample_data_flights/_search
+{
+  "query": {
+    "term": {"DestCountry": {"value": "AE"}}
+  }
+}
+```
+
+Right query:
+```
+POST kibana_sample_data_logs/_search
+{
+  "query": {
+    "term": {"geo.dest": {"value": "AE"}}
+  }
+}
+```
+
+Join query:
+```
+POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+{
+  "left": {
+    "field": "DestCountry",
+    "query": {"term": {"DestCountry": {"value": "AE"}}}
+  },
+
+  "right: {
+    "field": "geo.dest",
+    "query": {"term": {"geo.dest": {"value": "AE"}}}
+  },
+
+  "out": {
+    "field": "joined_field",
+    "scroll_time": "1m",
+    "batch": 100
+  }
+}
+```
+
+
+#### Example 2
+```
+POST kibana_sample_data_ecommerce,kibana_sample_data_flights/_join
+{
+  "left": {
+    "field":"geoip.city_name",
+    "query": {"term": {"geoip.city_name": {"value":"Istanbul"}}}
+  },
+
+  "right": {
+    "field":"DestCityName",
+    "query": {"term": {"DestWeather": {"value":"Sunny"}}}
+  },
+
+  "out": {
+    "field":"flights",
+    "scroll_time": "1m",
+    "batch":1000
+  }
+}
+```
+
+#### Example 3
+```
+POST kibana_sample_data_ecommerce,kibana_sample_data_flights/_join
+{
+  "left": {
+    "field":"geoip.city_name",
+    "query": {"match_all":{}}
+  },
+
+  "right": {
+    "field":"DestCityName",
+    "query": {"match_all":{}}
+  },
+
+  "out": {
+    "field_out":"flights",
+    "scroll_time": "1m"
+  }
+}
+```
+
+#### Example 4 - correlation (httpd and winlogbeat)
+
+```
+POST httpd-*,winlogbeat2*/_join
+{
+  "left": {
+    "field":"client.ip",
+        "query": {
+            "bool": {
+              "should": [
+                {"wildcard":{"client.ip":{"value":"10.4.4.3"}}}
+              ]
+            }
+          },
+    "size": 100,
+    "source": {
+      "includes": [ "domain", "client.ip" ]
+    }
+  },
+  "right": {
+    "field":"host.ip",
+        "query": {
+            "bool": {
+              "must": [
+                {"wildcard":{"host.ip":{"value":"10.*"}}},
+                {"term":{"winlog.event_id":{"value":"5379"}}}
+              ]
+            }
+          },
+    "size": 1,
+    "source": {
+      "includes": [ "@timestamp", "host.name", "winlog.event_data.SubjectUserName" ]
+    }
+  },
+  "out": {
+    "field":"correlated",
+    "scroll_time": "1m",
+    "batch":1000
+  }
+}
+```
+
+#### Example 5 - correlation (dhcpd and winlogbeat)
+```
+POST syslog-*,winlogbeat2*/_join
+{
+  "left": {
+    "field":"client.mac",
+        "query": {
+            "bool": {
+              "must": [
+                {"wildcard":{"client.ip":{"value":"10.4.4.3"}}},
+                {"term":{"program":{"value":"dhcpd"}}}
+              ]
+            }
+          },
+    "size": 100,
+    "source": {
+      "includes": [ "client.ip", "client.mac" ]
+    }
+  },
+  "right": {
+    "field":"host.mac",
+        "query": {
+            "bool": {
+              "must": [
+                {"wildcard":{"host.ip":{"value":"10.4.4.*"}}}
+              ]
+            }
+          },
+    "size": 1,
+    "source": {
+      "includes": [ "@timestamp", "host.name", "host.mac", "winlog.event_data.SubjectUserName", "event_data.TargetUserName" ]
+    }
+  },
+  "out": {
+    "field":"correlated",
+    "scroll_time": "1m",
+    "batch":1000
+  }
+}
+```
