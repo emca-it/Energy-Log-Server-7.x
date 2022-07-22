@@ -1074,3 +1074,754 @@ The following views have been placed in the Gateways section:
    - [AWS] Internet Gateway - details table of configured AWS Internet Gateways;
    - [AWS] Transit Gateways - details table of configured AWS Transit Gateways;
    - [AWS] Nat Gateway - details table of configured AWS Nat Gateways;
+
+## Integration with Azure / o365
+
+### Introduction
+The goal of the integration is to create a single repository with aggregated information from multiple Azure / o365 accounts or subscriptions and presented in a readable way with the ability to search, analyze and generate reports.
+
+### Scope of Integration
+
+The scope of integration include:
+
+1. User activity:
+
+   - Event category,
+   - Login status,
+   - Client application,
+   - Location,
+   - Type of activity,
+   - Login problems and their reasons.
+
+2. Infrastructure Metrics:
+
+   - Azure Monitor Metrics (or Metrics) is a platform service that provides a single source for monitoring Azure resources.
+   - Application Insights is an extensible Application Performance Management (APM) service for web developers on multiple platforms and can be used for live web application monitoring - it automatically detects performance anomalies.
+
+
+### System components
+#### Logstash
+Logstash is an event collector and executor of queries which, upon receipt, are initially processed and sent to the event buffer.
+
+#### Kafka
+Component that enables buffering of events before they are saved on Energy Logserver Data servers. Kafka also has the task of storing data when the Energy Logserver Data nodes are unavailable.
+
+#### Energy Logserver Data
+The Energy Logserver cluster is responsible for storing and sharing data.
+
+#### Energy Logserver GUI
+Energy Logserver GUI is a graphical tool for searching, analyzing and visualizing data. It has an alert module that can monitor the collected metrics and take action in the event of a breach of the permitted thresholds.
+
+### Data sources
+Energy Logserver can access metrics from the Azure services via API. Service access can be configured with the same credentials if the account was configured with Azure AD.
+Configuration procedures:
+
+ - https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal
+
+ - https://dev.loganalytics.io/documentation/Authorization/AAD-Setup
+
+ - https://dev.applicationinsights.io/quickstart/
+
+
+#### Azure Monitor datasource configuration
+To enable an Azure Monitor data source, the following information from the Azure portal is required:
+   -  Tenant Id (Azure Active Directory -> Properties -> Directory ID)
+   -  Client Id (Azure Active Directory -> App Registrations -> Choose your app -> Application ID)
+   -  Client Secret (Azure Active Directory -> App Registrations -> Choose your app -> Keys)
+   -  Default Subscription Id (Subscriptions -> Choose subscription -> Overview -> Subscription ID)
+
+
+#### Azure Insights datasource configuration
+To enable an Azure Insights data source, the following information is required from the Azure portal: 
+   -  Application ID
+   -  API Key
+
+### Azure Command-Line Interface
+To verify the configuration and connect Energy Logserver to the Azure cloud, it is recommended to use the Azure command line interface:
+
+   -  https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
+
+This tool deliver a set of commands for creating and managing Azure resources. Azure CLI is available in Azure services and is designed to allow you to work quickly with Azure with an emphasis on automation.
+Example command:
+   -  Login to the Azure platform using azure-cli:
+
+```basg
+az login --service-principal -u $ (client_id) -p $ (client_secret) --tenant $ (tenant_id)
+```
+
+
+#### Permission
+The following permissions are required to access the metrics:
+   -  Logon,
+   -  Geting a resource list with an ID (az resource list),
+   -  Geting a list of metrics for a given resource (az monitor metrics list-definitions),
+   -  Listing of metric values for a given resource and metric (az monitor metrics list).
+
+### Service selection
+The service is selected by launching the appropriate pipeline in Logstash collectors:
+   -  Azure Meters
+   -  Azure Application Insights
+The collector's queries will then be properly adapted to the chosen service.
+
+#### Azure Monitor metrics
+Sample metrics:
+   -  Microsoft.Compute / virtualMachines - Percentage CPU
+   -  Microsoft.Network/networkInterfaces - Bytes sent
+   -  Microsoft.Storage/storageAccounts - Used Capacity
+
+The Logstash collector gets the metrics through the following commands:
+   -  downloading a list of resources for a given account:
+/usr/bin/az resource list
+   -  downloading a list of resource-specific metrics:
+/usr/bin/az monitor metrics list-definitions --resource $ (resource_id)
+   -  for a given resource, downloading the metric value in the 1-minute interval
+/usr/bin/az monitor metrics list --resource "$ (resource_id)" --metric "$ (metric_name)"
+
+Azure Monitor metric list:
+
+   -  https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported 
+
+The downloaded data is decoded by the filter logstash:
+
+```conf
+filter {
+        ruby {
+            code => "
+              e = event.to_hash
+              data = e['value'][0]['timeseries'][0]['data']
+                for d in Array(data) do
+                  new_event = LogStash::Event.new()
+                  new_event.set('@timestamp', e['@timestamp'])
+                  new_event.set('data', d)
+                  new_event.set('namespace', e['namespace'])
+                  new_event.set('resourceregion', e['resourceregion'])
+                  new_event.set('resourceGroup', e['value'][0]['resourceGroup'])
+                  new_event.set('valueUnit', e['value'][0]['unit'])
+                  new_event.set('valueType', e['value'][0]['type'])
+                  new_event.set('id', e['value'][0]['id'])
+                  new_event.set('errorCode', e['value'][0]['errorCode'])
+                  new_event.set('displayDescription', e['value'][0]['displayDescription'])
+                  new_event.set('localizedValue', e['value'][0]['name']['localizedValue'])
+                  new_event.set('valueName', e['value'][0]['name']['@value'])
+                  new_event_block.call(new_event)
+                end
+              event.cancel()
+           "
+        }
+        if "_rubyexception" in [tags] {
+                drop {}
+        }
+        date {
+                match => [ "[data][timeStamp]", "yyyy-MM-dd'T'HH:mm:ssZZ" ]
+        }
+        mutate {
+                convert => {
+                        "[data][count]" => "integer"
+                        "[data][minimum]" => "integer"
+                        "[data][total]" => "integer"
+                        "[data][maximum]" => "integer"
+                        "[data][average]" => "integer"
+                }
+        }
+}
+```
+
+After processing, the obtained documents are saved to the Kafka topic using Logstash output:
+
+```conf
+output {
+        kafka {
+                bootstrap_servers => "localhost:9092"
+                client_id => "gk-eslapp01v"
+                topic_id => "azurelogs"
+                codec => json
+        }
+}
+```
+
+#### Azure Application Insights metrics
+
+Sample metrics:
+   -  performanceCounters / exceptionsPerSecond
+   -  performanceCounters / memoryAvailableBytes
+   -  performanceCounters / processCpuPercentage
+   -  performanceCounters / processIOBytesPerSecond
+   -  performanceCounters / processPrivateBytes
+
+Sample query:
+
+   ```bash
+   GET https://api.applicationinsights.io/v1/apps/[appIdarówka/metrics/ nutsmetricId}
+   ```
+
+Metrics List:
+
+   - https://docs.microsoft.com/en-us/rest/api/application-insights/metrics/get 
+
+
+### Energy Logserver GUI
+
+#### Metrics
+Metric data is recorded in the monthly indexes:
+
+   `azure-metrics -% {YYYY.MM}`
+
+The pattern index in Energy Logserver GUI is:
+
+  `azure-metrics *`
+
+Energy Logserver Discover data is available using the saved search: "[Azure Metrics] Metrics Details"
+
+![](/media/media/image232.png)
+
+The analysis of the collected metrics is possible using the provided dashboard:
+
+![](/media/media/image233.png)
+
+On which the following views have been placed:
+
+   -  **[Azure Metrics] Main Selector** - a selector that allows you to search by name and select a resource group, metric or namespace for a filter.
+   -  **[Azure Metrics] Main Average** - a numeric field that calculates the average value of a selected metric;
+   -  **[Azure Metrics] Main Median** - numeric field that calculates the median of the selected metric;
+   -  **[Azure Metrics] Average Line** - a line chart of the value of the selected metric over time;
+   -  **[Azure Metrics] Top Resource Group** - horizontal bar chart of resource groups with the most metrics
+   -  **[Azure Metrics] Top Metrics** - horizontal bar chart, metrics with the largest amount of data
+   -  **[Azure Metrics] Top Namespace** - horizontal bar chart, namespace with the most metrics
+   -  **[Azure Metrics] Metrics Details** - table containing details / raw data;
+
+Dashboard with an active filter:
+
+![](/media/media/image234.png)
+
+#### Events
+
+Events are stored in the monthly indexes:
+
+`azure_events -% {YYYY.MM}`
+
+The index pattern in Energy Logserver GUI is:
+
+`azure_events *`
+
+![](/media/media/image235.png)
+
+Examples of fields decoded in the event:
+
+The analysis of the collected events is possible using the provided dashboard:
+
+![](/media/media/image236.png)
+
+Componens:
+
+   -  **[AZURE] Event category** - pie chart, division into event categories,
+   -  **[AZURE] Login Status** - pie chart, login status breakdown,
+   -  **[AZURE] User localtion** - map, location of logging in users,
+   -  **[AZURE] Client App Type** - pie chart, division into client application type,
+   -  **[AZURE] Client APP** - bar chart, the most used client application,
+   -  **[AZURE] Top activity type** - pie chart, division into user activity type,
+   -  **[AZURE] Client Top App** - table, the most frequently used client application,
+   -  **[AZURE] Failed login reason** - save search, user access problems, raw data.
+
+## F5 
+The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  https://support.f5.com/csp/article/K13080 
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["F5"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'F5'
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "F5" in [tags] {
+       elasticsearch {
+         hosts => "https://localhost:9200"
+         ssl => true
+         ssl_certificate_verification => false
+         index => "F5-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Aruba Devices
+
+The Energy Logserver accepts data from the Aruba Devices system using the SYSLOG protocol. The Aruba Switches configuration procedure is as follows:  https://community.arubanetworks.com/browse/articles/blogviewer?blogkey=80765a47-fe42-4d69-b500-277217f5312e
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["ArubaSW"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'ArubaSW'
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "ArubaSW" in [tags] {
+       elasticsearch {
+         hosts => "https://localhost:9200"
+         ssl => true
+         ssl_certificate_verification => false
+         index => "ArubaSW-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Sophos Central
+
+The Energy Logserver accepts data from the Sophos Central system using the API interface. The Sophos Central configuration procedure is as follows: https://github.com/sophos/Sophos-Central-SIEM-Integration
+
+Pipeline configuration in Logstash collector:
+
+```conf
+   input {
+      exec {
+          command => "/etc/lists/bin/Sophos-Central/siem.py -c /usr/local/Sophos-Central/config.ini -q"
+          interval => 60
+          codec => "json_lines"
+      }
+   }
+   filter {
+      date {
+              match => [ "[data][created_at]", "UNIX_MS" ]
+      }
+   }
+   output {
+      elasticsearch {
+          hosts => "http://localhost:9200"
+          index => "sophos-central-%{+YYYY.MM}"
+          user => "logstash"
+          password => "logstash"
+      }
+   }
+```
+Example of `config.ini` file:
+
+```conf
+   /usr/local/Sophos-Central/config.ini
+   [login]
+   token_info = 'url: https://api4.central.sophos.com/gateway, x-api-key: dcaz, Authorization: Basic abdc'
+   client_id = UUID
+   client_secret = client-secrter
+   tenant_id =
+   auth_url = https://id.sophos.com/api/v2/oauth2/token
+   api_host = api.central.sophos.com
+   format = json
+   filename = stdout
+   endpoint = all
+   address = /var/run/syslog
+   facility = daemon
+   socktype = udp
+   state_file_path = siem_sophos.json
+```
+
+## FreeRadius
+The Energy Logserver accepts data from the FreeRadius system using the SYSLOG protocol. The FreeRadius configuration procedure is as follows:  https://wiki.freeradius.org/config/Logging
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["FreeRadius"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'FreeRadius'
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "FreeRadius" in [tags] {
+       elasticsearch {
+         hosts => "http://localhost:9200"
+         index => "FreeRadius-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Microsoft Advanced Threat Analytics
+The Energy Logserver accepts data from the Advanced Threat Analytics  system using the SYSLOG protocol with message in CEF format. The Advanced Threat Analytics  configuration procedure is as follows: https://docs.microsoft.com/pl-pl/advanced-threat-analytics/cef-format-sa
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["ATA"]
+                    }
+                }
+        }
+   }
+   ```
+
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'ATA'
+
+The event is recognized and decoded:
+
+```conf
+filter {
+   if [msg] =~ /CEF:/ {
+       grok {
+         keep_empty_captures => true
+         named_captures_only => true
+         remove_field => [
+           "msg",
+           "[cef][version]"
+         ]
+         match => {
+           "msg" => [
+             "^%{DATA} CEF:%{NUMBER:[cef][version]}\|%{DATA:[cef][device][vendor]}\|%{DATA:[cef][device][product]}\|%{DATA:[cef] [device][version]}\|%{DATA:[cef][sig][id]}\|%{DATA:[cef][sig][name]}\|%{DATA:[cef][sig][severity]}\|%{GREEDYDATA:[cef]   [extensions]}"
+           ]
+         }
+       }
+     }
+   if "ATA" in [tags] {
+       if [cef][extensions] {
+
+         kv {
+           source => "[cef][extensions]"
+           remove_field => [
+             "[cef][extensions]",
+             "device_time"
+           ]
+           field_split_pattern => "\s(?=\w+=[^\s])"
+           include_brackets => true
+           transform_key => "lowercase"
+           trim_value => "\s"
+           allow_duplicate_values => true
+         }
+        if [json] {
+
+           mutate {
+             gsub => [
+               "json", "null", '""',
+               "json", ":,", ':"",'
+             ]
+           }
+
+           json {
+             skip_on_invalid_json => true
+             source => "json"
+             remove_field => [
+               "json"
+             ]
+           }
+
+         }
+         mutate {
+           rename => { "device_ip" => "[device][ip]" }
+           rename => { "device_uid" => "[device][uid]" }
+           rename => { "internalhost" => "[internal][host]" }
+           rename => { "external_ip" => "[external][ip]" }
+           rename => { "internalip" => "[internal][ip]" }
+         }
+       }
+     }
+   }
+}
+```
+
+Using the assigned tag, the documents is send to the appropriate index:
+   ```conf
+   output {
+     if "ATA" in [tags] {
+       elasticsearch {
+         hosts => "http://localhost:9200"
+         index => "ATA-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## CheckPoint Firewalls
+The Energy Logserver accepts data from the CheckPoint Firewalls system using the SYSLOG protocol. The CheckPoint Firewalls configuration procedure is as follows: https://sc1.checkpoint.com/documents/SMB_R80.20/AdminGuides/Locally_Managed/EN/Content/Topics/Configuring-External-Log-Servers.htm?TocPath=Appliance%20Configuration%7CLogs%20and%20Monitoring%7C_____3
+
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["CheckPoint"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'CheckPoint'
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "F5BIGIP" in [tags] {
+       elasticsearch {
+         hosts => "http://localhost:9200"
+         index => "CheckPoint-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## WAF F5 Networks Big-IP
+The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  https://support.f5.com/csp/article/K13080 
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["F5BIGIP"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'F5'
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "F5BIGIP" in [tags] {
+       elasticsearch {
+         hosts => "https://localhost:9200"
+         ssl => true
+         ssl_certificate_verification => false
+         index => "F5BIGIP-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Infoblox DNS Firewall
+
+The Energy Logserver accepts data from the Infoblox system using the SYSLOG protocol. The Infoblox configuration procedure is as follows:  https://docs.infoblox.com/space/NAG8/22252249/Using+a+Syslog+Server#Specifying-Syslog-Servers
+
+To identify and collect events from a Infoblox, is nessery to use Filebeat with `infoblox` module.
+To run Filebeat with infoblox moduel run following commnds:
+
+```bash
+filebeat modules enable infoblox
+```
+
+Configure output section in `/etc/filebat/filebeat.yml` file:
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+
+## CISCO Devices
+The Energy Logserver accepts data from the Cisco devices - router, switch, firewall and access point using the SYSLOG protocol. The Cisco devices configuration procedure is as follows: https://www.ciscopress.com/articles/article.asp?p=426638&seqNum=3
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["CISCO"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'CISCO'.
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "CISCO" in [tags] {
+       elasticsearch {
+         hosts => "http://localhost:9200"
+         index => "CISCO-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Microsoft Windows Systems
+
+The Energy Logserver getting events from Microsoft Systems using the Winlogbeat agent. 
+
+To identify and collect events from a Windows eventchannel, it is nessery to setup following parameters in `winlobeat.yml` configuration file.
+
+```yml
+   winlogbeat.event_logs:
+   - name: Application
+      ignore_older: 72h
+   - name: Security
+   - name: System
+
+   #output.elasticsearch:
+   # Array of hosts to connect to.
+   #hosts: ["localhost:9200"]
+
+   output.logstash:
+   # The Logstash hosts
+  hosts: ["$IP:5044"]
+```
+Where $IP is IP address of Energy Logserver datanode.
+
+## Linux Systems
+The Energy Logserver accepts data from the Linux systems using the SYSLOG protocol.
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["LINUX"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'LINUX'.
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "LINUX" in [tags] {
+       elasticsearch {
+         hosts => "http://localhost:9200"
+         index => "LINUX-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## AIX Systems
+The Energy Logserver accepts data from the AIX systems using the SYSLOG protocol.
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["AIX"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'AIX'.
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "AIX" in [tags] {
+       elasticsearch {
+         hosts => "http://localhost:9200"
+         index => "AIX-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Microsoft Windows DNS, DHCP Service
+
+The Energy Logserver accepts data from the Microsoft DNS and DHCP services using the Filebeat agent. Servers
+
+To identify and collect events from Microsoft DNS and DHCP services, is nessery to set correct path do log files.
+
+Configure output section in `/etc/filebat/filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - c:\\Path_to_DNS_logs\*.log
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
