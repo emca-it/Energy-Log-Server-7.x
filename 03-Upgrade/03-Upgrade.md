@@ -49,6 +49,7 @@ Run upgrade script:
 
 #### Required post upgrade
 
+- Full restart of the cluster is necessary when upgrading from 7.0.6 or below. 
 - Role "wiki" has to be modified to contain only path: ".wiki" and all methods,
 - Configure the License Service according to the *Configuration* section.
 
