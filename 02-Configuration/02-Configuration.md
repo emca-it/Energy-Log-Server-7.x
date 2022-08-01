@@ -205,9 +205,11 @@ listing currently available core plugins:
       logserverguard.ssl.transport.resolve_hostname: true
 
       logserverguard.ssl.transport.enabled_ciphers:
-      - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+       - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+       - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+
       logserverguard.ssl.transport.enabled_protocols:
-      - "TLSv1.2"
+       - "TLSv1.2"
       ```
   - HTTP layer encryption
 
@@ -220,10 +222,11 @@ listing currently available core plugins:
 
     logserverguard.ssl.http.clientauth_mode: OPTIONAL
     logserverguard.ssl.http.enabled_ciphers:
-    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+     - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+     - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
 
     logserverguard.ssl.http.enabled_protocols:
-    - "TLSv1.2"
+     - "TLSv1.2"
     ```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
