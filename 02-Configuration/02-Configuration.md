@@ -2286,14 +2286,14 @@ To install the Kafka, follow the steps below:
 3. Download  the installation package:: 
 
    ```bash
-   https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
+   https://www.apache.org/dyn/closer.cgi?path=/kafka/3.2.0/kafka_2.13-3.2.0.tgz
    ```
 
 4. Unpack installation files to `/opt/kafka` directory:
 
    ```bash
-   tar -xzvf kafka_2.13-2.7.0.tgz -C /opt/
-   mv /opt/kafka_2.13-2.7.0 /opt/kafka
+   tar -xzvf kafka_2.13-3.2.0.tgz -C /opt/
+   mv /opt/kafka_2.13-3.2.0 /opt/kafka
    ```
    
 5. Set the necessary permissions
@@ -2512,7 +2512,7 @@ To install the Kafka, follow the steps below:
 
 ### Configuring Kafka Brokers
 
-1. In `/etc/kafka/server.properties` file set the following options:
+1. In `/opt/kafka/server.properties` file set the following options:
    
    Complete:
     - Path to server keystore;
