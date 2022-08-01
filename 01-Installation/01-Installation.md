@@ -30,6 +30,8 @@ The installation process:
 
 - unpack the archive containing the installer
 `tar xjf energy-logserver-${product-version}.x.x86_64.tar.bz2`
+- unpack the archive containing the SIEM installer (only in SIEM plan)
+`tar xjf energy-logserver-siem-plan-${product-version}.x.x86_64.tar.bz2
 - copy license to installation directory
 `cp es_*.license install/`
 - go to the installation directory (you can run install.sh script from any location)
