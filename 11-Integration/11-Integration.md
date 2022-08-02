@@ -1325,7 +1325,7 @@ Componens:
 
 ## Google Cloud Platform
 
-The Energy Logserver accepts data from the Google Cloud Platform using the Pub/Sub service. Pub/Sub is used for streaming analytics and data integration pipelines to ingest and distribute data. It's equally effective as a messaging-oriented middleware for service integration or as a queue to parallelize tasks. https://cloud.google.com/pubsub/docs/overview
+The Energy Logserver accepts data from the Google Cloud Platform using the Pub/Sub service. Pub/Sub is used for streaming analytics and data integration pipelines to ingest and distribute data. It's equally effective as a messaging-oriented middleware for service integration or as a queue to parallelize tasks. [https://cloud.google.com/pubsub/docs/overview](https://cloud.google.com/pubsub/docs/overview)
 
 To fetch events from the GCP service add the following condition to the Logstash configuration file:
 
@@ -1369,7 +1369,7 @@ To fetch events from the GCP service add the following condition to the Logstash
   }
 ```
 
-Authentication to the Pub/Sub service must be done with a private key: [](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating)
+Authentication to the Pub/Sub service must be done with a private key: [ttps://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating)
 
 
 ## F5 
@@ -1846,9 +1846,9 @@ Using the assigned tag, the documents is send to the appropriate index:
 
 ## Microsoft Windows DNS, DHCP Service
 
-The Energy Logserver accepts data from the Microsoft DNS and DHCP services using the Filebeat agent. Servers
+The Energy Logserver accepts data from the Microsoft DNS and DHCP services using the Filebeat agent.
 
-To identify and collect events from Microsoft DNS and DHCP services, is nessery to set correct path do log files.
+To identify and collect events from Microsoft DNS and DHCP services, is nessery to set correct path do logs in Filebeat configuration file.
 
 Configure output section in `/etc/filebat/filebeat.yml` file:
 
@@ -1875,3 +1875,4 @@ and:
 ```bash
 filebeat test output
 ```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
