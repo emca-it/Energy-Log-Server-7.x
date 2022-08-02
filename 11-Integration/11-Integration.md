@@ -1322,6 +1322,56 @@ Componens:
    -  **[AZURE] Client Top App** - table, the most frequently used client application,
    -  **[AZURE] Failed login reason** - save search, user access problems, raw data.
 
+
+## Google Cloud Platform
+
+The Energy Logserver accepts data from the Google Cloud Platform using the Pub/Sub service. Pub/Sub is used for streaming analytics and data integration pipelines to ingest and distribute data. It's equally effective as a messaging-oriented middleware for service integration or as a queue to parallelize tasks. https://cloud.google.com/pubsub/docs/overview
+
+To fetch events from the GCP service add the following condition to the Logstash configuration file:
+
+```conf
+  input {
+          google_pubsub {
+                  # Your GCP project id (name)
+                  project_id => "augmented-form-349311"
+
+                  # The topic name below is currently hard-coded in the plugin. You
+                  # must first create this topic by hand and ensure you are exporting
+                  # logging to this pubsub topic.
+                  topic => "topic_1"
+
+                  # The subscription name is customizeable. The plugin will attempt to
+                  # create the subscription (but use the hard-coded topic name above).
+                  subscription => "sub_1"
+
+                  # If you are running logstash within GCE, it will use
+                  # Application Default Credentials and use GCE's metadata
+                  # service to fetch tokens.  However, if you are running logstash
+                  # outside of GCE, you will need to specify the service account's
+                  # JSON key file below.
+                  json_key_file => "/etc/logstash/conf.d/tests/09_GCP/pkey.json"
+
+                  # Should the plugin attempt to create the subscription on startup?
+                  # This is not recommended for security reasons but may be useful in
+                  # some cases.
+                  #create_subscription => true
+          }
+  }
+  filter {}
+  output {
+          elasticsearch {
+                  hosts => ["127.0.0.1:9200"]
+                  index => "gcp-%{+YYYY.MM}"
+                  user => "logstash"
+                  password => "logstash"
+                  ilm_enabled => false
+          }
+  }
+```
+
+Authentication to the Pub/Sub service must be done with a private key: [](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating)
+
+
 ## F5 
 The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  https://support.f5.com/csp/article/K13080 
 
