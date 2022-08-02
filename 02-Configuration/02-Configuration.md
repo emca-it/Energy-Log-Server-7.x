@@ -205,26 +205,29 @@ listing currently available core plugins:
       logserverguard.ssl.transport.resolve_hostname: true
 
       logserverguard.ssl.transport.enabled_ciphers:
-      - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+       - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+       - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+
       logserverguard.ssl.transport.enabled_protocols:
-      - "TLSv1.2"
+       - "TLSv1.2"
       ```
   - HTTP layer encryption
 
-    ```yml
-    logserverguard.ssl.http.enabled: true
-    logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-    logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
-    logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
-    logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+      ```yaml
+      logserverguard.ssl.http.enabled: true
+      logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
+      logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+      logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+      logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
-    logserverguard.ssl.http.clientauth_mode: OPTIONAL
-    logserverguard.ssl.http.enabled_ciphers:
-    - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+      logserverguard.ssl.http.clientauth_mode: OPTIONAL
+      logserverguard.ssl.http.enabled_ciphers:
+       - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+       - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
 
-    logserverguard.ssl.http.enabled_protocols:
-    - "TLSv1.2"
-    ```
+      logserverguard.ssl.http.enabled_protocols:
+       - "TLSv1.2"
+      ```
 
 2. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
 
@@ -2283,14 +2286,14 @@ To install the Kafka, follow the steps below:
 3. Download  the installation package:: 
 
    ```bash
-   https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
+   https://www.apache.org/dyn/closer.cgi?path=/kafka/3.2.0/kafka_2.13-3.2.0.tgz
    ```
 
 4. Unpack installation files to `/opt/kafka` directory:
 
    ```bash
-   tar -xzvf kafka_2.13-2.7.0.tgz -C /opt/
-   mv /opt/kafka_2.13-2.7.0 /opt/kafka
+   tar -xzvf kafka_2.13-3.2.0.tgz -C /opt/
+   mv /opt/kafka_2.13-3.2.0 /opt/kafka
    ```
    
 5. Set the necessary permissions
@@ -2509,7 +2512,7 @@ To install the Kafka, follow the steps below:
 
 ### Configuring Kafka Brokers
 
-1. In `/etc/kafka/server.properties` file set the following options:
+1. In `/opt/kafka/server.properties` file set the following options:
    
    Complete:
     - Path to server keystore;

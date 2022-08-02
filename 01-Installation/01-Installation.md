@@ -6,12 +6,14 @@
 
 1. Supported Operating Systems
 
-   - Red Hat Linux 7
-   -  Red Hat Linux 8
-   -  Centos 7
-   -  Centos 8
-   -  Oracle Linux 8.3 - Unbreakable Enterprise Kernel (UEK)
+   -  Red Hat Linux 7.X
+   -  Red Hat Linux 8.X
+   -  Centos 7.X
+   -  Centos 8.X
+   -  Oracle Linux 8.X - Unbreakable Enterprise Kernel (UEK)
    -  Centos Stream
+   -  AlmaLinux
+   -  RockyLinux
 
 ## Installation method 
 
@@ -20,76 +22,39 @@ The Energy Logserver installer is delivered as:
 - RPM package energy-logserver-data-node and energy-logserver-client-node,
 - "install.sh" installation script
 
-## Installation using the RPM package
+### Interactive installation using "install.sh"
 
-1. Install OpenJDK / Oracle JDK  version 11:
+The Energy Logserver comes with simple installation script called `install.sh`. It is designed to facilitate the installation and deployment process of our product. After running (execute) the script, it will detect supported distribution and by default it will ask incl. about the components we want to install. The script is located in the `"install"`directory.
 
-    ```bash
-    yum -y -q install java-11-openjdk-headless.x86_64
-    ```
+The installation process:
 
-1. Select default command for OpenJDK /Oracle JDK:
+- unpack the archive containing the installer
+`tar xjf energy-logserver-${product-version}.x.x86_64.tar.bz2`
+- unpack the archive containing the SIEM installer (only in SIEM plan)
+`tar xjf energy-logserver-siem-plan-${product-version}.x.x86_64.tar.bz2`
+- copy license to installation directory
+`cp es_*.license install/`
+- go to the installation directory (you can run install.sh script from any location)
+- run installation script with interactive install command
+`./install.sh -i`
 
-    ```bash
-    alternatives --config java
-    ```
+During interactive installation you will be ask about following tasks:  
+- install & configure Logstash with custom  Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;  
+- install the  Energy Logserver Client Node, as well as the other client-node dependencies;  
+- install the  Energy Logserver Data Node, as well as the other data-node dependencies;  
+- load the  Energy Logserver custom dashboards, alerts and configs;  
 
-1. Upload Package
+### Non-interactive installation mode using "install.sh"
 
-    ```bash
-    scp ./energy-logserver-data-node-7.1.0-1.el7.x86_64.rpm root@hostname:~/
-    scp ./energy-logserver-client-node-7.1.0-1.el7.x86_64.rpm root@hostname:~/
-    ```
+With the help of an install script, installation is possible without questions that require user interaction, which can be helpful with automatic deployment. In this case, you should provide options which components (data, client node) should be installed.
 
-1. Install Energy Logserver Data Node
+Example: 
 
-    ```bash
-    yum install ./energy-logserver-data-node-7.1.0-1.el7.x86_64.rpm
-    ```
+`./install.sh -n -d` - will install only data node components. 
 
-1. Verification of Configuration Files
+`./install.sh -n -c -d` - will install both - data and client node components.
 
-    Please, verify your Elasticsearch configuration and JVM configuration in files:
-
-    - /etc/elasticsearch/jvm.options – check JVM HEAP settings and another parameters
-
-    ```bash
-    ## -Xms4g
-    ## -Xmx4g
-    # Xms represents the initial size of total heap space
-    # Xmx represents the maximum size of total heap space
-    -Xms600m
-    -Xmx600m
-    ```
-
-    - /etc/elasticsearch/elasticsearch.yml – verify elasticsearch configuration file
-    
-  
-1. Start and enable Elasticsearch service
-    If everything went correctly, we will start the Elasticsearch instance:
-
-    ```bash
-    systemctl start elasticsearch
-    ```
-    
-    ```bash
-    systemctl status elasticsearch
-    ● elasticsearch.service - Elasticsearch
-       Loaded: loaded (/usr/lib/systemd/system/elasticsearch.service; enabled; vendor preset: disabled)
-       Active: active (running) since Wed 2020-03-18 16:50:15 CET; 57s ago
-         Docs: http://www.elastic.co
-     Main PID: 17195 (java)
-       CGroup: /system.slice/elasticsearch.service
-               └─17195 /etc/alternatives/jre/bin/java -Xms512m -Xmx512m -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/plugins/elasticsearch_auth/plugin-securi...
-    
-    Mar 18 16:50:15 migration-01 systemd[1]: Started Elasticsearch.
-    Mar 18 16:50:25 migration-01 elasticsearch[17195]: SSL not activated for http and/or transport.
-    Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
-    Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Defaulting to no-operation (NOP) logger implementation
-    Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-    ```
-    
-1. Check cluster/indices status and Elasticsearch version
+### Check cluster/indices status and Elasticsearch version
 
     Invoke curl command to check the status of Elasticsearch:
 
@@ -136,68 +101,6 @@ The Energy Logserver installer is delivered as:
     ```
 
     If everything went correctly, we should see 100% allocated shards in  cluster health.
-
-    
-
-1. Install Energy Logserver Client Node 
-
-    ```bash
-    yum install ./energy-logserver-client-node-7.1.0-1.el7.x86_64.rpm
-    ```
-
-1. Start Energy Logserver GUI
-   
-    Add service:
-    - Kibana
-      - Cerebro
-    - Alert
-    
-    to autostart and add port ( 5602/TCP ) for Cerebro. 
-    Run them and check status:
-    
-    ```bash
-    firewall-cmd –permanent –add-port 5602/tcp
-    firewall-cmd –reload
-    ```
-
-    ```bash
-    systemctl enable kibana cerebro alert
-    ```
-    
-    ```bash
-    systemctl start kibana cerebro alert
-    systemctl status kibana cerebro alert
-    ```
-
-### Interactive installation using "install.sh"
-
-The Energy Logserver comes with simple installation script called `install.sh`. It is designed to facilitate the installation and deployment process of our product. After running (execute) the script, it will detect supported distribution and by default it will ask incl. about the components we want to install. The script is located in the `"install"`directory.
-
-The installation process:
-
-- unpack the archive containing the installer
-`tar xjf energy-logserver-${product-version}.x.x86_64.tar.bz2`
-- copy license to installation directory
-`cp es_*.license install/`
-- go to the installation directory (you can run install.sh script from any location)
-- run installation script with interactive install command
-`./install.sh -i`
-
-During interactive installation you will be ask about following tasks:  
-- install & configure Logstash with custom  Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;  
-- install the  Energy Logserver Client Node, as well as the other client-node dependencies;  
-- install the  Energy Logserver Data Node, as well as the other data-node dependencies;  
-- load the  Energy Logserver custom dashboards, alerts and configs;  
-
-### Non-interactive installation mode using "install.sh"
-
-With the help of an install script, installation is possible without questions that require user interaction, which can be helpful with automatic deployment. In this case, you should provide options which components (data, client node) should be installed.
-
-Example: 
-
-`./install.sh -n -d` - will install only data node components. 
-
-`./install.sh -n -c -d` - will install both - data and client node components.
 
 ### Generating basic system information report
 
