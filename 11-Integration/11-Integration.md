@@ -1850,7 +1850,7 @@ The Energy Logserver accepts data from the Microsoft DNS and DHCP services using
 
 To identify and collect events from Microsoft DNS and DHCP services, is nessery to set correct path do logs in Filebeat configuration file.
 
-Configure output section in `/etc/filebat/filebeat.yml` file:
+Configure output section in `C:\Program Files (x86)\filebeat\filebeat.yml` file:
 
 ```yml
 filebeat.inputs:
@@ -1877,13 +1877,13 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
-# Microsoft IIS Service
+## Microsoft IIS Service
 
 The Energy Logserver accepts data from the Microsoft IIS services using the Filebeat agent.
 
 To identify and collect events from Microsoft IIS services, is nessery to set correct path do logs in Filebeat configuration file.
 
-Configure output section in `/etc/filebat/filebeat.yml` file:
+Configure output section in `C:\Program Files (x86)\filebeat\filebeat.yml` file:
 
 ```yml
 filebeat.inputs:
@@ -1942,3 +1942,71 @@ and:
 filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## Microsoft Exchange
+
+The Energy Logserver accepts data from the Microsoft Exchange services using the Filebeat agent.
+
+To identify and collect events from Microsoft Exchange services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `C:\Program Files (x86)\filebeat\filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - c:\\Path_to_Exchange_logs\*.log
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## Microsoft AD, Radius, Network Policy Server
+
+The Energy Logserver accepts data from the Active Directory, Radius, Network Policy Server services using the Winlogbeat agent.
+
+To identify and collect events from Active Directory, Radius, Network Policy Server services, is nessery to set correct path do logs in Winlogbeat configuration file.
+
+Configure output section in `C:\Program Files (x86)\winlogbeat\winlogbeat.yml` file:
+
+```yml
+winlogbeat.event_logs:
+  - name: Application
+
+  - name: System
+
+  - name: Security
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+winlogbeat test config
+```
+
+and:
+
+```bash
+winlogbeat test output
+```
+The Energy Logserver save collected data in `winlogbeat-*` index pattern and its available to review in the Discover module.
