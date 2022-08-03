@@ -2010,3 +2010,233 @@ and:
 winlogbeat test output
 ```
 The Energy Logserver save collected data in `winlogbeat-*` index pattern and its available to review in the Discover module.
+
+## Microsoft MS SQL Server
+
+The Energy Logserver accepts data from the Microsoft MS SQL Server services using the Filebeat agent.
+
+To identify and collect events from Microsoft MS SQL Server services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `C:\Program Files (x86)\filebeat\filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - "C:\Program Files\Microsoft SQL Server\MSSQL10_50.SQL\MSSQL\Log\*LOG*"
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## MySQL Server
+
+The Energy Logserver accepts data from the MySQL Server services using the Filebeat agent.
+
+To identify and collect events from MySQL Server services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `/etc/filebeat/filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - /var/log/mysql/*.log
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## Oracle Database Server
+
+The Energy Logserver accepts data from the Oracle Database Server services using the Filebeat agent.
+
+To identify and collect events from Oracle Database Server services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `/etc/filebeat/filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - /var/log/oracle/*.xml
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## Postgres Database Server
+
+The Energy Logserver accepts data from the Postgres Database Server services using the Filebeat agent.
+
+To identify and collect events from Oracle Postgres Server services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `/etc/filebeat/filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - //opt/postgresql/9.3/data/pg_log/*.log
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## VMware Platform
+
+The Energy Logserver accepts data from the VMware platform using the SYSLOG protocol. The VMware vCenter Server configuration procedure is as follows:  [https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-FD51CE83-8B2A-4EBA-A16C-75DB2E384E95.html](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-FD51CE83-8B2A-4EBA-A16C-75DB2E384E95.html)
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+   ```conf
+   filter {
+        if "syslog" in [tags] {
+                if [host] == "$IP" {
+                    mutate {
+                        add_tag => ["vmware"]
+                    }
+                }
+        }
+   }
+   ```
+
+Where $IP is IP address of source system and each document coming from the address will be tagged with 'VMware vCenter Server'
+Using the assigned tag, the documents is send to the appropriate index:
+
+   ```conf
+   output {
+     if "vmware" in [tags] {
+       elasticsearch {
+         hosts => "https://localhost:9200"
+         ssl => true
+         ssl_certificate_verification => false
+         index => "vmware-%{+YYYY.MM.dd}"
+         user => "logstash"
+         password => "logstash"
+       }
+     }
+   }
+   ```
+
+## Nerwork Flows
+
+The Energy Logserver has the ability to receive and process various types of network flows. For this purpose, the following input ports have been prepared:
+
+IPFIX, Netflow v10 - 4739/TCP, 4739/UDP
+NetFlow v5,9 - 2055/UDP
+Sflow - 6343/UDP
+
+Example of inputs configuration:
+
+```conf
+  input {
+  udp {
+      port => 4739
+      codec => netflow {
+        ipfix_definitions => "/etc/logstash/netflow/definitions/ipfix.yaml"
+        versions => [10]
+        target => ipfix
+        include_flowset_id => "true"
+    }
+    type => ipfix
+    tags => ["ipfix", "v10", "udp"]
+    }
+    tcp {
+      port => 4739
+      codec => netflow {
+        ipfix_definitions => "/etc/logstash/netflow/definitions/ipfix.yaml"
+        versions => [10]
+        target => ipfix
+        include_flowset_id => "true"
+      }
+      type => ipfix
+      tags => ["ipfix", "v10", "tcp"]
+    }
+  }
+```
+
+```conf
+  input {
+    udp {
+      port => 2055
+      type => netflow
+      codec => netflow {
+        netflow_definitions => "/etc/logstash/netflow/definitions/netflow.yaml"
+        versions => [5,9]
+      }
+      tags => ["netflow"]
+    }
+  }
+```
+
+```conf
+  input {
+    udp {
+    port => 6343
+    type => sflow
+    codec => sflow
+    tags => ["sflow"]
+  }
+  }
+```
