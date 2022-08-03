@@ -1369,11 +1369,11 @@ To fetch events from the GCP service add the following condition to the Logstash
   }
 ```
 
-Authentication to the Pub/Sub service must be done with a private key: [ttps://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating)
+Authentication to the Pub/Sub service must be done with a private key: [https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating)
 
 
 ## F5 
-The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  https://support.f5.com/csp/article/K13080 
+The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  [https://support.f5.com/csp/article/K13080](https://support.f5.com/csp/article/K13080)
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
 
@@ -1409,7 +1409,7 @@ Using the assigned tag, the documents is send to the appropriate index:
 
 ## Aruba Devices
 
-The Energy Logserver accepts data from the Aruba Devices system using the SYSLOG protocol. The Aruba Switches configuration procedure is as follows:  https://community.arubanetworks.com/browse/articles/blogviewer?blogkey=80765a47-fe42-4d69-b500-277217f5312e
+The Energy Logserver accepts data from the Aruba Devices system using the SYSLOG protocol. The Aruba Switches configuration procedure is as follows:  [https://community.arubanetworks.com/browse/articles/blogviewer?blogkey=80765a47-fe42-4d69-b500-277217f5312e](https://community.arubanetworks.com/browse/articles/blogviewer?blogkey=80765a47-fe42-4d69-b500-277217f5312e)
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
 
@@ -1445,7 +1445,7 @@ Using the assigned tag, the documents is send to the appropriate index:
 
 ## Sophos Central
 
-The Energy Logserver accepts data from the Sophos Central system using the API interface. The Sophos Central configuration procedure is as follows: https://github.com/sophos/Sophos-Central-SIEM-Integration
+The Energy Logserver accepts data from the Sophos Central system using the API interface. The Sophos Central configuration procedure is as follows: [https://github.com/sophos/Sophos-Central-SIEM-Integration](https://github.com/sophos/Sophos-Central-SIEM-Integration)
 
 Pipeline configuration in Logstash collector:
 
@@ -1492,7 +1492,7 @@ Example of `config.ini` file:
 ```
 
 ## FreeRadius
-The Energy Logserver accepts data from the FreeRadius system using the SYSLOG protocol. The FreeRadius configuration procedure is as follows:  https://wiki.freeradius.org/config/Logging
+The Energy Logserver accepts data from the FreeRadius system using the SYSLOG protocol. The FreeRadius configuration procedure is as follows:  [https://wiki.freeradius.org/config/Logging](https://wiki.freeradius.org/config/Logging)
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
 
@@ -1525,7 +1525,7 @@ Using the assigned tag, the documents is send to the appropriate index:
    ```
 
 ## Microsoft Advanced Threat Analytics
-The Energy Logserver accepts data from the Advanced Threat Analytics  system using the SYSLOG protocol with message in CEF format. The Advanced Threat Analytics  configuration procedure is as follows: https://docs.microsoft.com/pl-pl/advanced-threat-analytics/cef-format-sa
+The Energy Logserver accepts data from the Advanced Threat Analytics  system using the SYSLOG protocol with message in CEF format. The Advanced Threat Analytics  configuration procedure is as follows: [https://docs.microsoft.com/pl-pl/advanced-threat-analytics/cef-format-sa](https://docs.microsoft.com/pl-pl/advanced-threat-analytics/cef-format-sa)
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
 
@@ -1624,7 +1624,7 @@ Using the assigned tag, the documents is send to the appropriate index:
    ```
 
 ## CheckPoint Firewalls
-The Energy Logserver accepts data from the CheckPoint Firewalls system using the SYSLOG protocol. The CheckPoint Firewalls configuration procedure is as follows: https://sc1.checkpoint.com/documents/SMB_R80.20/AdminGuides/Locally_Managed/EN/Content/Topics/Configuring-External-Log-Servers.htm?TocPath=Appliance%20Configuration%7CLogs%20and%20Monitoring%7C_____3
+The Energy Logserver accepts data from the CheckPoint Firewalls system using the SYSLOG protocol. The CheckPoint Firewalls configuration procedure is as follows: [https://sc1.checkpoint.com/documents/SMB_R80.20/AdminGuides/Locally_Managed/EN/Content/Topics/Configuring-External-Log-Servers.htm?TocPath=Appliance%20Configuration%7CLogs%20and%20Monitoring%7C_____3](https://sc1.checkpoint.com/documents/SMB_R80.20/AdminGuides/Locally_Managed/EN/Content/Topics/Configuring-External-Log-Servers.htm?TocPath=Appliance%20Configuration%7CLogs%20and%20Monitoring%7C_____3)
 
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
@@ -1658,7 +1658,7 @@ Using the assigned tag, the documents is send to the appropriate index:
    ```
 
 ## WAF F5 Networks Big-IP
-The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  https://support.f5.com/csp/article/K13080 
+The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  [https://support.f5.com/csp/article/K13080](https://support.f5.com/csp/article/K13080)
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
 
@@ -1694,7 +1694,7 @@ Using the assigned tag, the documents is send to the appropriate index:
 
 ## Infoblox DNS Firewall
 
-The Energy Logserver accepts data from the Infoblox system using the SYSLOG protocol. The Infoblox configuration procedure is as follows:  https://docs.infoblox.com/space/NAG8/22252249/Using+a+Syslog+Server#Specifying-Syslog-Servers
+The Energy Logserver accepts data from the Infoblox system using the SYSLOG protocol. The Infoblox configuration procedure is as follows:  [https://docs.infoblox.com/space/NAG8/22252249/Using+a+Syslog+Server#Specifying-Syslog-Servers](https://support.f5.com/csp/article/K13080)
 
 To identify and collect events from a Infoblox, is nessery to use Filebeat with `infoblox` module.
 To run Filebeat with infoblox moduel run following commnds:
@@ -1723,7 +1723,7 @@ filebeat test output
 ```
 
 ## CISCO Devices
-The Energy Logserver accepts data from the Cisco devices - router, switch, firewall and access point using the SYSLOG protocol. The Cisco devices configuration procedure is as follows: https://www.ciscopress.com/articles/article.asp?p=426638&seqNum=3
+The Energy Logserver accepts data from the Cisco devices - router, switch, firewall and access point using the SYSLOG protocol. The Cisco devices configuration procedure is as follows: [https://www.ciscopress.com/articles/article.asp?p=426638&seqNum=3](https://support.f5.com/csp/article/K13080)
 
 To identify events from a specific source, add the following condition to the Logstash configuration file:
 
@@ -1857,6 +1857,72 @@ filebeat.inputs:
 - type: log
   paths:
     - c:\\Path_to_DNS_logs\*.log
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+# Microsoft IIS Service
+
+The Energy Logserver accepts data from the Microsoft IIS services using the Filebeat agent.
+
+To identify and collect events from Microsoft IIS services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `/etc/filebat/filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - c:\\Path_to_IIS_logs\*.log
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## Apache Service
+
+The Energy Logserver accepts data from the Linux Apache services using the Filebeat agent.
+
+To identify and collect events from Linux Apache services, is nessery to set correct path do logs in Filebeat configuration file.
+
+Configure output section in `/etc/filebat/filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - /var/log/apache/*.log
 ```
 
 ```yml
