@@ -2183,9 +2183,9 @@ Using the assigned tag, the documents is send to the appropriate index:
 
 The Energy Logserver has the ability to receive and process various types of network flows. For this purpose, the following input ports have been prepared:
 
-IPFIX, Netflow v10 - 4739/TCP, 4739/UDP
-NetFlow v5,9 - 2055/UDP
-Sflow - 6343/UDP
+- IPFIX, Netflow v10 - 4739/TCP, 4739/UDP
+- NetFlow v5,9 - 2055/UDP
+- Sflow - 6343/UDP
 
 Example of inputs configuration:
 
@@ -2240,3 +2240,60 @@ Example of inputs configuration:
   }
   }
 ```
+
+## Citrix XenApp and XenDesktop
+
+This Energy Logserver has the ability to acquire data from Citrix XenApp and XenDesktop. 
+
+An example command to enable Citrix Broker Service log to a file is as follows:
+
+  ```PowerShell
+  BrokerService.exe –Logfile "C:\XDLogs\Citrix Broker Service.log"
+  ```
+
+Or there is the possibility of extracting results, data from a report generated using the console:
+
+[https://docs.citrix.com/en-us/xenapp-and-xendesktop/7-15-ltsr/monitor/configuration-logging.html#generate-reports](https://docs.citrix.com/en-us/xenapp-and-xendesktop/7-15-ltsr/monitor/configuration-logging.html#generate-reports)
+
+The Energy Logserver accepts data from Citrix XenApp and XenDesktop server using the Filebeat agent.
+
+To identify and collect events from Citrix XenApp and XenDesktop servers, you need to set the correct path to the logs in the Filebeat configuration file.
+
+Configure output section in `C:\Program Files (x86)\filebeat\filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - "C:\XDLogs\Citrix Broker Service.log"
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+## Sumologic Cloud SOAR
+
+The Energy Logserver has the ability to forward detected alerts to *Sumologic Cloud SOAR*. To do this, select the "syslog" method in the alert definition and set the following parameters:
+
+  - Host
+  - Port
+  - Protocol
+  - Logging Level
+  - Facility
+
+![](/media/media/image237.png)
