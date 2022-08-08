@@ -732,7 +732,7 @@ The value field value is then added to the table on which the risk calculation a
 
 The Incident module allows you to handle incidents created by triggered alert rules. 
 
-![](/media/media/image154.PNG)
+![](/media/media/image154.png)
 
 Incident handling allows you to perform the following action:
 
@@ -7955,7 +7955,7 @@ In this case, rule ``100100`` is used to look for alerts where the source IP add
 
 Below you can find a screenshot with two SIEM alerts: one that is triggered when a web attack is detected trying to exploit a PHP server vulnerability, and one that informs that the malicious actor has been blocked.
 
-![](/media/media/image240.PNG)
+![](/media/media/image240.png)
 
 ## Tenable and Qualisis Integration
 
