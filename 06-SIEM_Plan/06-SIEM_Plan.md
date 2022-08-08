@@ -7854,3 +7854,15 @@ Qualys Guard and Tenable.sc is vulnerability management tools, which make a scan
 ![](/media/media/image166.png)
 
 To configure Qulays or Tenable.sc see the *Configuration* section.
+
+## UBA
+
+UBA module enables premium features of Energy Logserver SIEM Plan. This cybersecurity approach helps analytics to discover threads in user behaviour. Module tracks user actions and scans common behaviour patterns. With UBA system provides deep knowledge of daily trends in user actions enabling SOC teams to detect any abnormal and suspicious activities. UBA differs a lot from regular SIEM approach based on logs analytics in time. The module focus on user actions and not the logs itself. Every user is identified as an entity in the system and its behaviour describes its work. UBA provide new data schema that mark each user action over time. Underlying UBA search engine analyse incoming data in order to identify log corresponding to user action. We leave the log for SIEM use cases, but incoming data is associated with a user action categories. New data model stores actions for each users and mark them down as metadata stored in individual index. Once tracking is done, SOC teams can investigate patterns for single action among many users or many actions for a single user. This unique approach creates an activity map for everyone working in the organization. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UBA is designed to give information about the common type of action that user performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts.
+UBA comes with defined dashboards which shows discovered actions and metrics for them.
+
+![](/media/media/image238.png)
+
+It is easy to filter presented data with single username or a group of users using query syntax. With help of saved searches SOC can create own outlook to stay focused on users at high risk of an attack.
+
+Energy Logserver is made for working with data. UBA gives new analytics approach, but what is more important it brings new metrics that we can work with. Why not to use The Intelligence of Energy Logserver to calculate forecast for each action over single user or entire organization. 
+Working with UBA greatly enlarge security analytics scope. 
