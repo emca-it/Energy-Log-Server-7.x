@@ -7866,3 +7866,21 @@ It is easy to filter presented data with single username or a group of users usi
 
 Energy Logserver is made for working with data. UBA gives new analytics approach, but what is more important it brings new metrics that we can work with. Why not to use The Intelligence of Energy Logserver to calculate forecast for each action over single user or entire organization. 
 Working with UBA greatly enlarge security analytics scope. 
+
+## BCM Remedy
+
+Energy Logserver creates incidents that require handling based on notifications from the Alert module. This can be done, for example, in the BMC Remedy system using API requests. 
+
+BMC Remedy configuration details: [https://docs.bmc.com/docs/ars91/en/bmc-remedy-ar-system-rest-api-overview-609071509.html](https://docs.bmc.com/docs/ars91/en/bmc-remedy-ar-system-rest-api-overview-609071509.html) .
+
+To perform this incident notification in an external system.  You need to select in the configuration of the alert rule "Alert Method" "Command" and in the "Path to script/command" field enter the correct request.
+
+![](/media/media/image239.png)
+
+It is possible to cancel the incident in the external system using a parameter added to the alert rule.
+
+```yaml
+  #Recovery definition:
+  recovery: true
+  recovery_command: "mail -s 'Recovery Alert for rule RULE_NAME' user@example.com < /dev/null"
+```
