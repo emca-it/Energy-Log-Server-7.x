@@ -3160,7 +3160,7 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
   )
   ```
 
-## Virtus Total
+## SIEM Virtus Total integration
 
 This integration utilizes the VirusTotal API to detect malicious content within the files monitored by **File Integrity Monitoring**. This integration functions as described below:
 
@@ -3192,3 +3192,33 @@ Find examples of these alerts in the `VirusTotal integrationalerts`_ section bel
     <alert_format>json</alert_format>
   </integration>
 ```
+
+## SIEM Custom integration
+
+The integrator tool is able to connect SIEM module with other external software. 
+
+This is an example configuration for a custom integration in `ossec.conf`:
+
+```xml
+  <!--Custom external Integration -->
+  <integration>
+    <name>custom-integration</name>
+    <hook_url>WEBHOOK</hook_url>
+    <level>10</level>
+    <group>multiple_drops|authentication_failures</group>
+    <api_key>APIKEY</api_key> <!-- Replace with your external service API key -->
+    <alert_format>json</alert_format>
+  </integration>
+```
+
+To start the custom integration, the `ossec.conf` file, including the block integration component, has to be modified in the manager. The following parameters can be used:
+
+ - name: Name of the script that performs the integration. In the case of a custom integration like the one discussed in this article, the name must start with “custom-“.
+ - hook_url: URL provided by the software API to connect to the API itself. Its use is optional, since it can be included in the script.
+ - api_key: Key of the API that enables us to use it. Its use is also optional for the same reason the use of the hook_url is optional.
+ - level: Sets a level filter so that the script will not receive alerts below a certain level.
+ - rule_id: Sets a filter for alert identifiers.
+ - group: Sets an alert group filter.
+ - event_location: Sets an alert source filter.
+ - alert_format: Indicates that the script receives the alerts in JSON format (recommended). By default, the script will receive the alerts in full_log format.
+
