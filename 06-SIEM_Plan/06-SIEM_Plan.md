@@ -7837,9 +7837,70 @@ condition we are interested in is met, we send an action in the form
 of sending a message to our e-mail address. In the action, you can
 also set the launch of any script.
 
+### Alert detect and mitigate time
+
+The Energy Logserver allows you to keep track of the time and actions taken in the incident you created. 
+A detected alert incident has the date the incident occurred `match_body.@timestamp` and the date and time the incident was detected `alert.time`. 
+
+In addition, it is possible to enrich the alert event with the date and time of incident resolution `alert_solvedtime` using the following pipeline:
+
+```conf
+  input {
+      elasticsearch {
+          hosts => "http://localhost:9200"
+          user => logserver
+          password => logserver
+          index => "alert*"
+          size => 500
+          scroll => "5m"
+          docinfo => true
+          schedule => "*/5 * * * *"
+          query => '{ "query": {     "bool": {
+        "must": [
+          {
+            "match_all": {}
+          }
+        ],
+        "filter": [
+          {
+            "match_phrase": {
+              "alert_info.status": {
+                "query": "solved"
+              }
+            }
+          }
+        ],
+        "should": [],
+        "must_not": [{
+            "exists": {
+              "field": "alert_solvedtime"
+            }
+          }]
+      }
+  }, "sort": [ "_doc" ] }'
+      }
+  }
+  filter {
+          ruby {
+                  code => "event.set('alert_solvedtime', Time.now());"
+          }
+  }
+  output {
+      elasticsearch {
+          hosts => "http://localhost:9200"
+          user => logserver
+          password => logserver
+          action => "update"
+          document_id => "%{[@metadata][_id]}"
+          index => "%{[@metadata][_index]}"
+      }
+  }
+```
+
+
 ## Siem Module
 
-Energy Logserver, through its built-in vulnerability detection module called Wazuh and the use of best practices defined in the CIS, allows to audit monitored environment for security vulnerabilities, misconfigurations, or outdated software versions. File Integrity Monitoring functionality allows for detailed monitoring and alerting of unauthorized access attempts to most sensitive data.
+Energy Logserver, through its built-in vulnerability detection module use of best practices defined in the CIS, allows to audit monitored environment for security vulnerabilities, misconfigurations, or outdated software versions. File Integrity Monitoring functionality allows for detailed monitoring and alerting of unauthorized access attempts to most sensitive data.
 
 SIEM Plan is a solution that provides a ready-made set of tools for compliance regulations such as CIS, PCI DSS, GDPR, NIST 800-53, ISO 27001.The system enables mapping of detected threats to Mitre ATT&CK tactics. By integrating with the MISP Energy Logserver, allows to get real-time information about new threats on the network by downloading the latest IoC lists.
 
