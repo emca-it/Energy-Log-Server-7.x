@@ -7906,6 +7906,57 @@ SIEM Plan is a solution that provides a ready-made set of tools for compliance r
 
 To configure the SIEM agents see the *Configuration* section.
 
+### Active response
+
+The SIEM agent automates the response to threats by running actions when these are detected. The agent has the ability to block network connections, stop running processes, and delete malicious files, among other actions. In addition, it can also run customized scripts developed by the user (e.g., Python, Bash, or PowerShell).
+
+To use this feature, users define the conditions that trigger the scripted actions, which usually involve threat detection and assessment. For example, a user can use log analysis rules to detect an intrusion attempt and an IP address reputation database to assess the threat by looking for the source IP address of the attempted connection.
+
+In the scenario described above, when the source IP address is recognized as malicious (low reputation), the monitored system is protected by automatically setting up a firewall rule to drop all traffic from the attacker. Depending on the active response, this firewall rule is temporary or permanent.
+
+On Linux systems, the Wazuh agent usually integrates with the local Iptables firewall for this purpose. On Windows systems, instead, it uses the null routing technique (also known as blackholing). Below you can find the configuration to define two scripts that are used for automated connection blocking:
+
+```xml
+    <command>
+      <name>firewall-drop</name>
+      <executable>firewall-drop</executable>
+      <timeout_allowed>yes</timeout_allowed>
+    </command>
+```
+
+```xml
+    <command>
+      <name>win_route-null</name>
+      <executable>route-null.exe</executable>
+      <timeout_allowed>yes</timeout_allowed>
+    </command>
+```
+
+On top of the defined commands, active responses set the conditions that need to be met to trigger them. Below is an example of a configuration that triggers the ``firewall-drop`` command when the log analysis rule ``100100`` is matched.
+
+```xml
+    <active-response>
+      <command>firewall-drop</command>
+      <location>local</location>
+      <rules_id>100100</rules_id>
+      <timeout>60</timeout>
+    </active-response>
+```
+
+In this case, rule ``100100`` is used to look for alerts where the source IP address is part of a well-known IP address reputation database.
+
+```xml
+   <rule id="100100" level="10">
+     <if_group>web|attack|attacks</if_group>
+     <list field="srcip" lookup="address_match_key">etc/lists/blacklist-alienvault</list>
+     <description>IP address found in AlienVault reputation database.</description>
+   </rule>
+```
+
+Below you can find a screenshot with two SIEM alerts: one that is triggered when a web attack is detected trying to exploit a PHP server vulnerability, and one that informs that the malicious actor has been blocked.
+
+![](/media/media/image240.PNG)
+
 ## Tenable and Qualisis Integration
 
 Qualys Guard and Tenable.sc is vulnerability management tools, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Qualys Guard API or Tenable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable` and `[Vulnerability] Overview Tenable`
@@ -7918,7 +7969,7 @@ To configure Qulays or Tenable.sc see the *Configuration* section.
 
 ## UBA
 
-UBA module enables premium features of Energy Logserver SIEM Plan. This cybersecurity approach helps analytics to discover threads in user behaviour. Module tracks user actions and scans common behaviour patterns. With UBA system provides deep knowledge of daily trends in user actions enabling SOC teams to detect any abnormal and suspicious activities. UBA differs a lot from regular SIEM approach based on logs analytics in time. The module focus on user actions and not the logs itself. Every user is identified as an entity in the system and its behaviour describes its work. UBA provide new data schema that mark each user action over time. Underlying UBA search engine analyse incoming data in order to identify log corresponding to user action. We leave the log for SIEM use cases, but incoming data is associated with a user action categories. New data model stores actions for each users and mark them down as metadata stored in individual index. Once tracking is done, SOC teams can investigate patterns for single action among many users or many actions for a single user. This unique approach creates an activity map for everyone working in the organization. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UBA is designed to give information about the common type of action that user performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts.
+The UBA module enables premium features of Energy Logserver SIEM Plan. This cybersecurity approach helps analytics to discover threads in user behaviour. Module tracks user actions and scans common behaviour patterns. With UBA system provides deep knowledge of daily trends in user actions enabling SOC teams to detect any abnormal and suspicious activities. UBA differs a lot from regular SIEM approach based on logs analytics in time. The module focus on user actions and not the logs itself. Every user is identified as an entity in the system and its behaviour describes its work. UBA provide new data schema that mark each user action over time. Underlying UBA search engine analyse incoming data in order to identify log corresponding to user action. We leave the log for SIEM use cases, but incoming data is associated with a user action categories. New data model stores actions for each users and mark them down as metadata stored in individual index. Once tracking is done, SOC teams can investigate patterns for single action among many users or many actions for a single user. This unique approach creates an activity map for everyone working in the organization. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UBA is designed to give information about the common type of action that user performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts.
 UBA comes with defined dashboards which shows discovered actions and metrics for them.
 
 ![](/media/media/image238.png)

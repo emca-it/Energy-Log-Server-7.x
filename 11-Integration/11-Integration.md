@@ -1491,6 +1491,10 @@ Example of `config.ini` file:
    state_file_path = siem_sophos.json
 ```
 
+The Energy Logserver can make automatic configuration changes via the API in Sophos E-mail Appliance, such as: adding a domain to the blocked domain list. This is done by using the `command` alert method and entering the correct API request in the `Path to script/command` field.
+
+![](/media/media/image241.PNG)
+
 ## FreeRadius
 The Energy Logserver accepts data from the FreeRadius system using the SYSLOG protocol. The FreeRadius configuration procedure is as follows:  [https://wiki.freeradius.org/config/Logging](https://wiki.freeradius.org/config/Logging)
 
@@ -1624,6 +1628,7 @@ Using the assigned tag, the documents is send to the appropriate index:
    ```
 
 ## CheckPoint Firewalls
+
 The Energy Logserver accepts data from the CheckPoint Firewalls system using the SYSLOG protocol. The CheckPoint Firewalls configuration procedure is as follows: [https://sc1.checkpoint.com/documents/SMB_R80.20/AdminGuides/Locally_Managed/EN/Content/Topics/Configuring-External-Log-Servers.htm?TocPath=Appliance%20Configuration%7CLogs%20and%20Monitoring%7C_____3](https://sc1.checkpoint.com/documents/SMB_R80.20/AdminGuides/Locally_Managed/EN/Content/Topics/Configuring-External-Log-Servers.htm?TocPath=Appliance%20Configuration%7CLogs%20and%20Monitoring%7C_____3)
 
 
@@ -1656,6 +1661,10 @@ Using the assigned tag, the documents is send to the appropriate index:
      }
    }
    ```
+
+The Energy Logserver can make automatic configuration changes via the API in Checkpoint firewalls such as adding a rule in the firewall. This is done using the `command` alert method and entering the correct API request in the `Path to script/command` field.
+
+![](/media/media/image241.PNG)
 
 ## WAF F5 Networks Big-IP
 The Energy Logserver accepts data from the F5 system using the SYSLOG protocol. The F5 configuration procedure is as follows:  [https://support.f5.com/csp/article/K13080](https://support.f5.com/csp/article/K13080)
@@ -1721,6 +1730,10 @@ and:
 ```bash
 filebeat test output
 ```
+
+The Energy Logserver can make automatic configuration changes via an API in the Infoblox DNS Firewall, e.g.: automatic domain locking. This is done using the `command` alert method and entering the correct API request in the `Path to script/command` field.
+
+![](/media/media/image241.PNG)
 
 ## CISCO Devices
 The Energy Logserver accepts data from the Cisco devices - router, switch, firewall and access point using the SYSLOG protocol. The Cisco devices configuration procedure is as follows: [https://www.ciscopress.com/articles/article.asp?p=426638&seqNum=3](https://support.f5.com/csp/article/K13080)
