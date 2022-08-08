@@ -2297,3 +2297,37 @@ The Energy Logserver has the ability to forward detected alerts to *Sumologic Cl
   - Facility
 
 ![](/media/media/image237.png)
+
+Energy Logserver has the ability to create security dashboards from data found in SOAR, such as statistics. It has the ability to create and configure master views from extracted SOAR data. 
+
+An example of an API request retrieving data:
+```bash
+  curl -X GET "https://10.4.3.202/incmansuite_ng/api/v2/kpi?output_set=Weekly%20summary&type=json" -H "accept: application/json" -H "Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9. eyJpYXQiOjE2NTc3MTg2ODAsImp0aSI6IjdmMzg1ZDdhLTc1YjYtNGZmMC05YTdmLTVkMmNjYTjZjTQ0YiIsImlzcyI6IkluY01hbiA1LjMuMC4wIiwibmJmIjoxNjU3NzE4NjgwLCJleHAiOm51bGwsImRhdGEiOnsidXNlcklkIjoxfX0. pCJlM9hxj8VdavGuNfIuq1y5Dwd9kJT_UMyoRca_gUZjUXQ85nwEQZz_QEquE1rXTgVW9TO__gDNjY30r8yjoA" -k
+```
+Example of request response:
+
+```bash
+  [{"[INCIDENT] Created by": "System","[INCIDENT] Owner": "IncMan Administrator","[INCIDENT] Kind": "Forensic - Incident response","[INCIDENT] Status": "Open","[INCIDENT] Incident ID": "2022","[INCIDENT] Opening time": "07/15/22 10:47:11","[INCIDENT] Closing time":"","[INCIDENT] Category": "General","[INCIDENT] Type": "General, Incident Response","[OBSERVABLES] EMAIL":["adam@it.emca.pl"]},{"[INCIDENT] Created by": "System","[INCIDENT] Owner": "IncMan Administrator","[INCIDENT] Kind": "Forensic - Incident response","[INCIDENT] Status": "Open","[INCIDENT] Incident ID": "ENE-LOGS EVENTS FROM ENERGY LOGSERVER 2022-07-15 08:23:00","[INCIDENT] Opening time": "07/15/22 10:23:01","[INCIDENT] Closing time":"","[INCIDENT] Category": "General","[INCIDENT] Type": "General, Intrusion attempt"},[{"[INCIDENT] Created by": "System","[INCIDENT] Owner": "IncMan Administrator","[INCIDENT] Kind": "Forensic - Incident response","[INCIDENT] Status": "Open","[INCIDENT] Incident ID": "ENE-LOGS EVENTS FROM ENERGY LOGSERVER 2022-07-15 08:20: 49","[INCIDENT] Opening time": "07/15/22 10:20:50","[INCIDENT] Closing time":"","[INCIDENT] Category": "General","[INCIDENT] Type": "General, Intrusion attempt"}]]
+```
+
+Integration pipeline configuration:
+```conf
+input {
+  exec {
+     command => ""https://10.4.3.202/incmansuite_ng/api/v2/kpi?output_set=Weekly%20summary&type=json" -H "accept: application/json" -H "Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9. eyJpYXQiOjE2NTc3MTg2ODAsImp0aSI6IjdmMzg1ZDdhLTc1YjYtNGZmMC05YTdmLTVkMmNjYTjZjTQ0YiIsImlzcyI6IkluY01hbiA1LjMuMC4wIiwibmJmIjoxNjU3NzE4NjgwLCJleHAiOm51bGwsImRhdGEiOnsidXNlcklkIjoxfX0. pCJlM9hxj8VdavGuNfIuq1y5Dwd9kJT_UMyoRca_gUZjUXQ85nwEQZz_QEquE1rXTgVW9TO__gDNjY30r8yjoA" -k"
+     interval => 86400
+   }
+}
+
+# optional
+filter {}
+
+output {
+  elasticsearch {
+    hosts => [ "http://localhost:9200" ]
+    index => "soar-%{+YYYY.MM}"
+    user => "logserver"
+    password => "logserver"
+  }
+}
+```
