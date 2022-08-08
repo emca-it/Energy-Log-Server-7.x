@@ -7837,13 +7837,13 @@ condition we are interested in is met, we send an action in the form
 of sending a message to our e-mail address. In the action, you can
 also set the launch of any script.
 
-## Wazuh
+## Siem Module
 
 Energy Logserver, through its built-in vulnerability detection module called Wazuh and the use of best practices defined in the CIS, allows to audit monitored environment for security vulnerabilities, misconfigurations, or outdated software versions. File Integrity Monitoring functionality allows for detailed monitoring and alerting of unauthorized access attempts to most sensitive data.
 
 SIEM Plan is a solution that provides a ready-made set of tools for compliance regulations such as CIS, PCI DSS, GDPR, NIST 800-53, ISO 27001.The system enables mapping of detected threats to Mitre ATT&CK tactics. By integrating with the MISP Energy Logserver, allows to get real-time information about new threats on the network by downloading the latest IoC lists.
 
-To configure the Wazuh agents see the *Configuration* section.
+To configure the SIEM agents see the *Configuration* section.
 
 ## Tenable and Qualisis Integration
 

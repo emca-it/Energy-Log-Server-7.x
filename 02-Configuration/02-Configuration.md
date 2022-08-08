@@ -3159,3 +3159,36 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
       hostname="qualysguard.qg2.apps.qualys.eu"
   )
   ```
+
+## Virtus Total
+
+This integration utilizes the VirusTotal API to detect malicious content within the files monitored by **File Integrity Monitoring**. This integration functions as described below:
+
+1. FIM looks for any file addition, change, or deletion onthe monitored folders. This module stores the hash of thesefiles and triggers alerts when any changes are made.
+2. When the VirusTotal integration is enabled, it istriggered when an FIM alert occurs. From this alert, themodule extracts the hash field of the file.
+3. The module then makes an HTTP POST request to theVirusTotal database using the VirusTotal API for comparisonbetween the extracted hash and the information contained inthe database.
+4. A JSON response is then received that is the result ofthis search which will trigger one of the following alerts:
+    - Error: Public API request rate limit reached.
+    - Error: Check credentials.
+    - Alert: No records in VirusTotal database.
+    - Alert: No positives found.
+    - Alert: X engines detected this file.
+
+The triggered alert is logged in the ``integration.log`` file and stored in the ``alerts.log`` file with all other alerts.
+
+Find examples of these alerts in the `VirusTotal integrationalerts`_ section below.
+
+### Configuration
+
+  Follow the instructions from :ref:`manual_integration` to enable the **Integrator** daemon and configure the VirusTotal integration.
+
+  This is an example configuration to add on the ``ossec.conf`` file:
+
+```xml
+  <integration>
+    <name>virustotal</name>
+    <api_key>API_KEY</api_key> <!-- Replace with your   sTotal API key -->
+    <group>syscheck</group>
+    <alert_format>json</alert_format>
+  </integration>
+```
