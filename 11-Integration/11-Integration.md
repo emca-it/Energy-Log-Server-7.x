@@ -2331,3 +2331,167 @@ output {
   }
 }
 ```
+## Microsfort System Center Operations Manager
+
+The Energy Logserver has the ability to integrate with MS SCOM (System Center Operations Manager) monitoring systems to monitor metrics and service availability in the context of the end system user. 
+
+An example of the integration pipeline configuration with SCOM:
+
+
+```bash
+input {
+        # scom
+        jdbc {
+            jdbc_driver_library => "/usr/share/logstash/jdbc/mssql-jdbc-6.2.2.jre8.jar"
+            jdbc_driver_class => "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+            jdbc_connection_string => "jdbc:sqlserver://VB2010000302;databaseName=OperationsManagerDW2012;"
+            jdbc_user => "PerfdataSCOM"
+            jdbc_password => "${SCOM_PASSWORD}"
+            jdbc_default_timezone => "UTC"
+            statement_filepath => "/usr/share/logstash/plugin/query"
+            schedule => "*/5 * * * *"
+            sql_log_level => "warn"
+            record_last_run => "false"
+            clean_run => "true"
+            tags => "scom"
+            }
+}
+# optional filter section
+filter {}
+output {
+  if "scom" in [tags] {
+      elasticsearch {
+        hosts => [ "http://localhost:9200" ]
+        index => "scom-%{+YYYY.MM}"
+        user => "logstash"
+        password => "logstash"
+    }
+  }
+}
+```
+
+
+The SLQ query stored in `/usr/share/logstash/plugin/query` file:
+
+```sql
+  #query
+
+  SELECT
+        Path,
+        FullName,
+        ObjectName,
+        CounterName,
+        InstanceName,
+        SampleValue AS Value,
+        DateTime
+  FROM Perf.vPerfRaw pvpr WITH (NOLOCK)
+  INNER JOIN vManagedEntity vme WITH (NOLOCK)
+        ON pvpr.ManagedEntityRowId = vme.ManagedEntityRowId
+  INNER JOIN vPerformanceRuleInstance vpri WITH (NOLOCK)
+        ON pvpr.PerformanceRuleInstanceRowId = vpri.PerformanceRuleInstanceRowId
+  INNER JOIN vPerformanceRule vpr WITH (NOLOCK)
+        ON vpr.RuleRowId = vpri.RuleRowId
+  WHERE ObjectName IN (
+  'AD FS',
+  'AD Replication',
+  'Cluster Disk',
+  'Cluster Shared Volume',
+  'DirectoryServices',
+  'General Response',
+  'Health Service',
+  'LogicalDisk',
+  'Memory',
+  'Network Adapter',
+  'Network Interface',
+  'Paging File',
+  'Processor',
+  'Processor Information',
+  'Security System-Wide Statistics',
+  'SQL Database',
+  'System',
+  'Web Service'
+  )
+  AND CounterName IN (
+  'Artifact resolution Requests',
+  'Artifact resolution Requests/sec',
+  'Federation Metadata Requests',
+  'Federation Metadata Requests/sec',
+  'Token Requests',
+  'Token Requests/sec',
+  'AD Replication Queue',
+  'Replication Latency',
+  'Free space / MB',
+  'Free space / Percent',
+  'Total size / MB',
+  'ATQ Outstanding Queued Requests',
+  'ATQ Request Latency',
+  'ATQ Threads LDAP',
+  'ATQ Threads Total',
+  'Active Directory Last Bind',
+  'Global Catalog Search Time',
+  'agent processor utilization',
+  '% Free Space',
+  'Avg. Disk Queue Length',
+  'Avg. Disk sec/Read',
+  'Avg. Disk sec/Write',
+  'Current Disk Queue Length',
+  'Disk Bytes/sec',
+  'Disk Read Bytes/sec',
+  'Disk Reads/sec',
+  'Disk Write Bytes/sec',
+  'Disk Writes/sec',
+  'Free Megabytes',
+  'Bytes Total/sec',
+  'Bytes Received/sec',
+  'Bytes Sent/sec',
+  'Bytes Total/sec',
+  'Current Bandwidth',
+  '% Processor Time',
+  '% Usage',
+  '% Committed Bytes In Use',
+  'Available Bytes',
+  'Available MBytes',
+  'Cache Bytes',
+  'Cache Faults/sec',
+  'Committed Bytes',
+  'Free System Page Table Entries',
+  'Page Reads/sec',
+  'Page Writes/sec',
+  'Pages/sec',
+  'PercentMemoryUsed',
+  'Pool Nonpaged Bytes',
+  'Pool Paged Bytes',
+  'KDC AS Requests',
+  'KDC TGS Requests',
+  'Kerberos Authentications',
+  'NTLM Authentications',
+  'DB Active Connections',
+  'DB Active Sessions',
+  'DB Active Transactions',
+  'DB Allocated Free Space (MB)',
+  'DB Allocated Size (MB)',
+  'DB Allocated Space (MB)',
+  'DB Allocated Space Used (MB)',
+  'DB Available Space Total (%)',
+  'DB Available Space Total (MB)',
+  'DB Avg. Disk ms/Read',
+  'DB Avg. Disk ms/Write',
+  'DB Disk Free Space (MB)',
+  'DB Disk Read Latency (ms)',
+  'DB Disk Write Latency (ms)',
+  'DB Total Free Space (%)',
+  'DB Total Free Space (MB)',
+  'DB Transaction Log Available Space Total (%)',
+  'DB Transactions/sec',
+  'DB Used Space (MB)',
+  'Log Free Space (%)',
+  'Log Free Space (MB)',
+  'Log Size (MB)',
+  'Processor Queue Length',
+  'System Up Time',
+  'Connection Attempts/sec',
+  'Current Connections'
+  )
+
+  AND DateTime >= DATEADD(MI, -6, GETUTCDATE())
+```

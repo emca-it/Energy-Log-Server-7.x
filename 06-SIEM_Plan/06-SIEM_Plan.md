@@ -7877,7 +7877,7 @@ To perform this incident notification in an external system.  You need to select
 
 ![](/media/media/image239.png)
 
-It is possible to cancel the incident in the external system using a parameter added to the alert rule.
+It is possible to close the incident in the external system using a parameter added to the alert rule.
 
 ```yaml
   #Recovery definition:
