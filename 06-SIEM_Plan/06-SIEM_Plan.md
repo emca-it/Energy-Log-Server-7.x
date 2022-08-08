@@ -7837,7 +7837,7 @@ condition we are interested in is met, we send an action in the form
 of sending a message to our e-mail address. In the action, you can
 also set the launch of any script.
 
-### Alert detect and mitigate time
+### Incident detection and mitigation time
 
 The Energy Logserver allows you to keep track of the time and actions taken in the incident you created. 
 A detected alert incident has the date the incident occurred `match_body.@timestamp` and the date and time the incident was detected `alert.time`. 
