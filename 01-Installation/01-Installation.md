@@ -266,6 +266,20 @@ To update bad reputation lists and to create `.blacklists` index, you have to ru
   green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
   ```
 
+### Web Application Firewall requriments
+
+The Energy Logserver GUI requires the following request parameters to be allowed in WAF:
+
+ - URI Length: 2048 characters,
+ - Cookie Number In Request: 16,
+ - Header Number In Request: 50,
+ - Request Header Name Length: 1024 characters,
+ - Request Header Value Length: 4096 characters,
+ - URL Parameter Name Length: 1024 characters,
+ - URL Parameter Value Length: 4096 characters,
+ - Request Header Length: 8192 bytes,
+ - Request Body Length: 67108864 bytes.
+
 ## Docker support
 
 To get system cluster up and running in Docker, you can use Docker Compose.
