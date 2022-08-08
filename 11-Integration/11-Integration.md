@@ -1976,6 +1976,38 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
+### Microsoft Exchange message tracking
+
+The message tracking log is a detailed record of all activity as mail flows through the transport pipeline on Mailbox servers and Edge Transport servers. You can use message tracking for message forensics, mail flow analysis, reporting, and troubleshooting.
+
+By default, Exchange uses circular logging to limit the message tracking log based on file size and file age to help control the hard disk space that's used by the log files. To configure the message tracking log, see the documentation: [https://docs.microsoft.com/en-us/exchange/mail-flow/transport-logs/configure-message-tracking?view=exchserver-2019](https://docs.microsoft.com/en-us/exchange/mail-flow/transport-logs/configure-message-tracking?view=exchserver-2019)
+
+Configure output section in `C:\Program Files (x86)\filebeat\filebeat.yml` file:
+
+```yml
+filebeat.inputs:
+- type: log
+  paths:
+    - "%ExchangeInstallPath%TransportRoles\Logs\MessageTracking\*"
+```
+
+```yml
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+```
+
+Test the configuration:
+
+```bash
+filebeat test config
+```
+
+and:
+
+```bash
+filebeat test output
+```
+
 ## Microsoft AD, Radius, Network Policy Server
 
 The Energy Logserver accepts data from the Active Directory, Radius, Network Policy Server services using the Winlogbeat agent.
