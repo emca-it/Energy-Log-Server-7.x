@@ -1824,6 +1824,14 @@ Using the assigned tag, the documents is send to the appropriate index:
    }
    ```
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ## AIX Systems
 The Energy Logserver accepts data from the AIX systems using the SYSLOG protocol.
 
@@ -1890,6 +1898,14 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ## Microsoft IIS Service
 
 The Energy Logserver accepts data from the Microsoft IIS services using the Filebeat agent.
@@ -1922,6 +1938,14 @@ and:
 filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
 
 ## Apache Service
 
@@ -1956,6 +1980,14 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ## Microsoft Exchange
 
 The Energy Logserver accepts data from the Microsoft Exchange services using the Filebeat agent.
@@ -1989,6 +2021,14 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ### Microsoft Exchange message tracking
 
 The message tracking log is a detailed record of all activity as mail flows through the transport pipeline on Mailbox servers and Edge Transport servers. You can use message tracking for message forensics, mail flow analysis, reporting, and troubleshooting.
@@ -2019,6 +2059,13 @@ and:
 
 ```bash
 filebeat test output
+```
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
 ```
 
 ## Microsoft AD, Radius, Network Policy Server
@@ -2056,6 +2103,14 @@ winlogbeat test output
 ```
 The Energy Logserver save collected data in `winlogbeat-*` index pattern and its available to review in the Discover module.
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ## Microsoft MS SQL Server
 
 The Energy Logserver accepts data from the Microsoft MS SQL Server services using the Filebeat agent.
@@ -2088,6 +2143,14 @@ and:
 filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
 
 ## MySQL Server
 
@@ -2122,6 +2185,14 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ## Oracle Database Server
 
 The Energy Logserver accepts data from the Oracle Database Server services using the Filebeat agent.
@@ -2155,6 +2226,14 @@ filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
 
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
+
 ## Postgres Database Server
 
 The Energy Logserver accepts data from the Postgres Database Server services using the Filebeat agent.
@@ -2187,6 +2266,14 @@ and:
 filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
 
 ## VMware Platform
 
@@ -2330,6 +2417,14 @@ and:
 filebeat test output
 ```
 The Energy Logserver save collected data in `filebeat-*` index pattern and its available to review in the Discover module.
+
+If additional agent data information is required, e.g.: IP address, add the following section in the agent configuration file:
+
+```yml
+processors:
+  - add_host_metadata: 
+      netinfo.enabled: true
+```
 
 ## Sumologic Cloud SOAR
 

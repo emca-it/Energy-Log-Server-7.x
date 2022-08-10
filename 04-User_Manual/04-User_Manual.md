@@ -5052,6 +5052,36 @@ Configuration steps:
 		  }
 		}
 
+### Multiline codec
+
+The original goal of this codec was to allow joining of multiline messages from files into a single event. For example, joining Java exception and stacktrace messages into a single event.
+
+```conf
+    input {
+      stdin {
+        codec => multiline {
+          pattern => "pattern, a regexp"
+          negate => "true" or "false"
+          what => "previous" or "next"
+        }
+      }
+    }
+```
+
+```conf
+    input {
+      file {
+        path => "/var/log/someapp.log"
+        codec => multiline {
+          # Grok pattern names are valid! :)
+          pattern => "^%{TIMESTAMP_ISO8601} "
+          negate => true
+          what => "previous"
+        }
+      }
+    }
+```
+
 ## Join
 **Note**
 ***Before use *Join* upgrade *Log Server* to at least v7.1.1***
