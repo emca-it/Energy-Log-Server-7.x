@@ -2540,3 +2540,133 @@ The SLQ query stored in `/usr/share/logstash/plugin/query` file:
 
   AND DateTime >= DATEADD(MI, -6, GETUTCDATE())
 ```
+## MISP Integration
+
+Integration with MISP is divided into two parts, server side and client side.
+
+### Requirements
+
+1. Server side
+
+  - Prepare the MISP instance - you need an authorization key (go to Administration -> List Auth Keys -> Add authentication key)
+  - Complete the necessary information in the `misp_threat_lists_update.sh` script, in particular the variables:
+    - KEY (authentication key)
+    - MISP_URL (misp instance to connect)
+    - DEST (directory made available to the http server for output files)
+
+```bash
+#!/bin/bash
+DEST=/etc/logstash/lists
+IOC_USER=''
+IOC_PASS=''
+LOGSERVER_USER='logserver'
+LOGSERVER_PASS='logserver'
+LOGSERVER_HOST=127.0.0.1
+LOGSERVER_PORT=9200
+LOGSERVER_SSL=false
+REPOSITORY_URL=https://repository.energylogserver.pl
+
+
+# FILTER
+function prepare_blacklist() {
+	blacklist=$1
+	/bin/mv -f ${DEST}/misp_${blacklist}.blacklist ${DEST}/misp_${blacklist}-$(date +%s).blacklist
+	#/usr/bin/echo "#"`/usr/bin/date` > ${DEST}/misp_${blacklist}.yml
+	#/usr/bin/awk '{print $1}' ${DEST}/misp_${blacklist}-*.blacklist | /usr/bin/sed -r "s/(.*)/\"\1\": \""bad_${blacklist}"\"/" >> ${DEST}/misp_${blacklist}.yml
+	#/usr/bin/sort -u ${DEST}/misp_${blacklist}.yml -o ${DEST}/misp_${blacklist}.yml
+}
+
+# INPUT
+function update_blacklist() {
+	blacklist=$1
+	local CURL_STATUS=""
+	CURL_STATUS=$(/usr/bin/curl -w "%{http_code}\n" -sS -u "${IOC_USER}":"${IOC_PASS}" ${REPOSITORY_URL}/ioc/misp_${blacklist}.blacklist -o ${DEST}/misp_${blacklist}.blacklist)
+	if [ ${CURL_STATUS} == 200 ]
+	then
+		prepare_blacklist ${blacklist}
+	fi
+}
+
+update_blacklist domain
+update_blacklist email
+update_blacklist filename
+update_blacklist ip
+update_blacklist url
+update_blacklist filehash
+update_blacklist certhash
+update_blacklist regkey
+
+## OUTPUT
+if [ ${LOGSERVER_SSL} = true ]
+then
+	/usr/bin/curl -k -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "https://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
+else
+	/usr/bin/curl -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "http://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
+fi
+```
+ - Add the script to the schedule:
+
+```bash
+# crontab -e
+# 0 1 * * * /path/to/misp_threat_lists_update.sh
+```
+2. Clinet side
+
+ - Has access to the server repository
+ - Has logstash installed
+ - Complete the necessary information in the `misp_threat_lists.sh script`, in particular the variables:
+    - REPOSITORY_URL
+    - IOC_USER (if needed)
+    - IOC_PASS (if needed)
+
+```bash
+#!/bin/bash
+DEST=/etc/logstash/lists
+IOC_USER=''
+IOC_PASS=''
+LOGSERVER_USER='logserver'
+LOGSERVER_PASS='logserver'
+LOGSERVER_HOST=127.0.0.1
+LOGSERVER_PORT=9200
+LOGSERVER_SSL=false
+REPOSITORY_URL=https://repository.energylogserver.pl
+
+
+# FILTER
+function prepare_blacklist() {
+	blacklist=$1
+	/bin/mv -f ${DEST}/misp_${blacklist}.blacklist ${DEST}/misp_${blacklist}-$(date +%s).blacklist
+	#/usr/bin/echo "#"`/usr/bin/date` > ${DEST}/misp_${blacklist}.yml
+	#/usr/bin/awk '{print $1}' ${DEST}/misp_${blacklist}-*.blacklist | /usr/bin/sed -r "s/(.*)/\"\1\": \""bad_${blacklist}"\"/" >> ${DEST}/misp_${blacklist}.yml
+	#/usr/bin/sort -u ${DEST}/misp_${blacklist}.yml -o ${DEST}/misp_${blacklist}.yml
+}
+
+# INPUT
+function update_blacklist() {
+	blacklist=$1
+	local CURL_STATUS=""
+	CURL_STATUS=$(/usr/bin/curl -w "%{http_code}\n" -sS -u "${IOC_USER}":"${IOC_PASS}" ${REPOSITORY_URL}/ioc/misp_${blacklist}.blacklist -o ${DEST}/misp_${blacklist}.blacklist)
+	if [ ${CURL_STATUS} == 200 ]
+	then
+		prepare_blacklist ${blacklist}
+	fi
+}
+
+update_blacklist domain
+update_blacklist email
+update_blacklist filename
+update_blacklist ip
+update_blacklist url
+update_blacklist filehash
+update_blacklist certhash
+update_blacklist regkey
+
+## OUTPUT
+if [ ${LOGSERVER_SSL} = true ]
+then
+	/usr/bin/curl -k -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "https://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
+else
+	/usr/bin/curl -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "http://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
+fi
+```
+ - Activate pipeline blacklists in `/etc/logstash/pipelnes.yml`.

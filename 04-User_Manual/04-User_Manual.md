@@ -336,6 +336,83 @@ are in the range of 500 to 599, simultaneously contain the word
 „access denied" or „error", omitting those events for which the status
 field value is 505.
 
+#### Wildcards
+
+Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters:
+
+`qu?ck bro*`
+
+Be aware that wildcard queries can use an enormous amount of memory and perform very badly — just think how many terms need to be queried to match the query string "a* b* c*".
+
+#### Regular expressions
+
+Regular expression patterns can be embedded in the query string by wrapping them in forward-slashes ("/"):
+
+`name:/joh?n(ath[oa]n)/`
+
+The supported regular expression syntax is explained in Regular expression syntax [https://www.elastic.co/guide/en/elasticsearch/reference/8.3/regexp-syntax.html](https://www.elastic.co/guide/en/elasticsearch/reference/8.3/regexp-syntax.html)
+
+#### Fuzziness
+
+You can run fuzzy queries using the ~ operator:
+
+`quikc~ brwn~ foks~`
+
+For these queries, the query string is normalized. If present, only certain filters from the analyzer are applied. For a list of applicable filters, see Normalizers.
+
+The query uses the Damerau-Levenshtein distance to find all terms with a maximum of two changes, where a change is the insertion, deletion or substitution of a single character, or transposition of two adjacent characters.
+
+The default edit distance is 2, but an edit distance of 1 should be sufficient to catch 80% of all human misspellings. It can be specified as:
+
+`quikc~1`
+
+#### Proximity searches
+
+While a phrase query (eg "john smith") expects all of the terms in exactly the same order, a proximity query allows the specified words to be further apart or in a different order. In the same way that fuzzy queries can specify a maximum edit distance for characters in a word, a proximity search allows us to specify a maximum edit distance of words in a phrase:
+
+`"fox quick"~5`
+
+The closer the text in a field is to the original order specified in the query string, the more relevant that document is considered to be. When compared to the above example query, the phrase "quick fox" would be considered more relevant than "quick brown fox".
+
+#### Ranges
+
+Ranges can be specified for date, numeric or string fields. Inclusive ranges are specified with square brackets [min TO max] and exclusive ranges with curly brackets {min TO max}.
+
+ - All days in 2012:
+
+    `date:[2012-01-01 TO 2012-12-31]`
+
+ - Numbers 1..5
+
+    `count:[1 TO 5]`
+
+ - Tags between alpha and omega, excluding alpha and omega:
+
+    `tag:{alpha TO omega}`
+
+ - Numbers from 10 upwards
+
+    `count:[10 TO *]`
+
+ - Dates before 2012
+
+   `date:{* TO 2012-01-01}`
+
+Curly and square brackets can be combined:
+
+ - Numbers from 1 up to but not including 5
+
+    `count:[1 TO 5}`
+
+ - Ranges with one side unbounded can use the following syntax:
+
+    ```
+    age:>10
+    age:>=10
+    age:<10
+    age:<=10
+    ```
+
 ### Saving and deleting queries
 
 Saving queries enables you to reload and use them in the future. 
