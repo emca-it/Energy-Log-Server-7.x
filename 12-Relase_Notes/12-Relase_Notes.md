@@ -1,5 +1,61 @@
 # **CHANGELOG**
 
+## v7.1.2
+
+### NewFeatures
+
+- Energy SOAR: Redesigned and improved integration (Security Orchestration, Automation And Response) 
+- Intelligence: Redesigned and improved Forecasting [experimental]
+- Masteragent: New feature: Configuration Templates
+- New plugin: CMDB - simple implementation of Configuration Management Database
+
+### Improvements
+
+- es2csv - Performance boost and Memory optimization
+- Reports: Support for large report files
+- Redirection of HTTPS connection to GUI enabled by default - 443 => 5601
+- Login: Home Page moved to Integrations Page
+- diagnostic-tool.sh - Added logstash logs
+- Elasticsearch: Global timeouts changed to 60s
+- Updated LICENSE in all components
+- Index Management: Prepare index has been moved from Config to Index-Management tab
+- Masteragent: Setting authorization with a client certificate by default
+- Masteragent: Possibility to fully disable the HTTP server on masteragent clients
+
+### BugFixes
+
+- Login: Fixed problems with sharing Short Links
+- Discovery: Fixed problem with index-patterns name overlapping 
+- Index Management: Fixed execution time for builin logtrail policies 
+- Masteragent: Fixed error when getting installed services
+
+### Integrations
+
+- windows-ad: Fixed error in Ad Accounts dashboard
+- beats - Fixes in waf ruby filter
+
+### SIEM Plan
+
+- Vectra.AI: Integration with dedicated dashboard and alerts
+- MITRE added to SIEM Dashboard
+- Agents: SIEM agents updated to 3.13.4
+- Agents: Vulnerability detection & feeds enabled by default
+- Alert: Simplified discover_url feature
+- Alert: theHive project - Improved integration
+- Alert: Fixed exception for risk query
+- Alert: SIEM alert group changed to "Correlated"
+- Alert: Fixed problem with TypeError: deprecated_search() 
+- Alert: Fixed logs problem after rotating the file
+- Alert: Fixed permission problem in Run Once mode
+- Alert: Fixed indentation in query_string
+- [bugfix] Added missing library to Qualys Quard venv
+- [bugfix] Added missing ports 1514udp-tcp/1515tcp to install.sh
+
+### Required post upgrade
+
+- Recreate bundles/cache: ```rm -rf /usr/share/kibana/optimize/bundles/* && systemctl restart kibana```
+- (SIEM only) Update/ReImport SIEM Dashboard for MITRE
+
 ## v7.1.1
 
 ### NewFeatures
