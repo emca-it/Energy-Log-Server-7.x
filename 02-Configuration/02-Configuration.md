@@ -1298,17 +1298,17 @@ Add an exception to the firewall to allow outgoing connection to TCP port master
 
   To install agent you can use interchangeably the following methods:
 
-    - Method 1 - use installer:
+  - Method 1 - use installer:
 
-    ```bash
-    # cd "C:\Program Files\MasterAgent"
-    # .\agents.exe install
-    # .\agents.exe start
-    ```
+  ```bash
+  # cd "C:\Program Files\MasterAgent"
+  # .\agents.exe install
+  # .\agents.exe start
+  ```
 
-    - Method 2 - manually creating service:
+  - Method 2 - manually creating service:
 
-    `# New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"`
+  `# New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"`
 
 8. Finally verify in Kibana '`Agents`' plugin if newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in `C:\Program Files\MasterAgent` directory after service start. Also check the service status:
 
