@@ -1146,109 +1146,219 @@ Configuration steps
 
 ## Agents module
 
-The Agents module is used for the central management of agents used in Energy Logserver such as *Filebeat*, *Winlogbeat*, *Packetbeat*, *Metricbeat*, Logstash and all other configuration files.
+Before use ensure that you have all required files
+  - Script for creating necessary certificates:  ./agents/masteragent/certificates/generate_certs.sh;
+  - Logstash utilites:
+    
+    ```conf
+      ./integrations/masteragent/conf.d/masteragent {01-input-agents.conf, 050-filter-agents.conf, 100-output-agents.conf}
+      ./integrations/masteragent/masteragent.yml.off.
+    ```
+  - Linux Agent files: `./agents/masteragent/agents/linux/masteragent`:
 
-### Component modules
+Executable: `MasterBeatAgent.jar`
+Configuration File for MasterAgent (server): `MasterBeatAgent.conf`
+Configuration File for Agent (client): `agent.conf`
+Service file: `masteragent.service`
 
-The software consists of two modules:
+### Preparations
 
-- Agent Module - installation just like any standard Kibana plugin. 
+EVERY COMMAND HAVE TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
-- Agent software - installed on host with agent (like beats);
+1. Generate the certificates using generate_certs.sh script from `./agents/masteragent/certificates directory`.
 
-### Agent Module installation
+  - Fill DOMAIN, DOMAIN_IP, COUNTRYNAME, STATE, COMPANY directives at the beggining of the script. Note that DOMAIN_IP represents IP of host running logstash.
+  - Generate certs:
 
-All necessary components can be found in the installation folder `./install/Agents/masteragent`.
+`# bash ./agents/masteragent/certificates/generate_certs.sh`
 
-1. Go to installation directory:
+  - Set KeyStore password of your choice that is utilised to securely store certificates.
+  - Type 'yes' when "Trust this certificate?" monit will be shown.
+  - Set TrusStore password of your choice that is used to secure CAs. Remember entered passwords - they'll be used later!
+
+2. Configure firewall to enable communication on used ports (defaults: TCP 8080 -> logstash, TCP 8081 -> agent's server).
+
+  - These ports can be changed, but must reflect "port" and "logstash" directives from agent.conf file to ensure connection with agent.
+  - Commands for default ports:
+
+  ```bash
+  # firewall-cmd --permanent --zone public --add-port 8080/tcp
+  # firewall-cmd --permanent --zone public --add-port 8081/tcp
+  ```
+3. Configure Logstash:
+
+  - Copy files:
+
+`# cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/`
+
+  - Copy pipeline configuration:
+
+  ```bash
+  # cp -rf ./integrations/masteragent/*.yml.off /etc/logstash/pipelines.d/masteragent.yml
+  # cat ./integrations/masteragent/masteragent.yml.off >> /etc/logstash/pipelines.yml`
+  ```
+  - Configure SSL connection, by copying previously generated certificates:
+
+  ```bash
+  # mkdir -p /etc/logstash/conf.d/masteragent/ssl
+  # /bin/cp -rf ./agents/masteragent/certificates/localhost.* ./agents/masteragent/certificates/rootCA.crt /etc/logstash/conf.d/masteragent/ssl/
+  ```
+  - Set permissions:
+
+`# chown -R logstash:logstash /etc/logstash/conf.d/masteragent`
+
+  - Restart service:
+
+`# systemctl restart logstash`
+
+### Installation of MasterAgent - Server Side
+
+  - Copy executable and config:
 
 ```bash
-cd ./install/Agents/masteragent
+# mkdir -p /opt/agents
+# /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/agents
+# /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.conf /opt/agents/agent.conf
 ```
 
-2. Generating the certificates:
+  - Copy certificates:
 
-   ```bash
-   cd certificates/
-   ```
+`# /bin/cp -rf ./agents/masteragent/certificates/node_name.p12 ./agents/masteragent/certificates/root.jks /opt/agents/`
 
-   - set *DOMAIN* and *DOMAIN_IP* in scripts from `./certificates` directory:
+  - Set permissions:
 
-     ```bash
-     #!/bin/bash
-     DOMAIN="localhost"
-     DOMAIN_IP="10.4.3.185"
-     ```
+`# chown -R kibana:kibana /opt/agents`
 
-   - execute the scripts in the following order:
+  - Update configuration file with KeyStore/TrustStore paths and passwords. Use your preferred editor eg. vim:
 
-     ```bash
-     ./1_rootca.sh
-     ./2_clientcrt.sh
-     ./3_createstore.sh
-     ```
+`# vim /opt/agents/agent.conf`
 
-3. Install the required packages:
+### Installation of Agent - Client Side
 
-   ```bash
-   yum install net-tools
-   ```
+FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
-4. Add an exception to the firewall to listen on TCP 8080 and 8081:
-   ```bash
-   firewall-cmd --permanent --zone public --add-port 8080/tcp
-   firewall-cmd --permanent --zone public --add-port 8081/tcp
-   ```
+Linux Agent - software installed on clients running on Linux OS:
 
-5. Logstash pipeline configuration:
-   ```bash
-   /bin/cp -rf ./logstash/agents_template.json /etc/logstash/templates.d/
-   mkdir /etc/logstash/conf.d/masteragent
-   /bin/cp -rf ./logstash/*.conf /etc/logstash/conf.d/masteragent/
-   ```
+1. Install net-tools package to use Agent on Linux RH / Centos:
 
-   - Edit file  `/etc/logstash/pipelines.yml` by uncomment this line(be awer to this lines looks likes other uncomment lines. It's yml file.):
+`# yum install net-tools`
 
-   ```yaml
-   - pipeline.id: masteragent
-     path.config: "/etc/logstash/conf.d/masteragent/*.conf
-   ```
-   - Logstash SSL configuration:
+2. Copy executable and config:
 
-   ```bash
-   mkdir /etc/logstash/conf.d/masteragent/ssl
-   /bin/cp -rf ./certificates/domain.key /etc/logstash/conf.d/masteragent/ssl/
-   /bin/cp -rf ./certificates/domain.crt /etc/logstash/conf.d/masteragent/ssl/
-   /bin/cp -rf ./certificates/rootCA.crt /etc/logstash/conf.d/masteragent/ssl/
-   chown -R logstash:logstash /etc/logstash
-   ```
+```bash
+# mkdir -p /opt/masteragent
+# /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/agent.conf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/masteragent
+# /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/masteragent.service /usr/lib/systemd/system/masteragent.service
+```
 
-### Linux Agent installation
+3. Copy certificates:
 
-1. Copy necessary files to destination host:
+`# /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/`
 
-   ```bash
-   /bin/cp -rf ./install/Agents/masteragent/agents/linux/masteragent /opt/masteragent
-   /bin/cp -rf ./install/Agents/masteragent/certificates/node_name.p12 /opt/masteragent
-   /bin/cp -rf ./install/Agents/masteragent/certificates/root.jks /opt/masteragent
-   /bin/cp -rf    ./install/Agents/masteragent/agents/linux/masteragent/masteragent.service /usr/lib/systemd/system/masteragent.service
-   ```
+4. Update configuration file with KeyStore/TrustStore paths and passwords. Also update IP and port (by default 8080 is used) of the logstash host that agent will connect to with 'logstash' directive. Use your preferred editor eg. vim:
 
-2. Set correct IP address of Logstash and Kibana in  **/opt/masteragent/agent.conf** and verify paths for Filebeat, Metricbeat, etc. are correct.
+`# vim /opt/masteragent/agent.conf`
 
-   ```bash
-   systemctl daemon-reload
-   systemctl enable masteragent
-   systemctl start masteragent
-   ```
+5. Enable masteragent service:
 
-3. Restart logstash:
+```bash
+# systemctl daemon-reload
+# systemctl enable masteragent
+# systemctl start masteragent
+```
 
-   ```bash
-   systemctl restart logstash
-   ```
+6. Finally verify in Kibana 'Agents' plugin if newly added agent is present. Check masteragent logs executing:
 
-4. In the GUI, in the **Agents** tab, you can check the status of the newly connected host.
+`# journalctl -fu masteragent`
+
+### Windows Agent - software installed on clients running on Windows OS:
+
+FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
+
+1. Ensure that you have all required files (`./install/agents/masteragent/agents/windows/masteragent`):
+
+  - Installer and manifest: `agents.exe`, `agents.xml`
+  - Client: `Agents.jar`
+  - Configuration File: `agent.conf`
+
+2. Configure firewall:
+
+Add an exception to the firewall to listen on TCP port 8081.
+Add an exception to the firewall to allow outgoing connection to TCP port masteragent:8080 (reasonable only with configured "`http_enabled = true`")
+
+3. Create `C:\Program Files\MasterAgent` directory.
+
+4. Copy the contents of the `./install/agents/masteragent/agents/windows/masteragent` directory to the `C:\Program Files\MasterAgent`.
+
+5. Copy node_name.p12 and root.jks files from the `./install/agents/masteragent/certificates` to desired directory.
+
+6. Update "`C:\Program Files\MasterAgent\agent.conf`" file with KeyStore/TrustStore paths from previous step and passwords. Also update IP and port (by default 8080 is used) of the logstash host that agent will connect to with 'logstash' directive.
+
+7. Start PowerShell as an administrator:
+
+  To install agent you can use interchangeably the following methods:
+
+    - Method 1 - use installer:
+
+    ```bash
+    # cd "C:\Program Files\MasterAgent"
+    # .\agents.exe install
+    # .\agents.exe start
+    ```
+
+    - Method 2 - manually creating service:
+
+    `# New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"`
+
+8. Finally verify in Kibana '`Agents`' plugin if newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in `C:\Program Files\MasterAgent` directory after service start. Also check the service status:
+
+  `# .\agents.exe status`
+
+### Beats - configuration templates
+
+1. Go to the `Agents` that is located in main manu. Then go to `Templates` and click `Add template` button.
+
+![](/media/media/image242.png)
+
+2. Click `Create new` file button at the bottom.
+
+![](/media/media/image243.png)
+
+3. you will see form to create file that will be on client system.
+  There are inputs such as:
+
+  - Destination Path,
+  - File name,
+  - Description,
+  - Upload file,
+  - Content.
+
+![](/media/media/image244.png)
+
+4. Remember that you must provide the exact path to your directory in Destination Path field
+
+![](/media/media/image245.png)
+
+5. After that add your file to template by checking it from `Available files` list and clicking `Add` and then `Create new file`.
+
+![](/media/media/image246.png)
+
+6. You can now see your template in the `Template` tab
+
+![](/media/media/image247.png)
+
+7. The next step will be to add the template to the agent by checking the agent's form list and clicking `Apply Template`.
+
+![](/media/media/image248.png)
+
+8. Last step is apply template by checking it from list and clicking `Apply` button.
+
+![](/media/media/image249.png)
+
+You can also select multiple agents. Remember, if your file path is Windows type You can only select Windows agents.
+You can check the Logs by clicking the icon in the `logs` column.
+
+![](/media/media/image250.png)
 
 ## Windows Agent installation
 
@@ -3222,3 +3332,24 @@ To start the custom integration, the `ossec.conf` file, including the block inte
  - event_location: Sets an alert source filter.
  - alert_format: Indicates that the script receives the alerts in JSON format (recommended). By default, the script will receive the alerts in full_log format.
 
+## Field level security
+You can restrict access to specific fields in documents for a user role. For example: the user can only view specific fields in the Discovery module, other fields will be inaccessible to the user. You can do this by:
+
+1. You can do this by adding the index to the `field includes` or `field excludes` in the `Create Role` tab.
+
+  - Includes are only fields that will be visible to the user.
+  - Excludes are fields that the user cannot see.
+
+  ![](/media/media/image251.png)
+
+2. After that you will see new role in `Role list` tab.
+
+  ![](/media/media/image252.png)
+
+3. Add your user to new `Role`
+
+  ![](/media/media/image253.png)
+
+You can now log in as a user with a new role, the user in the Discovery module should only see selected fields.
+
+![](/media/media/image254.png)
