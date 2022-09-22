@@ -3182,68 +3182,6 @@ elasticsearch_connection:
   https: true
 ```
 
-## SIEM Virtus Total integration
-
-This integration utilizes the VirusTotal API to detect malicious content within the files monitored by **File Integrity Monitoring**. This integration functions as described below:
-
-1. FIM looks for any file addition, change, or deletion onthe monitored folders. This module stores the hash of thesefiles and triggers alerts when any changes are made.
-2. When the VirusTotal integration is enabled, it istriggered when an FIM alert occurs. From this alert, themodule extracts the hash field of the file.
-3. The module then makes an HTTP POST request to theVirusTotal database using the VirusTotal API for comparisonbetween the extracted hash and the information contained inthe database.
-4. A JSON response is then received that is the result ofthis search which will trigger one of the following alerts:
-    - Error: Public API request rate limit reached.
-    - Error: Check credentials.
-    - Alert: No records in VirusTotal database.
-    - Alert: No positives found.
-    - Alert: X engines detected this file.
-
-The triggered alert is logged in the ``integration.log`` file and stored in the ``alerts.log`` file with all other alerts.
-
-Find examples of these alerts in the `VirusTotal integrationalerts`_ section below.
-
-### Configuration
-
-  Follow the instructions from :ref:`manual_integration` to enable the **Integrator** daemon and configure the VirusTotal integration.
-
-  This is an example configuration to add on the ``ossec.conf`` file:
-
-```xml
-  <integration>
-    <name>virustotal</name>
-    <api_key>API_KEY</api_key> <!-- Replace with your   sTotal API key -->
-    <group>syscheck</group>
-    <alert_format>json</alert_format>
-  </integration>
-```
-
-## SIEM Custom integration
-
-The integrator tool is able to connect SIEM module with other external software. 
-
-This is an example configuration for a custom integration in `ossec.conf`:
-
-```xml
-  <!--Custom external Integration -->
-  <integration>
-    <name>custom-integration</name>
-    <hook_url>WEBHOOK</hook_url>
-    <level>10</level>
-    <group>multiple_drops|authentication_failures</group>
-    <api_key>APIKEY</api_key> <!-- Replace with your external service API key -->
-    <alert_format>json</alert_format>
-  </integration>
-```
-
-To start the custom integration, the `ossec.conf` file, including the block integration component, has to be modified in the manager. The following parameters can be used:
-
- - name: Name of the script that performs the integration. In the case of a custom integration like the one discussed in this article, the name must start with “custom-“.
- - hook_url: URL provided by the software API to connect to the API itself. Its use is optional, since it can be included in the script.
- - api_key: Key of the API that enables us to use it. Its use is also optional for the same reason the use of the hook_url is optional.
- - level: Sets a level filter so that the script will not receive alerts below a certain level.
- - rule_id: Sets a filter for alert identifiers.
- - group: Sets an alert group filter.
- - event_location: Sets an alert source filter.
- - alert_format: Indicates that the script receives the alerts in JSON format (recommended). By default, the script will receive the alerts in full_log format.
-
 ## Field level security
 You can restrict access to specific fields in documents for a user role. For example: the user can only view specific fields in the Discovery module, other fields will be inaccessible to the user. You can do this by:
 
