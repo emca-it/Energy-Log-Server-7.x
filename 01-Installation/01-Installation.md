@@ -12,8 +12,8 @@
    -  Centos 8.X
    -  Oracle Linux 8.X - Unbreakable Enterprise Kernel (UEK)
    -  Centos Stream
-   -  AlmaLinux
-   -  RockyLinux
+   -  AlmaLinux 8
+   -  RockyLinux 8
 
 ## Installation method 
 
