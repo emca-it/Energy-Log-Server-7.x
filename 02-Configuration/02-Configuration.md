@@ -3158,29 +3158,6 @@ Configuration file: `/opt/cerebro/conf/application.conf`
       curl -k -XPOST 'https://192.168.3.11:5602/auth/login' -H 'mimeType: application/      -www-form-urlencoded' -d 'user=logserver&password=logserver' -c cookie.txt
       curl -k -XGET 'https://192.168.3.11:5602' -b cookie.txt
    ```
-   
-## License service (SIEM Plan only)
-
-License service configuration is required when using the SIEM Plan license. To configure the License Service, set the following parameters in the configuration file:
-
-
-hosts - Elasticsearch cluster hosts IP,
-password - password for Logserver  user,
-https - true or false.
-
-```bash
-vi /opt/license-service/license-service.conf
-```
-
-```bash
-elasticsearch_connection:
-  hosts: ["els_host_IP:9200"]
-
-  username: logserver
-  password: "logserver_password"
-
-  https: true
-```
 
 ## Field level security
 You can restrict access to specific fields in documents for a user role. For example: the user can only view specific fields in the Discovery module, other fields will be inaccessible to the user. You can do this by:

@@ -8135,3 +8135,26 @@ To start the custom integration, the `ossec.conf` file, including the block inte
  - group: Sets an alert group filter.
  - event_location: Sets an alert source filter.
  - alert_format: Indicates that the script receives the alerts in JSON format (recommended). By default, the script will receive the alerts in full_log format.
+
+## License Service
+
+License service configuration is required when using the SIEM Plan license. To configure the License Service, set the following parameters in the configuration file:
+
+
+hosts - Elasticsearch cluster hosts IP,
+password - password for Logserver  user,
+https - true or false.
+
+```bash
+vi /opt/license-service/license-service.conf
+```
+
+```bash
+elasticsearch_connection:
+  hosts: ["els_host_IP:9200"]
+
+  username: logserver
+  password: "logserver_password"
+
+  https: true
+```
