@@ -4,6 +4,10 @@ SIEM Plan provides access to a database of hundreds of predefined correlation ru
 
 System responds to the needs of today’s organizations by allowing identification of threats on the basis of a much larger amount of data, not always related to the security area as it is provided by traditional SIEM systems.
 
+Product contains deep expert knowledge about security posture. Using entire ecosystem of correlation rules, security dashboards with ability to create electronic documentation SIEM PLAN allows You to score the readiness of Your organization to prevent cyber-attacks. Embedded integration with MITRE ATT&CK quickly identifies unmanaged areas where Your organization potentially needs improvements. Security design will be measured and scored . Single screen will show You potential risk and the consequences of an attack hitting any area of the organization.
+
+Use SIEM Plan do prevent loss of reputation, data leakage, phishing or any other cyber-attack and stay safe.
+
 ## Alert Module
 
 ### Enabling the Alert Module
@@ -577,6 +581,8 @@ Energy Logserver allows you to estimate the risk based on the collected data. Th
 
 Information on the defined risk for a given field is passed with an alert and multiplied by the value of the Rule Importance parameter.
 
+Risk calculation does not use only logs for its work. Processing the security posture encounters all the information like user behaviour data, performance data, system inventory, running software, vulnerabilities and many more. Having large scope of information Your organization gather an easy way to score its security project and detect all missing spots of the design. Embedded deep expert knowledge is here to help.
+
 #### Create category
 
 To add a new risk Category, go to the **Alert** module, select the **Risks** tab and then **Create Cagtegory**. 
@@ -742,6 +748,10 @@ Incident handling allows you to perform the following action:
 - *Update* - allows you to change the Incident status or transfer the incident handling to another user. Status list: *New, Ongoing, False, Solved.*
 - *Playbooks* - enables handling of Playbooks assigned to an incident;
 - *Note* - User notes about the incident;
+
+SIEM correlation engine allows automatically scores organization security posture showing You what tactic the attacked use and how this puts organization at risk. Every attack can be traced on dashboard reflecting Your security design identifying missing enforcements.
+
+Incidents on the operation of the organization through appropriate points for caught incidents. Hazard situations are presented, using the so-called Mitre ATT / CK matrix. The Energy Logserver system, in addition to native integration with MITER, allows this knowledge to be correlated with other collected data and logs, creating even more complex techniques of behavior detection and analysis. Advanced approach allows for efficient analysis of security design estimation.
 
 #### Incident Escalation
 
@@ -8047,14 +8057,16 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
   ```
 
 
-## UBA
+## UEBA
 
-The UBA module enables premium features of Energy Logserver SIEM Plan. This is module which collects knowledge and functionalities which were always available in our system. This cybersecurity approach helps analytics to discover threads in user and entities behaviour. Module tracks user or resource actions and scans common behaviour patterns. With UBA system provides deep knowledge of daily trends in actions enabling SOC teams to detect any abnormal and suspicious activities. UBA differs a lot from regular SIEM approach based on logs analytics in time. The module focus on  actions and not the logs itself. Every user, host or other resource is identified as an entity in the system and its behaviour describes its work. Energy Logserver provide new data schema that mark each action over time. Underlying Energy search engine analyse incoming data in order to identify log corresponding to action. We leave the log for SIEM use cases, but incoming data is associated with an action categories. New data model stores actions for each entity and mark them down as metadata stored in individual index. Once tracking is done, SOC teams can investigate patterns for single action among many entities or many actions for a single user/entity. This unique approach creates an activity map for everyone working in the organization and for any resource. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UBA is designed to give information about the common type of action that user or entity performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts. UBA comes with defined dashboards which shows discovered actions and metrics for them.
+Energy Logserver system allows building and maintaining user's database model (UBA) and computers (EBA), and uses build in mechanisms of Machine Learning and Artificial Intelligence. Both have been implemented withing UEBA module.
+
+The UEBA module enables premium features of Energy Logserver SIEM Plan. This is module which collects knowledge and functionalities which were always available in our system. This cybersecurity approach helps analytics to discover threads in user and entities behaviour. Module tracks user or resource actions and scans common behaviour patterns. With UEBA system provides deep knowledge of daily trends in actions enabling SOC teams to detect any abnormal and suspicious activities. UEBA differs a lot from regular SIEM approach based on logs analytics in time. The module focus on  actions and not the logs itself. Every user, host or other resource is identified as an entity in the system and its behaviour describes its work. Energy Logserver provide new data schema that mark each action over time. Underlying Energy search engine analyse incoming data in order to identify log corresponding to action. We leave the log for SIEM use cases, but incoming data is associated with an action categories. New data model stores actions for each entity and mark them down as metadata stored in individual index. Once tracking is done, SOC teams can investigate patterns for single action among many entities or many actions for a single user/entity. This unique approach creates an activity map for everyone working in the organization and for any resource. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UEBA is designed to give information about the common type of action that user or entity performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts. UEBA comes with defined dashboards which shows discovered actions and metrics for them.
 
 ![](/media/media/image238.png)
 
 It is easy to filter presented data with single username/host or a group of users/hosts using query syntax. With help of saved searches SOC can create own outlook to stay focused on users at high risk of an attack.
-Energy Logserver is made for working with data. UBA gives new analytics approach, but what is more important it brings new metrics that we can work with. Artificial Intelligence functionality build in Energy Logserver help to calculate forecast for each action over single user or entire organization. In the same time thanks to extended set of rule types, Energy Logserver can correlate behavioral analysis with other data collected from environment. Working with Energy Logserver SIEM Plan with UBA module greatly enlarge security analytics scope.
+Energy Logserver is made for working with data. UEBA gives new analytics approach, but what is more important it brings new metrics that we can work with. Artificial Intelligence functionality build in Energy Logserver help to calculate forecast for each action over single user or entire organization. In the same time thanks to extended set of rule types, Energy Logserver can correlate behavioral analysis with other data collected from environment. Working with Energy Logserver SIEM Plan with UEBA module greatly enlarge security analytics scope.
 
 ## BCM Remedy
 
@@ -8158,3 +8170,9 @@ elasticsearch_connection:
 
   https: true
 ```
+
+---
+
+All title and ownership rights to the Product, its entire code, any copies thereof, including without limitation Copyright, are owned by EMCA Software sp. z o.o. . Any rights not expressly granted are reserved to EMCA Software.  
+
+All software components, including incorporated modules are maintained by EMCA software and protected with vendor license.  
