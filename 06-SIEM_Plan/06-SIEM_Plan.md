@@ -736,6 +736,10 @@ The value field value is then added to the table on which the risk calculation a
 
 ### Incidents
 
+SIEM correlation engine allows automatically scores organization security posture showing You what tactic the attacked use and how this puts organization at risk. Every attack can be traced on dashboard reflecting Your security design identifying missing enforcements.
+
+Incidents on the operation of the organization through appropriate points for caught incidents. Hazard situations are presented, using the so-called Mitre ATT / CK matrix. The Energy Logserver system, in addition to native integration with MITER, allows this knowledge to be correlated with other collected data and logs, creating even more complex techniques of behavior detection and analysis. Advanced approach allows for efficient analysis of security design estimation.
+
 The Incident module allows you to handle incidents created by triggered alert rules. 
 
 ![](/media/media/image154.png)
@@ -748,10 +752,6 @@ Incident handling allows you to perform the following action:
 - *Update* - allows you to change the Incident status or transfer the incident handling to another user. Status list: *New, Ongoing, False, Solved.*
 - *Playbooks* - enables handling of Playbooks assigned to an incident;
 - *Note* - User notes about the incident;
-
-SIEM correlation engine allows automatically scores organization security posture showing You what tactic the attacked use and how this puts organization at risk. Every attack can be traced on dashboard reflecting Your security design identifying missing enforcements.
-
-Incidents on the operation of the organization through appropriate points for caught incidents. Hazard situations are presented, using the so-called Mitre ATT / CK matrix. The Energy Logserver system, in addition to native integration with MITER, allows this knowledge to be correlated with other collected data and logs, creating even more complex techniques of behavior detection and analysis. Advanced approach allows for efficient analysis of security design estimation.
 
 #### Incident Escalation
 
@@ -8061,7 +8061,11 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
 
 Energy Logserver system allows building and maintaining user's database model (UBA) and computers (EBA), and uses build in mechanisms of Machine Learning and Artificial Intelligence. Both have been implemented withing UEBA module.
 
-The UEBA module enables premium features of Energy Logserver SIEM Plan. This is module which collects knowledge and functionalities which were always available in our system. This cybersecurity approach helps analytics to discover threads in user and entities behaviour. Module tracks user or resource actions and scans common behaviour patterns. With UEBA system provides deep knowledge of daily trends in actions enabling SOC teams to detect any abnormal and suspicious activities. UEBA differs a lot from regular SIEM approach based on logs analytics in time. The module focus on  actions and not the logs itself. Every user, host or other resource is identified as an entity in the system and its behaviour describes its work. Energy Logserver provide new data schema that mark each action over time. Underlying Energy search engine analyse incoming data in order to identify log corresponding to action. We leave the log for SIEM use cases, but incoming data is associated with an action categories. New data model stores actions for each entity and mark them down as metadata stored in individual index. Once tracking is done, SOC teams can investigate patterns for single action among many entities or many actions for a single user/entity. This unique approach creates an activity map for everyone working in the organization and for any resource. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UEBA is designed to give information about the common type of action that user or entity performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts. UEBA comes with defined dashboards which shows discovered actions and metrics for them.
+The UEBA module enables premium features of Energy Logserver SIEM Plan. This is module which collects knowledge and functionalities which were always available in our system. This cybersecurity approach helps analytics to discover threads in user and entities behaviour. Module tracks user or resource actions and scans common behaviour patterns. With UEBA system provides deep knowledge of daily trends in actions enabling SOC teams to detect any abnormal and suspicious activities. UEBA differs a lot from regular SIEM approach based on logs analytics in time.
+
+The module focus on actions and not the logs itself. Every user, host or other resource is identified as an entity in the system and its behaviour describes its work. Energy Logserver provide new data schema that mark each action over time. Underlying Energy search engine analyse incoming data in order to identify log corresponding to action. We leave the log for SIEM use cases, but incoming data is associated with an action categories. New data model stores actions for each entity and mark them down as metadata stored in individual index.
+
+Once tracking is done, SOC teams can investigate patterns for single action among many entities or many actions for a single user/entity. This unique approach creates an activity map for everyone working in the organization and for any resource. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UEBA is designed to give information about the common type of action that user or entity performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts. UEBA comes with defined dashboards which shows discovered actions and metrics for them.
 
 ![](/media/media/image238.png)
 
@@ -8170,9 +8174,3 @@ elasticsearch_connection:
 
   https: true
 ```
-
----
-
-All title and ownership rights to the Product, its entire code, any copies thereof, including without limitation Copyright, are owned by EMCA Software sp. z o.o. . Any rights not expressly granted are reserved to EMCA Software.  
-
-All software components, including incorporated modules are maintained by EMCA software and protected with vendor license.  
