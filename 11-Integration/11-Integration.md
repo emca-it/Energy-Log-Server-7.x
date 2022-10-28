@@ -2635,9 +2635,9 @@ The SLQ query stored in `/usr/share/logstash/plugin/query` file:
 
   AND DateTime >= DATEADD(MI, -6, GETUTCDATE())
 ```
-## MISP Integration
+## Energy Security Feeds
 
-Integration with MISP is divided into two parts, server side and client side.
+Integration with Energy Security Feeds is divided into two parts, server side and client side.
 
 ### Requirements
 
