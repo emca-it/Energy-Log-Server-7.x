@@ -2635,133 +2635,50 @@ The SLQ query stored in `/usr/share/logstash/plugin/query` file:
 
   AND DateTime >= DATEADD(MI, -6, GETUTCDATE())
 ```
+
 ## Energy Security Feeds
 
-Integration with Energy Security Feeds is divided into two parts, server side and client side.
+Energy Security Feeds boosts Your security detection rules. Get connected to fresh lists of Indicators of Compromise (IoCs) that contain crucial data about malware activities, attacks, financial fraud or any suspicious behaviour detected using our public traps. 
+Energy Security Feeds is a set of rich dictionary files ready to be integrated in SIEM Plan. Indicators like ip adresses, certhash, domain, email, filehash, filename, regkey, url are daily updated from our lab which is integrated with MISP ecosystem. The default feeds are described in a simple JSON format. 
 
-### Requirements
+### Configuration
 
-1. Server side
+#### Bad IP list update
+To update bad reputation lists and to create .blacklists index, you have to run following scripts:
 
-  - Prepare the MISP instance - you need an authorization key (go to Administration -> List Auth Keys -> Add authentication key)
-  - Complete the necessary information in the `misp_threat_lists_update.sh` script, in particular the variables:
-    - KEY (authentication key)
-    - MISP_URL (misp instance to connect)
-    - DEST (directory made available to the http server for output files)
-
-```bash
-#!/bin/bash
-DEST=/etc/logstash/lists
-IOC_USER=''
-IOC_PASS=''
-LOGSERVER_USER='logserver'
-LOGSERVER_PASS='logserver'
-LOGSERVER_HOST=127.0.0.1
-LOGSERVER_PORT=9200
-LOGSERVER_SSL=false
-REPOSITORY_URL=https://repository.energylogserver.pl
-
-
-# FILTER
-function prepare_blacklist() {
-	blacklist=$1
-	/bin/mv -f ${DEST}/misp_${blacklist}.blacklist ${DEST}/misp_${blacklist}-$(date +%s).blacklist
-	#/usr/bin/echo "#"`/usr/bin/date` > ${DEST}/misp_${blacklist}.yml
-	#/usr/bin/awk '{print $1}' ${DEST}/misp_${blacklist}-*.blacklist | /usr/bin/sed -r "s/(.*)/\"\1\": \""bad_${blacklist}"\"/" >> ${DEST}/misp_${blacklist}.yml
-	#/usr/bin/sort -u ${DEST}/misp_${blacklist}.yml -o ${DEST}/misp_${blacklist}.yml
-}
-
-# INPUT
-function update_blacklist() {
-	blacklist=$1
-	local CURL_STATUS=""
-	CURL_STATUS=$(/usr/bin/curl -w "%{http_code}\n" -sS -u "${IOC_USER}":"${IOC_PASS}" ${REPOSITORY_URL}/ioc/misp_${blacklist}.blacklist -o ${DEST}/misp_${blacklist}.blacklist)
-	if [ ${CURL_STATUS} == 200 ]
-	then
-		prepare_blacklist ${blacklist}
-	fi
-}
-
-update_blacklist domain
-update_blacklist email
-update_blacklist filename
-update_blacklist ip
-update_blacklist url
-update_blacklist filehash
-update_blacklist certhash
-update_blacklist regkey
-
-## OUTPUT
-if [ ${LOGSERVER_SSL} = true ]
-then
-	/usr/bin/curl -k -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "https://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
-else
-	/usr/bin/curl -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "http://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
-fi
 ```
- - Add the script to the schedule:
-
-```bash
-# crontab -e
-# 0 1 * * * /path/to/misp_threat_lists_update.sh
+/etc/logstash/lists/bin/misp_threat_lists.sh
 ```
-2. Clinet side
 
- - Has access to the server repository
- - Has logstash installed
- - Complete the necessary information in the `misp_threat_lists.sh script`, in particular the variables:
-    - REPOSITORY_URL
-    - IOC_USER (if needed)
-    - IOC_PASS (if needed)
+#### Scheduling bad IP lists update
 
-```bash
-#!/bin/bash
-DEST=/etc/logstash/lists
-IOC_USER=''
-IOC_PASS=''
-LOGSERVER_USER='logserver'
-LOGSERVER_PASS='logserver'
-LOGSERVER_HOST=127.0.0.1
-LOGSERVER_PORT=9200
-LOGSERVER_SSL=false
-REPOSITORY_URL=https://repository.energylogserver.pl
+This can be done in cron (host with Logstash installed):
 
-
-# FILTER
-function prepare_blacklist() {
-	blacklist=$1
-	/bin/mv -f ${DEST}/misp_${blacklist}.blacklist ${DEST}/misp_${blacklist}-$(date +%s).blacklist
-	#/usr/bin/echo "#"`/usr/bin/date` > ${DEST}/misp_${blacklist}.yml
-	#/usr/bin/awk '{print $1}' ${DEST}/misp_${blacklist}-*.blacklist | /usr/bin/sed -r "s/(.*)/\"\1\": \""bad_${blacklist}"\"/" >> ${DEST}/misp_${blacklist}.yml
-	#/usr/bin/sort -u ${DEST}/misp_${blacklist}.yml -o ${DEST}/misp_${blacklist}.yml
-}
-
-# INPUT
-function update_blacklist() {
-	blacklist=$1
-	local CURL_STATUS=""
-	CURL_STATUS=$(/usr/bin/curl -w "%{http_code}\n" -sS -u "${IOC_USER}":"${IOC_PASS}" ${REPOSITORY_URL}/ioc/misp_${blacklist}.blacklist -o ${DEST}/misp_${blacklist}.blacklist)
-	if [ ${CURL_STATUS} == 200 ]
-	then
-		prepare_blacklist ${blacklist}
-	fi
-}
-
-update_blacklist domain
-update_blacklist email
-update_blacklist filename
-update_blacklist ip
-update_blacklist url
-update_blacklist filehash
-update_blacklist certhash
-update_blacklist regkey
-
-## OUTPUT
-if [ ${LOGSERVER_SSL} = true ]
-then
-	/usr/bin/curl -k -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "https://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
-else
-	/usr/bin/curl -sS -u "${LOGSERVER_USER}":"${LOGSERVER_PASS}" -X POST "http://${LOGSERVER_HOST}:${LOGSERVER_PORT}/.blacklists/_delete_by_query" --connect-timeout 2 -H 'Content-Type: application/json' -d '{"query":{"bool":{"must":[{"range":{"@timestamp":{"lt":"now-5m/m"}}},{"term":{"tags":"misp_blacklist"}}]}}}' 2>&1 > /dev/null
-fi
 ```
- - Activate pipeline blacklists in `/etc/logstash/pipelnes.yml`.
+0 6 * * * logstash /etc/logstash/lists/bin/misp_threat_lists.sh
+```
+
+or with Kibana Scheduller app (only if Logstash is running on the same host).
+
+ - Prepare script path:
+
+```
+/bin/ln -sfn /etc/logstash/lists/bin /opt/ai/bin/lists
+chown logstash:kibana /etc/logstash/lists/
+chmod g+w /etc/logstash/lists/
+```
+
+ - Log in to Energy Logserver GUI and go to Scheduler app. Set it up with below options and push “Submit” button:
+
+Name:           MispThreatList
+Cron pattern:   0 1 * * *
+Command:        lists/misp_threat_lists.sh
+Category:       logstash
+After a couple of minutes check for blacklists index:
+
+`curl -sS -u user:password -XGET '127.0.0.1:9200/_cat/indices/.blacklists?s=index&v'`
+
+```
+health status index       uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
+```
