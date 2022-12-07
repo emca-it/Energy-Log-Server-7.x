@@ -1,5 +1,13 @@
 # **CHANGELOG**
 
+## v7.1.3
+
+### Security related
+
+- log4j updated to 2.19.0
+- kafka updated to 2.13-3.3.1 (log4j dependency removed)
+- logstash: removed obsolete bundled jdk
+
 ## v7.1.2
 
 ### NewFeatures
