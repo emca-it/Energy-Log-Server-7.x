@@ -15,6 +15,13 @@
    -  AlmaLinux 8
    -  RockyLinux 8
 
+2. Supported Web Browsers
+
+   - Google Chrome
+   - Mozilla Firefox
+   - Opera
+   - Microsoft Edge
+
 ## Installation method 
 
 The Energy Logserver installer is delivered as:
