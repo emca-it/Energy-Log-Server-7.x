@@ -2636,6 +2636,72 @@ The SLQ query stored in `/usr/share/logstash/plugin/query` file:
   AND DateTime >= DATEADD(MI, -6, GETUTCDATE())
 ```
 
+## JBoss
+
+The Energy Logserver accepts data from the JBoss platform using the Filebeat agent. Example configuration file for Filebeat:
+```
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/messages
+        - /var/log/secure
+      input_type: log
+      document_type: syslog
+    -
+      paths:
+        - /opt/jboss/server/default/log/server.log
+      input_type: log
+      document_type: jboss_server_log
+      multiline:
+        pattern: "^[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}"
+        negate: true
+        match: after
+        max_lines: 5
+  registry_file: /var/lib/filebeat/registry
+output:
+  logstash:
+    hosts: ["10.1.1.10:5044"]
+    bulk_max_size: 1024
+    tls:
+      certificate_authorities: ["/etc/pki/tls/certs/logstash-forwarder.crt"]
+shipper:
+logging:
+  to_syslog: false
+  to_files: true
+  files:
+    path: /var/log/mybeat
+    name: mybeat
+    rotateeverybytes: 10485760 # = 10MB
+    keepfiles: 2
+  level: info
+```
+
+To identify events from a specific source, add the following condition to the Logstash configuration file:
+
+```
+filter {
+ if [type] == "syslog" {
+   grok {
+     match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:msgdetail}" }
+     add_field => [ "received_at", "%{@timestamp}" ]
+     add_field => [ "received_from", "%{host}" ]
+   }
+   syslog_pri { }
+   date {
+     match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+   }
+ }
+ else if [type] == "jboss_server_log" {
+   grok {
+         match => { "message" => "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} +\[%{DATA:logger}\] %{GREEDYDATA:msgdetail}" }
+         add_field => [ "received_at", "%{@timestamp}" ]
+         add_field => [ "received_from", "%{host}" ]
+   }
+ }
+}
+```
+
 ## Energy Security Feeds
 
 Energy Security Feeds boosts Your security detection rules. Get connected to fresh lists of Indicators of Compromise (IoCs) that contain crucial data about malware activities, attacks, financial fraud or any suspicious behaviour detected using our public traps. 
