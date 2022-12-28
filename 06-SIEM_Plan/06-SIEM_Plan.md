@@ -8132,9 +8132,38 @@ Windows event channels can be monitored by placing their name at the location fi
     <log_format>eventchannel</log_format>
 </localfile>
 ```
-Attempt | #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 | #9 | #10 | #11
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-Seconds | 301 | 283 | 290 | 286 | 289 | 285 | 287 | 287 | 272 | 276 | 269
+
+<table border="1" class="colwidths-given docutils" id="id1">
+<colgroup>
+<col width="2%" />
+<col width="10%" />
+<col width="20%" />
+<col width="5%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr.</th>
+<th class="head">Source</th>
+<th class="head">Channel location</th>
+<th class="head">Provider name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">Application</p>
+</td>
+<td><p class="first last">Application</p>
+</td>
+<td><p class="first last">Any</p>
+</td>
+<td><p class="first last">This log retrieves every event related to system applications management and is one of the main Windows administrative channels along with Security and System.</p>
+</td>
+</tr>
+
+</tbody>
+</table>
 
 ## Tenable.sc
 
