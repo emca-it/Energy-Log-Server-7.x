@@ -8690,6 +8690,35 @@ Synchronization can be configured to change the synchronization interval, the nu
 </syscheck>
 ```
 
+### Active response
+
+#### How it works 
+
+When is an active response triggered?
+
+An active response is a script that is configured to execute when a specific alert, alert level or rule group has been triggered. Active responses are either stateful or stateless responses. Stateful responses are configured to undo the action after a specified period of time while stateless responses are configured as one-time actions.
+
+Where are active response actions executed?
+
+Each active response specifies where its associated command will be executed: on the agent that triggered the alert, on the manager, on another specified agent or on all agents, which also includes the manager(s).
+
+Active response configuration
+Active responses are configured in the manager by modifying the ossec.conf file as follows:
+	1. Create a command
+		- In order to configure an active response, a command must be defined that will initiate a certain script in response to a trigger.
+		- To configure the active response, define the name of a command using the pattern below and then reference the script to be initiated. Next, define what data element(s) will be passed to the script.
+		- Custom scripts that have the ability to receive parameters from the command line may also be used for an active response.
+	Example:
+```xml
+<command>
+  <name>host-deny</name>
+  <executable>host-deny.sh</executable>
+  <expect>srcip</expect>
+  <timeout_allowed>yes</timeout_allowed>
+</command>
+```
+In this example, the command is called host-deny and initiates the host-deny.sh script. The data element is defined as srcip. This command is configured to allow a timeout after a specified period of time, making it a stateful response.
+
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
