@@ -8096,6 +8096,43 @@ By default, alerts will be generated on events that are important or of security
 
 Alerts will be stored at ```/var/ossec/logs/alerts/alerts.(json|log)``` and events at ```/var/ossec/logs/archives/archives.(json|log)```. Logs are rotated and an individual directory is created for each month and year.
 
+#### How to collect Windows logs
+
+Windows events can be gathered and forwarded to the manager, where they are processed and alerted if they match any rule. There are two formats to collect Windows logs:
+
+- Eventlog (supported by every Windows version)
+- Eventchannel (for Windows Vista and later versions)
+
+Windows logs are descriptive messages which come with relevant information about events that occur in the system. They are collected and shown at the Event Viewer, where they are classified by the source that generated them.
+
+This information is gathered by the Windows agent, including the event description, the ```system``` standard fields and the specific ```eventdata``` information from the event. Once an event is sent to the manager, it is processed and translated to JSON format, which leads to an easier way of querying and filtering the event fields.
+
+Eventlog uses as well the Windows API to obtain events from Windows logs and return the information in a specific format.
+
+
+Windows Eventlog vs Windows Eventchannel
+Eventlog is supported on every Windows version and can monitor any logs except for particular Applications and Services Logs, this means that the information that can be retrieved is reduced to System, Application and Security channels.
+On the other hand, Eventchannel is maintained since Windows Vista and can monitor the Application and Services logs along with the basic Windows logs. In addition, the use of queries to filter by any field is supported for this log format.
+
+Monitor the Windows Event Log with Wazuh
+To monitor a Windows event log, it is necessary to provide the format as "eventlog" and the location as the name of the event log.
+```xml
+<localfile>
+    <location>Security</location>
+    <log_format>eventlog</log_format>
+</localfile>
+```
+These logs are obtained through Windows API calls and sent to the manager where they will be alerted if they match any rule.
+
+Monitor the Windows Event Channel with Wazuh
+Windows event channels can be monitored by placing their name at the location field from the localfile block and "eventchannel" as the log format.
+```xml
+<localfile>
+    <location>Microsoft-Windows-PrintService/Operational</location>
+    <log_format>eventchannel</log_format>
+</localfile>
+```
+
 
 ## Tenable.sc
 
