@@ -7916,7 +7916,9 @@ SIEM Plan is a solution that provides a ready-made set of tools for compliance r
 
 To configure the SIEM agents see the *Configuration* section.
 
-### Active response
+### Capabilities
+
+#### Active response
 
 The SIEM agent automates the response to threats by running actions when these are detected. The agent has the ability to block network connections, stop running processes, and delete malicious files, among other actions. In addition, it can also run customized scripts developed by the user (e.g., Python, Bash, or PowerShell).
 
