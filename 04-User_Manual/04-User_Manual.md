@@ -5818,3 +5818,688 @@ POST syslog-*,winlogbeat2*/_join
   }
 }
 ```
+
+### Automation
+SOC analysts have to handle many repetitive tasks. With Energy LogServer you can build automations to automatically execute all relevant actions.
+
+Automations helps you to interconnect different apps with an API with each other to share and manipulate its data without a single line of code. It is an easy to use, user-friendly and highly customizable module, which uses an intuitive user interface for you to design your unique scenarios very fast. 
+A automation is a collection of nodes connected together to automate a process.
+A automation can be started manually (with the Start node) or by Trigger nodes. When a automation is started, it executes all the active and connected nodes. The automation execution ends when all the nodes have processed their data. You can view your automation executions in the Execution log, which can be helpful for debugging.
+
+![](/05-0-0-User_guide/execute_workflow.gif)
+
+**Activating a automation**
+Auomations that start with a Trigger node or a Webhook node need to be activated in order to be executed. This is done via the Active toggle in the Automation UI.
+Active automations enable the Trigger and Webhook nodes to receive data whenever a condition is met (e.g., Monday at 10:00, an update in a Trello board) and in turn trigger the automation execution.
+All the newly created automations are deactivated by default.
+
+**Sharing a automation**
+
+Automations are saved in JSON format. You can export your automations as JSON files or import JSON files into your system.
+You can export a automation as a JSON file in two ways:
+*	Download: Click the Download button under the Automation menu in the sidebar. This will download the automation as a JSON file.
+*	Copy-Paste: Select all the automation nodes in the Automation UI, copy them (Ctrl + c), then paste them (Ctrl + v) in your desired file.
+You can import JSON files as automations in two ways:
+*	Import: Click Import from File or Import from URL under the Automation menu in the sidebar and select the JSON file or paste the link to a automation.
+*	Copy-Paste: Copy the JSON automation to the clipboard (Ctrl + c) and paste it (Ctrl + v) into the Automation UI.
+
+**Automation settings**
+
+On each automation, it is possible to set some custom settings and overwrite some of the global default settings from the Automation > Settings menu.
+
+![](/05-0-0-User_guide/workflow-settings.png)
+ 
+The following settings are available:
+*	Error Automation: Select a automation to trigger if the current automation fails. 
+*	Timezone: Sets the timezone to be used in the automation. The Timezone setting is particularly important for the Cron Trigger node.
+*	Save Data Error Execution: If the execution data of the automation should be saved when the automation fails.
+*	Save Data Success Execution: If the execution data of the automation should be saved when the automation succeeds.
+*	Save Manual Executions: If executions started from the Automation UI should be saved.
+*	Save Execution Progress: If the execution data of each node should be saved. If set to "Yes", the automation resumes from where it stopped in case of an error. However, this might increase latency.
+*	Timeout Automation: Toggle to enable setting a duration after which the current automation execution should be cancelled.
+*	Timeout After: Only available when Timeout Automation is enabled. Set the time in hours, minutes, and seconds after which the automation should timeout. 
+
+**Failed automations**
+
+If your automation execution fails, you can retry the execution. To retry a failed automation:
+1.	Open the Executions list from the sidebar.
+2.	For the automation execution you want to retry, click on the refresh icon under the Status column.
+3.	Select either of the following options to retry the execution: 
+*	Retry with currently saved automation: Once you make changes to your automation, you can select this option to execute the automation with the previous execution data.
+*	Retry with original automation: If you want to retry the execution without making changes to your automation, you can select this option to retry the execution with the previous execution data.
+
+You can also use the Error Trigger node, which triggers a automation when another automation has an error. Once a automation fails, this node gets details about the failed automation and the errors.
+
+#### Crate your first automation
+
+##### Automate Incident Reporting with Typeform
+Let’s create your first automation in Energy SOAR. The automation will create a new alert and promote it to a case whenever a user submits a high severity incident.
+
+**Prerequisites**
+
+You'll need to obtain the credentials for the Typeform Trigger node.
+1.	Create a Typeform account: https://www.typeform.com/
+2.	Open the Typeform dashboard: https://admin.typeform.com/
+3.	Click on your avatar on the top right and select 'Settings'.
+4.	Click on Personal tokens under the Profile section in the sidebar.
+5.	Click on the Generate a new token button.
+6.	Enter a name in the Token name field.
+7.	Click on the Generate token button.
+8.	Click on the Copy button to copy the access token.
+9.	In Energy SOAR choose Automations > Credentials > New > Typeform API.
+10.	Enter a name for your credentials in the Credentials Name field.
+11.	Paste the access token in the Access Token field.
+12.	Click the Create button to save your credentials in Energy SOAR.
+
+You will also need to create a form in Typeform to collect incident reports with the following questions:
+*	What is your name? (optional) (Short Text)
+*	What is your email address? (optional) (Email)
+*	What is incident’s category? (Multiple Choice)
+
+ ![](/05-0-0-User_guide/workflow-typeform-form.png) 
+ 
+*	Severity (Multiple Choice)
+
+![](/05-0-0-User_guide/workflow-typeform-form2.png)
+
+*	Description (Long Text)
+
+**Building the Automation**
+
+This automation would use the following nodes:
+*	Typeform Trigger - Start the automation when a form receives a report
+*	Set - Set the automation data
+*	FunctionItem - Calculate severity and alert reference
+*	TheHive - Create alert and case
+*	IF - Conditional logic to decide the flow of the automation
+*	NoOp - Do nothing (optional)
+
+The final automation should look like the following image:
+
+![](workflow-getting-started-final.png)
+
+1.	Typeform Trigger node
+
+We'll use the Typeform Trigger node for starting the automation. Add a Typeform Trigger node by clicking on the + button on the top right of the Automation UI. Click on the Typeform Trigger node under the section marked Trigger.
+
+Double click on the node to enter the Node Editor. Select Credentials from the Typeform API dropdown list.
+
+Select the form that you created from the Form dropdown list. We'll let the other fields stay as they are.
+
+Now save your automation so that the webhook in the Typeform Trigger node can be activated. Since you’ll be using the test webhooks while building the automation, the node only stays active for 120 seconds after you click the Execute Node button.
+
+After clicking on the Execute Node button, submit a response to your form in Typeform.
+
+![](/05-0-0-User_guide/workflow-getting-started-trigger.png)
+ 
+
+2.	Set node
+
+We'll use the Set node to ensure that only the data that we set in this node gets passed on to the next nodes in the automation.
+
+Add the Set node by clicking on the + button and selecting the Set node. Click on Add Value and select String from the dropdown list. Enter title in the Name field. Since the Value (title) would be a dynamic piece of information, click on the gears icon next to the field, and select Add Expression.
+
+This will open up the Variable Selector. From the left panel, select the following variable:
+Nodes > Typeform Trigger > Output Data > JSON > What is incident’s category?
+Also add Incident Report prefix, so the expression would look like this:
+Incident Report - {{$node["Typeform Trigger"].json["What is incident's category?"]}}
+
+Close the Edit Expression window. Click on Add Value and select String from the dropdown list. Enter description in the Name field. Since the Value (description) would be a dynamic piece of information, click on the gears icon next to the field, and select Add Expression.
+This will open up the Variable Selector. From the left panel, select the following variables:
+Nodes > Typeform Trigger > Output Data > JSON > What is your name?
+Nodes > Typeform Trigger > Output Data > JSON > What is your email address?
+Nodes > Typeform Trigger > Output Data > JSON > Description?
+
+Also add Name, E-mail, Details prefixes. Full expression:
+Name: `{{$node["Typeform Trigger"].json["First up, what's your full name"]}}`
+
+E-mail: `{{$node["Typeform Trigger"].json["And your email address?"]}}`
+
+Details: `{{$node["Typeform Trigger"].json["Could you tell us what happened exactly?"]}}`
+
+Close the Edit Expression window. Click on Add Value and select Number from the dropdown list. Enter severity in the Name field. Since the Value (severity) would be a dynamic piece of information, click on the gears icon next to the field, and select Add Expression.
+This will open up the Variable Selector. Delete the 0 in the Expression field on the right. From the left panel, select the following variable:
+Nodes > Typeform Trigger > Output Data > JSON > Severity
+Toggle Keep Only Set to true. We set this option to true to ensure that only the data that we have set in this node get passed on to the next nodes in the automation. Click on the Execute Node button on the top right to set the data for the automation.
+
+![](/05-0-0-User_guide/workflow-getting-started-expression.png)
+ 
+3.	FunctionItem node
+
+To create Energy SOAR alert in automation we have to provide SourceRef number. We’ll use the FunctionItem node to generate that random number.
+Add the FunctionItem node by clicking on the + button and selecting the FunctionItem node.
+Clear JavaScript Code window and insert the following code:
+
+```
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+item.number= getRandomInt(20000000);
+item.number=item.number.toString(16);
+item.severity=parseInt(item.severity);
+return item;
+```
+
+We use parseInt function to convert string severity value into an integer.
+
+4.	Create alert node
+Add TheHive node by clicking on the + button and selecting the TheHive node. Double click on the node and click on TheHive name to change it to Create alert.
+
+Since the Title would be a dynamic piece of information, click on the gears icon next to the field, and select Add Expression.
+
+This will open up the Variable Selector. From the left panel, select the following variable:
+Nodes > Set > Output Data > JSON > title
+
+Close the Edit Expression window. In Description field add expression:
+Nodes > Set > Output Data > JSON > description
+
+Close the Edit Expression window. In Severity field add expression:
+Nodes > FunctionItem > Output Data > JSON > severity
+
+Close the Edit Expression window. In SourceRef field add expression:
+Nodes > FunctionItem > Output Data > JSON > number
+
+Click on the Execute Node button on the top right to create alert.
+
+5.	IF node
+Add the IF node by clicking on the + button and selecting the IF node. This is a conditional logic node that allows us to alter the flow of the automation depending on the data that we get from the previous node(s).
+Double click on the node, click on the Add Condition button and select Number from the menu. Since the Value 1 (severity) would be a dynamic piece of information, click on the gears icon next to the field, and select Add Expression.
+This will open up the Variable Selector. Delete the 0 in the Expression field on the right. From the left panel, select the following variable:
+Nodes > Create alert > Output Data > JSON > severity
+For the Operation field, we'll set it to 'Larger'. For Value 2, enter 2. This will ensure that the IF node returns true only if the severity is higher than 2 (above medium level). Feel free to change this to some other value. Click on the Execute Node button on the top right to check if the severity is larger than 2 or not.
+
+![](workflow-getting-started-if.png)
+
+
+6.	Promote alert node
+
+Add TheHive node by clicking on the + button and selecting the TheHive node. Double click on the node and click on TheHive name to change it to Promote alert.
+
+Select ‘Promote’ from the Operation dropdown list.
+In Alert ID field add expression:
+Nodes > Create alert > Output Data > JSON > _id
+
+![](workflow-getting-started-expression2.png)
+
+
+7.	NoOp node
+If the score is smaller than 3, we don't want the automation to do anything. We'll use the NoOp node for that. Adding this node here is optional, as the absence of this node won't make a difference to the functioning of the automation. Add the NoOp node by clicking on the + button and selecting the NoOp node. Connect this node with the false output of the IF node.
+To test the automation, click on the Execute Automation button at the bottom of the Automation UI.
+Don't forget to save the automation and then click on the Activate toggle on the top right of the screen to set it to true and activate the automation. 
+Green checkmarks indicate successful automation execution:
+
+![](workflow-getting-started-final2.png)
+
+Congratulations on creating you first automation with Energy SOAR.
+
+
+#### Connection
+
+A connection establishes a link between nodes to route data through the automation. A connection between two nodes passes data from one node's output to another node's input. Each node can have one or multiple connections.
+
+To create a connection between two nodes, click on the grey dot on the right side of the node and slide the arrow to the grey rectangle on the left side of the following node.
+
+##### Example
+
+An IF node has two connections to different nodes: one for when the statement is true and one for when the statement is false.
+
+![](/media/Connection_ifnode.8e006dce.gif)
+
+#### Automations List
+
+This section includes the operations for creating and editing automations.
+
+* **New**: Create a new automation
+* **Open**: Open the list of saved automations
+* **Save**: Save changes to the current automation
+* **Save As**: Save the current automation under a new name
+* **Rename**: Rename the current automation
+* **Delete**: Delete the current automation
+* **Download**: Download the current automation as a JSON file
+* **Import from URL**: Import a automation from a URL
+* **Import from File**: Import a automation from a local file
+* **Settings**: View and change the settings of the current automation
+
+#### Credentials
+
+This section includes the operations for creating credentials.
+
+Credentials are private pieces of information issued by apps/services to authenticate you as a user and allow you to connect and share information between the app/service and the n8n node.
+
+* **New**: Create new credentials
+* **Open**: Open the list of saved credentials
+
+#### Executions
+
+This section includes information about your automation executions, each completed run of a automation.
+
+You can enabling logging of your failed, successful, and/or manually selected automations using the Automation > Settings page.
+
+#### Node
+
+A node is an entry point for retrieving data, a function to process data, or an exit for sending data. The data process performed by nodes can include filtering, recomposing, and changing data.
+
+There may be one or several nodes for your API, service, or app. By connecting multiple nodes, you can create simple and complex automations. When you add a node to the Editor UI, the node is automatically activated and requires you to configure it (by adding credentials, selecting operations, writing expressions, etc.).
+
+There are three types of nodes:
+
+* Core Nodes
+* Regular Nodes
+* Trigger Nodes
+
+##### Core nodes
+
+Core nodes are functions or services that can be used to control how automations are run or to provide generic API support.
+
+Use the Start node when you want to manually trigger the automation with the `Execute Automation` button at the bottom of the Editor UI. This way of starting the automation is useful when creating and testing new automations.
+
+If an application you need does not have a dedicated Node yet, you can access the data by using the HTTP Request node or the Webhook node. You can also read about creating nodes and make a node for your desired application.
+
+
+##### Regular nodes
+
+Regular nodes perform an action, like fetching data or creating an entry in a calendar. Regular nodes are named for the application they represent and are listed under Regular Nodes in the Editor UI.
+
+![](/media/Regular_nodes.d3cec3e9.png)
+
+###### Example
+
+A Google Sheets node can be used to retrieve or write data to a Google Sheet.
+
+![](/media/Google_sheets.d9ee72a3.png)
+
+##### Trigger nodes
+
+Trigger nodes start automations and supply the initial data.
+
+![](/media/Trigger_nodes.5bd536aa.png)
+
+Trigger nodes can be app or core nodes.
+
+* **Core Trigger nodes** start the automation at a specific time, at a time interval, or on a webhook call. For example, to get all users from a Postgres database every 10 minutes, use the Interval Trigger node with the Postgres node.
+
+* **App Trigger nodes** start the automation when an event happens in an app. App Trigger nodes are named like the application they represent followed by "Trigger" and are listed under Trigger Nodes in the Editor. For example, a Telegram trigger node can be used to trigger a automation when a message is sent in a Telegram chat.
+
+![](/media/telegram_trigger.fae8dcd9.png)
+
+##### Node settings
+
+Nodes come with global **operations** and **settings**, as well as app-specific **parameters** that can be configured.
+
+###### Operations
+
+The node operations are illustrated with icons that appear on top of the node when you hover on it:
+* **Delete**: Remove the selected node from the automation
+* **Pause**: Deactivate the selected node
+* **Copy**: Duplicate the selected node
+* **Play**: Run the selected node
+
+![](/media/Node_settings.36ddf764.gif)
+
+To access the node parameters and settings, double-click on the node.
+
+###### Parameters
+
+The node parameters allow you to define the operations the node should perform. Find the available parameters of each node in the node reference.
+
+###### Settings
+
+The node settings allow you to configure the look and execution of the node. The following options are available:
+
+* **Notes**: Optional note to save with the node
+* **Display note in flow**: If active, the note above will be displayed in the automation as a subtitle
+* **Node Color**: The color of the node in the automation
+* **Always Output Data**: If active, the node will return an empty item even if the node returns no data during an initial execution. Be careful setting this on IF nodes, as it could cause an infinite loop.
+* **Execute Once**: If active, the node executes only once, with data from the first item it receives.
+* **Retry On Fail**: If active, the node tries to execute a failed attempt multiple times until it succeeds
+* **Continue On Fail**: If active, the automation continues even if the execution of the node fails. When this happens, the node passes along input data from previous nodes, so the automation should account for unexpected output data.
+
+![](/media/Node_parameters.090b2d35.gif)
+
+If a node is not correctly configured or is missing some required information, a **warning sign** is displayed on the top right corner of the node. To see what parameters are incorrect, double-click on the node and have a look at fields marked with red and the error message displayed in the respective warning symbol.
+
+![](/media/Node_error.e189f05d.gif)
+
+#### Automation integration nodes
+To boost your automation automation you can connect with widely external nodes.
+
+List of automation nodes:
+- Action Network
+- Activation Trigger
+- ActiveCampaign
+- ActiveCampaign Trigger
+- Acuity Scheduling Trigger
+- Affinity
+- Affinity Trigger
+- Agile CRM
+- Airtable
+- Airtable Trigger
+- AMQP Sender
+- AMQP Trigger
+- APITemplate.io
+- Asana
+- Asana Trigger
+- Automizy
+- Autopilot
+- Autopilot Trigger
+- AWS Comprehend
+- AWS DynamoDB
+- AWS Lambda
+- AWS Rekognition
+- AWS S3
+- AWS SES
+- AWS SNS
+- AWS SNS Trigger
+- AWS SQS
+- AWS Textract
+- AWS Transcribe
+- Bannerbear
+- Baserow
+- Beeminder
+- Bitbucket Trigger
+- Bitly
+- Bitwarden
+- Box
+- Box Trigger
+- Brandfetch
+- Bubble
+- Calendly Trigger
+- Chargebee
+- Chargebee Trigger
+- CircleCI
+- Clearbit
+- ClickUp
+- ClickUp Trigger
+- Clockify
+- Clockify Trigger
+- Cockpit
+- Coda
+- CoinGecko
+- Compression
+- Contentful
+- ConvertKit
+- ConvertKit Trigger
+- Copper
+- Copper Trigger
+- Cortex
+- CrateDB
+- Cron
+- Crypto
+- Customer Datastore (n8n training)
+- Customer Messenger (n8n training)
+- Customer Messenger (n8n training)
+- Customer.io
+- Customer.io Trigger
+- Date & Time
+- DeepL
+- Demio
+- DHL
+- Discord
+- Discourse
+- Disqus
+- Drift
+- Dropbox
+- Dropcontact
+- E-goi
+- Edit Image
+- Elastic Security
+- Elasticsearch
+- EmailReadImap
+- Emelia
+- Emelia Trigger
+- ERPNext
+- Error Trigger
+- Eventbrite Trigger
+- Execute Command
+- Execute Automation
+- Facebook Graph API
+- Facebook Trigger
+- Figma Trigger (Beta)
+- FileMaker
+- Flow
+- Flow Trigger
+- Form.io Trigger
+- Formstack Trigger
+- Freshdesk
+- Freshservice
+- Freshworks CRM
+- FTP
+- Function
+- Function Item
+- G Suite Admin
+- GetResponse
+- GetResponse Trigger
+- Ghost
+- Git
+- GitHub
+- Github Trigger
+- GitLab
+- GitLab Trigger
+- Gmail
+- Google Analytics
+- Google BigQuery
+- Google Books
+- Google Calendar
+- Google Calendar Trigger
+- Google Cloud Firestore
+- Google Cloud Natural Language
+- Google Cloud Realtime Database
+- Google Contacts
+- Google Docs
+- Google Drive
+- Google Drive Trigger
+- Google Perspective
+- Google Sheets
+- Google Slides
+- Google Tasks
+- Google Translate
+- Gotify
+- GoToWebinar
+- Grafana
+- GraphQL
+- Grist
+- Gumroad Trigger
+- Hacker News
+- Harvest
+- HelpScout
+- HelpScout Trigger
+- Home Assistant
+- HTML Extract
+- HTTP Request
+- HubSpot
+- HubSpot Trigger
+- Humantic AI
+- Hunter
+- iCalendar
+- IF
+- Intercom
+- Interval
+- Invoice Ninja
+- Invoice Ninja Trigger
+- Item Lists
+- Iterable
+- Jira Software
+- Jira Trigger
+- JotForm Trigger
+- Kafka
+- Kafka Trigger
+- Keap
+- Keap Trigger
+- Kitemaker
+- Lemlist
+- Lemlist Trigger
+- Line
+- LingvaNex
+- LinkedIn
+- Local File Trigger
+- Magento 2
+- Mailcheck
+- Mailchimp
+- Mailchimp Trigger
+- MailerLite
+- MailerLite Trigger
+- Mailgun
+- Mailjet
+- Mailjet Trigger
+- Mandrill
+- Marketstack
+- Matrix
+- Mattermost
+- Mautic
+- Mautic Trigger
+- Medium
+- Merge
+- MessageBird
+- Microsoft Dynamics CRM
+- Microsoft Excel
+- Microsoft OneDrive
+- Microsoft Outlook
+- Microsoft SQL
+- Microsoft Teams
+- Microsoft To Do
+- Mindee
+- MISP
+- Mocean
+- Monday.com
+- MongoDB
+- Monica CRM
+- Move Binary Data
+- MQTT
+- MQTT Trigger
+- MSG91
+- MySQL
+- n8n Trigger
+- NASA
+- Netlify
+- Netlify Trigger
+- Nextcloud
+- No Operation, do nothing
+- NocoDB
+- Notion (Beta)
+- Notion Trigger (Beta)
+- One Simple API
+- OpenThesaurus
+- OpenWeatherMap
+- Orbit
+- Oura
+- Paddle
+- PagerDuty
+- PayPal
+- PayPal Trigger
+- Peekalink
+- Phantombuster
+- Philips Hue
+- Pipedrive
+- Pipedrive Trigger
+- Plivo
+- Postgres
+- PostHog
+- Postmark Trigger
+- ProfitWell
+- Pushbullet
+- Pushcut
+- Pushcut Trigger
+- Pushover
+- QuestDB
+- Quick Base
+- QuickBooks Online
+- RabbitMQ
+- RabbitMQ Trigger
+- Raindrop
+- Read Binary File
+- Read Binary Files
+- Read PDF
+- Reddit
+- Redis
+- Rename Keys
+- Respond to Webhook
+- RocketChat
+- RSS Read
+- Rundeck
+- S3
+- Salesforce
+- Salesmate
+- SeaTable
+- SeaTable Trigger
+- SecurityScorecard
+- Segment
+- Send Email
+- SendGrid
+- Sendy
+- Sentry.io
+- ServiceNow
+- Set
+- Shopify
+- Shopify Trigger
+- SIGNL4
+- Slack
+- sms77
+- Snowflake
+- Split In Batches
+- Splunk
+- Spontit
+- Spotify
+- Spreadsheet File
+- SSE Trigger
+- SSH
+- Stackby
+- Start
+- Stop and Error
+- Storyblok
+- Strapi
+- Strava
+- Strava Trigger
+- Stripe
+- Stripe Trigger
+- SurveyMonkey Trigger
+- Switch
+- Taiga
+- Taiga Trigger
+- Tapfiliate
+- Telegram
+- Telegram Trigger
+- TheHive
+- TheHive Trigger
+- TimescaleDB
+- Todoist
+- Toggl Trigger
+- TravisCI
+- Trello
+- Trello Trigger
+- Twake
+- Twilio
+- Twist
+- Twitter
+- Typeform Trigger
+- Unleashed Software
+- Uplead
+- uProc
+- UptimeRobot
+- urlscan.io
+- Vero
+- Vonage
+- Wait
+- Webex by Cisco
+- Webex by Cisco Trigger
+- Webflow
+- Webflow Trigger
+- Webhook
+- Wekan
+- Wise
+- Wise Trigger
+- WooCommerce
+- WooCommerce Trigger
+- Wordpress
+- Workable Trigger
+- Automation Trigger
+- Write Binary File
+- Wufoo Trigger
+- Xero
+- XML
+- Yourls
+- YouTube
+- Zendesk
+- Zendesk Trigger
+- Zoho CRM
+- Zoom
+- Zulip
