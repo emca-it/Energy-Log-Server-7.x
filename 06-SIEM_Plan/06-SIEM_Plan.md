@@ -8411,6 +8411,86 @@ To have a complete view of which events are equivalent to the old ones from ```e
 </tbody>
 </table>
 
+#### Configuration
+
+Basic usage
+
+Log data collection is configured in the ```ossec.conf``` file primarily in the ```localfile```, ```remote``` and ```global``` sections. Configuration of log data collection can also be completed in the ```agent.conf``` file to centralize the distribution of these configuration settings to relevant agents.
+
+As in this basic usage example, provide the name of the file to be monitored and the format:
+
+```xml
+<localfile>
+  <location>/var/log/messages</location>
+  <log_format>syslog</log_format>
+</localfile>
+```
+
+Monitoring logs using wildcard patterns for file names
+Wazuh supports posix wildcard patterns, just like listing files in a terminal. For example, to analyze every file that ends with a .log inside the ```/var/log``` directory, use the following configuration:
+
+```xml
+<localfile>
+    <location>/var/log/*.log</location>
+    <log_format>syslog</log_format>
+</localfile>
+```
+
+Monitoring date-based logs
+For log files that change according to the date, you can also specify a strftime format to replace the day, month, year, etc. For example, to monitor the log files like ```C:\Windows\app\log-08-12-15.log```, where 08 is the year, 12 is the month and 15 the day (and it is rolled over every day), configuration is as follows:
+
+```xml
+<localfile>
+    <location>C:\Windows\app\log-%y-%m-%d.log</location>
+    <log_format>syslog</log_format>
+</localfile>
+```
+
+Using environment variables 
+Environment variables like ```%WinDir%``` can be used in the location pattern. The following is an example of reading logs from an IIS server:
+
+```xml
+<localfile>
+    <location>%SystemDrive%\inetpub\logs\LogFiles\W3SVC1\u_ex%y%m%d.log</location>
+    <log_format>iis</log_format>
+</localfile>
+```
+
+Using multiple outputs
+Log data is sent to the agent socket by default, but it is also possible to specify other sockets as output. ```ossec-logcollector``` uses UNIX type sockets to communicate allowing TCP or UDP protocols.
+
+To add a new output socket we need to specify it using the tag ```<socket>``` as shown in the following example configuration:
+
+```xml
+<socket>
+    <name>custom_socket</name>
+    <location>/var/run/custom.sock</location>
+    <mode>tcp</mode>
+    <prefix>custom_syslog: </prefix>
+</socket>
+
+<socket>
+    <name>test_socket</name>
+    <location>/var/run/test.sock</location>
+</socket>
+```
+
+Once the socket is defined, it's possible to add the destination socket for each localfile:
+
+```xml
+<localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/messages</location>
+    <target>agent,test_socket</target>
+</localfile>
+
+<localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/messages</location>
+    <target>custom_socket,test_socket</target>
+</localfile>
+```
+
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
