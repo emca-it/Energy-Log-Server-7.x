@@ -8720,6 +8720,146 @@ Example:
 ```
 In this example, the command is called host-deny and initiates the host-deny.sh script. The data element is defined as srcip. This command is configured to allow a timeout after a specified period of time, making it a stateful response.
 
+2. Define the active response
+The active response configuration defines when and where a command is going to be executed. A command will be triggered when a specific rule with a specific id, severity level or source matches the active response criteria. This configuration will further define where the action of the command will be initiated, meaning in which environment (agent, manager, local, or everywhere).
+
+Example:
+```xml
+<active-response>
+  <command>host-deny</command>
+  <location>local</location>
+  <level>7</level>
+  <timeout>600</timeout>
+</active-response>
+```
+In this example, the active response is configured to execute the command that was defined in the previous step. The where of the action is defined as the local host and the when is defined as any time the rule has a level higher than 6. The timeout that was allowed in the command configuration is also defined in the above example.
+The active response log can be viewed at ```/var/ossec/logs/active-responses.log```
+
+Default Active response scripts
+Wazuh is pre-configured with the following scripts for Linux:
+
+<table border="1" class="colwidths-given docutils" id="id1">
+<colgroup>
+<col width="2%" />
+<col width="35%" />
+<col width="28%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr.</th>
+<th class="head">Script name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">disable-account.sh</p>
+</td>
+<td><p class="first last">Disables an account by setting passwd-l</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">firewall-drop.sh</p>
+</td>
+<td><p class="first last">Adds an IP to the iptables deny list</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">3</p>
+</td>
+<td><p class="first last">firewalld-drop.sh</p>
+</td>
+<td><p class="first last">Adds an IP to the firewalld drop list</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">4</p>
+</td>
+<td><p class="first last">host-deny.sh</p>
+</td>
+<td><p class="first last">Adds an IP to the /etc/hosts.deny file</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">5</p>
+</td>
+<td><p class="first last">ip-customblock.sh</p>
+</td>
+<td><p class="first last">Custom OSSEC block, easily modifiable for custom response</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">6</p>
+</td>
+<td><p class="first last">ipfw_mac.sh</p>
+</td>
+<td><p class="first last">Firewall-drop response script created for the Mac OS</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">7</p>
+</td>
+<td><p class="first last">ipfw.sh</p>
+</td>
+<td><p class="first last">Firewall-drop response script created for ipfw</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">8</p>
+</td>
+<td><p class="first last">npf.sh</p>
+</td>
+<td><p class="first last">Firewall-drop response script created for npf</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">9</p>
+</td>
+<td><p class="first last">ossec-slack.sh</p>
+</td>
+<td><p class="first last">Posts modifications on Slack</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">10</p>
+</td>
+<td><p class="first last">ossec-tweeter.sh</p>
+</td>
+<td><p class="first last">Posts modifications on Twitter</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">11</p>
+</td>
+<td><p class="first last">pf.sh</p>
+</td>
+<td><p class="first last">Firewall-drop response script created for pf</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">12</p>
+</td>
+<td><p class="first last">restart-ossec.sh</p>
+</td>
+<td><p class="first last">Automatically restarts Wazuh when ossec.conf has been changed</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">13</p>
+</td>
+<td><p class="first last">route-null.sh</p>
+</td>
+<td><p class="first last">Adds an IP to null route</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
