@@ -5032,13 +5032,13 @@ This Logstash plugin has example of complete configuration for integration with 
 
 3. Install logstash plugin.
 
-	/usr/share/logstash/bin/logstash-plugin install /directory/to/file/logstash-filter-ldap-0.2.4.gem
+	```/usr/share/logstash/bin/logstash-plugin install /directory/to/file/logstash-filter-ldap-0.2.4.gem```
 	
-4. Create new file in beats pipeline. To do this, go to beats folder (/etc/logstash/conf.d/beats) and create new config file, for example 031-filter-ldap-enrichement.conf
+4. Create new file in beats pipeline. To do this, go to beats folder (/etc/logstash/conf.d/beats) and create new config file, for example ```031-filter-ldap-enrichement.conf```
 
 5. Below is an example of the contents of the configuration file:
 	
-	filter {
+	```filter {
 	  ldap {
 	    identifier_value => "%{[winlog][event_data][TargetUserName]}"
 	    identifier_key => "sAMAccountName"
@@ -5062,7 +5062,7 @@ This Logstash plugin has example of complete configuration for integration with 
 	password - Password of the account linked to previous username.
 	search_dn - Domain name in which search inside the ldap database (usually your userdn or groupdn).
 	enable_error_logging - When there is a problem with the connection with the LDAP database, write reason in the event.
-	attributes - List of attributes to get. If not set, all attributes available will be get.
+	attributes - List of attributes to get. If not set, all attributes available will be get.```
 
 ### Single password in all Logstash outputs
 
