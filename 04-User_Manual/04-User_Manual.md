@@ -5022,6 +5022,47 @@ This Logstash plugin has example of complete configuration for integration with 
         }
       }
     }
+    
+
+### Logstash plugin for LDAP data enrichement
+
+1. Download logstash plugin with dependencies ![](/files/logstash-filter-ldap-0.2.4.zip) and upload files to your server.
+
+2. Unzip file.
+
+3. Install logstash plugin.
+
+	/usr/share/logstash/bin/logstash-plugin install /directory/to/file/logstash-filter-ldap-0.2.4.gem
+	
+4. Create new file in beats pipeline. To do this, go to beats folder (/etc/logstash/conf.d/beats) and create new config file, for example 031-filter-ldap-enrichement.conf
+
+5. Below is an example of the contents of the configuration file:
+	
+	filter {
+	  ldap {
+	    identifier_value => "%{[winlog][event_data][TargetUserName]}"
+	    identifier_key => "sAMAccountName"
+	    identifier_type => "person"
+	    host => "10.0.0.1"
+	    ldap_port => "389"
+	    username => "user"
+	    password => "pass"
+	    search_dn => "OU=example,DC=example"
+	    enable_error_logging => true
+	    attributes => ['sAMAccountType','lastLogon','badPasswordTime']
+	  }
+	}
+	
+	identifier_value - Identifier of the value to search. If identifier type is uid, then the value should be the uid to search for.
+	identifier_key - Type of the identifier to search.
+	identifier_type - Object class of the object to search.
+	host - LDAP server host adress.
+	ldap_port - LDAP server port for non-ssl connection.
+	username - Username to use for search in the database.
+	password - Password of the account linked to previous username.
+	search_dn - Domain name in which search inside the ldap database (usually your userdn or groupdn).
+	enable_error_logging - When there is a problem with the connection with the LDAP database, write reason in the event.
+	attributes - List of attributes to get. If not set, all attributes available will be get.
 
 ### Single password in all Logstash outputs
 
