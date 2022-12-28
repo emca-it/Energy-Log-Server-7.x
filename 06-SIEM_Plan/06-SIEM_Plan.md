@@ -8860,6 +8860,50 @@ Wazuh is pre-configured with the following scripts for Linux:
 </tbody>
 </table>
 
+The following pre-configured scripts are for Windows:
+
+<table border="1" class="colwidths-given docutils" id="id1">
+<colgroup>
+<col width="2%" />
+<col width="48%" />
+<col width="50%" />
+
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr.</th>
+<th class="head">Script name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">netsh.cmd</p>
+</td>
+<td><p class="first last">Blocks an ip using netsh</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">restart-ossec.cmd</p>
+</td>
+<td><p class="first last">Restarts ossec agent</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">32</p>
+</td>
+<td><p class="first last">route-null.cmd</p>
+</td>
+<td><p class="first last">Adds an IP to null route</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
