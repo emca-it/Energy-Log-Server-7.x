@@ -7907,6 +7907,25 @@ In addition, it is possible to enrich the alert event with the date and time of 
   }
 ```
 
+### Adding a tag to an existing alert
+We can add a tag to an existing alert using the dev tools.
+You can use belowe code.
+
+```bash
+POST alert/_update/example_document_id
+{
+  "doc": {
+    "tags":"example"
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/42172770/209844235-390cf973-cda7-41e6-8ff1-5636ba87a75a.png)
+
+You can get the corresponding document id in the discovery section.
+
+![image](https://user-images.githubusercontent.com/42172770/209844638-2bb0b6fa-32d6-4430-bb6e-c2d4abef1db6.png)
+
 
 ## Siem Module
 
