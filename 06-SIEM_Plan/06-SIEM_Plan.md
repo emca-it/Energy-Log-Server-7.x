@@ -8704,11 +8704,12 @@ Each active response specifies where its associated command will be executed: on
 
 Active response configuration
 Active responses are configured in the manager by modifying the ossec.conf file as follows:
-	1. Create a command
-		- In order to configure an active response, a command must be defined that will initiate a certain script in response to a trigger.
-		- To configure the active response, define the name of a command using the pattern below and then reference the script to be initiated. Next, define what data element(s) will be passed to the script.
-		- Custom scripts that have the ability to receive parameters from the command line may also be used for an active response.
-	Example:
+1. Create a command
+- In order to configure an active response, a command must be defined that will initiate a certain script in response to a trigger.
+- To configure the active response, define the name of a command using the pattern below and then reference the script to be initiated. Next, define what data element(s) will be passed to the script.
+- Custom scripts that have the ability to receive parameters from the command line may also be used for an active response.
+
+Example:
 ```xml
 <command>
   <name>host-deny</name>
