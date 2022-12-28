@@ -8505,6 +8505,190 @@ File integrity monitoring results for the whole environment can be observed in E
 
 ![image](https://user-images.githubusercontent.com/42172770/209820768-dd08601e-5d21-4b22-b82b-21aa98c01201.png)
 
+#### Configuration
+
+Syscheck component is configured both in the SIEM manager's and in the SIEM agent's ossec.conf file. This capability can be also configured remotely using centralized configuration and the agent.conf file. The list of all syscheck configuration options is available in the syscheck section.
+
+Configuring syscheck - basic usage
+To configure syscheck, a list of files and directories must be identified. The ```check_all``` attribute of the directories option allows checks of the file size, permissions, owner, last modification date, inode and all the hash sums (MD5, SHA1 and SHA256). By default, syscheck scans selected directories, whose list depends on the default configuration for the host's operating system.
+
+```xml
+<syscheck>
+  <directories check_all="yes">/etc,/usr/bin,/usr/sbin</directories>
+  <directories check_all="yes">/root/users.txt,/bsd,/root/db.html</directories>
+</syscheck>
+```
+
+It is possible to hot-swap the monitored directories. This can be done for Linux, in both the SIEM agent and the SIEM manager, by setting the monitoring of symbolic links to directories. To set the refresh interval, use ```syscheck.symlink_scan_interval``` option found in the ```internal configuration``` of the monitored SIEM agent.
+
+Once, the directory path is removed from the syscheck configuration and the SIEM agent is being restarted, the data from the previously monitored path is no longer stored in the FIM database.
+
+Configuring scan time 
+By default, syscheck scans when the SIEM starts, however, this behavior can be changed with the scan_on_start option.
+
+For the schedluled scans, syscheck has an option to configure the frequency of the system scans. In this example, syscheck is configured to run every 10 hours:
+```xml
+<syscheck>
+  <frequency>36000</frequency>
+  <directories>/etc,/usr/bin,/usr/sbin</directories>
+  <directories>/bin,/sbin</directories>
+</syscheck>
+```
+
+There is an alternative way to schedule the scans using the ```scan_time``` and the ```scan_day``` options. In this example, the scan will run every Saturday at the 10pm. Configuring syscheck that way might help, for example, to set up the scans outside the environment production hours:
+
+```xml
+<syscheck>
+  <scan_time>10pm</scan_time>
+  <scan_day>saturday</scan_day>
+  <directories>/etc,/usr/bin,/usr/sbin</directories>
+  <directories>/bin,/sbin</directories>
+</syscheck>
+```
+
+Configuring real-time monitoring
+Real-time monitoring is configured with the ```realtime``` attribute of the ```directories``` option. This attribute only works with the directories rather than with the individual files. Real-time change detection is paused during periodic syscheck scans and reactivates as soon as these scans are complete:
+
+```xml
+<syscheck>
+  <directories check_all="yes" realtime="yes">c:/tmp</directories>
+</syscheck>
+```
+
+Configuring who-data monitoring 
+Who-data monitoring is configured with the ```whodata``` attribute of the ```directories``` option. This attribute replaces the ```realtime``` attribute, which means that ```whodata``` implies real-time monitoring but adding the who-data information. This functionality uses Linux Audit subsystem and the Microsoft Windows SACL, so additional configurations might be necessary. Check the ```auditing who-data entry``` to get further information:
+
+```xml
+<syscheck>
+  <directories check_all="yes" whodata="yes">/etc</directories>
+</syscheck>
+```
+Configuring reporting new files 
+To report new files added to the system, syscheck can be configured with the alert_new_files option. By default, this feature is enabled on the monitored SIEM agent, but the option is not present in the syscheck section of the configuration:
+
+```xml
+<syscheck>
+  <alert_new_files>yes</alert_new_files>
+</syscheck>
+```
+
+Configuring reporting file changes
+To report the exact content that has been changed in a text file, syscheck can be configured with the ```report_changes``` attribute of the ```directories``` option. ```Report_changes``` should be used with caution as Wazuh copies every single monitored file to a private location.
+
+```xml
+<syscheck>
+  <directories check_all="yes" realtime="yes" report_changes="yes">/test</directories>
+</syscheck>
+```
+
+If some sentive files exist in the monitored with report_changes path, nodiff option can be used. This option disables computing the diff for the listed files, avoiding data leaking by sending the files content changes through alerts:
+
+```xml
+<syscheck>
+  <directories check_all="yes" realtime="yes" report_changes="yes">/test</directories>
+  <nodiff>/test/private</nodiff>
+</syscheck>
+```
+
+Configuring ignoring files and Windows registry entries
+In order to avoid false positives, syscheck can be configured to ignore certain files and directories that do not need to be monitored by using the ```ignore``` option:
+
+```xml
+<syscheck>
+  <ignore>/etc/random-seed</ignore>
+  <ignore>/root/dir</ignore>
+  <ignore type="sregex">.log$|.tmp</ignore>
+</syscheck>
+```
+
+Similar functionality, but for the Windows registries can be achieved by using the ```registry_ignore``` option:
+
+```xml
+<syscheck>
+ <registry_ignore>HKEY_LOCAL_MACHINE\Security\Policy\Secrets</registry_ignore>
+ <registry_ignore type="sregex">\Enum$</registry_ignore>
+</syscheck>
+```
+
+Configuring ignoring files via rules 
+An alternative method to ignore specific files scanned by syscheck is by using rules and setting the rule level to 0. By doing that the alert will be silenced:
+```xml
+<rule id="100345" level="0">
+  <if_group>syscheck</if_group>
+  <match>/var/www/htdocs</match>
+  <description>Ignore changes to /var/www/htdocs</description>
+</rule>
+```
+
+Configuring the alert severity for the monitored files
+With a custom rule, the level of a syscheck alert can be altered when changes to a specific file or file pattern are detected:
+```xml
+<rule id="100345" level="12">
+  <if_group>syscheck</if_group>
+  <match>/var/www/htdocs</match>
+  <description>Changes to /var/www/htdocs - Critical file!</description>
+</rule>
+```
+
+Configuring maximum recursion level allowed 
+It is possible to configure the maximum recursion level allowed for a specific directory by using the recursion_level attribute of the directories option. recursion_level value must be an integer between 0 and 320.
+
+An example configuration may look as follows:
+
+```xml
+<syscheck>
+  <directories check_all="yes">/etc,/usr/bin,/usr/sbin</directories>
+  <directories check_all="yes">/root/users.txt,/bsd,/root/db.html</directories>
+  <directories check_all="yes" recursion_level="3">folder_test</directories>
+</syscheck>
+```
+
+Configuring syscheck process priority 
+To adjust syscheck CPU usage on the monitored system the ```process_priority``` option can be used. It sets the nice value for syscheck process. The default ```process_priority``` is set to 10.
+
+Setting ```process_priority``` value higher than the default, will give syscheck lower priority, less CPU resources and make it run slower. In the example below the nice value for syscheck process is set to maximum:
+```xml
+<syscheck>
+  <process_priority>19</process_priority>
+</syscheck>
+```
+
+Setting process_priority value lower than the default, will give syscheck higher priority, more CPU resources and make it run faster. In the example below the nice value for syscheck process is set to minimum:
+```xml
+<syscheck>
+  <process_priority>-20</process_priority>
+</syscheck>
+```
+
+Configuring where the database is to be stored
+When the SIEM agent starts it performs a first scan and generates its database. By default, the database is created in disk:
+```xml
+<syscheck>
+  <database>disk</database>
+</syscheck>
+```
+Syscheck can be configured to store the database in memory instead by changing value of the database option:
+```xml
+<syscheck>
+  <database>memory</database>
+</syscheck>
+```
+The main advantage of using in memory database is the performance as reading and writing operations are faster than performing them on disk. The corresponding disadvantage is that the memory must be sufficient to store the data.
+
+Configuring synchronization
+Synchronization can be configured to change the synchronization interval, the number of events per second, the queue size and the response timeout:
+```xml
+<syscheck>
+  <synchronization>
+    <enabled>yes</enabled>
+    <interval>5m</interval>
+    <max_interval>1h</max_interval>
+    <response_timeout>30</response_timeout>
+    <queue_size>16384</queue_size>
+    <max_eps>10</max_eps>
+  </synchronization>
+</syscheck>
+```
 
 ## Tenable.sc
 
