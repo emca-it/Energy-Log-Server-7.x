@@ -9045,6 +9045,98 @@ Active response:
  </active-response>
 ```
 
+### Vulnerability detection
+
+#### How it works
+
+To be able to detect vulnerabilities, now agents are able to natively collect a list of installed applications, sending it periodically to the manager (where it is stored in local sqlite databases, one per agent). Also, the manager builds a global vulnerabilities database, from publicly available CVE repositories, using it later to cross-correlate this information with the agent's applications inventory data.
+
+The global vulnerabilities database is created automatically, currently pulling data from the following repositories:
+- https://canonical.com: Used to pull CVEs for Ubuntu Linux distributions.
+- https://access.redhat.com: Used to pull CVEs for Red Hat and CentOS Linux distributions.
+- https://www.debian.org: Used to pull CVEs for Debian Linux distributions.
+- https://nvd.nist.gov/: Used to pull CVEs from the National Vulnerability Database.
+
+This database can be configured to be updated periodically, ensuring that the solution will check for the very latest CVEs.
+
+Once the global vulnerability database (with the CVEs) is created, the detection process looks for vulnerable packages in the inventory databases (unique per agent). Alerts are generated when a CVE (Common Vulnerabilities and Exposures) affects a package that is known to be installed in one of the monitored servers. A package is labeled as vulnerable when its version is contained within the affected range of a CVE.
+
+#### Running a vulnerability scan
+
+1. Enable the agent module used to collect installed packages on the monitored system.
+It can be done by adding the following block of settings to your shared agent configuration file:
+
+```xml
+<wodle name="syscollector">
+  <disabled>no</disabled>
+  <interval>1h</interval>
+  <os>yes</os>
+  <packages>yes</packages>
+</wodle>
+```
+
+If you want to scan vulnerabilities in Windows agents, you will also have to add the ```hotfixes``` scan:
+
+```xml
+<wodle name="syscollector">
+  <disabled>no</disabled>
+  <interval>1h</interval>
+  <os>yes</os>
+  <packages>yes</packages>
+  <hotfixes>yes</hotfixes>
+</wodle>
+```
+
+2. Enable the manager module used to detect vulnerabilities.
+You can do this adding a block like the following to your manager configuration file:
+
+```xml
+<vulnerability-detector>
+    <enabled>yes</enabled>
+    <interval>5m</interval>
+    <ignore_time>6h</ignore_time>
+    <run_on_start>yes</run_on_start>
+
+    <provider name="canonical">
+        <enabled>yes</enabled>
+        <os>trusty</os>
+        <os>xenial</os>
+        <os>bionic</os>
+        <os>focal</os>
+        <update_interval>1h</update_interval>
+    </provider>
+
+    <provider name="debian">
+        <enabled>yes</enabled>
+        <os>wheezy</os>
+        <os>stretch</os>
+        <os>jessie</os>
+        <os>buster</os>
+        <update_interval>1h</update_interval>
+    </provider>
+
+    <provider name="redhat">
+        <enabled>yes</enabled>
+        <update_from_year>2010</update_from_year>
+        <update_interval>1h</update_interval>
+    </provider>
+
+    <provider name="nvd">
+        <enabled>yes</enabled>
+        <update_from_year>2010</update_from_year>
+        <update_interval>1h</update_interval>
+    </provider>
+
+</vulnerability-detector>
+```
+
+Remember to restart the manager to apply the changes.
+
+You can also check the vulnerability dashboards to have an overview of your agents' status.
+
+![image](https://user-images.githubusercontent.com/42172770/209840302-f405052b-d03e-430f-a56a-1d5882eaca8f.png)
+
+
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
