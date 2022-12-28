@@ -8133,6 +8133,9 @@ Windows event channels can be monitored by placing their name at the location fi
 </localfile>
 ```
 
+Available channels and providers
+Table below shows available channels and providers to monitor included in the Wazuh ruleset:
+
 <table border="1" class="colwidths-given docutils" id="id1">
 <colgroup>
 <col width="2%" />
@@ -8268,6 +8271,140 @@ Windows event channels can be monitored by placing their name at the location fi
 <td><p class="first last">Any</p>
 </td>
 <td><p class="first last">Other channels (they are grouped in a generic Windows rule file).</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+When monitoring a channel, events from different providers can be gathered. At the ruleset this is taken into account to monitor logs from McAfee, Eventlog or Security Essentials.
+
+Windows ruleset redesign
+
+In order to ease the addition of new rules, the eventchannel ruleset has been classified according to the channel from which events belong. This will ensure an easier way of maintaining the ruleset organized and find the better place for custom rules. To accomplish this, several modifications have been added:
+
+- Each eventchannel file contains a specific channel's rules.
+- A base file includes every parent rule filtering by the specific channels monitored.
+- Rules have been updated and improved to match the new JSON events, showing relevant information at the rule's description and facilitating the way of filtering them.
+- New channel's rules have been added. By default, the monitored channels are System, Security and Application, these channels have their own file now and include a fair set of rules.
+- Every file has their own rule ID range in order to get it organized. There are a hundred IDs set for the base rules and five hundred for each channel file.
+- In case some rules can't be classified easily or there are so few belonging to a specific channel, they are included at a generic Windows rule file.
+
+To have a complete view of which events are equivalent to the old ones from ```eventlog``` and the previous version of ```eventchannel```, this table classifies every rule according to the source in which they were recorded, including their range of rule IDs and the file where they are described.
+
+<table border="1" class="colwidths-given docutils" id="id1">
+<colgroup>
+<col width="2%" />
+<col width="35%" />
+<col width="28%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr.</th>
+<th class="head">Source</th>
+<th class="head">Rule IDs</th>
+<th class="head">Rule file</th>
+</tr>
+</thead>
+<tbody valign="top">
+
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">Base rules</p>
+</td>
+<td><p class="first last">60000 - 60099</p>
+</td>
+<td><p class="first last">0575-win-base_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">Security</p>
+</td>
+<td><p class="first last">60100 - 60599</p>
+</td>
+<td><p class="first last">0580-win-security_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">3</p>
+</td>
+<td><p class="first last">Application</p>
+</td>
+<td><p class="first last">60600 - 61099</p>
+</td>
+<td><p class="first last">0585-win-application_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">4</p>
+</td>
+<td><p class="first last">System</p>
+</td>
+<td><p class="first last">61100 - 61599</p>
+</td>
+<td><p class="first last">0590-win-system_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">5</p>
+</td>
+<td><p class="first last">Sysmon</p>
+</td>
+<td><p class="first last">61600 - 62099</p>
+</td>
+<td><p class="first last">0595-win-sysmon_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">6</p>
+</td>
+<td><p class="first last">Windows Defender</p>
+</td>
+<td><p class="first last">62100 - 62599</p>
+</td>
+<td><p class="first last">0600-win-wdefender_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">7</p>
+</td>
+<td><p class="first last">McAfee</p>
+</td>
+<td><p class="first last">62600 - 63099</p>
+</td>
+<td><p class="first last">0605-win-mcafee_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">8</p>
+</td>
+<td><p class="first last">Eventlog</p>
+</td>
+<td><p class="first last">63100 - 63599</p>
+</td>
+<td><p class="first last">0610-win-ms_logs_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">9</p>
+</td>
+<td><p class="first last">Microsoft Security Essentials</p>
+</td>
+<td><p class="first last">63600 - 64099</p>
+</td>
+<td><p class="first last">0615-win-ms-se_rules.xml</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">10</p>
+</td>
+<td><p class="first last">Others</p>
+</td>
+<td><p class="first last">64100 - 64599</p>
+</td>
+<td><p class="first last">0620-win-generic_rules.xml</p>
 </td>
 </tr>
 
