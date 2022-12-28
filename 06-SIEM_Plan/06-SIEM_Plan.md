@@ -8150,6 +8150,7 @@ Windows event channels can be monitored by placing their name at the location fi
 </tr>
 </thead>
 <tbody valign="top">
+	
 <tr class="row-even"><td><p class="first last">1</p>
 </td>
 <td><p class="first last">Application</p>
@@ -8159,6 +8160,114 @@ Windows event channels can be monitored by placing their name at the location fi
 <td><p class="first last">Any</p>
 </td>
 <td><p class="first last">This log retrieves every event related to system applications management and is one of the main Windows administrative channels along with Security and System.</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">Security</p>
+</td>
+<td><p class="first last">Security</p>
+</td>
+<td><p class="first last">Any</p>
+</td>
+<td><p class="first last">This channel gathers information related to users and groups creation, login, logoff and audit policy modifications.</p>
+</td>
+</tr>
+	
+<tr class="row-even"><td><p class="first last">3</p>
+</td>
+<td><p class="first last">System</p>
+</td>
+<td><p class="first last">System</p>
+</td>
+<td><p class="first last">Any</p>
+</td>
+<td><p class="first last">The System channel collects events associated with kernel and service control.</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">4</p>
+</td>
+<td><p class="first last">Sysmon</p>
+</td>
+<td><p class="first last">Microsoft-Windows-Sysmon/Operational</p>
+</td>
+<td><p class="first last">Microsoft-Windows-Sysmon</p>
+</td>
+<td><p class="first last">Sysmon monitors system activity as process creation and termination, network connection and file changes.</p>
+</td>
+</tr>
+	
+<tr class="row-even"><td><p class="first last">5</p>
+</td>
+<td><p class="first last">Windows Defender</p>
+</td>
+<td><p class="first last">Microsoft-Windows-Windows Defender/Operational</p>
+</td>
+<td><p class="first last">Microsoft-Windows-Windows Defender</p>
+</td>
+<td><p class="first last">The Windows Defender log file shows information about the scans passed, malware detection and actions taken against them.</p>
+</td>
+</tr>
+	
+<tr class="row-even"><td><p class="first last">6</p>
+</td>
+<td><p class="first last">McAfee</p>
+</td>
+<td><p class="first last">Application</p>
+</td>
+<td><p class="first last">McLogEvent</p>
+</td>
+<td><p class="first last">This source shows McAfee scan results, virus detection and actions taken against them.</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">7</p>
+</td>
+<td><p class="first last">EventLog</p>
+</td>
+<td><p class="first last">System</p>
+</td>
+<td><p class="first last">Eventlog</p>
+</td>
+<td><p class="first last">This source retrieves information about audit and Windows logs.</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">8</p>
+</td>
+<td><p class="first last">Microsoft Security Essentials</p>
+</td>
+<td><p class="first last">System</p>
+</td>
+<td><p class="first last">Microsoft Antimalware</p>
+</td>
+<td><p class="first last">This software gives information about real-time protection for the system, malware-detection scans and antivirus settings.</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">9</p>
+</td>
+<td><p class="first last">Remote Access</p>
+</td>
+<td><p class="first last">File Replication Service</p>
+</td>
+<td><p class="first last">Any</p>
+</td>
+<td><p class="first last">Other channels (they are grouped in a generic Windows rule file).</p>
+</td>
+</tr>
+	
+<tr class="row-even"><td><p class="first last">10</p>
+</td>
+<td><p class="first last">Terminal Services</p>
+</td>
+<td><p class="first last">Service Microsoft-Windows-TerminalServices-RemoteConnectionManager</p>
+</td>
+<td><p class="first last">Any</p>
+</td>
+<td><p class="first last">Other channels (they are grouped in a generic Windows rule file).</p>
 </td>
 </tr>
 
