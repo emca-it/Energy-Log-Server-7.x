@@ -5026,7 +5026,7 @@ This Logstash plugin has example of complete configuration for integration with 
 
 ### Logstash plugin for LDAP data enrichement
 
-1. Download logstash plugin with dependencies ![](/files/logstash-filter-ldap-0.2.4.zip) and upload files to your server.
+1. Download logstash plugin with dependencies ![logstash-filter-ldap-0.2.4.zip](/files/logstash-filter-ldap-0.2.4.zip) and upload files to your server.
 
 2. Unzip file.
 
@@ -5051,9 +5051,9 @@ This Logstash plugin has example of complete configuration for integration with 
 	    enable_error_logging => true
 	    attributes => ['sAMAccountType','lastLogon','badPasswordTime']
 	  }
-	}
+	}```
 	
-	identifier_value - Identifier of the value to search. If identifier type is uid, then the value should be the uid to search for.
+	```identifier_value - Identifier of the value to search. If identifier type is uid, then the value should be the uid to search for.
 	identifier_key - Type of the identifier to search.
 	identifier_type - Object class of the object to search.
 	host - LDAP server host adress.
