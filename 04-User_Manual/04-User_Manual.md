@@ -4717,7 +4717,7 @@ filter {
 }
 ```
 
-More about `jdbc` plugin parameters: [(https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html](https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html#plugins-filters-jdbc_streaming-prepared_statements)
+More about `jdbc` plugin parameters: [https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html](https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html#plugins-filters-jdbc_streaming-prepared_statements)
 
 #### Filter `logstash-filter-ldap`
 
@@ -4917,6 +4917,18 @@ ruby {
 }
 grok {
 	match => { "op5exists" => [ ".*\:%{NUMBER:op5count}" ] }
+}
+```
+
+#### Mathematical calculations
+
+Using Logstash filters, you can perform mathematical calculations for field values and save the results to a new field. 
+
+Application example: 
+
+```bash
+filter {
+   ruby { code => 'event.set("someField", event.get("field1") + event.get("field2"))' }
 }
 ```
 
