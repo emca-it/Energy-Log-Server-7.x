@@ -2311,6 +2311,41 @@ Using the assigned tag, the documents is send to the appropriate index:
    }
    ```
 
+## VMware Connector
+
+
+The Energy Logserver accepts logs from the VMware system using the VMware logstash pipeline. 
+
+
+We need set configuration in script following location:
+
+`/logstash/lists/bin/vmware.sh`
+
+And set the connection parameters:
+
+```bash
+export GOVC_URL="https://ESX_IP_ADDRESS"
+export GOVC_USERNAME="ESX_login"
+export GOVC_PASSWORD="ESX_password"
+export GOVC_INSECURE="true"
+```
+
+The documents is send to the appropriate index:
+
+```bash
+output {
+        if "vmware" in [tags] {
+                elasticsearch {
+                        hosts => ["127.0.0.1:9200"]
+                        index => "vmware-%{+YYYY.MM}"
+                        user => "logstash"
+                        password => "logstash"
+                        ilm_enabled => false
+                }
+        }
+}
+```
+
 ## Nerwork Flows
 
 The Energy Logserver has the ability to receive and process various types of network flows. For this purpose, the following input ports have been prepared:
