@@ -5050,7 +5050,7 @@ This Logstash plugin has example of complete configuration for integration with 
 	    search_dn => "OU=example,DC=example"
 	    enable_error_logging => true
 	    attributes => ['sAMAccountType','lastLogon','badPasswordTime']
-	  }```
+	  }
 	
 	
 6. Fields description
@@ -5064,7 +5064,7 @@ This Logstash plugin has example of complete configuration for integration with 
 	password - Password of the account linked to previous username.
 	search_dn - Domain name in which search inside the ldap database (usually your userdn or groupdn).
 	enable_error_logging - When there is a problem with the connection with the LDAP database, write reason in the event.
-	attributes - List of attributes to get. If not set, all attributes available will be get.```
+	attributes - List of attributes to get. If not set, all attributes available will be get.
 
 ### Single password in all Logstash outputs
 
