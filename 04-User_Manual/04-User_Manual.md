@@ -1155,16 +1155,16 @@ Examples of implementation:
 
 We can Separate data from one index to different user groups using aliases. For example, in one index we have several tags:
 
-![image](https://user-images.githubusercontent.com/42172770/209846991-ca27566d-1a57-4d45-b5ae-24ce24ed5c84.png)
+![](https://user-images.githubusercontent.com/42172770/209846991-ca27566d-1a57-4d45-b5ae-24ce24ed5c84.png)
 
 To separate the data, you must first set up an alias on the appropriate tag.
 
-![image](https://user-images.githubusercontent.com/42172770/209850716-104762f8-4cb6-45dc-b651-287eacbf92d8.png)
+![](https://user-images.githubusercontent.com/42172770/209850716-104762f8-4cb6-45dc-b651-287eacbf92d8.png)
 
-Then assume a patter index on the above alias.
+Then assume a pattern index on the above alias.
 Finally, we can assign the appropriate role to the new index pattern.
 
-![image](https://user-images.githubusercontent.com/42172770/209851010-2dc583de-889b-4baf-bdc9-21cbaba820eb.png)
+![](https://user-images.githubusercontent.com/42172770/209851010-2dc583de-889b-4baf-bdc9-21cbaba820eb.png)
 
 
 ## Settings
