@@ -5820,13 +5820,14 @@ POST syslog-*,winlogbeat2*/_join
 ```
 
 ### Automation
+
 SOC analysts have to handle many repetitive tasks. With Energy LogServer you can build automations to automatically execute all relevant actions.
 
 Automations helps you to interconnect different apps with an API with each other to share and manipulate its data without a single line of code. It is an easy to use, user-friendly and highly customizable module, which uses an intuitive user interface for you to design your unique scenarios very fast. 
 A automation is a collection of nodes connected together to automate a process.
 A automation can be started manually (with the Start node) or by Trigger nodes. When a automation is started, it executes all the active and connected nodes. The automation execution ends when all the nodes have processed their data. You can view your automation executions in the Execution log, which can be helpful for debugging.
 
-![](/05-0-0-User_guide/execute_workflow.gif)
+![](/media/media/execute_workflow.gif)
 
 **Activating a automation**
 Auomations that start with a Trigger node or a Webhook node need to be activated in order to be executed. This is done via the Active toggle in the Automation UI.
@@ -5847,7 +5848,7 @@ You can import JSON files as automations in two ways:
 
 On each automation, it is possible to set some custom settings and overwrite some of the global default settings from the Automation > Settings menu.
 
-![](/05-0-0-User_guide/workflow-settings.png)
+![](/media/media/workflow-settings.png)
  
 The following settings are available:
 *	Error Automation: Select a automation to trigger if the current automation fails. 
@@ -5873,7 +5874,7 @@ You can also use the Error Trigger node, which triggers a automation when anothe
 #### Crate your first automation
 
 ##### Automate Incident Reporting with Typeform
-Let’s create your first automation in Energy SOAR. The automation will create a new alert and promote it to a case whenever a user submits a high severity incident.
+Let’s create your first automation in Energy Logserver. The automation will create a new alert and promote it to a case whenever a user submits a high severity incident.
 
 **Prerequisites**
 
@@ -5886,21 +5887,21 @@ You'll need to obtain the credentials for the Typeform Trigger node.
 6.	Enter a name in the Token name field.
 7.	Click on the Generate token button.
 8.	Click on the Copy button to copy the access token.
-9.	In Energy SOAR choose Automations > Credentials > New > Typeform API.
+9.	In Energy Logserver choose Automations > Credentials > New > Typeform API.
 10.	Enter a name for your credentials in the Credentials Name field.
 11.	Paste the access token in the Access Token field.
-12.	Click the Create button to save your credentials in Energy SOAR.
+12.	Click the Create button to save your credentials in Energy Logserver.
 
 You will also need to create a form in Typeform to collect incident reports with the following questions:
 *	What is your name? (optional) (Short Text)
 *	What is your email address? (optional) (Email)
 *	What is incident’s category? (Multiple Choice)
 
- ![](/05-0-0-User_guide/workflow-typeform-form.png) 
+ ![](/media/media/workflow-typeform-form.png) 
  
 *	Severity (Multiple Choice)
 
-![](/05-0-0-User_guide/workflow-typeform-form2.png)
+![](/media/media/workflow-typeform-form2.png)
 
 *	Description (Long Text)
 
@@ -5910,7 +5911,6 @@ This automation would use the following nodes:
 *	Typeform Trigger - Start the automation when a form receives a report
 *	Set - Set the automation data
 *	FunctionItem - Calculate severity and alert reference
-*	TheHive - Create alert and case
 *	IF - Conditional logic to decide the flow of the automation
 *	NoOp - Do nothing (optional)
 
@@ -5930,7 +5930,7 @@ Now save your automation so that the webhook in the Typeform Trigger node can be
 
 After clicking on the Execute Node button, submit a response to your form in Typeform.
 
-![](/05-0-0-User_guide/workflow-getting-started-trigger.png)
+![](/media/media/workflow-getting-started-trigger.png)
  
 
 2.	Set node
@@ -5962,11 +5962,11 @@ This will open up the Variable Selector. Delete the 0 in the Expression field on
 Nodes > Typeform Trigger > Output Data > JSON > Severity
 Toggle Keep Only Set to true. We set this option to true to ensure that only the data that we have set in this node get passed on to the next nodes in the automation. Click on the Execute Node button on the top right to set the data for the automation.
 
-![](/05-0-0-User_guide/workflow-getting-started-expression.png)
+![](/media/media/workflow-getting-started-expression.png)
  
 3.	FunctionItem node
 
-To create Energy SOAR alert in automation we have to provide SourceRef number. We’ll use the FunctionItem node to generate that random number.
+To create Energy Logserver alert in automation we have to provide SourceRef number. We’ll use the FunctionItem node to generate that random number.
 Add the FunctionItem node by clicking on the + button and selecting the FunctionItem node.
 Clear JavaScript Code window and insert the following code:
 
@@ -5983,7 +5983,7 @@ return item;
 We use parseInt function to convert string severity value into an integer.
 
 4.	Create alert node
-Add TheHive node by clicking on the + button and selecting the TheHive node. Double click on the node and click on TheHive name to change it to Create alert.
+Add node by clicking on the + button and selecting the node. Double click on the node and click on name to change it to Create alert.
 
 Since the Title would be a dynamic piece of information, click on the gears icon next to the field, and select Add Expression.
 
@@ -6013,7 +6013,7 @@ For the Operation field, we'll set it to 'Larger'. For Value 2, enter 2. This wi
 
 6.	Promote alert node
 
-Add TheHive node by clicking on the + button and selecting the TheHive node. Double click on the node and click on TheHive name to change it to Promote alert.
+Add node by clicking on the + button and selecting the node. Double click on the node and click on name to change it to Promote alert.
 
 Select ‘Promote’ from the Operation dropdown list.
 In Alert ID field add expression:
@@ -6030,7 +6030,7 @@ Green checkmarks indicate successful automation execution:
 
 ![](workflow-getting-started-final2.png)
 
-Congratulations on creating you first automation with Energy SOAR.
+Congratulations on creating you first automation with Energy Logserver.
 
 
 #### Connection
@@ -6043,7 +6043,7 @@ To create a connection between two nodes, click on the grey dot on the right sid
 
 An IF node has two connections to different nodes: one for when the statement is true and one for when the statement is false.
 
-![](/media/Connection_ifnode.8e006dce.gif)
+![](/media/media/Connection_ifnode.8e006dce.gif)
 
 #### Automations List
 
@@ -6100,19 +6100,19 @@ If an application you need does not have a dedicated Node yet, you can access th
 
 Regular nodes perform an action, like fetching data or creating an entry in a calendar. Regular nodes are named for the application they represent and are listed under Regular Nodes in the Editor UI.
 
-![](/media/Regular_nodes.d3cec3e9.png)
+![](/media/media/Regular_nodes.d3cec3e9.png)
 
 ###### Example
 
 A Google Sheets node can be used to retrieve or write data to a Google Sheet.
 
-![](/media/Google_sheets.d9ee72a3.png)
+![](/media/media/Google_sheets.d9ee72a3.png)
 
 ##### Trigger nodes
 
 Trigger nodes start automations and supply the initial data.
 
-![](/media/Trigger_nodes.5bd536aa.png)
+![](/media/media/Trigger_nodes.5bd536aa.png)
 
 Trigger nodes can be app or core nodes.
 
@@ -6120,7 +6120,7 @@ Trigger nodes can be app or core nodes.
 
 * **App Trigger nodes** start the automation when an event happens in an app. App Trigger nodes are named like the application they represent followed by "Trigger" and are listed under Trigger Nodes in the Editor. For example, a Telegram trigger node can be used to trigger a automation when a message is sent in a Telegram chat.
 
-![](/media/telegram_trigger.fae8dcd9.png)
+![](/media/media/telegram_trigger.fae8dcd9.png)
 
 ##### Node settings
 
@@ -6134,7 +6134,7 @@ The node operations are illustrated with icons that appear on top of the node wh
 * **Copy**: Duplicate the selected node
 * **Play**: Run the selected node
 
-![](/media/Node_settings.36ddf764.gif)
+![](/media/media/Node_settings.36ddf764.gif)
 
 To access the node parameters and settings, double-click on the node.
 
@@ -6154,14 +6154,14 @@ The node settings allow you to configure the look and execution of the node. The
 * **Retry On Fail**: If active, the node tries to execute a failed attempt multiple times until it succeeds
 * **Continue On Fail**: If active, the automation continues even if the execution of the node fails. When this happens, the node passes along input data from previous nodes, so the automation should account for unexpected output data.
 
-![](/media/Node_parameters.090b2d35.gif)
+![](/media/media/Node_parameters.090b2d35.gif)
 
 If a node is not correctly configured or is missing some required information, a **warning sign** is displayed on the top right corner of the node. To see what parameters are incorrect, double-click on the node and have a look at fields marked with red and the error message displayed in the respective warning symbol.
 
-![](/media/Node_error.e189f05d.gif)
+![](/media/media/Node_error.e189f05d.gif)
 
 #### Automation integration nodes
-To boost your automation automation you can connect with widely external nodes.
+To boost your automation you can connect with widely external nodes.
 
 List of automation nodes:
 - Action Network
