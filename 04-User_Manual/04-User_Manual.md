@@ -5819,7 +5819,7 @@ POST syslog-*,winlogbeat2*/_join
 }
 ```
 
-### Automation
+## Automation
 
 SOC analysts have to handle many repetitive tasks. With Energy LogServer you can build automations to automatically execute all relevant actions.
 
@@ -6033,7 +6033,7 @@ Green checkmarks indicate successful automation execution:
 Congratulations on creating you first automation with Energy Logserver.
 
 
-#### Connection
+### Connection
 
 A connection establishes a link between nodes to route data through the automation. A connection between two nodes passes data from one node's output to another node's input. Each node can have one or multiple connections.
 
@@ -6045,7 +6045,7 @@ An IF node has two connections to different nodes: one for when the statement is
 
 ![](/media/media/Connection_ifnode.8e006dce.gif)
 
-#### Automations List
+### Automations List
 
 This section includes the operations for creating and editing automations.
 
@@ -6060,7 +6060,7 @@ This section includes the operations for creating and editing automations.
 * **Import from File**: Import a automation from a local file
 * **Settings**: View and change the settings of the current automation
 
-#### Credentials
+### Credentials
 
 This section includes the operations for creating credentials.
 
@@ -6069,13 +6069,13 @@ Credentials are private pieces of information issued by apps/services to authent
 * **New**: Create new credentials
 * **Open**: Open the list of saved credentials
 
-#### Executions
+### Executions
 
 This section includes information about your automation executions, each completed run of a automation.
 
 You can enabling logging of your failed, successful, and/or manually selected automations using the Automation > Settings page.
 
-#### Node
+### Node
 
 A node is an entry point for retrieving data, a function to process data, or an exit for sending data. The data process performed by nodes can include filtering, recomposing, and changing data.
 
@@ -6087,7 +6087,7 @@ There are three types of nodes:
 * Regular Nodes
 * Trigger Nodes
 
-##### Core nodes
+#### Core nodes
 
 Core nodes are functions or services that can be used to control how automations are run or to provide generic API support.
 
@@ -6096,19 +6096,19 @@ Use the Start node when you want to manually trigger the automation with the `Ex
 If an application you need does not have a dedicated Node yet, you can access the data by using the HTTP Request node or the Webhook node. You can also read about creating nodes and make a node for your desired application.
 
 
-##### Regular nodes
+#### Regular nodes
 
 Regular nodes perform an action, like fetching data or creating an entry in a calendar. Regular nodes are named for the application they represent and are listed under Regular Nodes in the Editor UI.
 
 ![](/media/media/Regular_nodes.d3cec3e9.png)
 
-###### Example
+##### Example
 
 A Google Sheets node can be used to retrieve or write data to a Google Sheet.
 
 ![](/media/media/Google_sheets.d9ee72a3.png)
 
-##### Trigger nodes
+#### Trigger nodes
 
 Trigger nodes start automations and supply the initial data.
 
@@ -6122,11 +6122,11 @@ Trigger nodes can be app or core nodes.
 
 ![](/media/media/telegram_trigger.fae8dcd9.png)
 
-##### Node settings
+#### Node settings
 
 Nodes come with global **operations** and **settings**, as well as app-specific **parameters** that can be configured.
 
-###### Operations
+##### Operations
 
 The node operations are illustrated with icons that appear on top of the node when you hover on it:
 * **Delete**: Remove the selected node from the automation
@@ -6138,11 +6138,11 @@ The node operations are illustrated with icons that appear on top of the node wh
 
 To access the node parameters and settings, double-click on the node.
 
-###### Parameters
+##### Parameters
 
 The node parameters allow you to define the operations the node should perform. Find the available parameters of each node in the node reference.
 
-###### Settings
+##### Settings
 
 The node settings allow you to configure the look and execution of the node. The following options are available:
 
@@ -6160,7 +6160,7 @@ If a node is not correctly configured or is missing some required information, a
 
 ![](/media/media/Node_error.e189f05d.gif)
 
-#### Automation integration nodes
+### Automation integration nodes
 To boost your automation you can connect with widely external nodes.
 
 List of automation nodes:
