@@ -1835,12 +1835,12 @@ Configuration options
 You can specify the following options in the ```queue.mem``` section of the ```winlogbeat.yml``` config file:
 ```events```
 Number of events the queue can store.
-The default value is 4096 events.
+The default value is ```4096``` events.
 
 ```flush.min_events```
 Minimum number of events required for publishing. If this value is set to 0, the output can start publishing events without additional waiting times. Otherwise the output has to wait for more events to become available.
 
-The default value is 2048.
+The default value is ```2048```.
 
 ```flush.timeout```
 Maximum wait time for flush.min_events to be fulfilled. If set to 0s, events will be immediately available for consumption.
@@ -1883,7 +1883,7 @@ The default value is ```max_size / 10```.
 ```read_ahead```
 The number of events that should be read from disk into memory while waiting for an output to request them. If you find outputs are slowing down because they can’t read as many events at a time, adjusting this setting upward may help, at the cost of higher memory usage.
 
-The default value is ```512``.
+The default value is ```512```.
 
 ```write_ahead```
 The number of events the queue should accept and store in memory while waiting for them to be written to disk. If you find the queue’s memory use is too high because events are waiting too long to be written to disk, adjusting this setting downward may help, at the cost of reduced event throughput. On the other hand, if inputs are waiting or discarding events because they are being produced faster than the disk can handle, adjusting this setting upward may help, at the cost of higher memory usage.
