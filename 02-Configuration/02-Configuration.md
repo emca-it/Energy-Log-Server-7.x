@@ -1617,6 +1617,9 @@ winlogbeat.exe test config
 winlogbeat.exe test output
 ```
 
+We can also drop events on the agent side. To do this we need to use the ```drop_event``` processor
+
+
 ```yml
 processors:
   - drop_event:
@@ -1624,8 +1627,173 @@ processors:
         condition
 ```
 
+Each condition receives a field to compare. You can specify multiple fields under the same condition by using ```AND``` between the fields (for example, ```field1 AND field2```).
 
-We can also drop events on the agent side. To do this we need to use the ```drop_event``` processor
+For each field, you can specify a simple field name or a nested map, for example ```dns.question.name```.
+
+See Exported fields for a list of all the fields that are exported by Winlogbeat.
+
+The supported conditions are:
+- equals
+- contains
+- regexp
+- range
+- network
+- has_fields
+- or
+- and
+- not
+
+```equals```
+With the ```equals``` condition, you can compare if a field has a certain value. The condition accepts only an integer or a string value.
+
+For example, the following condition checks if the response code of the HTTP transaction is 200:
+
+```yml
+equals:
+  http.response.code: 200
+```
+
+```contains```
+The ```contains``` condition checks if a value is part of a field. The field can be a string or an array of strings. The condition accepts only a string value.
+
+For example, the following condition checks if an error is part of the transaction status:
+
+```yml
+contains:
+  status: "Specific error"
+```
+
+```regexp```
+The ```regexp``` condition checks the field against a regular expression. The condition accepts only strings.
+
+For example, the following condition checks if the process name starts with ```foo```:
+
+```yml
+regexp:
+  system.process.name: "^foo.*"
+```
+
+```range```
+The range condition checks if the field is in a certain ```range``` of values. The condition supports ```lt, lte, gt and gte```. The condition accepts only integer or float values.
+
+For example, the following condition checks for failed HTTP transactions by comparing the ```http.response.code``` field with 400.
+
+```yml
+range:
+  http.response.code:
+    gte: 400
+```
+This can also be written as:
+```yml
+range:
+  http.response.code.gte: 400
+```
+
+The following condition checks if the CPU usage in percentage has a value between 0.5 and 0.8.
+```yml
+range:
+  system.cpu.user.pct.gte: 0.5
+  system.cpu.user.pct.lt: 0.8
+```
+
+```network```
+The ```network``` condition checks if the field is in a certain IP network range. Both IPv4 and IPv6 addresses are supported. The network range may be specified using CIDR notation, like "192.0.2.0/24" or "2001:db8::/32", or by using one of these named ranges:
+- ```loopback``` - Matches loopback addresses in the range of 127.0.0.0/8 or ::1/128.
+- ```unicast``` - Matches global unicast addresses defined in RFC 1122, RFC 4632, and RFC 4291 with the exception of the IPv4 broadcast address (```255.255.255.255```). This includes private address ranges.
+- ```multicast``` - Matches multicast addresses.
+- ```interface_local_multicast``` - Matches IPv6 interface-local multicast addresses.
+- ```link_local_unicast``` - Matches link-local unicast addresses.
+- ```link_local_multicast``` - Matches link-local multicast addresses.
+- ```private``` - Matches private address ranges defined in RFC 1918 (IPv4) and RFC 4193 (IPv6).
+- ```public``` - Matches addresses that are not loopback, unspecified, IPv4 broadcast, link local unicast, link local multicast, interface local multicast, or private.
+- ```unspecified``` - Matches unspecified addresses (either the IPv4 address "0.0.0.0" or the IPv6 address "::").
+
+The following condition returns true if the source.ip value is within the private address space.
+
+```yml
+network:
+  source.ip: private
+```
+
+This condition returns true if the ```destination.ip``` value is within the IPv4 range of ```192.168.1.0``` - ```192.168.1.255```.
+
+```yml
+network:
+  destination.ip: '192.168.1.0/24'
+```
+
+And this condition returns true when ```destination.ip``` is within any of the given subnets.
+
+```yml
+network:
+  destination.ip: ['192.168.1.0/24', '10.0.0.0/8', loopback]
+```
+
+```has_fields```
+The ```has_fields``` condition checks if all the given fields exist in the event. The condition accepts a list of string values denoting the field names.
+
+For example, the following condition checks if the ```http.response.code``` field is present in the event.
+```yml
+has_fields: ['http.response.code']
+```
+
+```or```
+The ```or``` operator receives a list of conditions.
+```yml
+or:
+  - <condition1>
+  - <condition2>
+  - <condition3>
+  ...
+```
+
+For example, to configure the condition ```http.response.code = 304 OR http.response.code = 404```:
+
+```yml
+or:
+  - equals:
+      http.response.code: 304
+  - equals:
+      http.response.code: 404
+```
+
+```and```
+The ```and``` operator receives a list of conditions.
+
+```yml
+and:
+  - <condition1>
+  - <condition2>
+  - <condition3>
+  ...
+```
+
+For example, to configure the condition ```http.response.code = 200 AND status = OK```:
+
+```yml
+or:
+  - <condition1>
+  - and:
+    - <condition2>
+    - <condition3>
+```
+
+```not```
+The ```not``` operator receives the condition to negate.
+
+```yml
+not:
+  <condition>
+```
+
+For example, to configure the condition ```NOT status = OK```:
+
+```yml
+not:
+  equals:
+    status: OK
+```
 
 ##### Filebeat
 
