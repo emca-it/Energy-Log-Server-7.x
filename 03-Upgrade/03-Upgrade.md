@@ -917,9 +917,15 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
 Follow the steps below:
 
 ```bash
-systemctl stop elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert 
+systemctl stop elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
+```
+```bash
 yum remove energy-logserver-*
+```
+```bash
 yum install old-version.rpm
+```
+```bash
 systemctl start elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
 ```
 
