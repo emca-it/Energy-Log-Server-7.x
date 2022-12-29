@@ -1644,7 +1644,7 @@ The supported conditions are:
 - and
 - not
 
-```equals```
+```equals```.
 With the ```equals``` condition, you can compare if a field has a certain value. The condition accepts only an integer or a string value.
 
 For example, the following condition checks if the response code of the HTTP transaction is 200:
@@ -1654,7 +1654,7 @@ equals:
   http.response.code: 200
 ```
 
-```contains```
+```contains```.
 The ```contains``` condition checks if a value is part of a field. The field can be a string or an array of strings. The condition accepts only a string value.
 
 For example, the following condition checks if an error is part of the transaction status:
@@ -1664,7 +1664,7 @@ contains:
   status: "Specific error"
 ```
 
-```regexp```
+```regexp```.
 The ```regexp``` condition checks the field against a regular expression. The condition accepts only strings.
 
 For example, the following condition checks if the process name starts with ```foo```:
@@ -1674,7 +1674,7 @@ regexp:
   system.process.name: "^foo.*"
 ```
 
-```range```
+```range```.
 The range condition checks if the field is in a certain ```range``` of values. The condition supports ```lt, lte, gt and gte```. The condition accepts only integer or float values.
 
 For example, the following condition checks for failed HTTP transactions by comparing the ```http.response.code``` field with 400.
@@ -1697,7 +1697,7 @@ range:
   system.cpu.user.pct.lt: 0.8
 ```
 
-```network```
+```network```.
 The ```network``` condition checks if the field is in a certain IP network range. Both IPv4 and IPv6 addresses are supported. The network range may be specified using CIDR notation, like "192.0.2.0/24" or "2001:db8::/32", or by using one of these named ranges:
 - ```loopback``` - Matches loopback addresses in the range of 127.0.0.0/8 or ::1/128.
 - ```unicast``` - Matches global unicast addresses defined in RFC 1122, RFC 4632, and RFC 4291 with the exception of the IPv4 broadcast address (```255.255.255.255```). This includes private address ranges.
@@ -1730,7 +1730,7 @@ network:
   destination.ip: ['192.168.1.0/24', '10.0.0.0/8', loopback]
 ```
 
-```has_fields```
+```has_fields```.
 The ```has_fields``` condition checks if all the given fields exist in the event. The condition accepts a list of string values denoting the field names.
 
 For example, the following condition checks if the ```http.response.code``` field is present in the event.
@@ -1738,7 +1738,7 @@ For example, the following condition checks if the ```http.response.code``` fiel
 has_fields: ['http.response.code']
 ```
 
-```or```
+```or```.
 The ```or``` operator receives a list of conditions.
 ```yml
 or:
@@ -1758,7 +1758,7 @@ or:
       http.response.code: 404
 ```
 
-```and```
+```and```.
 The ```and``` operator receives a list of conditions.
 
 ```yml
@@ -1779,7 +1779,7 @@ or:
     - <condition3>
 ```
 
-```not```
+```not```.
 The ```not``` operator receives the condition to negate.
 
 ```yml
