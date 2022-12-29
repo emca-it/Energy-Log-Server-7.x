@@ -3822,6 +3822,48 @@ Events are by default sent in plain text. You can enable encryption by setting s
 		  }
 		}
 
+### Logstash - Input Kafka
+
+This input will read events from a Kafka topic.
+
+Sample definition:
+
+```yml
+input {
+  kafka {
+    bootstrap_servers => "10.0.0.1:9092"
+    consumer_threads => 3
+
+    topics => ["example"]
+    codec => json
+    client_id => "hostname"
+    group_id => "logstash"
+    max_partition_fetch_bytes => "30000000"
+    max_poll_records => "1000"
+	
+    fetch_max_bytes => "72428800"
+    fetch_min_bytes => "1000000"
+	
+    fetch_max_wait_ms => "800"
+	                    
+    check_crcs => false
+
+  }
+}
+```
+```bootstrap_servers``` - A list of URLs of Kafka instances to use for establishing the initial connection to the cluster. This list should be in the form of host1:port1,host2:port2 These urls are just used for the initial connection to discover the full cluster membership (which may change dynamically) so this list need not contain the full set of servers (you may want more than one, though, in case a server is down).
+```consumer_threads``` - Ideally you should have as many threads as the number of partitions for a perfect balance — more threads than partitions means that some threads will be idle
+```topics``` - A list of topics to subscribe to, defaults to ["logstash"].
+```codec``` - The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+```client_id``` - The id string to pass to the server when making requests. The purpose of this is to be able to track the source of requests beyond just ip/port by allowing a logical application name to be included.
+```group_id``` - The identifier of the group this consumer belongs to. Consumer group is a single logical subscriber that happens to be made up of multiple processors. Messages in a topic will be distributed to all Logstash instances with the same group_id.
+```max_partition_fetch_bytes``` - The maximum amount of data per-partition the server will return. The maximum total memory used for a request will be #partitions * max.partition.fetch.bytes. This size must be at least as large as the maximum message size the server allows or else it is possible for the producer to send messages larger than the consumer can fetch. If that happens, the consumer can get stuck trying to fetch a large message on a certain partition.
+```max_poll_records``` - The maximum number of records returned in a single call to poll().
+```fetch_max_bytes``` - The maximum amount of data the server should return for a fetch request. This is not an absolute maximum, if the first message in the first non-empty partition of the fetch is larger than this value, the message will still be returned to ensure that the consumer can make progress.
+```fetch_min_bytes``` - The minimum amount of data the server should return for a fetch request. If insufficient data is available the request will wait for that much data to accumulate before answering the request.
+```fetch_max_wait_ms``` - The maximum amount of time the server will block before answering the fetch request if there isn’t sufficient data to immediately satisfy fetch_min_bytes. This should be less than or equal to the timeout used in poll_timeout_ms
+```check_crcs``` - Automatically check the CRC32 of the records consumed. This ensures no on-the-wire or on-disk corruption to the messages occurred. This check adds some overhead, so it may be disabled in cases seeking extreme performance.
+
 #### Logstash - Input File
 
 This plugin stream events from files, normally by tailing them in a manner similar to tail -0F but optionally reading them from the beginning. Sample definition:
