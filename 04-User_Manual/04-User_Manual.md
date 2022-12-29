@@ -1263,6 +1263,89 @@ Intelligence chapter)
 - **Scheduler Account** - the scheduler module is associated with this
 account, which corresponds to, among others for generating reports
 
+### Restoration procedures
+
+#### Backing up
+
+The backup bash script is located on the hosts with Elasticsearch in location:
+```/usr/share/elasticsearch/utils/configuration-backup.sh```.
+The script is responsible for backing up the basic data in the Logserver system (these data are the system indexes found in Elasticsearch of those starting with a dot  '.'  in the name),  the configuration of the entire cluster, the set of templates used in the cluster and all the components.
+These components include the Logstash configuration located in ```/etc/logstash``` and Kibana configuration located in ```/etc/kibana```.
+All data is stored in the ```/tmp``` folder and then packaged using the ```/usr/bin/tar``` utility to ```tar.gz``` format with the exact date and time of execution in the target location, then the files from ```/tmp``` are deleted.
+
+crontab
+It is recommended to configure ```crontab```.
+- Before executing the following commands, you need to create a crontab file, set the path to backup and direct them there.
+
+In the below example, the task was configured on hosts with the Elasticsearch module on the root.
+```bash
+# crontab -l #Printing the Crontab file for the currently logged in user 
+0 1 * * * /bin/bash /usr/share/elasticsearch/utils/configuration-backup.sh
+```
+
+- The client-node host saves the backup in the /archive/configuration-backup/ folder.
+- Receiver-node  hosts save the backup in the /root/backup/ folder.
+
+#### Restoration from backup
+
+To restore the data, extract the contents of the created archive, e.g.
+
+```bash
+# tar -xzf /archive/configuration-backup/backup_name-000000-00000.tar.gz -C /tmp/restore
+```
+
+Then display the contents and select the files to restore (this will look similar to the following):
+
+```bash
+# ls -al /tmp/restore/00000-11111/
+drwxr-xr-x 2 root root    11111 01-08 10:29 .
+drwxr-xr-x 3 root root     2222 01-08 10:41 ..
+-rw-r--r-- 1 root root  3333333 01-08 10:28 .file1.json
+-rw-r--r-- 1 root root     4444 01-08 10:28 .file_number2.json
+-rw-r--r-- 1 root root     5555 01-08 10:29 .file3.json
+-rw-r--r-- 1 root root      666 01-08 10:29 .file4.json
+-rw-r--r-- 1 root root     7777 01-08 10:29 .file5.json
+-rw-r--r-- 1 root root       87 01-08 10:29 .file6.json
+-rw-r--r-- 1 root root        1 01-08 10:29  file6.json
+-rw-r--r-- 1 root root       11 01-08 10:29 .file7.json
+-rw-r--r-- 1 root root     1234 01-08 10:29  file8.tar.gz
+-rw-r--r-- 1 root root     0000 01-08 10:29 .file9.json
+```
+
+To restore any of the system indexes, e.g. ```.security```, execute the commands:
+
+```bash
+# /usr/share/kibana/elasticdump/elasticdump  --output="http://logserver:password@127.0.0.1:9200/.kibana" --input="/root/restore/20210108-102848/.security.json" –type=data
+# /usr/share/kibana/elasticdump/elasticdump  --output="http://logserver:password@127.0.0.1:9200/.kibana" --input="/root/restore/20210108-102848/.security_mapping.json" --type=mapping
+```
+
+In order to restore any of the configurations e.g. ```kibana/logstash/elastic/wazuh```, follow the steps below:
+
+```bash
+# systemctl stop kibana
+# tar -xvf /tmp/restore/20210108-102848/kibana_conf.tar.gz -C / --overwrite
+```
+
+```bash
+# systemctl start kibana
+```
+
+To restore any of the templates, perform the following steps for each template:
+
+- Select from the ```templates.json``` file the template you are interested in, omitting its name
+- Move it to a new ```json``` file, e.g. ```test.json```
+- Load by specifying the name of the target template in the link
+
+```bash
+# curl -s -XPUT -H 'Content-Type: application/json' -u logserver '127.0.0.1:9200/_template/test -d@/root/restore/20210108-102848/test.json
+```
+
+To restore the cluster settings, execute the following command:
+
+```bash
+# curl -s -XPUT -H 'Content-Type: application/json' -u logserver '127.0.0.1:9200/_cluster/settings' -d@/root/restore/20210108-102848/cluster_settings.json
+```
+
 ##  Index management
 
 **Note**
