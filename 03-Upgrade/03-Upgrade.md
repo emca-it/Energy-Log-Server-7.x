@@ -912,6 +912,17 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
     Mar 19 14:46:52 migration-01 systemd[1]: Started Alert.
 ```
 
+## Downgrade
+
+Follow the steps below:
+
+```bash
+# systemctl stop elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert 
+# yum remove energy-logserver-*
+# yum install old-version.rpm
+# systemctl start elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
+```
+
 ## Changing OpenJDK version
 
 ### Logstash
