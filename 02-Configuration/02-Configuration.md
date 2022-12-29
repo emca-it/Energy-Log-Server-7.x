@@ -1617,6 +1617,16 @@ winlogbeat.exe test config
 winlogbeat.exe test output
 ```
 
+```yml
+processors:
+  - drop_event:
+      when:
+        condition
+```
+
+
+We can also drop events on the agent side. To do this we need to use the ```drop_event``` processor
+
 ##### Filebeat
 
 ###### Installation
