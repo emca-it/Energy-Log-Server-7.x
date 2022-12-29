@@ -917,10 +917,10 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
 Follow the steps below:
 
 ```bash
-# systemctl stop elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert 
-# yum remove energy-logserver-*
-# yum install old-version.rpm
-# systemctl start elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
+systemctl stop elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert 
+yum remove energy-logserver-*
+yum install old-version.rpm
+systemctl start elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
 ```
 
 ## Changing OpenJDK version
