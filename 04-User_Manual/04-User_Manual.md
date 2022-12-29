@@ -6397,6 +6397,136 @@ If a node is not correctly configured or is missing some required information, a
 
 ![](/media/media/Node_error.e189f05d.gif)
 
+### How to filter events
+
+You can do it in multiple ways. You can use those nodes:
+
+- IF
+- Switch
+- Spreadsheet File (a lot of conditions - advanced)
+
+#### Example If usage
+
+If you receive messages from Logstash then you have fields like host.name. You can use if condition to filter known host.
+
+1. Create If node
+2. Click Add condition
+3. From dropdown menu select String
+4. As Value 1 type or select a field which you want use. In this example we use expression {{ $json["host"]["name"] }}
+5. As Value 2 type host name which you want to process. In this example we use paloalto.paseries.test
+6. Next you can select any other node for further process filtered message.
+
+#### Example Case usage
+
+1. Create Case node
+2. Select Rules on Mode 
+3. Select String on Data Type
+4. As Value 1 type or select a field which you want use. In this example we use expression {{ $json["host"]["name"] }}
+5. Click Add Routing Rule
+6. As Value 2 type host name which you want to process. In this example we use paloalto.paseries.test
+7. As Output type 0.
+
+You can add multiple conditions. On one node you can add 3 conditions if you need more then add to latest output next node and select this node as Fallback Output.
+
+#### IF
+
+The IF node is used to split a workflow conditionally based on comparison operations.
+
+##### Node Reference
+
+You can add comparison conditions using the Add Condition dropdown. Conditions can be created based on the data type, the available comparison operations vary for each data type.
+
+Boolean
+
+- Equal
+- Not Equal
+- Number
+
+Smaller
+
+- Smaller Equal
+- Equal
+- Not Equal
+- Larger
+- Larger Equal
+- Is Empty
+
+String
+
+- Contains
+- Equal
+- Not Contains
+- Not Equal
+- Regex
+- Is Empty
+
+You can choose to split a workflow when any of the specified conditions are met, or only when all the specified conditions are met using the options in the Combine dropdown list.
+
+#### Switch
+
+The Switch node is used to route a workflow conditionally based on comparison operations. It is similar to the IF node, but supports up to four conditional routes.
+
+##### Node Reference
+
+Mode: This dropdown is used to select whether the conditions will be defined as rules in the node, or as an expression, programmatically.
+
+You can add comparison conditions using the Add Routing Rule dropdown. Conditions can be created based on the data type. The available comparison operations vary for each data type.
+
+Boolean
+
+- Equal
+- Not Equal
+
+Number
+
+- Smaller
+- Smaller Equal
+- Equal
+- Not Equal
+- Larger
+- Larger Equal
+
+String
+
+- Contains
+- Equal
+- Not Contains
+- Not Equal
+- Regex
+
+You can route a workflow when none of the specified conditions are met using Fallback Output dropdown list.
+
+#### Spreadsheet File
+
+The Spreadsheet File node is used to access data from spreadsheet files.
+
+##### Basic Operations
+
+- Read from file
+- Write to file
+
+##### Node Reference
+
+When writing to a spreadsheet file, the File Format field can be used to specify the format of the file to save the data as.
+
+File Format
+
+- CSV (Comma-separated values)
+- HTML (HTML Table)
+- ODS (OpenDocument Spreadsheet)
+- RTF (Rich Text Format)
+- XLS (Excel)
+- XLSX (Excel)
+
+Binary Property field: Name of the binary property in which to save the binary data of the spreadsheet file.
+
+Options
+
+- Sheet Name field: This field specifies the name of the sheet from which the data should be read or written to.
+- Read As String field: This toggle enables you to parse all input data as strings.
+- RAW Data field: This toggle enables you to skip the parsing of data.
+- File Name field: This field can be used to specify a custom file name when writing a spreadsheet file to disk.
+
 ### Automation integration nodes
 To boost your automation you can connect with widely external nodes.
 
@@ -6740,3 +6870,5 @@ List of automation nodes:
 - Zoho CRM
 - Zoom
 - Zulip
+
+
