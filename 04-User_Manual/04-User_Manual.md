@@ -3821,6 +3821,261 @@ Events are by default sent in plain text. You can enable encryption by setting s
 		    ssl_key => "path_to_key_file"
 		  }
 		}
+		
+### Logstash - Input Relp
+
+#### Installation
+
+For plugins not bundled by default, it is easy to install by running bin/logstash-plugin install logstash-input-relp.
+
+#### Description
+
+Read RELP events over a TCP socket.
+
+This protocol implements application-level acknowledgements to help protect against message loss.
+
+Message acks only function as far as messages being put into the queue for filters; anything lost after that point will not be retransmitted.
+
+#### Relp input configuration options
+
+This plugin supports the following configuration options plus the Common Options described later.
+
+<table border="1" class="colwidths-given docutils" id="id1">
+<colgroup>
+<col width="2%" />
+<col width="30%" />
+<col width="50%" />
+<col width="18%" />
+
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr.</th>
+<th class="head">Setting</th>
+<th class="head">Input type</th>
+<th class="head">Required</th>
+</tr>
+</thead>
+<tbody valign="top">
+
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">host</p>
+</td>
+<td><p class="first last">string</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">port</p>
+</td>
+<td><p class="first last">number</p>
+</td>
+<td><p class="first last">Yes</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">3</p>
+</td>
+<td><p class="first last">ssl_cacert</p>
+</td>
+<td><p class="first last">a valid filesystem path</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">4</p>
+</td>
+<td><p class="first last">ssl_cert</p>
+</td>
+<td><p class="first last">a valid filesystem path</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">5</p>
+</td>
+<td><p class="first last">ssl_enable</p>
+</td>
+<td><p class="first last">boolean</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">6</p>
+</td>
+<td><p class="first last">ssl_key</p>
+</td>
+<td><p class="first last">a valid filesystem path</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">7</p>
+</td>
+<td><p class="first last">ssl_key_passphrase</p>
+</td>
+<td><p class="first last">password</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">8</p>
+</td>
+<td><p class="first last">ssl_verify</p>
+</td>
+<td><p class="first last">string</p>
+</td>
+<td><p class="first last">boolean</p>
+</td>
+</tr>
+
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+```host``` - The address to listen on.
+
+```port``` - The port to listen on.
+
+```ssl_cacert``` - The SSL CA certificate, chainfile or CA path. The system CA path is automatically included.
+
+```ssl_cert``` - SSL certificate path
+
+```ssl_enable``` - Enable SSL (must be set for other ssl_ options to take effect).
+
+```ssl_key``` - SSL key path
+
+```ssl_key_passphrase``` - SSL key passphrase
+
+```ssl_verify``` - Verify the identity of the other end of the SSL connection against the CA. For input, sets the field sslsubject to that of the client certificate.
+
+
+Common Options
+The following configuration options are supported by all input plugins:
+
+<table border="1" class="colwidths-given docutils" id="id1">
+<colgroup>
+<col width="2%" />
+<col width="30%" />
+<col width="50%" />
+<col width="18%" />
+
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Nr.</th>
+<th class="head">Setting</th>
+<th class="head">Input type</th>
+<th class="head">Required</th>
+</tr>
+</thead>
+<tbody valign="top">
+
+<tr class="row-even"><td><p class="first last">1</p>
+</td>
+<td><p class="first last">add_field</p>
+</td>
+<td><p class="first last">hash</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">2</p>
+</td>
+<td><p class="first last">codec</p>
+</td>
+<td><p class="first last">codec</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">3</p>
+</td>
+<td><p class="first last">enable_metric</p>
+</td>
+<td><p class="first last">boolean</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">4</p>
+</td>
+<td><p class="first last">id</p>
+</td>
+<td><p class="first last">string</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">5</p>
+</td>
+<td><p class="first last">tags</p>
+</td>
+<td><p class="first last">array</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+<tr class="row-even"><td><p class="first last">6</p>
+</td>
+<td><p class="first last">type</p>
+</td>
+<td><p class="first last">string</p>
+</td>
+<td><p class="first last">No</p>
+</td>
+</tr>
+
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+```add_field``` - Add a field to an event
+
+```codec``` - The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+
+```enable_metric``` - Disable or enable metric logging for this specific plugin instance by default we record all the metrics we can, but you can disable metrics collection for a specific plugin.
+
+```id``` - Add a unique ID to the plugin configuration. If no ID is specified, Logstash will generate one. It is strongly recommended to set this ID in your configuration. This is particularly useful when you have two or more plugins of the same type, for example, if you have 2 relp inputs. Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+
+```yml
+input {
+  relp {
+    id => "my_plugin_id"
+  }
+}
+```
+
+```tags``` - add any number of arbitrary tags to your event.
+
+```type``` - Add a type field to all events handled by this input.
+
+Types are used mainly for filter activation.
+
+The type is stored as part of the event itself, so you can also use the type to search for it in Kibana.
+
+If you try to set a type on an event that already has one (for example when you send an event from a shipper to an indexer) then a new input will not override the existing type. A type set at the shipper stays with that event for its life even when sent to another Logstash server.
+
 
 ### Logstash - Input Kafka
 
@@ -3873,7 +4128,7 @@ input {
 
 ```check_crcs``` - Automatically check the CRC32 of the records consumed. This ensures no on-the-wire or on-disk corruption to the messages occurred. This check adds some overhead, so it may be disabled in cases seeking extreme performance.
 
-#### Logstash - Input File
+### Logstash - Input File
 
 This plugin stream events from files, normally by tailing them in a manner similar to tail -0F but optionally reading them from the beginning. Sample definition:
 
