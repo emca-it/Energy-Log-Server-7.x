@@ -3840,12 +3840,12 @@ input {
     group_id => "logstash"
     max_partition_fetch_bytes => "30000000"
     max_poll_records => "1000"
-	
+
     fetch_max_bytes => "72428800"
     fetch_min_bytes => "1000000"
-	
+
     fetch_max_wait_ms => "800"
-	                    
+    
     check_crcs => false
 
   }
