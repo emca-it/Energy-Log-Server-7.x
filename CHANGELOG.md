@@ -57,7 +57,7 @@
 - Alert: Fixed permission problem in Run Once mode
 - Alert: Fixed indentation in query_string
 - [bugfix] Added missing library to Qualys Quard venv
-- [bugfix] Added missing ports 1514udp-tcp/1515tcp to install.sh
+- [bugfix] Added missing ports 1514udp/tcp & 1515/tcp to install.sh
 
 ### Required post upgrade
 
