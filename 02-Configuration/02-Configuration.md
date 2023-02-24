@@ -3469,27 +3469,27 @@ You can now log in as a user with a new role, the user in the Discovery module s
 The GUI language can be changed as follows:
 
 1. Add `.i18nrc.json` to `/usr/share/kibana/` directory:
-
-  ```json
-  {
-      "translations": ["translations/ja-JP.json"]
-  }
-  ```
+   
+   ```json
+   {
+       "translations": ["translations/ja-JP.json"]
+   }
+   ```
 
 2. Upload a translation to  /usr/share/kibana/translations/ja-JP.json directory
 
 3. Set the permission:
 
-  `# chown -R kibana:kibana /usr/share/kibana/translations/`
+   `# chown -R kibana:kibana /usr/share/kibana/translations/`
 
 4. Set in `kibana.yml` file:
 
-  `i18n.locale: "ja-JP"`
+   `i18n.locale: "ja-JP"`
 
 5. Restart:
 
- `# systemctl restart kibana`
+   `# systemctl restart kibana`
 
 6. Finally the result should be as shown in the picture:
 
-![](/media/media/image255.png)
+   ![](/media/media/image255.png)

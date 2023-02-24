@@ -771,6 +771,188 @@ elasticdump \
   --type=mapping
 ```
 
+## 2FA with Nginx and PKI certificate
+
+### Seting up Nginx Client-Certificate for Kibana
+
+#### 1. Installing NGINX
+
+   The following [link](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) directs you to the official NGINX documentation with installation instructions.
+
+#### 2. Creating client-certificate signing CA
+   
+   Now, we'll create our client-certificate signing CA. Let's create a directoru at thr root file system to pertform this work.
+   ```
+   cd /etc/nginx
+   mkdir CertificateAuthCA
+   cd CertificateAuthCA
+   chown root:www-data /etc/nginx/CertificateAuthCA/
+   chmod 770 /etc/nginx/CertificateAuthCA/
+   ```
+   
+   This set of permissions will grant the user **root** (replace with the username of your own privileged user used to setup the box) and the **www-data** group (the context in which nginx runs by default). It will grant everyone else no permission to the sensitive file that is your **root** signing key. 
+  
+   You will be prompted to set a passphrase. Make sure to set it to something yuo'll remember. 
+
+   ```
+   openssl genrsa -des3 -out myca.key 4096
+   ```
+
+   Makes the signing CA valid for 10 years. Change as requirements dictate. You will be asked to fill in attributes fo your CA. 
+
+   ```
+   openssl req -new -x509 -days 3650 -key myca.key -out myca.crt
+   ```
+
+#### 3. Creating a client keypair
+   
+   This will be performed once for **EACH user**. It can easily be scripted as part of a user provisioning process. 
+
+   You will be prompted for passphrase which will be distributed to your user with the certificate. 
+   
+   **NOTE** \
+   <mark>DO NOT ever distributed the passphrase set above for your root CA's private key.</mark> \
+   <mark>Make sure you understand this distinction!</mark>
+   
+   ```
+   openssl genrsa -des3 -out testuser.key 2048
+   openssl req -new -key testuser.key -out testuser.csr
+   ```
+
+   Sign with our certificate-signing CA. This Certificate will be valid for one year. Change as per your requirements. You can increment the serial if you have t oreissue the CERT. 
+      
+   ```
+   openssl x509 -req -days 365 -in testuser.csr -CA myca.crt -CAkey myca.key -set_serial 01 -out testuser.crt
+   ```
+   
+   For Windows clients, the key material can be combined into a single PFX. You will be prompted fo the passpharase you set above. 
+   
+   ```
+   openssl pkcs12 -export -out testuser.pfx -inkey testuser.key -in testuser.crt -certfile myca.crt
+   ```
+   
+   This includes the public portion of your CA's key to allows Windows to trust you internally signed CA. 
+
+#### 4. Creating the nginx configuration file
+
+   Here, we'll create the nginx configuration file to serve a site for our authenticated reverse proxy. 
+   
+   Creating site certificates (The ones that will be publicly signed by a CA such as from SSLTrust). 
+   
+   ```
+   chown -R root:www-data /etc/nginx/CertificateAuthCA
+   chmod 700 /etc/nginx/CertificateAuthCA
+   ```
+   
+   Generate an RSA Private Key (You will be prompted to a passphrase and fill out attributes). 
+   
+   ```
+   openssl genrsa -out ./domain.com.key 2048
+   ```
+   
+   Use it to create a CSR to send us. 
+   
+   ```
+   openssl req -new -sha256 -key ./domain.com.key -out ./domain.com.csr
+   ```
+   
+   Creating CERT for **domain.com**  
+   
+   ```
+   openssl x509 -req -days 365 -in domain.com.csr -CA myca.crt -CAkey myca.key -set_serial 01 -out domain.com.crt
+   ```
+   
+   Remove the passphrase from your key (you will be prompted for passphrase generated abov).
+   
+   ```
+   openssl rsa -in domain.com.key -out domain.com.key.nopass
+   ```
+   
+   Create nginx sites-available directory. 
+   
+   ```
+   cd /etc/nginx
+   mkdir sites-available
+   cd sites-available
+   ```
+   
+   And create a new configuration file(we use vim, you could use nano or other fav text editor). 
+   
+   ```
+   touch proxy.conf
+   vim proxy.conf
+   ```
+
+#### 5. Setting configurations in configuration file paste
+   
+   Before you set configurations make sure that you have installed and enabled [firewalld](https://www.linode.com/docs/guides/introduction-to-firewalld-on-centos/). 
+   
+   In configuration file(proxy.conf):
+   
+   ```
+   server {
+       listen        443;  ## REMEMBER ! Listen port and firewall port must match !!
+       ssl on;
+       server_name 192.168.3.87;  ## Set up your IP as server_name
+       proxy_ssl_server_name on;
+       ssl_certificate      /etc/nginx/CertificateAuthCA/domain.com.crt; ## Use your domain key
+       ssl_certificate_key /etc/nginx/CertificateAuthCA/domain.com.key.nopass; ## Use your own trusted certificate without password
+       ssl_client_certificate /etc/nginx/CertificateAuthCA/myca.key; ## Use your own trusted certificate from CA/SSLTrust
+   
+       ssl_verify_client on;
+   
+       ## You can optionally capture the error code and redirect it to a custom page
+       ## error_page 495 496 497 https://someerrorpage.yourdomain.com;
+   
+       ssl_prefer_server_ciphers on;
+       ssl_protocols TLSv1.1 TLSv1.2;
+       ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:RC4-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK';
+   
+       keepalive_timeout 10;
+       ssl_session_timeout 5m;
+   
+   location / {
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header Host $http_host;
+       proxy_redirect off;
+       proxy_set_header X-Forwarded-Proto https;
+       proxy_pass http://localhost:5601/;   ##proxy_pass for Kibana
+   
+     }
+   }
+   ```
+   
+#### 6. Create a symlink to enable your site in nginx
+   
+   In the nginx directory is **nginx.conf** file in which we will load modular configuration files (**include**). \
+   Based on <b>/etc/nginx/conf.d/*.conf</b>; create symlink using **proxy.conf**.
+   
+   ```
+   cd /etc/nginx
+   ln -s /etc/nginx/sites-available/proxy.conf /etc/nginx/conf.d/proxy.conf
+   ```
+   
+#### 7. Restart nginx
+   
+   ```
+   systemctl restart nginx
+   ```
+   
+#### 8. Importing the Client Certificate on to a Windows Machine
+   
+   Double click the .PFX file, select "Current User". \
+   ![](/media/media/11_2fa_nginx_pki_01.png) 
+   ![](/media/media/11_2fa_nginx_pki_02.png)
+   
+   If you set a passphrase on the PFX above, enter it here. Otherwise leave blank and hit next. \
+   ![](/media/media/11_2fa_nginx_pki_03.png)
+   
+   Next, add the site in question to "trusted sites" in Internet Explorer. This will allow the client certificate to be sent to the site for verification(Trusting it in Internet Explorer will trust it in chrome as well). 
+   
+   When you next visite the site, you should be prompted to select a client certificate. Select "OK" and you're in \
+   ![](/media/media/11_2fa_nginx_pki_04.png)
+
+
 
 ## Embedding dashboard in iframe
 

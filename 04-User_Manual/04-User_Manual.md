@@ -1115,6 +1115,16 @@ After you change password for one of the system account ( alert, intelligence, l
      	password => "new_password"
      }
      ```
+6. Account **License**
+
+   - Update file **/opt/license-service/license-service.conf**
+   ```
+   elasticsearch_connection:
+     hosts: ["127.0.0.1:9200"]
+
+     username: license
+     password: "new_license_password"
+   ```
 
 
 ### Module Access
@@ -1621,6 +1631,267 @@ actions:
       setting: enable
       wait_for_completion: True
       disable_action: True
+```
+
+### Preinstalled actions
+
+#### Close-Daily
+
+This action closes the selected indices olders older than 93 days and optionally deletes associated aliases beforehand. Example if its today 21 december this action it will close or optionally delete every index olders like 30 september the same year, action start everyday 01:00 AM.
+
+`Action type`:   CLOSE   
+`Action name`:   Close-Daily   
+`Action Description (optional)`:   Close daily indices older than 90 days   
+`Schedule Cron Pattern` :   0 1 \* \* \*   
+`Delete Aliases`:   enabled   
+`Skip Flush` :   disabled   
+`Ignore Empty List`:   enabled   
+`Ignore Sync Failures` :   enabled   
+`Pattern filter kind` :   Timestring   
+`Pattern filter value` :   %Y.%m$     
+`Index age` :   93 days   
+`Empty indices filter` :   disable
+
+#### Close-Monthly
+
+This action closes the selected indices olders older than 93 days (3 months)and optionally deletes associated aliases beforehand.  If its today  is 21 december, this action it will close or optionally delete every index olders then  oktober the same year, action start everyday 01:00 AM. 
+
+`Action type`:    CLOSE  
+`Action name`:     Close-Daily 
+`Action Description (optional)`:     Close daily indices older than 93 days 
+`Schedule Cron Pattern`:    0 1 * * * 
+`Delete Aliases`:     enabled 
+`Skip Flush`:    disabled  
+`Ignore Empty List`:   enabled  
+`Ignore Sync Failures`:    enabled 
+`Pattern filter kind`:    Timestring 
+`Pattern filter value`:   %Y.%m$    
+`Index age`:     93 days 
+`Empty indices filter`:    disable 
+
+#### Disable-Refresh-Older-Than-Days
+
+This action disables the daily refresh of indices older than 2 days. the action is performed daily at 01:00.  
+
+`Action type`:    CUSTOM 
+`Action name`:    Disable-Refresh-Older-Than-Days 
+`Schedule Cron Pattern`:    0 1 * * * 
+
+`YAML`:
+
+```
+actions:
+  '1':
+    action: index_settings
+    description: Disable refresh for older daily indices
+    options:
+      index_settings:
+        index:
+          refresh_interval: -1
+      ignore_unavailable: False
+      ignore_empty_list: true
+      preserve_existing: False
+    filters:
+      - filtertype: pattern
+        kind: timestring
+        value: '%Y.%m.%d$'
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 2
+```
+
+#### Disable-Refresh-Older-Than-Month
+
+This action force the daily  merge of indices older than one month. The action is performed daily at 01:00.
+
+`Action type`:    CUSTOM
+`Action name`:    Disable-Refresh-Older-Than-Month
+`Schedule Cron Pattern`:    0 1 * * *
+
+`YAML`:
+
+```
+actions:
+  '1':
+    action: index_settings
+    description: Disable refresh for older monthly indices
+    options:
+      index_settings:
+        index:
+          refresh_interval: -1
+      ignore_unavailable: False
+      ignore_empty_list: true
+      preserve_existing: False
+    filters:
+      - filtertype: pattern
+        kind: timestring
+        value: '%Y.%m$'
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 32
+
+```
+
+#### Force-Merge-Older-Than-Days
+
+This action force the daily  merge of indices older than two days. The action is performed daily at 01:00.
+
+`Action type`:    CUSTOM
+`Acticn name`:    Force-Merge-Older-Than-Days
+`Schedule Cron Pattern`:    0 1 * * *
+
+`YAML`:
+
+```
+actions:
+  '1':
+    action: forcemerge
+    description: Force merge on older daily indices
+    options:
+      max_num_segments: 1
+      ignore_empty_list: true
+      continue_if_exception: false
+      delay: 60
+    filters:
+      - filtertype: pattern
+        kind: timestring
+        value: '%Y.%m.%d$'
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 2
+      - filtertype: forcemerged
+        max_num_segments: 1
+        exclude: True
+```
+
+#### Force-Merge-Older-Than-Months
+
+This action force the daily  merge of indices older than one month. The action is performed daily at 01:00.
+
+`Action type`:    CUSTOM
+`Acticn name`:    Force-Merge-Older-Than-Months
+`Schedule Cron Pattern`:    0 1 * * *
+
+`YAML`:
+
+```
+actions:
+  '1':
+    action: forcemerge
+    description: Force merge on older monthly indices
+    options:
+      max_num_segments: 1
+      ignore_empty_list: true
+      continue_if_exception: false
+      delay: 60
+    filters:
+      - filtertype: pattern
+        kind: timestring
+        value: '%Y.%m$'
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 32
+      - filtertype: forcemerged
+        max_num_segments: 1
+        exclude: True
+
+```
+
+#### Logtrail-default-delete
+
+This action leave only two last indices from each logtrail rollover index ( allows for up to 10GB data).The action is performed daily at 03:30.
+
+`Action type`:   CUSTOM 
+`Action name`:   Logtrail-default-delete 
+`Schedule Cron Pattern`:   30 3 * * *
+
+`YAML`:
+
+```
+actions:
+  '1':
+    action: delete_indices
+    description: >-
+      Leave only two last indices from each logtrail rollover index - allows for up to
+      10GB data.
+    options:
+      ignore_empty_list: true
+      continue_if_exception: true
+    filters:
+      - filtertype: count
+        count: 2
+        pattern: '^logtrail-(.*?)-\d{4}.\d{2}.\d{2}-\d+$'
+        reverse: true
+
+
+```
+
+#### Logtrail-default-rollover
+
+This action rollover default Logtrail indices .The action is performed every 5 minute. 
+
+`Action type`:   CUSTOM
+`Action name`:   Logtrail-default-rollover
+`Schedule Cron Pattern`:   5 * * * *
+
+`YAML`:
+
+```
+actions:
+  '1':
+    action: rollover
+    description: >-
+      This action works on default logtrail indices. It is recommended to enable
+      it.
+    options:
+      name: logtrail-alert
+      conditions:
+        max_size: 5GB
+      continue_if_exception: true
+      allow_ilm_indices: true
+  '2':
+    action: rollover
+    description: >-
+      This action works on default logtrail indices. It is recommended to enable
+      it.
+    options:
+      name: logtrail-elasticsearch
+      conditions:
+        max_size: 5GB
+      continue_if_exception: true
+      allow_ilm_indices: true
+  '3':
+    action: rollover
+    description: >-
+      This action works on default logtrail indices. It is recommended to enable
+      it.
+    options:
+      name: logtrail-kibana
+      conditions:
+        max_size: 5GB
+      continue_if_exception: true
+      allow_ilm_indices: true
+  '4':
+    action: rollover
+    description: >-
+      This action works on default logtrail indices. It is recommended to enable
+      it.
+    options:
+      name: logtrail-logstash
+      conditions:
+        max_size: 5GB
+      continue_if_exception: true
+      allow_ilm_indices: true
+
+
 ```
 
 ## Intelligence Module
@@ -2324,15 +2595,13 @@ The command for compress and decompress Archive `*.zdtd` file useing multiple CP
 zstdmt -d winlogbeat-2020.10_2020-10-23.json.zstd -o winlogbeat-2020.10_2020-10-23.json
 ```
 
-## Wiki
+## E-doc
 
-### Wiki.js
+**E-doc** is one of the most powerful and extensible Wiki-like software. The **Energy Logserver** have integration plugin with **E-doc**, which allows you to access **E-doc** directly from the Energy Logserver GUI. Additionally, Energy Logserver provides access management to the E-doc content.
 
-**Wiki.js** is one of the most powerful and extensible Wiki software. The **Energy Logserver** have integration plugin with **Wiki.js**, which allows you to access **Wiki.js** directly from the Energy Logserver GUI. Additionally, Energy Logserver provides access management to the Wiki content.
+#### Login to E-doc
 
-#### Login to Wiki
-
-Access to the **Wiki** is from the main **Energy Logserver** GUI window via the **Wiki** button located at the top of the window:
+Access to the **E-doc** is from the main **Energy Logserver** GUI window via the **E-doc** button located at the top of the window:
 
 ![](/media/media/image168.png)
 
@@ -2460,7 +2729,7 @@ There are several ways to create a public site:
 
 To create sites with the permissions of a given group, do the following:
 
-1. Check the permissions of the group to which the user belongs. To do this, click on the ***Account*** button in the top right menu in Wiki.js:
+1. Check the permissions of the group to which the user belongs. To do this, click on the ***Account*** button in the top right menu in E-doc:
 
    ![](/media/media/image195.png)
 
@@ -2524,7 +2793,7 @@ To create sites with the permissions of a given group, do the following:
 - to-do list;
 - inserting special characters;
 - inserting tables;
-- inserting text blocks Wiki.js also offers non-text insertion.
+- inserting text blocks E-doc also offers non-text insertion.
 
 
 
@@ -2602,7 +2871,7 @@ To create sites with the permissions of a given group, do the following:
 
 #### Create a "tree" of documents
 
-***Wiki.js*** does not offer a document tree structure directly. Creating a structure (tree) of documents is done automatically by grouping sites according to the paths in which they are available.
+***E-doc*** does not offer a document tree structure directly. Creating a structure (tree) of documents is done automatically by grouping sites according to the paths in which they are available.
 
 1. To create document structures (trees), create sites with the following paths:
 
@@ -2632,7 +2901,7 @@ To create sites with the permissions of a given group, do the following:
 
 4. You can create a document with chapters in a similar way. To do this, create sites with the following paths:
 
-   ```wiki
+   ```e-doc
    /en/elaboration/1-introduction
    /en/elaboration/2-chapter-1
    /en/elaboration/2-chapter-1
@@ -2654,7 +2923,179 @@ To create sites with the permissions of a given group, do the following:
 
    ![](/media/media/image194.png)
 
-## Celebro - Cluster Health
+#### Embed allow iframes
+
+**iFrames** - an element to the HTML language that allows an HTML document to be embedded within another HTML document.
+
+For enable iframes in pages:
+
+1. With top menu select `Administration` \
+   ![](/media/media/04_wiki_embed_01.png)
+
+2. Now select on left side menu `Rendering` \
+   ![](/media/media/04_wiki_embed_02.png)
+
+3. In `Pipeline` medu select `html->html` \
+   ![](/media/media/04_wiki_embed_03.png)
+
+4. Then select `Security` \
+   ![](media/media/04_wiki_embed_04.png)
+
+5. Next enable option `Allow iframes` \
+   ![](/media/media/04_wiki_embed_05.png)
+
+6. `Apply` changes \
+   ![](/media/media/04_wiki_embed_06.png)
+
+**Now is possible embed iframes in page HTML code.** 
+
+Example of usage:
+
+- Use iframe tag in page html code. \
+  ![](/media/media/04_wiki_embed_eou_01.png)
+
+- Result: \
+  ![](/media/media/04_wiki_embed_eou_02.png)
+
+#### Conver Pages
+
+It's possible convert page between `Visoal Editor`, `MarkDown` and `Raw HTML`.
+
+Example of usage: 
+
+- Create or edit page content in `Visual Editor` \
+  ![](/media/media/04_wiki_convert_01.png)
+
+- Click on the `save` button and later click `close` button '\
+  ![](/media/media/04_wiki_convert_02.png)
+
+- Select `Page Action` and `Convert` \
+  ![](/media/media/04_wiki_convert_03.png)
+
+- Choose destination format \
+  ![](/media/media/04_wiki_convert_04.png)
+
+- The content in `Raw HTML format: \
+  ![](/media/media/04_wiki_convert_05.png)
+
+
+## CMDB module
+
+This module is a tool used to store information about hardware and sofrware assets, its database store information regarding the relationships among its assets.Is a means of understanding the critical assets and their relationships, such as information systyems upstream sources or dependencies of assets. Data coming with indexes wazuh, winlogbeat,syslog and filebeat. 
+
+Module CMDB have two tabs:
+
+### `Infrastructure` tab
+
+
+1. Get documents button - which get all matching data. \
+   ![](/media/media/04_cmdb_infra_tab_01.png)
+
+2. Search by parameters. \
+   ![](/media/media/04_cmdb_infra_tab_02.png)
+
+3. Select query filters - filter data by fields example name or IP. \
+   ![](/media/media/04_cmdb_infra_tab_03.png)
+
+4. Add new source
+   
+   * For add new element click `Add new source` button. \
+   ![](/media/media/04_cmdb_infra_tab_04.png)
+   
+   Complete a form:
+   
+      - name (required)
+      - ip (optional)
+      - risk_group (optional)
+      - lastKeepAlive (optional)
+      - risk_score (optional)
+      - siem_id (optional)
+      - status (optional)
+   Click `Save` \
+   ![](/media/media/04_cmdb_infra_tab_05.png)
+   
+5. Update multiple element
+   
+   - Select multiple items which you needed change \
+   ![](/media/media/04_cmdb_infra_tab_06.png)
+   - Select fields for changes (in all selected items)
+   - Write new value (for all selected items)
+   - Click `Update` button \
+   ![](/media/media/04_cmdb_infra_tab_07.png)
+   
+6. Update single element
+   
+   - Select `Update` icon on element \
+   ![](/media/media/04_cmdb_infra_tab_08.png)
+   - Change value/values and click `Update` \
+   ![](/media/media/04_cmdb_infra_tab_09.png)
+
+### `Relations` Tab
+   
+1. Expand details \
+   ![](/media/media/04_cmdb_infra_tab_10.png)
+
+2. Edit relation for source
+   
+   - Click update icon. \
+   ![](/media/media/04_cmdb_infra_tab_11.png)
+   - Add new destination for selected source and click `update` \
+   ![](/media/media/04_cmdb_infra_tab_12.png)
+   - Delete select destination for delete and click delete destination, confirm with `Update` button \
+   ![](/media/media/04_cmdb_infra_tab_13.png)
+
+3. Create relation
+   
+   - Click `Add new relations` \
+   ![](/media/media/04_cmdb_infra_tab_14.png)
+   - Select source and one or more destination, next confirm with `Save` button. \
+   ![](/media/media/04_cmdb_infra_tab_15.png)
+
+4. Delete relation
+   
+   - Selecte delete relation icon \
+   ![](/media/media/04_cmdb_infra_tab_16.png)
+   - Confirm delete relation \
+   ![](/media/media/04_cmdb_infra_tab_17.png)
+
+### Integration with network_visualization
+
+1. Select visualize module \
+![](/media/media/04_cmdb_integra_net_vis_01.png)
+
+2. Click create visualization button \
+![](/media/media/04_cmdb_integra_net_vis_02.png)
+
+3. Select Network type \
+![](/media/media/04_cmdb_integra_net_vis_03.png)
+
+4. Select `cmdb_relations` source \
+![](/media/media/04_cmdb_integra_net_vis_04.png)
+
+5. At Buckets menu click `Add`, \
+![](/media/media/04_cmdb_integra_net_vis_05.png)
+
+   - First bucket **Node** 
+      - Aggregation: Terms
+      - Field: source
+   
+   - Second bucket **Node**
+      - Sub aggregation: Terms
+      - Field: destination
+
+   - Third bucket **Node Color**
+      - Sub aggregation: Terms
+      - Field: source_risk_group
+
+![](/media/media/04_cmdb_integra_net_vis_06.png)
+
+6. Select `option` button and matk the checkbox `Redirect to CMDB` \
+![](/media/media/04_cmdb_integra_net_vis_07.png)
+
+7. Now if click on some source icon, browser will redirect you to CMDB module with all information for this source. \
+![](/media/media/04_cmdb_integra_net_vis_08.png)
+
+## Cerebro - Cluster Health
 
 Cerebro is the Elasticsearch administration tool that allows you to perform the following tasks:
 
@@ -2662,7 +3103,7 @@ Cerebro is the Elasticsearch administration tool that allows you to perform the 
 
 ![](/media/media/image217.png)
 
-- monitoring and management of index shapshoots :
+- monitoring and management of index snapshoots :
 
 ![](/media/media/image220.png)
 

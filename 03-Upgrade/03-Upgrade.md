@@ -6,6 +6,42 @@
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
 
+## Upgrade from version 7.1.3
+
+### **Breaking and major changes**
+
+- Wiki portal renamed to E-Doc
+
+### Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+### Required post upgrade
+
+- Recreate bundles/cache: ```rm -rf /usr/share/kibana/optimize/bundles/* && systemctl restart kibana```
+
+### Required post upgrade from version 7.1.3
+
+In this version, the name "wiki" has been replace by "e-doc".
+Due to this change user have to check if there are differences in config.yml and database.sqlite files.
+If the user made his own changes to one of these files before update after the update, the files with .rpmsave extension
+will appear in the /opt/wiki folder. 
+
+1. In case there is config.yml.rpmsave file in /opt/wiki directory, follow the steps below:
+   - Rename config.yml to config.yml.new: # mv /opt/e-doc/config.yml /opt/e-doc/config.yml.new
+   - Move config.yml.rpmsave to e-doc directory: # mv /opt/wiki/config.yml.rpmsave /opt/e-doc/config.yml
+   - Compare files config.yml/config.yml.new and apply changes from config.yml.new to config.yml:
+      a. new default path to db storage: "/opt/e-doc/database.sqlite"
+      b. new default kibanaCredentials: "e-doc:e-doc"
+2. In case there is database.sqlite.rpmsave file in /opt/wiki directory, follow the steps below:
+   - Stop kibana service: # systemctl stop kibana 
+   - Stop e-doc service: # systemctl stop e-doc
+   - Replace database file: # mv /opt/wiki/database.sqlite.rpmsave /opt/e-doc/database.sqlite
+   - Change permissions to the e-doc: # chown e-doc:e-doc /opt/e-doc/database.sqlite
+   - Start e-doc service: # systemctl start e-doc
+   - Start kibana service: # systemctl start kibana
+
 ## Upgrade from version 7.1.0
 
 ### Preferred Upgrade steps
