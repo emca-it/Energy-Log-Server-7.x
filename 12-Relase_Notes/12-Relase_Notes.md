@@ -1,5 +1,95 @@
 # **CHANGELOG**
 
+## v7.2.0
+
+### **Breaking changes**
+
+- Login: changed how gui access is granted for administrative users - access for any administrator has to be explicitly granted
+- Wiki portal renamed to E-Doc
+
+### NewFeatures
+
+- CMDB: Infrastructure - create an inventory of all sources sending data to SIEM
+- CMDB: Relations - ability to create relation topology map based on sources inventory
+- Extended auditing support - each plugin can be enabled in GUI config to save its actions in the audit index
+- Syntax Assistant for Alerts, Agents, Index Management, Network Probe. Check YAML definition and structure
+
+### Improvements
+
+- Update process will not override /etc/sysconfig/elasticsearch config
+- Clear GUI message for expired license
+- Agents: improved services information display for not running agents
+- Archive: optimization and improvements; added multi threaded processing and Task Retry support
+- Login: redesigned audit selection and exclusion settings GUI
+- Reports: tasks edit is now more robust and allows modification of advanced parameters
+- Reports: moved settings into new Config tab in the plugin from Config -> Settings
+- Alerts: loading new alarm Rule Set during update process [install.sh]
+- Beats: updated to v7.17.8
+- Skimmer: negotiate highest TLS1.3 version if possible
+- Skimmer: fixes regarding ssl connection
+- Skimmer: added elasticsearch_ssl config option
+- Skimmer: added new metric: node_stats_fs_total_free_in_pct
+- Skimmer: updated to v1.0.22
+- Elasticdump updated to v6.79.4
+
+### BugFixes
+
+- Refreshing audit exclusions caused ELS node to freeze in rare cases
+- Update process on RedHat 7.9 could not be run caused by missing package
+- LDAP login: improved validation on username input
+- Table visualization: fix for "Count percenteges", which was inacurate in some cases
+- Skimmer: sometimes did not start after installation
+- Agents: small GUI improvements
+- Alerts: long alert names presented outside the frame
+- Alerts: sorting alert risk on incident tab did not work properly
+- Intelligence: malware scanners would rise a false positive on one of the plugin dependencies
+- Reports: data export (csv) improvements on file integrity
+- Reports: a rare case of a race condition when removing temporary directories
+- E-Doc: improvements to https handling when using Elasticsearch as a search engine
+- install.sh: installation process always uses LC_ALL=C
+
+### Integrations
+
+- Added new integrations: FireEye, Infoblox, ArcSight Common Event Format
+
+### SIEM Plan
+
+- Agents: SIEM agents updated to 3.13.6
+- Alerts: new notification methods: ServiceNow, WebHook, TheHive, Jira
+- Alerts: risk values on incident tab formated for clarity
+- Alerts: example description supplied with new values regarding escalate and recovery
+- Alerts: all alerts in a goup can be seen with a proper row selection
+- Alerts: creating risks is now supported on no time based indices
+- Alerts: long alert names presented outside of message frame
+- Alerts: on incident tab sorting by risk did not work properly
+- Alerts: added Ransomware Detection rules
+
+### Network-Probe
+
+- Increased tolerance for status/verification calls
+
+### Security related
+
+- axios - CVE-2021-3749
+- qs - CVE-2022-24999
+- express - CVE-2022-24999
+- moment - CVE-2022-24785
+- moment - CVE-2022-31129
+- minimist - CVE-2021-44906
+- char.js - CVE-2020-7746
+- async - CVE-2021-43138
+- minimist - CVE-2021-44906
+- requestretry - CVE-2022-0654
+- xmldom - CVE-2022-39353
+- underscore - CVE-2021-23358
+- flask-cors - CVE-2020-25032
+- kibana - CVE-2022-23707
+
+### Required post upgrade
+
+- Recreate bundles/cache: ```rm -rf /usr/share/kibana/optimize/bundles/* && systemctl restart kibana```
+- Wiki portal renamed to E-Doc: if data migration is required follow the steps of UPGRADE.md
+
 ## v7.1.3
 
 ### Security related
