@@ -1273,9 +1273,9 @@ Intelligence chapter)
 - **Scheduler Account** - the scheduler module is associated with this
 account, which corresponds to, among others for generating reports
 
-### Restoration procedures
+## Backup/Restore 
 
-#### Backing up
+### Backing up
 
 The backup bash script is located on the hosts with Elasticsearch in location:
 ```/usr/share/elasticsearch/utils/configuration-backup.sh```.
@@ -1296,7 +1296,7 @@ In the below example, the task was configured on hosts with the Elasticsearch mo
 - The client-node host saves the backup in the /archive/configuration-backup/ folder.
 - Receiver-node  hosts save the backup in the /root/backup/ folder.
 
-#### Restoration from backup
+### Restoration from backup
 
 To restore the data, extract the contents of the created archive, e.g.
 
@@ -2985,7 +2985,7 @@ This module is a tool used to store information about hardware and sofrware asse
 
 Module CMDB have two tabs:
 
-### `Infrastructure` tab
+### Infrastructure tab
 
 
 1. Get documents button - which get all matching data. \
@@ -3030,7 +3030,7 @@ Module CMDB have two tabs:
    - Change value/values and click `Update` \
    ![](/media/media/04_cmdb_infra_tab_09.png)
 
-### `Relations` Tab
+### Relations Tab
    
 1. Expand details \
    ![](/media/media/04_cmdb_infra_tab_10.png)

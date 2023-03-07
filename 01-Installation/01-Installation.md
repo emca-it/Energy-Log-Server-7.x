@@ -24,7 +24,21 @@
 
 3. Network communication
    
-   <table><thead><tr><th>From</th><th>To</th><th>Port</th><th>Protocol</th><th>Description</th></tr></thead><tbody><tr><td rowspan="3"><br><br>Wazuh Agent</td><td rowspan="7"><br><br><br><br><br><br><br>Wazuh service</td><td>1514</td><td>TCP (default)</td><td>Agent connection service</td></tr><tr><td>1514</td><td>UDP (optional)</td><td>Agent connection service (disabled by default)</td></tr><tr><td>1515</td><td>TCP</td><td>Agent enrollment</td></tr><tr><td>Wazuh service</td><td>1516</td><td>TCP</td><td>Wazuh cluster daemon</td></tr><tr><td rowspan="2"><br>Source</td><td>****</td><td>UDP (default)</td><td>Wazuh Syslog collector (disabled by default)</td></tr><tr><td>****</td><td>TCP (optional</td><td>Wazuh Syslog collector (disabled by default)</td></tr><tr><td>Wazuh service</td><td>55000</td><td>TCP</td><td>Wazuh Server RESTful API</td></tr><tr><td>Every ELS component</td><td rowspan="3"><br><br>Elasticsearch<br></td><td>9200</td><td>TCP</td><td>License verification through License Service</td></tr><tr><td>Inegration source</td><td>9200</td><td>TCP<br></td><td>Elasticsearch API</td></tr><tr><td>Other cluster nodes </td><td>9300 </td><td>TCP</td><td>Elasticsearch transport</td></tr><tr><td rowspan="3"><br><br>User browser</td><td rowspan="3"><br><br>Kibana<br></td><td>5601</td><td>TCP</td><td>Default GUI</td></tr><tr><td>5602</td><td>TCP</td><td>Admin console</td></tr><tr><td>5603</td><td>TCP</td><td>E-doc GUI</td></tr></tbody></table>
+   |         From         	|       To      	|  Port 	|    Protocol    	|                   Description                  	|
+   |:--------------------:	|:-------------:	|:-----:	|:--------------:	|:----------------------------------------------:	|
+   | Wazuh Agent          	| Wazuh service 	| 1514  	| TCP (default)  	| Agent connection service                       	|
+   | Wazuh Agent          	| Wazuh service 	| 1514  	| UDP (optional) 	| Agent connection service (disabled by default) 	|
+   | Wazuh Agent          	| Wazuh service 	| 1515  	| TCP            	| Agent enrollment                               	|
+   | Wazuh service        	| Wazuh service 	| 1516  	| TCP            	| Wazuh cluster daemon                           	|
+   | Source               	| Wazuh service 	| XXXX  	| UDP (default)  	| Wazuh Syslog collector (disabled by default)   	|
+   | Source               	| Wazuh service 	| XXXX  	| TCP (optional  	| Wazuh Syslog collector (disabled by default)   	|
+   | Wazuh service        	| Wazuh service 	| 55000 	| TCP            	| Wazuh Server RESTful API                       	|
+   | Every ELS component  	| Elasticsearch 	| 9200  	| TCP            	| License verification through License Service   	|
+   | Inegration source    	| Elasticsearch 	| 9200  	| TCP            	| Elasticsearch API                              	|
+   | Other cluster nodes  	| Elasticsearch 	| 9300  	| TCP            	| Elasticsearch transport                        	|
+   | User browser         	| Kibana        	| 5601  	| TCP            	| Default GUI                                    	|
+   | User browser         	| Kibana        	| 5602  	| TCP            	| Admin console                                  	|
+   | User browser         	| Kibana        	| 5603  	| TCP            	| E-doc GUI                                      	|
 
 ## Installation method 
 

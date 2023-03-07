@@ -349,8 +349,8 @@ Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption
   elasticsearch_connection:
     hosts: ["els_host_IP:9200"]
 
-    username: logserver
-    password: "logserver_password"
+    username: license
+    password: "license_user_password"
 
     https: true
   ```
