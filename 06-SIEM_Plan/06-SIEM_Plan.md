@@ -1422,8 +1422,9 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
 ### Security rules
 
 #### Cluster Health rules
+
 <table id="id1" class="colwidths-given docutils" border="1"><colgroup> <col width="2%" /> <col width="5%" /> <col width="22%" /> <col width="20%" /> <col width="6%" /> <col width="9%" /> <col width="12%" /> <col width="4%" /> <col width="20%" /> </colgroup>
-<thead>
+<thead valign="bottom">
 	<tr class="row-odd">
 		<th class="head">Nr.</th>
 		<th class="head">Architecture/Application</th>
