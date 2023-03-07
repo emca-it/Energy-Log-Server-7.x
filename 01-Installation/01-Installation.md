@@ -24,103 +24,92 @@
 
 3. Network communication
 
-   <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-h2m1{background-color:#f0f0f0;border-color:#333333;text-align:center;vertical-align:top}
-.tg .tg-ted4{border-color:#333333;text-align:center;vertical-align:middle}
-.tg .tg-ao2g{border-color:#333333;text-align:center;vertical-align:top}
-.tg .tg-de2y{border-color:#333333;text-align:left;vertical-align:top}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-h2m1">From</th>
-    <th class="tg-h2m1">To</th>
-    <th class="tg-h2m1">Port</th>
-    <th class="tg-h2m1">Protocol</th>
-    <th class="tg-h2m1">Description</th>
+ <table id="id1" class="colwidths-given docutils" border="1"><colgroup>  <col width="5%" /> <col width="22%" /> <col width="20%" /> <col width="6%" /> <col width="9%" />  </colgroup>
+<thead valign="bottom">
+  <tr class="row-odd">
+    <th class="head">From</th>
+    <th class="head">To</th>
+    <th class="head">Port</th>
+    <th class="head">Protocol</th>
+    <th class="head">Description</th>
   </tr>
 </thead>
-<tbody>
-  <tr>
-    <td class="tg-ted4" rowspan="3">Wazuh Agent</td>
-    <td class="tg-ted4" rowspan="7">Wazuh service</td>
-    <td class="tg-ao2g">1514</td>
-    <td class="tg-de2y">TCP (default)</td>
-    <td class="tg-de2y">Agent connection service</td>
+<tbody valign="center">
+  <tr class="row-even">
+    <td class="first last" rowspan="3">Wazuh Agent</td>
+    <td class="first last" rowspan="7">Wazuh service</td>
+    <td class="first last">1514</td>
+    <td class="first last">TCP (default)</td>
+    <td class="first last">Agent connection service</td>
   </tr>
-  <tr>
-    <td class="tg-ao2g">1514</td>
-    <td class="tg-de2y">UDP (optional)</td>
-    <td class="tg-de2y">Agent connection service (disabled by default)</td>
+  <tr class="row-odd">
+    <td class="first last">1514</td>
+    <td class="first last">UDP (optional)</td>
+    <td class="first last">Agent connection service (disabled by default)</td>
   </tr>
-  <tr>
-    <td class="tg-ao2g">1515</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Agent enrollment service</td>
+  <tr class="row-even">
+    <td class="first last">1515</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Agent enrollment service</td>
   </tr>
-  <tr>
-    <td class="tg-ted4">Wazuh service</td>
-    <td class="tg-ao2g">1516</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Wazuh cluster daemon</td>
+  <tr class="row-odd">
+    <td class="first last">Wazuh service</td>
+    <td class="first last">1516</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Wazuh cluster daemon</td>
   </tr>
-  <tr>
-    <td class="tg-ted4" rowspan="2">Source</td>
-    <td class="tg-ao2g">****</td>
-    <td class="tg-de2y">UDP (default)</td>
-    <td class="tg-de2y">Wazuh Syslog collector (disabled by default)</td>
+  <tr class="row-even">
+    <td class="first last" rowspan="2">Source</td>
+    <td class="first last">****</td>
+    <td class="first last">UDP (default)</td>
+    <td class="first last">Wazuh Syslog collector (disabled by default)</td>
   </tr>
-  <tr>
-    <td class="tg-ao2g">****</td>
-    <td class="tg-de2y">TCP (optional)</td>
-    <td class="tg-de2y">Wazuh Syslog collector (disabled by default)</td>
+  <tr class="row-odd">
+    <td class="first last">****</td>
+    <td class="first last">TCP (optional)</td>
+    <td class="first last">Wazuh Syslog collector (disabled by default)</td>
   </tr>
-  <tr>
-    <td class="tg-ted4">Wazuh service</td>
-    <td class="tg-ao2g">55000</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Wazuh server RESTful API</td>
+  <tr class="row-even">
+    <td class="first last">Wazuh service</td>
+    <td class="first last">55000</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Wazuh server RESTful API</td>
   </tr>
-  <tr>
-    <td class="tg-ted4">Every ELS component</td>
-    <td class="tg-ted4" rowspan="3">Elasticsearch</td>
-    <td class="tg-ao2g">9200</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">License verification through License Service</td>
+  <tr class="row-odd">
+    <td class="first last">Every ELS component</td>
+    <td class="first last" rowspan="3">Elasticsearch</td>
+    <td class="first last">9200</td>
+    <td class="first last">TCP</td>
+    <td class="first last">License verification through License Service</td>
   </tr>
-  <tr>
-    <td class="tg-ted4">Integration source</td>
-    <td class="tg-ao2g">9200</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Elasticsearch API</td>
+  <tr class="row-even">
+    <td class="first last">Integration source</td>
+    <td class="first last">9200</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Elasticsearch API</td>
   </tr>
-  <tr>
-    <td class="tg-ted4">Other cluster nodes</td>
-    <td class="tg-ao2g">9300</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Elasticsearch transport</td>
+  <tr class="row-odd">
+    <td class="first last">Other cluster nodes</td>
+    <td class="first last">9300</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Elasticsearch transport</td>
   </tr>
-  <tr>
-    <td class="tg-ted4" rowspan="3">User browser</td>
-    <td class="tg-ted4" rowspan="3">Kibana</td>
-    <td class="tg-ao2g">5601</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Default GUI</td>
+  <tr class="row-even">
+    <td class="first last" rowspan="3">User browser</td>
+    <td class="first last" rowspan="3">Kibana</td>
+    <td class="first last">5601</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Default GUI</td>
   </tr>
-  <tr>
-    <td class="tg-ao2g">5602</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Admin console</td>
+  <tr class="row-odd">
+    <td class="first last">5602</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Admin console</td>
   </tr>
-  <tr>
-    <td class="tg-ao2g">5603</td>
-    <td class="tg-de2y">TCP</td>
-    <td class="tg-de2y">Wiki GUI</td>
+  <tr class="row-even">
+    <td class="first last">5603</td>
+    <td class="first last">TCP</td>
+    <td class="first last">Wiki GUI</td>
   </tr>
 </tbody>
 </table>

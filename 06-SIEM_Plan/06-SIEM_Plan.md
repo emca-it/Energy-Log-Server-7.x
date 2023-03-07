@@ -1422,234 +1422,225 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
 ### Security rules
 
 #### Cluster Health rules
-<style type="text/css">
-.tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
-.tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
-  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
-  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-ao2g{border-color:#333333;text-align:center;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-</style>
-<table class="tg">
+<table id="id1" class="colwidths-given docutils" border="1"><colgroup> <col width="2%" /> <col width="5%" /> <col width="22%" /> <col width="20%" /> <col width="6%" /> <col width="9%" /> <col width="12%" /> <col width="4%" /> <col width="20%" /> </colgroup>
 <thead>
-  <tr>
-    <th class="tg-ao2g">Nr.</th>
-    <th class="tg-ao2g">Architecture/Application</th>
-    <th class="tg-ao2g">Rule Name</th>
-    <th class="tg-ao2g">Index name</th>
-    <th class="tg-ao2g">Description</th>
-    <th class="tg-ao2g">Rule type</th>
-    <th class="tg-ao2g">Rule Definition</th>
-  </tr>
+	<tr class="row-odd">
+		<th class="head">Nr.</th>
+		<th class="head">Architecture/Application</th>
+		<th class="head">Rule Name</th>
+		<th class="head">Index name</th>
+		<th class="head">Description</th>
+		<th class="head">Rule type</th>
+		<th class="head">Rule Definition</th>
+	</tr>
 </thead>
-<tbody>
-  <tr>
-    <td class="tg-0pky">1</td>
-    <td class="tg-0pky">Logtrail</td>
-    <td class="tg-0pky">Cluster Services Error Logs</td>
-    <td class="tg-0pky">logtrail-*</td>
-    <td class="tg-0pky">Shows errors in cluster services logs.</td>
-    <td class="tg-0pky">frequency</td>
-    <td class="tg-0pky"># (Optional, any specific) filter:   - query_string:       query: "log_level:ERROR AND exists:path"  # (Optional, any specific) #num_events: 10 #timeframe: #  hours: 1 query_key: path timeframe:   minutes: 10 num_events: 100</td>
+<tbody valign="top">
+  <tr class="row-even">
+    <td ><p class="first last">1</p></td>
+    <td ><p class="first last">Logtrail</p></td>
+    <td ><p class="first last">Cluster Services Error Logs</p></td>
+    <td ><p class="first last">logtrail-*</p></td>
+    <td ><p class="first last">Shows errors in cluster services logs.</p></td>
+    <td ><p class="first last">frequency</p></td>
+    <td ><p class="first last"># (Optional, any specific) filter:   - query_string:       query: "log_level:ERROR AND exists:path"  # (Optional, any specific) #num_events: 10 #timeframe: #  hours: 1 query_key: path timeframe:   minutes: 10 num_events: 100</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">2</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Cluster Health Status</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Health status of the cluster, based on the state of its primary and replica shards.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">timeframe:   minutes: 3  filter: - query:     query_string:       query: cluster_health_status:0</td>
+  <tr class="row-odd">
+    <td ><p class="first last">2</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Cluster Health Status</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Health status of the cluster, based on the state of its primary and replica shards.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">timeframe:   minutes: 3  filter: - query:     query_string:       query: cluster_health_status:0</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">3</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Cluster Stats Indices Docs Per Sec</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">A single-value metrics aggregation that calculates an approximate count of distinct values.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "cluster_stats_indices_docs_per_sec" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 16000000 buffer_time:   minutes: 1</td>
+  <tr class="row-even">
+    <td ><p class="first last">3</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Cluster Stats Indices Docs Per Sec</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">A single-value metrics aggregation that calculates an approximate count of distinct values.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "cluster_stats_indices_docs_per_sec" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 16000000 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">4</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Indices Stats All Total Store Size In Bytes</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Size of the index in byte units.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "indices_stats_all_total_store_size_in_bytes" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 60000000000000 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">4</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Indices Stats All Total Store Size In Bytes</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Size of the index in byte units.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "indices_stats_all_total_store_size_in_bytes" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 60000000000000 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">5</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Logstach Stats CPU Load Average 15M</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">15m -&gt; Fifteen-minute load average on the system (field is not present if fifteen-minute load average is not available).</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "logstash_stats_cpu_load_average_15m" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 5 buffer_time:   minutes: 1</td>
+  <tr class="row-even">
+    <td ><p class="first last">5</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Logstach Stats CPU Load Average 15M</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">15m -&gt; Fifteen-minute load average on the system (field is not present if fifteen-minute load average is not available).</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "logstash_stats_cpu_load_average_15m" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 5 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">6</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Logstash Stats Cpu Percent</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Properties of cpu -&gt; percent -&gt; Recent CPU usage for the whole system, or -1 if not supported.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "logstash_stats_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 20 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">6</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Logstash Stats Cpu Percent</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Properties of cpu -&gt; percent -&gt; Recent CPU usage for the whole system, or -1 if not supported.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "logstash_stats_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 20 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">7</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Logstash Stats Events Queue Push Duration In Millis</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> queue_push_duration_in_millis is the accumulative time the input are waiting to push events into the queue.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "logstash_stats_events_queue_push_duration_in_millis" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 140000000 buffer_time:   minutes: 1</td>
+  <tr class="row-even">
+    <td ><p class="first last">7</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Logstash Stats Events Queue Push Duration In Millis</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> queue_push_duration_in_millis is the accumulative time the input are waiting to push events into the queue.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "logstash_stats_events_queue_push_duration_in_millis" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 140000000 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">8</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Logstash Stats Mem Heap Used Percent</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Memory currently in use by the heap</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">metric_agg_key: "logstash_stats_mem_heap_used_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 80 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">8</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Logstash Stats Mem Heap Used Percent</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Memory currently in use by the heap</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">metric_agg_key: "logstash_stats_mem_heap_used_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 80 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">9</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Logstash Stats Persisted Queue Size</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">A Logstash persistent queue helps protect against data loss during abnormal termination by storing the in-flight message queue to disk.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">type: metric_aggregation metric_agg_key: node_stats_/var/lib/logstash/queue_disk_usage query_key: source_node_host metric_agg_type: max doc_type: _doc max_threshold: 734003200 realert:   minutes: 15</td>
+  <tr class="row-even">
+    <td ><p class="first last">9</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Logstash Stats Persisted Queue Size</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">A Logstash persistent queue helps protect against data loss during abnormal termination by storing the in-flight message queue to disk.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">type: metric_aggregation metric_agg_key: node_stats_/var/lib/logstash/queue_disk_usage query_key: source_node_host metric_agg_type: max doc_type: _doc max_threshold: 734003200 realert:   minutes: 15</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">10</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Expected Data Nodes</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Nodes stats API returns cluster nodes statistics</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_expected_data_nodes" metric_agg_type: "cardinality" doc_type: "_doc" min_threshold: 1 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">10</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Expected Data Nodes</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Nodes stats API returns cluster nodes statistics</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_expected_data_nodes" metric_agg_type: "cardinality" doc_type: "_doc" min_threshold: 1 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">11</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Indices Flush Duration</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> flush -&gt; Contains statistics about flush operations for the node.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_indices_flush_duration" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 250 buffer_time:   minutes: 1</td>
+  <tr class="row-even">
+    <td ><p class="first last">11</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Indices Flush Duration</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> flush -&gt; Contains statistics about flush operations for the node.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_indices_flush_duration" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 250 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">12</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Indices Search Fetch Current</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> fetch_current -&gt; Number of fetch operations currently running.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_indices_search_fetch_current" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 3,5 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">12</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Indices Search Fetch Current</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> fetch_current -&gt; Number of fetch operations currently running.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_indices_search_fetch_current" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 3,5 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">13</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Indices Search Query Current</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> query_current -&gt; Number of query operations currently running.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_indices_search_query_current" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 1,5 buffer_time:   minutes: 1</td>
+  <tr class="row-even">
+    <td ><p class="first last">13</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Indices Search Query Current</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> query_current -&gt; Number of query operations currently running.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_indices_search_query_current" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 1,5 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">14</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Jvm Mem Heap Used Percent</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> used_percent -&gt;  Percentage of used memory.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_jvm_mem_heap_used_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 87 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">14</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Jvm Mem Heap Used Percent</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> used_percent -&gt;  Percentage of used memory.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_jvm_mem_heap_used_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 87 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">15</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Os Cpu Percent</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> os.cpu_percentage informs how busy the system is.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_os_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 90 buffer_time:   minutes: 1</td>
+  <tr class="row-even">
+    <td ><p class="first last">15</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Os Cpu Percent</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> os.cpu_percentage informs how busy the system is.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_os_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 90 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">16</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Process Cpu Percent</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky"> process.cpu.percent informs how much CPU Elasticsearch is using.</td>
-    <td class="tg-0pky">metric_aggregation</td>
-    <td class="tg-0pky">metric_agg_key: "node_stats_process_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 90 buffer_time:   minutes: 1</td>
+  <tr class="row-odd">
+    <td ><p class="first last">16</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Process Cpu Percent</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last"> process.cpu.percent informs how much CPU Elasticsearch is using.</p></td>
+    <td ><p class="first last">metric_aggregation</p></td>
+    <td ><p class="first last">metric_agg_key: "node_stats_process_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 90 buffer_time:   minutes: 1</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">17</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats Tasks Current</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">The task management API returns information about tasks currently executing on one or more nodes in the cluster.</td>
-    <td class="tg-0pky">frequency</td>
-    <td class="tg-0pky">type: frequency num_events: 5000 timeframe:   minutes: 1  filter:  - query_string:      query: 'exists:task_id'</td>
+  <tr class="row-even">
+    <td ><p class="first last">17</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats Tasks Current</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">The task management API returns information about tasks currently executing on one or more nodes in the cluster.</p></td>
+    <td ><p class="first last">frequency</p></td>
+    <td ><p class="first last">type: frequency num_events: 5000 timeframe:   minutes: 1  filter:  - query_string:      query: 'exists:task_id'</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">18</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats TCP Port 5044</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Returns information about the availability of the tcp port.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">filter: - query:     query_string:       query: node_stats_tcp_port_5044:"unused"</td>
+  <tr class="row-odd">
+    <td ><p class="first last">18</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats TCP Port 5044</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Returns information about the availability of the tcp port.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">filter: - query:     query_string:       query: node_stats_tcp_port_5044:"unused"</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">19</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats TCP Port 5514</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Returns information about the availability of the tcp port.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">filter: - query:     query_string:       query: node_stats_tcp_port_5514:"unused"</td>
+  <tr class="row-even">
+    <td ><p class="first last">19</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats TCP Port 5514</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Returns information about the availability of the tcp port.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">filter: - query:     query_string:       query: node_stats_tcp_port_5514:"unused"</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">20</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats TCP Port 5602</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Returns information about the availability of the tcp port.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">filter: - query:     query_string:       query: node_stats_tcp_port_5602:"unused"</td>
+  <tr class="row-odd">
+    <td ><p class="first last">20</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats TCP Port 5602</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Returns information about the availability of the tcp port.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">filter: - query:     query_string:       query: node_stats_tcp_port_5602:"unused"</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">21</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats TCP Port 9200</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Returns information about the availability of the tcp port.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">timeframe:   minutes: 3  filter: - query:     query_string:       query: node_stats_tcp_port_9200:"unused"</td>
+  <tr class="row-even">
+    <td ><p class="first last">21</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats TCP Port 9200</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Returns information about the availability of the tcp port.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">timeframe:   minutes: 3  filter: - query:     query_string:       query: node_stats_tcp_port_9200:"unused"</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">22</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats TCP Port 9300</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Returns information about the availability of the tcp port.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">filter: - query:     query_string:       query: node_stats_tcp_port_9300:"unused"</td>
+  <tr class="row-odd">
+    <td ><p class="first last">22</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats TCP Port 9300</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Returns information about the availability of the tcp port.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">filter: - query:     query_string:       query: node_stats_tcp_port_9300:"unused"</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">23</td>
-    <td class="tg-0pky">Skimmer</td>
-    <td class="tg-0pky">Node Stats TCP Port 9600</td>
-    <td class="tg-0pky">skimmer-*</td>
-    <td class="tg-0pky">Returns information about the availability of the tcp port.</td>
-    <td class="tg-0pky">any</td>
-    <td class="tg-0pky">timeframe:   minutes: 3  filter: - query:     query_string:       query: node_stats_tcp_port_9600:"unused"</td>
+  <tr class="row-even">
+    <td ><p class="first last">23</p></td>
+    <td ><p class="first last">Skimmer</p></td>
+    <td ><p class="first last">Node Stats TCP Port 9600</p></td>
+    <td ><p class="first last">skimmer-*</p></td>
+    <td ><p class="first last">Returns information about the availability of the tcp port.</p></td>
+    <td ><p class="first last">any</p></td>
+    <td ><p class="first last">timeframe:   minutes: 3  filter: - query:     query_string:       query: node_stats_tcp_port_9600:"unused"</p></td>
   </tr>
 </tbody>
 </table>
