@@ -23,23 +23,107 @@
    - Microsoft Edge
 
 3. Network communication
-   
-   |         From         	|       To      	|  Port 	|    Protocol    	|                   Description                  	|
-   |:--------------------:	|:-------------:	|:-----:	|:--------------:	|:----------------------------------------------:	|
-   | Wazuh Agent          	| Wazuh service 	| 1514  	| TCP (default)  	| Agent connection service                       	|
-   | Wazuh Agent          	| Wazuh service 	| 1514  	| UDP (optional) 	| Agent connection service (disabled by default) 	|
-   | Wazuh Agent          	| Wazuh service 	| 1515  	| TCP            	| Agent enrollment                               	|
-   | Wazuh service        	| Wazuh service 	| 1516  	| TCP            	| Wazuh cluster daemon                           	|
-   | Source               	| Wazuh service 	| XXXX  	| UDP (default)  	| Wazuh Syslog collector (disabled by default)   	|
-   | Source               	| Wazuh service 	| XXXX  	| TCP (optional  	| Wazuh Syslog collector (disabled by default)   	|
-   | Wazuh service        	| Wazuh service 	| 55000 	| TCP            	| Wazuh Server RESTful API                       	|
-   | Every ELS component  	| Elasticsearch 	| 9200  	| TCP            	| License verification through License Service   	|
-   | Inegration source    	| Elasticsearch 	| 9200  	| TCP            	| Elasticsearch API                              	|
-   | Other cluster nodes  	| Elasticsearch 	| 9300  	| TCP            	| Elasticsearch transport                        	|
-   | User browser         	| Kibana        	| 5601  	| TCP            	| Default GUI                                    	|
-   | User browser         	| Kibana        	| 5602  	| TCP            	| Admin console                                  	|
-   | User browser         	| Kibana        	| 5603  	| TCP            	| E-doc GUI                                      	|
 
+   <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-h2m1{background-color:#f0f0f0;border-color:#333333;text-align:center;vertical-align:top}
+.tg .tg-ted4{border-color:#333333;text-align:center;vertical-align:middle}
+.tg .tg-ao2g{border-color:#333333;text-align:center;vertical-align:top}
+.tg .tg-de2y{border-color:#333333;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-h2m1">From</th>
+    <th class="tg-h2m1">To</th>
+    <th class="tg-h2m1">Port</th>
+    <th class="tg-h2m1">Protocol</th>
+    <th class="tg-h2m1">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-ted4" rowspan="3">Wazuh Agent</td>
+    <td class="tg-ted4" rowspan="7">Wazuh service</td>
+    <td class="tg-ao2g">1514</td>
+    <td class="tg-de2y">TCP (default)</td>
+    <td class="tg-de2y">Agent connection service</td>
+  </tr>
+  <tr>
+    <td class="tg-ao2g">1514</td>
+    <td class="tg-de2y">UDP (optional)</td>
+    <td class="tg-de2y">Agent connection service (disabled by default)</td>
+  </tr>
+  <tr>
+    <td class="tg-ao2g">1515</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Agent enrollment service</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4">Wazuh service</td>
+    <td class="tg-ao2g">1516</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Wazuh cluster daemon</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4" rowspan="2">Source</td>
+    <td class="tg-ao2g">****</td>
+    <td class="tg-de2y">UDP (default)</td>
+    <td class="tg-de2y">Wazuh Syslog collector (disabled by default)</td>
+  </tr>
+  <tr>
+    <td class="tg-ao2g">****</td>
+    <td class="tg-de2y">TCP (optional)</td>
+    <td class="tg-de2y">Wazuh Syslog collector (disabled by default)</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4">Wazuh service</td>
+    <td class="tg-ao2g">55000</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Wazuh server RESTful API</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4">Every ELS component</td>
+    <td class="tg-ted4" rowspan="3">Elasticsearch</td>
+    <td class="tg-ao2g">9200</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">License verification through License Service</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4">Integration source</td>
+    <td class="tg-ao2g">9200</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Elasticsearch API</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4">Other cluster nodes</td>
+    <td class="tg-ao2g">9300</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Elasticsearch transport</td>
+  </tr>
+  <tr>
+    <td class="tg-ted4" rowspan="3">User browser</td>
+    <td class="tg-ted4" rowspan="3">Kibana</td>
+    <td class="tg-ao2g">5601</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Default GUI</td>
+  </tr>
+  <tr>
+    <td class="tg-ao2g">5602</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Admin console</td>
+  </tr>
+  <tr>
+    <td class="tg-ao2g">5603</td>
+    <td class="tg-de2y">TCP</td>
+    <td class="tg-de2y">Wiki GUI</td>
+  </tr>
+</tbody>
+</table>
 ## Installation method 
 
 The Energy Logserver installer is delivered as:
