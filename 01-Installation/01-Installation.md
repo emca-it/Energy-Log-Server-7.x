@@ -24,95 +24,96 @@
 
 3. Network communication
 
- <table id="id1" class="colwidths-given docutils" border="1"><colgroup>  <col width="5%" /> <col width="22%" /> <col width="20%" /> <col width="6%" /> <col width="9%" />  </colgroup>
-<thead valign="bottom">
-  <tr class="row-odd">
-    <th class="head">From</th>
-    <th class="head">To</th>
-    <th class="head">Port</th>
-    <th class="head">Protocol</th>
-    <th class="head">Description</th>
-  </tr>
-</thead>
-<tbody valign="center">
-  <tr class="row-even">
-    <td class="first last" rowspan="3">Wazuh Agent</td>
-    <td class="first last" rowspan="7">Wazuh service</td>
-    <td class="first last">1514</td>
-    <td class="first last">TCP (default)</td>
-    <td class="first last">Agent connection service</td>
-  </tr>
-  <tr class="row-odd">
-    <td class="first last">1514</td>
-    <td class="first last">UDP (optional)</td>
-    <td class="first last">Agent connection service (disabled by default)</td>
-  </tr>
-  <tr class="row-even">
-    <td class="first last">1515</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Agent enrollment service</td>
-  </tr>
-  <tr class="row-odd">
-    <td class="first last">Wazuh service</td>
-    <td class="first last">1516</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Wazuh cluster daemon</td>
-  </tr>
-  <tr class="row-even">
-    <td class="first last" rowspan="2">Source</td>
-    <td class="first last">****</td>
-    <td class="first last">UDP (default)</td>
-    <td class="first last">Wazuh Syslog collector (disabled by default)</td>
-  </tr>
-  <tr class="row-odd">
-    <td class="first last">****</td>
-    <td class="first last">TCP (optional)</td>
-    <td class="first last">Wazuh Syslog collector (disabled by default)</td>
-  </tr>
-  <tr class="row-even">
-    <td class="first last">Wazuh service</td>
-    <td class="first last">55000</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Wazuh server RESTful API</td>
-  </tr>
-  <tr class="row-odd">
-    <td class="first last">Every ELS component</td>
-    <td class="first last" rowspan="3">Elasticsearch</td>
-    <td class="first last">9200</td>
-    <td class="first last">TCP</td>
-    <td class="first last">License verification through License Service</td>
-  </tr>
-  <tr class="row-even">
-    <td class="first last">Integration source</td>
-    <td class="first last">9200</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Elasticsearch API</td>
-  </tr>
-  <tr class="row-odd">
-    <td class="first last">Other cluster nodes</td>
-    <td class="first last">9300</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Elasticsearch transport</td>
-  </tr>
-  <tr class="row-even">
-    <td class="first last" rowspan="3">User browser</td>
-    <td class="first last" rowspan="3">Kibana</td>
-    <td class="first last">5601</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Default GUI</td>
-  </tr>
-  <tr class="row-odd">
-    <td class="first last">5602</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Admin console</td>
-  </tr>
-  <tr class="row-even">
-    <td class="first last">5603</td>
-    <td class="first last">TCP</td>
-    <td class="first last">Wiki GUI</td>
-  </tr>
-</tbody>
-</table>
+   <table id="id1" class="colwidths-given docutils" border="1"><colgroup>  <col width="5%" /> <col width="22%" /> <col width="20%" /> <col width="6%" /> <col width="9%" />  </colgroup>
+   <thead valign="bottom">
+     <tr class="row-odd">
+       <th class="head">From</th>
+       <th class="head">To</th>
+       <th class="head">Port</th>
+       <th class="head">Protocol</th>
+       <th class="head">Description</th>
+     </tr>
+   </thead>
+   <tbody valign="center">
+     <tr class="row-even">
+       <td class="first last" rowspan="3">Wazuh Agent</td>
+       <td class="first last" rowspan="7">Wazuh service</td>
+       <td class="first last">1514</td>
+       <td class="first last">TCP (default)</td>
+       <td class="first last">Agent connection service</td>
+     </tr>
+     <tr class="row-odd">
+       <td class="first last">1514</td>
+       <td class="first last">UDP (optional)</td>
+       <td class="first last">Agent connection service (disabled by default)</td>
+     </tr>
+     <tr class="row-even">
+       <td class="first last">1515</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Agent enrollment service</td>
+     </tr>
+     <tr class="row-odd">
+       <td class="first last">Wazuh service</td>
+       <td class="first last">1516</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Wazuh cluster daemon</td>
+     </tr>
+     <tr class="row-even">
+       <td class="first last" rowspan="2">Source</td>
+       <td class="first last">****</td>
+       <td class="first last">UDP (default)</td>
+       <td class="first last">Wazuh Syslog collector (disabled by default)</td>
+     </tr>
+     <tr class="row-odd">
+       <td class="first last">****</td>
+       <td class="first last">TCP (optional)</td>
+       <td class="first last">Wazuh Syslog collector (disabled by default)</td>
+     </tr>
+     <tr class="row-even">
+       <td class="first last">Wazuh service</td>
+       <td class="first last">55000</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Wazuh server RESTful API</td>
+     </tr>
+     <tr class="row-odd">
+       <td class="first last">Every ELS component</td>
+       <td class="first last" rowspan="3">Elasticsearch</td>
+       <td class="first last">9200</td>
+       <td class="first last">TCP</td>
+       <td class="first last">License verification through License Service</td>
+     </tr>
+     <tr class="row-even">
+       <td class="first last">Integration source</td>
+       <td class="first last">9200</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Elasticsearch API</td>
+     </tr>
+     <tr class="row-odd">
+       <td class="first last">Other cluster nodes</td>
+       <td class="first last">9300</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Elasticsearch transport</td>
+     </tr>
+     <tr class="row-even">
+       <td class="first last" rowspan="3">User browser</td>
+       <td class="first last" rowspan="3">Kibana</td>
+       <td class="first last">5601</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Default GUI</td>
+     </tr>
+     <tr class="row-odd">
+       <td class="first last">5602</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Admin console</td>
+     </tr>
+     <tr class="row-even">
+       <td class="first last">5603</td>
+       <td class="first last">TCP</td>
+       <td class="first last">Wiki GUI</td>
+     </tr>
+   </tbody>
+   </table>
+
 ## Installation method 
 
 The Energy Logserver installer is delivered as:
