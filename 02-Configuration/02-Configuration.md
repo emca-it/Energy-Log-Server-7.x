@@ -887,8 +887,9 @@ To set the default application for the GUI home page, please do the following:
   kibana.defaultAppId: "alerts"
   ```
 
-## Configure email delivery #
-### Configure email delivery for sending PDF reports in Scheduler. ##
+## Configure email delivery 
+
+### Configure email delivery for sending PDF reports in Scheduler. 
 
 
 The default e-mail client that installs with the Linux CentOS system,
@@ -1235,6 +1236,8 @@ EVERY COMMAND HAVE TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
 ### Installation of Agent - Client Side
 
+#### Linux
+
 FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
 Linux Agent - software installed on clients running on Linux OS:
@@ -1271,7 +1274,8 @@ Linux Agent - software installed on clients running on Linux OS:
 
 `# journalctl -fu masteragent`
 
-### Windows Agent - software installed on clients running on Windows OS:
+
+#### Windows
 
 FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
@@ -1360,39 +1364,11 @@ You can check the Logs by clicking the icon in the `logs` column.
 
 ![](/media/media/image250.png)
 
-## Windows Agent installation
-
-1. Add an exception to the firewall to listen on **TCP** port **8081**.
-
-2. Add an exception to the firewall enabling connection on **TCP LOGSTASH_IP:8080** port.
-
-3. Copy  content of the **./agents/windows** from installation directory to  **"C:\Program Files\MasterAgnet"**
-
-4. Change IP address of the Kibana GUI server and Logstash server in **"C:\Program Files\MasterAgnet\agent.conf"** file.
-
-5. In order to install the service, start the console as an administrator and execute the following commands: 
-
-    ```powershell
-    cd "C:\Program Files\MasterAgent"
-    agents.exe install
-    agents.exe start
-    ```
-
-6. An alternative method of installing the service, run the PowerShell console as administrator and execute the following commands: 
-
-   ```bash
-   New-Service -name masteragent -displayName masteragent - binaryPathName "C:\Program Files\MasterAgent\agents.exe"
-   ```
-
-7. Check status of service via **services.msc** (if stoped, try start it agian).
-
-8. In the GUI, in the **Agents** tab, you can check the status of the newly connected host.
-
 ### Agent module compatibility
 
 The Agents module works with Beats agents in the following versions:
 
-  <table border="1" class="docutils" id="id1">
+<table border="1" class="docutils" id="id1">
 <colgroup>
 <col width="3%" />
 <col width="12%" />
@@ -1411,63 +1387,63 @@ The Agents module works with Beats agents in the following versions:
 </td>
 <td><p class="first last">Filebeat</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/filebeat-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/filebeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">2</p>
 </td>
 <td><p class="first last">Packetbeat</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/packetbeat-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/packetbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">3</p>
 </td>
 <td><p class="first last">Winlogbeat</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/winlogbeat-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/winlogbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">4</p>
 </td>
 <td><p class="first last">Metricbeat</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/metricbeat-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/metricbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">5</p>
 </td>
 <td><p class="first last">Heartbeat</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/heartbeat-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/heartbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">6</p>
 </td>
 <td><p class="first last">Auditbeat</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/auditbeat-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/auditbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">7</p>
 </td>
 <td><p class="first last">Logstash</p>
 </td>
-<td><p class="first last">OSS 6.8.14</p>
+<td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/logstash-oss-6-8-13</p>
+<td><p class="first last">https://www.elastic.co/downloads/past-releases/logstash-oss-7-17-8</p>
 </td>
 </tr>
 </table>
@@ -1480,7 +1456,7 @@ The Agents module works with Beats agents in the following versions:
 
 ###### Installation
 
-1. Copy the Winlogbeat installer from the installation directory `install/Agents/beats/windows/winlogbeat-oss-6.8.14-windows-x86_64.zip` and unpack
+1. Copy the Winlogbeat installer from the installation directory `install/Agents/beats/windows/winlogbeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Winlogbeat` directory
 
@@ -1617,7 +1593,7 @@ winlogbeat.exe test config
 winlogbeat.exe test output
 ```
 
-##### Drop event
+###### Drop event
 
 We can also drop events on the agent side. To do this we need to use the ```drop_event``` processor
 
@@ -1797,7 +1773,7 @@ not:
     status: OK
 ```
 
-##### Internal queue
+###### Internal queue
 
 Winlogbeat uses an internal queue to store events before publishing them. The queue is responsible for buffering and combining events into batches that can be consumed by the outputs. The outputs will use bulk operations to send a batch of events in one transaction.
 
@@ -1900,11 +1876,11 @@ When there are multiple consecutive errors writing to the disk, the queue increa
 
 The default value is ```30s``` (thirty seconds).
 
-#### Filebeat
+##### Filebeat
 
 ###### Installation
 
-1. Copy the Filebeat installer from the installation directory `install/Agents/beats/windows/filebeat-oss-6.8.14-windows-x86_64.zip` and unpack
+1. Copy the Filebeat installer from the installation directory `install/Agents/beats/windows/filebeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Filebeat` directory
 
@@ -2066,15 +2042,15 @@ filebeat.exe test config
 filebeat.exe test output
 ```
 
-#### Merticbeat
+##### Merticbeat
 
-##### Installation
+###### Installation
 
-1. Copy the Merticbeat installer from the installation directory `install/Agents/beats/windows/merticbeat-oss-6.8.14-windows-x86_64.zip` and unpack
+1. Copy the Merticbeat installer from the installation directory `install/Agents/beats/windows/merticbeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Merticbeat` directory
 
-##### Configuration
+###### Configuration
 
 Editing the file: `C:\Program Files\Merticbeat\metricbeat.yml`:
 
@@ -2196,15 +2172,15 @@ metricbeat.exe test config
 metricbeat.exe test output
 ```
 
-#### Packetbeat
+##### Packetbeat
 
-##### Installation
+###### Installation
 
-1. Copy the Packetbeatinstaller from the installation directory `install/Agents/beats/windows/packetbeat-oss-6.8.14-windows-x86_64.zip` and unpack
+1. Copy the Packetbeatinstaller from the installation directory `install/Agents/beats/windows/packetbeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Packetbeat` directory
 
-##### Configuration
+###### Configuration
 
 Editing the file: `C:\Program Files\Packetbeat\packetbeat.yml`:
 
@@ -2315,21 +2291,21 @@ packetbeat.exe test config
 packetbeat.exe test output
 ```
 
-### Linux
+#### Linux
 
-#### Filebeat
+##### Filebeat
 
-##### Installation
+###### Installation
 
-1. Copy the Filebeat installer from the installation directory `install/Agents/beats/linux/filebeat-oss-6.8.14-x86_64.rpm`
+1. Copy the Filebeat installer from the installation directory `install/Agents/beats/linux/filebeat-oss-7.17.8-x86_64.rpm`
 
 2. Install filebeat with following commadn:
 
    ```bash
-   yum install -y filebeat-oss-6.8.14-x86_64.rpm
+   yum install -y filebeat-oss-7.17.8-x86_64.rpm
    ```
 
-##### Configuration
+###### Configuration
 
 Editing the file: `/etc/filebeat/filebeat.yml`:
 
@@ -2444,19 +2420,19 @@ filebeat test config
 filebeat test output
 ```
 
-#### Merticbeat
+##### Merticbeat
 
-##### Installation
+###### Installation
 
-1. Copy the Merticbeatinstaller from the installation directory `install/Agents/beats/linux/metricbeat-oss-6.8.14-x86_64.rpm`
+1. Copy the Merticbeatinstaller from the installation directory `install/Agents/beats/linux/metricbeat-oss-7.17.8-x86_64.rpm`
 
 2. Install Merticbeat with following command:
 
    ```bash
-   yum install -y metricbeat-oss-6.8.14-x86_64.rpm
+   yum install -y metricbeat-oss-7.17.8-x86_64.rpm
    ```
 
-##### Configuration
+###### Configuration
 
 Editing the file: `/etc/metricbeat/metricbeat.yml`:
 
@@ -2553,19 +2529,19 @@ metricbeat test config
 metricbeat test output
 ```
 
-#### Packetbeat
+##### Packetbeat
 
-##### Installation
+###### Installation
 
-1. Copy the Packetbeat installer from the installation directory `install/Agents/beats/linux/packetbeat-oss-6.8.14-x86_64.rpm`
+1. Copy the Packetbeat installer from the installation directory `install/Agents/beats/linux/packetbeat-oss-7.17.8-x86_64.rpm`
 
 2. Install Packetbeatwith following command:
 
    ```bash
-   yum install -y packetbeat-oss-6.8.14-x86_64.rpm
+   yum install -y packetbeat-oss-7.17.8-x86_64.rpm
    ```
 
-##### Configuration
+###### Configuration
 
 Editing the file: `/etc/packetbeat/packetbeat.yml`:
 
