@@ -1448,19 +1448,18 @@ The Agents module works with Beats agents in the following versions:
 </tr>
 </table>
 
-### Beats agents installation
 
-#### Windows
+### Windows - Beats agents installation
 
-##### Winlogbeat
+#### Winlogbeat
 
-###### Installation
+##### Installation
 
 1. Copy the Winlogbeat installer from the installation directory `install/Agents/beats/windows/winlogbeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Winlogbeat` directory
 
-###### Configuration
+##### Configuration
 
 Editing the file: `C:\Program Files\Winlogbeat\winlogbeat.yml`:
 
@@ -1593,7 +1592,7 @@ winlogbeat.exe test config
 winlogbeat.exe test output
 ```
 
-###### Drop event
+##### Drop event
 
 We can also drop events on the agent side. To do this we need to use the ```drop_event``` processor
 
@@ -1773,7 +1772,7 @@ not:
     status: OK
 ```
 
-###### Internal queue
+##### Internal queue
 
 Winlogbeat uses an internal queue to store events before publishing them. The queue is responsible for buffering and combining events into batches that can be consumed by the outputs. The outputs will use bulk operations to send a batch of events in one transaction.
 
@@ -1876,15 +1875,15 @@ When there are multiple consecutive errors writing to the disk, the queue increa
 
 The default value is ```30s``` (thirty seconds).
 
-##### Filebeat
+#### Filebeat
 
-###### Installation
+##### Installation
 
 1. Copy the Filebeat installer from the installation directory `install/Agents/beats/windows/filebeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Filebeat` directory
 
-###### Configuration
+##### Configuration
 
 Editing the file: `C:\Program Files\Filebeat\filebeat.yml`:
 
@@ -2042,15 +2041,15 @@ filebeat.exe test config
 filebeat.exe test output
 ```
 
-##### Merticbeat
+#### Merticbeat
 
-###### Installation
+##### Installation
 
 1. Copy the Merticbeat installer from the installation directory `install/Agents/beats/windows/merticbeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Merticbeat` directory
 
-###### Configuration
+##### Configuration
 
 Editing the file: `C:\Program Files\Merticbeat\metricbeat.yml`:
 
@@ -2172,15 +2171,15 @@ metricbeat.exe test config
 metricbeat.exe test output
 ```
 
-##### Packetbeat
+#### Packetbeat
 
-###### Installation
+##### Installation
 
 1. Copy the Packetbeatinstaller from the installation directory `install/Agents/beats/windows/packetbeat-oss-7.17.8-windows-x86_64.zip` and unpack
 
 2. Copy the installation files to the `C:\Program Files\Packetbeat` directory
 
-###### Configuration
+##### Configuration
 
 Editing the file: `C:\Program Files\Packetbeat\packetbeat.yml`:
 
@@ -2291,11 +2290,11 @@ packetbeat.exe test config
 packetbeat.exe test output
 ```
 
-#### Linux
+### Linux - Beats agents installation
 
-##### Filebeat
+#### Filebeat
 
-###### Installation
+##### Installation
 
 1. Copy the Filebeat installer from the installation directory `install/Agents/beats/linux/filebeat-oss-7.17.8-x86_64.rpm`
 
@@ -2305,7 +2304,7 @@ packetbeat.exe test output
    yum install -y filebeat-oss-7.17.8-x86_64.rpm
    ```
 
-###### Configuration
+##### Configuration
 
 Editing the file: `/etc/filebeat/filebeat.yml`:
 
@@ -2420,9 +2419,9 @@ filebeat test config
 filebeat test output
 ```
 
-##### Merticbeat
+#### Merticbeat
 
-###### Installation
+##### Installation
 
 1. Copy the Merticbeatinstaller from the installation directory `install/Agents/beats/linux/metricbeat-oss-7.17.8-x86_64.rpm`
 
@@ -2432,7 +2431,7 @@ filebeat test output
    yum install -y metricbeat-oss-7.17.8-x86_64.rpm
    ```
 
-###### Configuration
+##### Configuration
 
 Editing the file: `/etc/metricbeat/metricbeat.yml`:
 
@@ -2529,9 +2528,9 @@ metricbeat test config
 metricbeat test output
 ```
 
-##### Packetbeat
+#### Packetbeat
 
-###### Installation
+##### Installation
 
 1. Copy the Packetbeat installer from the installation directory `install/Agents/beats/linux/packetbeat-oss-7.17.8-x86_64.rpm`
 
@@ -2541,7 +2540,7 @@ metricbeat test output
    yum install -y packetbeat-oss-7.17.8-x86_64.rpm
    ```
 
-###### Configuration
+##### Configuration
 
 Editing the file: `/etc/packetbeat/packetbeat.yml`:
 
