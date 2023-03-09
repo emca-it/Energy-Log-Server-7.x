@@ -510,6 +510,48 @@ Configuration:
    - `Observable data mapping:` The key and the value observable data mapping.
    - `Alert text:` The text of content the alert.
 
+### Escalate
+
+The **escalate_users** function allows you to assign notifications to a specific user or group of users whereas the **escalate_after** funcion escalates the recipient of the notification after a set period of time.
+
+In order to use the **escalate_users** functionality, you should add to rule configuration two additional keys.
+
+Example:
+
+```yaml
+escalate_users: ["user1", "user2"]
+escalate_after:
+  days: 2
+```
+
+Following this example `user1` and `user2` will be alerted with escalation two days after the initial alarm.
+
+### Recovery
+
+The recovery function allows you to declare an additional action that will be performed after the termination of the conditions which triggering the initial alarm.
+
+```yaml
+recovery: true
+recovery_command: "command"
+```
+
+In addition recovery came with functionality of pulling field values from rules. The `%{@timestamp_recovery}` pulls the value from the **match** while `${name}` pulls the value from the rule. The `@timestamp_recovery` variable is a special variable that contains the time **recovery** executinon.
+
+In order to use the recovery functionality, you should add directives to your alarm definition, for example:
+
+```yaml
+recovery: true
+recovery_command: "echo \"%{@timestamp_recovery};;${name}_${ci};${alert_severity};RECOVERY;${ci};${alert_group};${alert_subgroup};${summary};${additional_info_1};${additional_info_2};${additional_info_3};\" >>/opt/elasticsearch/em_integration/events.log"
+```
+
+It is possible to close the incident in the external system using a parameter added to the alert rule.
+
+```yaml
+  #Recovery definition:
+  recovery: true
+  recovery_command: "mail -s 'Recovery Alert for rule RULE_NAME' user@example.com < /dev/null"
+```
+
 ### Aggregation
 
 `aggregation:` This option allows you to aggregate multiple matches together into one alert. Every time a match is found, Alert will wait for the aggregation period, and send all of the matches that have occurred in that time for a particular rule together.
@@ -9673,13 +9715,6 @@ To perform this incident notification in an external system.  You need to select
 
 ![](/media/media/image239.png)
 
-It is possible to close the incident in the external system using a parameter added to the alert rule.
-
-```yaml
-  #Recovery definition:
-  recovery: true
-  recovery_command: "mail -s 'Recovery Alert for rule RULE_NAME' user@example.com < /dev/null"
-```
 
 ## SIEM Virtus Total integration
 
