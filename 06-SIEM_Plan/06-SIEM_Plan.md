@@ -15,7 +15,7 @@ queries. These are constant queries that run in the background and
 when the conditions specified in the alert are met, the specify action
 is taken.
 
-![main_screen_alert_module](/media/media/image91.PNG)
+![](/media/media/image91.PNG)
 
 For example, if you want to know when more than 20
 „status:500" response code from on our homepage appear within an one
@@ -59,7 +59,7 @@ To configuring STMP server for email notification you should:
 
 To create the alert, click the "Alerts" button from the main menu bar.
 
- ![alerts_screen1](/media/media/image93.png)
+ ![](/media/media/image93.png)
 
 We will display a page with tree tabs: Create new alerts in „Create
 alert rule", manage alerts in „Alert rules List" and check alert
@@ -67,7 +67,7 @@ status „Alert Status".
 
 In the alert creation windows we have an alert creation form:
 
- ![alerts_screen2](/media/media/image92.PNG)
+ ![](/media/media/image92.PNG)
 
 - **Name** - the name of the alert, after which we will recognize and
 search for it.
@@ -85,10 +85,10 @@ met (sending an email message or executing a command)
 The "Alert Rule List" tab contain complete list of previously created
 alert rules:
 
-![alerts_screen3](/media/media/image94.png)
+![](/media/media/image94.png)
 
 In this window, you can activate / deactivate, delete and update alerts
-by clicking on the selected icon with the given alert: ![alert_screen4](/media/media/image63.png).
+by clicking on the selected icon with the given alert: ![](/media/media/image63.png).
 
 ### Alerts status
 
@@ -96,7 +96,7 @@ In the "Alert status" tab, you can check the current alert status: if
 it activated, when it started and when it ended, how long it lasted,
 how many event sit found and how many times it worked.
 
-![alert_screen5](/media/media/image95.png)
+![](/media/media/image95.png)
 
 Also, on this tab, you can recover the alert dashboard, by clicking the "Recovery Alert Dashboard" button.
 
@@ -169,7 +169,7 @@ Rule matches when a complex, logical criteria is met. Rule can be use for alert 
 
 An example of using the Logical rule type.
 
-![logical_alert_screen](/media/media/image149.png)
+![](/media/media/image149.png)
 
 Alerts that must occur for the rule to be triggered:
 
@@ -185,7 +185,7 @@ Rule matches when a complex, logical criteria is met. Rule can be use for alert 
 
 An example of using the Chain rule type.
 
-![chain_alert_screen](/media/media/image148.png)
+![](/media/media/image148.png)
 
 Alerts that must occur for the rule to be triggered:
 
@@ -722,7 +722,7 @@ Playbooks can be enriched with scripts that can be launched together with Playbo
 
 To add a new playbook, go to the **Alert** module, select the **Playbook** tab and then **Create Playbook**
 
-![playbook_screen_1](/media/media/image116.png)
+![](/media/media/image116.png)
 
 In the **Name** field, enter the name of the new Playbook.
 
@@ -736,7 +736,7 @@ To save the entered content, confirm with the **Submit** button.
 
 To view saved Playbook, go to the **Alert** module, select the **Playbook** tab and then **Playbooks list**:
 
-![playbook_screen_2](/media/media/image117.png)
+![](/media/media/image117.png)
 
 To view the content of a given Playbook, select the **Show** button.
 
@@ -756,7 +756,7 @@ To add a Palybook to existing Alert rule, go to the **Alert rule list** tab with
 
 When creating an alert or while editing an existing alert, it is possible that the system will indicate the most-suited playbook for the alert. For this purpose, the Validate button is used, which starts the process of searching the existing playbook and selects the most appropriate ones.
 
-![playbook_screen_3](/media/media/image132.png)
+![](/media/media/image132.png)
 
 ### Risks
 
@@ -770,7 +770,7 @@ Risk calculation does not use only logs for its work. Processing the security po
 
 To add a new risk Category, go to the **Alert** module, select the **Risks** tab and then **Create Cagtegory**.
 
-![risk_screen_1](/media/media/image118.png)
+![](/media/media/image118.png)
 
 Enter the **Name** for the new category and the category **Value**.
 
@@ -778,7 +778,7 @@ Enter the **Name** for the new category and the category **Value**.
 
 To view saved Category, go to the **Alert** module, select the **Risks** tab and then **Categories list**:
 
-![risk_screen_2](/media/media/image119.png)
+![](/media/media/image119.png)
 
 To view the content of a given Category, select the **Show** button.
 
@@ -790,7 +790,7 @@ To delete the selected Category, select the **Delete** button.
 
 To add a new playbook, go to the Alert module, select the Playbook tab and then Create Playbook
 
-![risk_screen_1](/media/media/image120.png)
+![](/media/media/image120.png)
 
 In the **Index pattern** field, enter the name of the index pattern.
 Select the **Read fields** button to get a list of fields from the index.
@@ -802,7 +802,7 @@ Press the **Read valules** button to get values from the previously selected fie
 
 Next, you must assign a risk category to the displayed values. You can do this for each value individually or use the check-box on the left to mark several values and set the category globally using the **Set global category** button. To quickly find the right value, you can use the search field.
 
-![risk_screen_2](/media/media/image122.png)
+![](/media/media/image122.png)
 
 After completing, save the changes with the **Submit** button.
 
@@ -810,7 +810,7 @@ After completing, save the changes with the **Submit** button.
 
 To view saved risks, go to the **Alert** module, select the **Risks** tab and then **Risks list**:
 
-![risk_screen_3](/media/media/image121.png)
+![](/media/media/image121.png)
 
 To view the content of a given Risk, select the **Show** button.
 
@@ -882,7 +882,7 @@ To use it, add a new rule according to the following steps:
 
 The following figure shows the places where you can call your own algorithm:
 
-![new_algorithm_screen](/media/media/image123.png)
+![](/media/media/image123.png)
 
 #### Additional modification of the algorithm (weight)
 
@@ -933,7 +933,7 @@ Incidents on the operation of the organization through appropriate points for ca
 
 The Incident module allows you to handle incidents created by triggered alert rules.
 
-![incident_screen_1](/media/media/image154.png)
+![](/media/media/image154.png)
 
 Incident handling allows you to perform the following action:
 
@@ -1086,11 +1086,11 @@ Object "item" contains information about the incident that action was used on.
 
 6. You should now be able to see an additional item in the action context menu in GUI Alerts::Incidents:
 
-   ![incident_new_action](/media/media/image202.png)
+   ![](/media/media/image202.png)
 
 7. Running the action will resolve into an alert:
 
-   ![incident_new_action2](/media/media/image203.png)
+   ![](/media/media/image203.png)
 
 ##### Steps to add a second and subsequent custom actions
 
@@ -1144,11 +1144,11 @@ Object "item" contains information about the incident that action was used on.
 
 6. Now both actions should be present on the context menu:
 
-   ![incident_new_action3](/media/media/image204.png)
+   ![](/media/media/image204.png)
 
 7. Using it will open dashboard in new tab:
 
-   ![incident_new_action4](/media/media/image205.png)
+   ![](/media/media/image205.png)
 
 ##### System update
 
@@ -8276,11 +8276,11 @@ POST alert/_update/example_document_id
 }
 ```
 
-![tag_screen1](https://user-images.githubusercontent.com/42172770/209844235-390cf973-cda7-41e6-8ff1-5636ba87a75a.png)
+![](https://user-images.githubusercontent.com/42172770/209844235-390cf973-cda7-41e6-8ff1-5636ba87a75a.png)
 
 You can get the corresponding document id in the discovery section.
 
-![tag_screen2](https://user-images.githubusercontent.com/42172770/209844638-2bb0b6fa-32d6-4430-bb6e-c2d4abef1db6.png)
+![](https://user-images.githubusercontent.com/42172770/209844638-2bb0b6fa-32d6-4430-bb6e-c2d4abef1db6.png)
 
 ## Siem Module
 
@@ -8339,7 +8339,7 @@ In this case, rule ``100100`` is used to look for alerts where the source IP add
 
 Below you can find a screenshot with two SIEM alerts: one that is triggered when a web attack is detected trying to exploit a PHP server vulnerability, and one that informs that the malicious actor has been blocked.
 
-![siem_screen1](/media/media/image240.png)
+![](/media/media/image240.png)
 
 ### Log data collection
 
@@ -8892,7 +8892,7 @@ By default, each SIEM agent has the syscheck enabled and preconfigured but it is
 
 File integrity monitoring results for the whole environment can be observed in Energylogserver app in the SIEM > Overview > Integrity monitoring:
 
-![image](https://user-images.githubusercontent.com/42172770/209820768-dd08601e-5d21-4b22-b82b-21aa98c01201.png)
+![](https://user-images.githubusercontent.com/42172770/209820768-dd08601e-5d21-4b22-b82b-21aa98c01201.png)
 
 #### Configuration
 
@@ -9557,13 +9557,13 @@ Remember to restart the manager to apply the changes.
 
 You can also check the vulnerability dashboards to have an overview of your agents' status.
 
-![image](https://user-images.githubusercontent.com/42172770/209840302-f405052b-d03e-430f-a56a-1d5882eaca8f.png)
+![](https://user-images.githubusercontent.com/42172770/209840302-f405052b-d03e-430f-a56a-1d5882eaca8f.png)
 
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
 
-![tenable_screen1](/media/media/image166.png)
+![](/media/media/image166.png)
 
 ### Configuration
 
@@ -9604,7 +9604,7 @@ Tenable.sc is vulnerability management tool, which make a scan systems and envir
 
 Qualys Guard is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Qualys Guard API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
 
-![qualys_screen1](/media/media/image166.png)
+![](/media/media/image166.png)
 
 ### Configuration
 
@@ -9658,7 +9658,7 @@ The module focus on actions and not the logs itself. Every user, host or other r
 
 Once tracking is done, SOC teams can investigate patterns for single action among many entities or many actions for a single user/entity. This unique approach creates an activity map for everyone working in the organization and for any resource. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UEBA is designed to give information about the common type of action that user or entity performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts. UEBA comes with defined dashboards which shows discovered actions and metrics for them.
 
-![ueba_screen1](/media/media/image238.png)
+![](/media/media/image238.png)
 
 It is easy to filter presented data with single username/host or a group of users/hosts using query syntax. With help of saved searches SOC can create own outlook to stay focused on users at high risk of an attack.
 Energy Logserver is made for working with data. UEBA gives new analytics approach, but what is more important it brings new metrics that we can work with. Artificial Intelligence functionality build in Energy Logserver help to calculate forecast for each action over single user or entire organization. In the same time thanks to extended set of rule types, Energy Logserver can correlate behavioral analysis with other data collected from environment. Working with Energy Logserver SIEM Plan with UEBA module greatly enlarge security analytics scope.
@@ -9671,7 +9671,7 @@ BMC Remedy configuration details: [https://docs.bmc.com/docs/ars91/en/bmc-remedy
 
 To perform this incident notification in an external system.  You need to select in the configuration of the alert rule "Alert Method" "Command" and in the "Path to script/command" field enter the correct request.
 
-![bcm_screen1](/media/media/image239.png)
+![](/media/media/image239.png)
 
 It is possible to close the incident in the external system using a parameter added to the alert rule.
 
