@@ -1,8 +1,7 @@
 # Installation
 
-## First steps 
 
-### System Requirements
+## System Requirements
 
 1. Supported Operating Systems
 
@@ -36,8 +35,8 @@
    </thead>
    <tbody valign="center">
      <tr class="row-even">
-       <td class="first last" rowspan="3">Wazuh Agent</td>
-       <td class="first last" rowspan="7">Wazuh service</td>
+       <td class="first last" rowspan="3">Siem Agent</td>
+       <td class="first last" rowspan="7">Siem service</td>
        <td class="first last">1514</td>
        <td class="first last">TCP (default)</td>
        <td class="first last">Agent connection service</td>
@@ -53,27 +52,27 @@
        <td class="first last">Agent enrollment service</td>
      </tr>
      <tr class="row-odd">
-       <td class="first last">Wazuh service</td>
+       <td class="first last">Siem service</td>
        <td class="first last">1516</td>
        <td class="first last">TCP</td>
-       <td class="first last">Wazuh cluster daemon</td>
+       <td class="first last">Siem cluster daemon</td>
      </tr>
      <tr class="row-even">
        <td class="first last" rowspan="2">Source</td>
        <td class="first last">****</td>
        <td class="first last">UDP (default)</td>
-       <td class="first last">Wazuh Syslog collector (disabled by default)</td>
+       <td class="first last">Siem Syslog collector (disabled by default)</td>
      </tr>
      <tr class="row-odd">
        <td class="first last">****</td>
        <td class="first last">TCP (optional)</td>
-       <td class="first last">Wazuh Syslog collector (disabled by default)</td>
+       <td class="first last">Siem Syslog collector (disabled by default)</td>
      </tr>
      <tr class="row-even">
-       <td class="first last">Wazuh service</td>
+       <td class="first last">Siem service</td>
        <td class="first last">55000</td>
        <td class="first last">TCP</td>
-       <td class="first last">Wazuh server RESTful API</td>
+       <td class="first last">Siem server RESTful API</td>
      </tr>
      <tr class="row-odd">
        <td class="first last">Every ELS component</td>

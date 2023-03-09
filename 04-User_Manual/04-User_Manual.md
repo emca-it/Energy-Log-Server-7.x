@@ -2979,7 +2979,7 @@ Example of usage:
   ![](/media/media/04_wiki_convert_05.png)
 
 
-## CMDB module
+## CMDB 
 
 This module is a tool used to store information about hardware and sofrware assets, its database store information regarding the relationships among its assets.Is a means of understanding the critical assets and their relationships, such as information systyems upstream sources or dependencies of assets. Data coming with indexes wazuh, winlogbeat,syslog and filebeat. 
 
