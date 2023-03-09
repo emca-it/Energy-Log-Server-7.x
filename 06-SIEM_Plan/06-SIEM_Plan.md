@@ -10,6 +10,21 @@ Use SIEM Plan do prevent loss of reputation, data leakage, phishing or any other
 
 ## Alert Module
 
+Energy Logserver allows you to create alerts, i.e. monitoring
+queries. These are constant queries that run in the background and
+when the conditions specified in the alert are met, the specify action
+is taken.
+
+![main_screen_alert_module](/media/media/image91.PNG)
+
+For example, if you want to know when more than 20
+„status:500" response code from on our homepage appear within an one
+hour, then we create an alert that check the number of occurrences of
+the „status:500" query for a specific index every 5 minutes. If the
+condition we are interested in is met, we send an action in the form
+of sending a message to our e-mail address. In the action, you can
+also set the launch of any script.
+
 ### Enabling the Alert Module
 
 ### SMTP server configuration
@@ -40,22 +55,21 @@ To configuring STMP server for email notification you should:
   systemctl restat alert
   ```
 
-
 ### Creating Alerts
 
 To create the alert, click the "Alerts" button from the main menu bar.
 
- ![](/media/media/image93.png)
+ ![alerts_screen1](/media/media/image93.png)
 
 We will display a page with tree tabs: Create new alerts in „Create
 alert rule", manage alerts in „Alert rules List" and check alert
 status „Alert Status".
 
- In the alert creation windows we have an alert creation form:
+In the alert creation windows we have an alert creation form:
 
- ![](/media/media/image92.PNG)
+ ![alerts_screen2](/media/media/image92.PNG)
 
- - **Name** - the name of the alert, after which we will recognize and
+- **Name** - the name of the alert, after which we will recognize and
 search for it.
 - **Index pattern** - a pattern of indexes after which the alert will be
 searched.
@@ -68,13 +82,13 @@ field
 met (sending an email message or executing a command)
 - **Any** - additional descriptive field.# List of Alert rules #
 
-The "Alert Rule List" tab contain complete list of previously created 
+The "Alert Rule List" tab contain complete list of previously created
 alert rules:
 
-![](/media/media/image94.png)
+![alerts_screen3](/media/media/image94.png)
 
-In this window, you can activate / deactivate, delete and update alerts 
-by clicking on the selected icon with the given alert: ![](/media/media/image63.png).
+In this window, you can activate / deactivate, delete and update alerts
+by clicking on the selected icon with the given alert: ![alert_screen4](/media/media/image63.png).
 
 ### Alerts status
 
@@ -82,14 +96,14 @@ In the "Alert status" tab, you can check the current alert status: if
 it activated, when it started and when it ended, how long it lasted,
 how many event sit found and how many times it worked.
 
-![](/media/media/image95.png)
+![alert_screen5](/media/media/image95.png)
 
 Also, on this tab, you can recover the alert dashboard, by clicking the "Recovery Alert Dashboard" button.
 
 ### Alert Types
 
-The various Rule Type classes, defined in Energy Logserver. 
-An instance is held in memory for each rule, passed all of the data returned by querying Elasticsearch 
+The various Rule Type classes, defined in Energy Logserver.
+An instance is held in memory for each rule, passed all of the data returned by querying Elasticsearch
 with a given filter, and generates matches based on that data.
 
 #### Any
@@ -155,7 +169,7 @@ Rule matches when a complex, logical criteria is met. Rule can be use for alert 
 
 An example of using the Logical rule type.
 
-![](/media/media/image149.png)
+![logical_alert_screen](/media/media/image149.png)
 
 Alerts that must occur for the rule to be triggered:
 
@@ -171,7 +185,7 @@ Rule matches when a complex, logical criteria is met. Rule can be use for alert 
 
 An example of using the Chain rule type.
 
-![](/media/media/image148.png)
+![chain_alert_screen](/media/media/image148.png)
 
 Alerts that must occur for the rule to be triggered:
 
@@ -186,14 +200,18 @@ If the sequence of occurrence of the above alerts is met within 5 minutes and th
 This rule calculates percentage difference between aggregations for two non-overlapping time windows.
 
 Let’s assume x represents the current time (i.e. when alert rule is run) then the relation between historical and present time windows is described by the inequality:
-```
+
+```python
 <x – agg_min – delta_min; x – delta_min> <= <x – agg_min; x>; where x – delta_min <= x – agg_min => delta_min >= agg_min
 ```
+
 The percentage difference is then described by the following equation:
-```
+
+```python
 d = | avg_now – avg_history | / max(avg_now, avg_history) * 100; for (avg_now – avg_history != 0; avg_now != 0; avg_history != 0)
 d = 0; (in other cases)
 ```
+
 `avg_now` is the arithmetic mean of `<x – agg_min; x>`
 `avg_history` is the arithmetic mean of `<x – agg_min – delta_min; x – delta_min>`
 
@@ -263,15 +281,18 @@ The executed command has parameters which are the values of the fields of the ex
 
 The Hive alerter will create an Incident in theHive. The body of the notification is formatted the same as with other alerters.\
 
-Configuration:\
+Configuration:
+
 1. Edit alerter configuration in file `/opt/alert/config.yaml`.
    - `hive_host:` The hostname of theHive server.
    - `hive_api:` The apikey for connect with theHive.
    Example usage:
-   ```
+
+   ```yaml
      hive_host: https://127.0.0.1/base
      hive_apikey: APIKEY
    ```
+
 2. Configuration of alert shuld be done in the definition of the Rule, using following options:
    - `Alert type:` Type of alert(alert or Case)
    - `Follow:` If enabled, then if it gets update, its status is set to Updated and the related case is updated too.
@@ -285,7 +306,6 @@ Configuration:\
    - `Tags:` The tags attached to alert.
    - `Observable data mapping:` The key and the value observable data mapping.
    - `Alert text:` The text of content the alert.
-
 
 #### RSA Archer
 
@@ -302,7 +322,7 @@ Configuration steps:
       ```bash
       #!/usr/bin/env bash
       base_url = "http://localhost/Archer" ##set the appropriate Archer URL
-      
+
       logger -n $base_url -t logger -p daemon.alert -T "CEF:0|LogServer|LogServer|${19}|${18}| TimeStamp=$1 DeviceVendor/Product=$2-$3 Message=$4 TransportProtocol=$5 Aggregated:$6 AttackerAddress=$7 AttackerMAC=$8 AttackerPort=$9 TargetMACAddress=${10} TargetPort=${11} TargetAddress=${12} FlexString1=${13} Link=${14} ${15} $1 ${16} $7 ${17}"
       ```
 
@@ -319,14 +339,14 @@ Configuration steps:
       "CEF":"0","Server":"LogServer","Version":"${19}","NameEvent":"${18}","TimeStamp":"$1","DeviceVendor/Product":"$2-$3","Message""$4","TransportProtocol":"$5","Aggregated":"$6","AttackerAddress":"$7","AttackerMAC":"$8","AttackerPort":"$9","TargetMACAddress":"${10}","TargetPort":"${11}","TargetAddress":"${12}","FlexString1":"${13}","Link":"${14}","EventID":"${15}","EventTime":"${16}","RawEvent":"${17}"
       }
       ```
- 
-2. Alert rule definition: 
+
+2. Alert rule definition:
 
    - Index Pattern: `alert*`
    - Name: `alert-sent-to-rsa`
    - Rule Type: `any`
    - Rule Definition:
-      
+
       ```bash
       filter:
       - query:
@@ -362,7 +382,7 @@ Configuration steps:
 #### Jira
 
 The Jira alerter will open a ticket on Jira whenever an alert is triggered. \
-Configuration steps: 
+Configuration steps:
 
 1. Create  the file which contains Jira account credentials for exmaple `/opt/alert/jira_acct.yaml`.
 
@@ -370,30 +390,33 @@ Configuration steps:
    - `password:` Personal Access Token
     \
      Example usage:
-    ```
+
+    ```yaml
        user: user.example.com
        password: IjP0vVhgrjkotElFf4ig03g6
     ```
 
 2. Edit alerter configuration file for example `/opt/alert/config.yaml`.
-   
+
    - `jira_account_file:` Path to Jira configuration file,
    - `jira_server:` The hostname of the Jira server
    \
    Example usage:
-   ```
+
+   ```yaml
       jira_account_file: "/opt/alert/jira_acct.yaml"
       jira_server: "https://example.atlassian.net"
    ```
+
 3. The configuration of the Jira Alert should be done in the definition of the Rule Definition alert usin the following options:
-   
+
    Required:
-   
+
    - `project:` The name of the Jira project,
    - `issue type:` The type of Jira issue
-   
+
    Optional:
-   
+
    - `Componenets:` The name of the component or components to set the ticket to. This can be a single component or a list of components, the same must be declare in Jira.
    - `Labels:` The name of the label or labels to set the ticket to. This can be a single label  or a list of labels the same must be declare in Jira.
    - `Watchets:` The id of user or  list of user id to add as watchers on a Jira ticket. This can be a single id or a list of id's.
@@ -423,7 +446,7 @@ The Webhook connector send a POST or PUT request to a web service. You can use  
 
 Slack alerter will send a notification to a predefined Slack channel. The body of the notification is formatted the same as with other alerters.
 
-- `Webhook URL:` The webhook URL that includes your auth data and the ID of the channel (room) you want to post to. Go to the Incoming Webhooks section in your Slack account https://XXXXX.slack.com/services/new/incoming-webhook , choose the channel, click ‘Add Incoming Webhooks Integration’ and copy the resulting URL.
+- `Webhook URL:` The webhook URL that includes your auth data and the ID of the channel (room) you want to post to. Go to the Incoming Webhooks section in your Slack account <https://XXXXX.slack.com/services/new/incoming-webhook> , choose the channel, click ‘Add Incoming Webhooks Integration’ and copy the resulting URL.
 - `Username:` The username or e-mail address in Slack.
 - `Slack channel:` The name of the Slack channel. If empty, send on default channel.
 - `Message Color:` The collot of the message. If empty, the alert will be posted with the 'danger' color.
@@ -433,13 +456,16 @@ Slack alerter will send a notification to a predefined Slack channel. The body o
 
 The ServiceNow alerter will create a ne Incident in ServiceNow. The body of the notification is formatted the same as with other alerters. \
 Configuration steps:
+
 1. Create the file which contains ServiceNow credentials for example `/opt/alert/servicenow_auth_file.yml`.
+
    - `servicenow_rest_url:` The ServiceNow RestApi url, this will look like TableAPI.
    - `username:` The ServiceNow username to access the api.
    - `password:` The ServiceNow user, from username, password.
-   
+
    Example usage:
-   ```
+
+   ```yaml
    servicenow_rest_url: https://dev123.service-now.com/api/now/v1/table/incident
    username: exampleUser
    password: exampleUserPassword
@@ -458,15 +484,18 @@ Configuration steps:
 
 The Energy Soar alerter will create a ne Incident in Energy Soar. The body of the notification is formatted the same as with other alerters.\
 
-Configuration:\
+Configuration:
+
 1. Edit alerter configuration in file `/opt/alert/config.yaml`.
    - `hive_host:` The hostname of the Energy Soar server.
    - `hive_api:` The apikey for connect with Energy Soat.
    Example usage:
-   ```
+
+   ```yaml
      hive_host: https://127.0.0.1/base
      hive_apikey: APIKEY
    ```
+
 2. Configuration of alert shuld be done in the definition of the Rule, using following options:
    - `Alert type:` Type of alert(alert or Case)
    - `Follow:` If enabled, then if it gets update, its status is set to Updated and the related case is updated too.
@@ -483,51 +512,53 @@ Configuration:\
 
 ### Aggregation
 
-`aggregation:` This option allows you to aggregate multiple matches together into one alert. Every time a match is found, Alert will wait for the aggregation period, and send all of the matches that have occurred in that time for a particular rule together. \
+`aggregation:` This option allows you to aggregate multiple matches together into one alert. Every time a match is found, Alert will wait for the aggregation period, and send all of the matches that have occurred in that time for a particular rule together.
 
 For example:
-```
+
+```yaml
 aggregation:
   hours: 2
 ```
-Means that if one match occurred at 12:00, another at 1:00, and a third at 2:30, one alert would be sent at 2:00, containing the first two matches, and another at 4:30, containing the third match plus any additional matches occurring before 4:30. This can be very useful if you expect a large number of matches and only want a periodic report. (Optional, time, default none) \
+
+Means that if one match occurred at 12:00, another at 1:00, and a third at 2:30, one alert would be sent at 2:00, containing the first two matches, and another at 4:30, containing the third match plus any additional matches occurring before 4:30. This can be very useful if you expect a large number of matches and only want a periodic report. (Optional, time, default none)
 
 If you wish to aggregate all your alerts and send them on a recurring interval, you can do that using the schedule field. \
 For example, if you wish to receive alerts every Monday and Friday:
 
-```
+```yaml
 aggregation:
   schedule: '2 4 * * mon,fri'
 ```
 
-This uses Cron syntax, which you can read more about [here](https://en.wikipedia.org/wiki/Cron). Make sure to only include either a schedule field or standard datetime fields (such as hours, minutes, days), not both. \
+This uses Cron syntax, which you can read more about [here](https://en.wikipedia.org/wiki/Cron). Make sure to only include either a schedule field or standard datetime fields (such as hours, minutes, days), not both.
 
 By default, all events that occur during an aggregation window are grouped together. However, if your rule has the aggregation_key field set, then each event sharing a common key value will be grouped together. A separate aggregation window will be made for each newly encountered key value. \
 For example, if you wish to receive alerts that are grouped by the userwho triggered the event, you can set:
 
-```
+```yaml
 aggregation_key: 'my_data.username'
 ```
 
 Then, assuming an aggregation window of 10 minutes, if you receive the following data points:
 
-```
+```json
 {'my_data': {'username': 'alice', 'event_type': 'login'}, '@timestamp': '2016-09-20T00:00:00'}
 {'my_data': {'username': 'bob', 'event_type': 'something'}, '@timestamp': '2016-09-20T00:05:00'}
 {'my_data': {'username': 'alice', 'event_type': 'something else'}, '@timestamp': '2016-09-20T00:06:00'}
 ```
 
-This should result in 2 alerts: One containing alice's two events, sent at 2016-09-20T00:10:00 and one containing bob's one event sent at 2016-09-20T00:16:00. \
+This should result in 2 alerts: One containing alice's two events, sent at 2016-09-20T00:10:00 and one containing bob's one event sent at 2016-09-20T00:16:00.
 
-For aggregations, there can sometimes be a large number of documents present in the viewing medium (email, Jira, etc..). If you set the summary_table_fields field, Alert will provide a summary of the specified fields from all the results. \
+For aggregations, there can sometimes be a large number of documents present in the viewing medium (email, Jira, etc..). If you set the summary_table_fields field, Alert will provide a summary of the specified fields from all the results.
 
-The formatting style of the summary table can be switched between ascii (default) and markdown with parameter summary_table_type. Markdown might be the more suitable formatting for alerters supporting it like TheHive or Energy Soar. \
+The formatting style of the summary table can be switched between ascii (default) and markdown with parameter summary_table_type. Markdown might be the more suitable formatting for alerters supporting it like TheHive or Energy Soar.
 
-The maximum number of rows in the summary table can be limited with the parameter `summary_table_max_rows`. \
+The maximum number of rows in the summary table can be limited with the parameter `summary_table_max_rows`.
 
 For example, if you wish to summarize the usernames and event_types that appear in the documents so that you can see the most relevant fields at a quick glance, you can set:
 
-```
+```md
 summary_table_fields:
     - my_data.username
     - my_data.event_type
@@ -535,7 +566,7 @@ summary_table_fields:
 
 Then, for the same sample data shown above listing alice and bob's events, Alert will provide the following summary table in the alert medium:
 
-```
+```txt
 +------------------+--------------------+
 | my_data.username | my_data.event_type |
 +------------------+--------------------+
@@ -546,15 +577,16 @@ Then, for the same sample data shown above listing alice and bob's events, Alert
 ```
 
 **!! NOTE !!**
-```
+
+```txt
 By default, aggregation time is relative to the current system time, not the time of the match. This means that running Alert over past events will result in different alerts than if Alert had been running while those events occured. This behavior can be changed by setting `aggregate_by_match_time`.
 ```
-
 
 ### Alert Content
 
 There are several ways to format the body text of the various types of events. In EBNF::
 
+```txt
     rule_name           = name
     alert_text          = alert_text
     ruletype_text       = Depends on type
@@ -562,44 +594,53 @@ There are several ways to format the body text of the various types of events. I
     top_counts_value    = Value, ": ", Count
     top_counts          = top_counts_header, LF, top_counts_value
     field_values        = Field, ": ", Value
+```
 
 Similarly to ``alert_subject``, ``alert_text`` can be further formatted using standard Python formatting syntax.
 The field names whose values will be used as the arguments can be passed with ``alert_text_args`` or ``alert_text_kw``.
 You may also refer to any top-level rule property in the ``alert_subject_args``, ``alert_text_args``, ``alert_missing_value``, and ``alert_text_kw fields``.  However, if the matched document has a key with the same name, that will take preference over the rule property.
 
-By default::
+By default:
 
+```txt
     body                = rule_name
-    
+
                           [alert_text]
-    
+
                           ruletype_text
-    
+
                           {top_counts}
-    
+
                           {field_values}
+```
 
-With ``alert_text_type: alert_text_only``::
+With ``alert_text_type: alert_text_only``:
 
+```txt
     body                = rule_name
-    
+
                           alert_text
+```
 
-With ``alert_text_type: exclude_fields``::
+With ``alert_text_type: exclude_fields``:
 
+```txt
     body                = rule_name
-    
+
                           [alert_text]
-    
+
                           ruletype_text
-    
+
                           {top_counts}
+```
 
-With ``alert_text_type: aggregation_summary_only``::
+With ``alert_text_type: aggregation_summary_only``:
 
+```txt
     body                = rule_name
-    
+
                           aggregation_summary
+```
 
 ruletype_text is the string returned by RuleType.get_match_str.
 
@@ -609,65 +650,79 @@ come from an individual event, usually the one which triggers the alert.
 
 When using ``alert_text_args``, you can access nested fields and index into arrays. For example, if your match was ``{"data": {"ips": ["127.0.0.1", "12.34.56.78"]}}``, then by using ``"data.ips[1]"`` in ``alert_text_args``, it would replace value with ``"12.34.56.78"``. This can go arbitrarily deep into fields and will still work on keys that contain dots themselves.
 
-### Example of rules ##
+### Example of rules
 
-#### Unix - Authentication Fail ###
+#### Unix - Authentication Fail
 
-- index pattern: 
+- index pattern:
 
-		syslog-*
-
-- Type:
-
-		Frequency
-
-- Alert Method:
-
-		Email
-
-- Any:
-
-		num_events: 4
-		timeframe:
-		  minutes: 5
-	
-	
-		filter:
-		- query_string:
-		    query: "program: (ssh OR sshd OR su OR sudo) AND message: \"Failed password\""
-
-#### Windows - Firewall disable or modify ###
-
-- index pattern: 
-
-		beats-*
+```txt
+    syslog-*
+```
 
 - Type:
 
-		Any
+```txt
+    Frequency
+```
 
 - Alert Method:
 
-		Email
+```txt
+    Email
+```
 
 - Any:
 
+```yaml
+    num_events: 4
+    timeframe:
+      minutes: 5
+
+    filter:
+    - query_string:
+        query: "program: (ssh OR sshd OR su OR sudo) AND message: \"Failed password\""
+```
+
+#### Windows - Firewall disable or modify
+
+- index pattern:
+
+```txt
+    beats-*
+```
+
+- Type:
+
+```txt
+    Any
+```
+
+- Alert Method:
+
+```txt
+    Email
+```
+
+- Any:
+
+```yaml
 filter:
 
-		- query_string:
-		       query: "event_id:(4947 OR 4948 OR 4946 OR 4949 OR 4954 OR 4956 OR 5025)"
-
+    - query_string:
+        query: "event_id:(4947 OR 4948 OR 4946 OR 4949 OR 4954 OR 4956 OR 5025)"
+```
 
 ### Playbooks
 
 Energy Logserver has a set of predefined set of rules and activities (called Playbook) that can be attached to a registered event in the Alert module.
 Playbooks can be enriched with scripts that can be launched together with Playbook.
 
-#### Create Playbook ###
+#### Create Playbook
 
 To add a new playbook, go to the **Alert** module, select the **Playbook** tab and then **Create Playbook**
 
-![](/media/media/image116.png)
+![playbook_screen_1](/media/media/image116.png)
 
 In the **Name** field, enter the name of the new Playbook.
 
@@ -677,11 +732,11 @@ In the **Script** field, enter the commands to be executed in the script.
 
 To save the entered content, confirm with the **Submit** button.
 
-#### Playbooks list  ###
+#### Playbooks list
 
 To view saved Playbook, go to the **Alert** module, select the **Playbook** tab and then **Playbooks list**:
 
-![](/media/media/image117.png)
+![playbook_screen_2](/media/media/image117.png)
 
 To view the content of a given Playbook, select the **Show** button.
 
@@ -689,7 +744,7 @@ To enter the changes in a given Playbook or in its script, select the **Update**
 
 To delete the selected Playbook, select the **Delete** button.
 
-#### Linking Playbooks with alert rule ###
+#### Linking Playbooks with alert rule
 
 You can add a Playbook to the Alert while creating a new Alert or by editing a previously created Alert.
 
@@ -697,11 +752,11 @@ To add Palybook to the new Alert rule, go to the **Create alert rule** tab and i
 
 To add a Palybook to existing Alert rule, go to the **Alert rule list** tab with the correct rule select the **Update** button and in the **Playbooks** section use the arrow keys to move the correct Playbook to the right window.
 
-#### Playbook verification ###
+#### Playbook verification
 
 When creating an alert or while editing an existing alert, it is possible that the system will indicate the most-suited playbook for the alert. For this purpose, the Validate button is used, which starts the process of searching the existing playbook and selects the most appropriate ones.
 
-![](/media/media/image132.png)
+![playbook_screen_3](/media/media/image132.png)
 
 ### Risks
 
@@ -713,9 +768,9 @@ Risk calculation does not use only logs for its work. Processing the security po
 
 #### Create category
 
-To add a new risk Category, go to the **Alert** module, select the **Risks** tab and then **Create Cagtegory**. 
+To add a new risk Category, go to the **Alert** module, select the **Risks** tab and then **Create Cagtegory**.
 
-![](/media/media/image118.png)
+![risk_screen_1](/media/media/image118.png)
 
 Enter the **Name** for the new category and the category **Value**.
 
@@ -723,7 +778,7 @@ Enter the **Name** for the new category and the category **Value**.
 
 To view saved Category, go to the **Alert** module, select the **Risks** tab and then **Categories list**:
 
-![](/media/media/image119.png)
+![risk_screen_2](/media/media/image119.png)
 
 To view the content of a given Category, select the **Show** button.
 
@@ -735,7 +790,7 @@ To delete the selected Category, select the **Delete** button.
 
 To add a new playbook, go to the Alert module, select the Playbook tab and then Create Playbook
 
-![](/media/media/image120.png)
+![risk_screen_1](/media/media/image120.png)
 
 In the **Index pattern** field, enter the name of the index pattern.
 Select the **Read fields** button to get a list of fields from the index.
@@ -747,7 +802,7 @@ Press the **Read valules** button to get values from the previously selected fie
 
 Next, you must assign a risk category to the displayed values. You can do this for each value individually or use the check-box on the left to mark several values and set the category globally using the **Set global category** button. To quickly find the right value, you can use the search field.
 
-![](/media/media/image122.png)
+![risk_screen_2](/media/media/image122.png)
 
 After completing, save the changes with the **Submit** button.
 
@@ -755,7 +810,7 @@ After completing, save the changes with the **Submit** button.
 
 To view saved risks, go to the **Alert** module, select the **Risks** tab and then **Risks list**:
 
-![](/media/media/image121.png)
+![risk_screen_3](/media/media/image121.png)
 
 To view the content of a given Risk, select the **Show** button.
 
@@ -770,7 +825,7 @@ You can add a Risk key to the Alert while creating a new Alert or by editing a p
 To add Risk key to the new Alert rule, go to the **Create alert rule** tab and after entering the index name, select the **Read fields** button and in the **Risk key** field, select the appropriate field name.
 In addition, you can enter the validity of the rule in the **Rule Importance** field (in the range 1-100%), by which the risk will be multiplied.
 
-To add Risk key to the existing Alert rule, go to the **Alert rule list**, tab with the correct rule select the **Update** button. 
+To add Risk key to the existing Alert rule, go to the **Alert rule list**, tab with the correct rule select the **Update** button.
 Use the **Read fields** button and in the **Risk key** field, select the appropriate field name.
 In addition, you can enter the validity of the rule in the **Rule Importance**.
 
@@ -789,26 +844,30 @@ We have the following algorithms for calculating the alert risk (Aggregation typ
 
 The new algorithm should be added in the `./elastalert_modules/playbook_util.py` file in the `calculate_risk` method. There is a sequence of conditional statements for already defined algorithms:
 
-	#aggregate values by risk_key_aggregation for rule
-	if risk_key_aggregation == "MIN":
-	    value_agg = min(values)
-	elif risk_key_aggregation == "MAX":
-	    value_agg = max(values)
-	elif risk_key_aggregation == "SUM":
-	    value_agg = sum(values)
-	elif risk_key_aggregation == "AVG":
-	    value_agg = sum(values)/len(values)
-	else:
-	    value_agg = max(values)
+```python
+#aggregate values by risk_key_aggregation for rule
+  if risk_key_aggregation == "MIN":
+    value_agg = min(values)
+  elif risk_key_aggregation == "MAX":
+    value_agg = max(values)
+  elif risk_key_aggregation == "SUM":
+    value_agg = sum(values)
+  elif risk_key_aggregation == "AVG":
+    value_agg = sum(values)/len(values)
+  else:
+    value_agg = max(values)
+```
 
 To add a new algorithm, add a new sequence as shown in the above code:
 
-	elif risk_key_aggregation == "AVG":
-	    value_agg = sum(values)/len(values)
-	elif risk_key_aggregation == "AAA":
-	    value_agg = BBB
-	else:
-	    value_agg = max(values)
+```python
+  elif risk_key_aggregation == "AVG":
+    value_agg = sum(values)/len(values)
+  elif risk_key_aggregation == "AAA":
+    value_agg = BBB
+  else:
+    value_agg = max(values)
+```
 
 where **AAA** is the algorithm code, **BBB** is a risk calculation function.
 
@@ -823,12 +882,13 @@ To use it, add a new rule according to the following steps:
 
 The following figure shows the places where you can call your own algorithm:
 
-![](/media/media/image123.png)
+![new_algorithm_screen](/media/media/image123.png)
 
 #### Additional modification of the algorithm (weight)
 
 Below is the code in the `calcuate_risk` method where category values are retrieved - here you can add your weight:
 
+```python
             #start loop by tablicy risk_key
             for k in range(len(risk_keys)):
                 risk_key = risk_keys[k]
@@ -853,11 +913,14 @@ Below is the code in the `calcuate_risk` method where category values are retrie
                 value_agg = sum(values)/len(values)
             else:
                 value_agg = max(values)
+```
 
 `Risk_key` is the array of selected risk key fields in the GUI.
 A loop is made on this array and a value is collected for the categories in the line:
 
-	value = float(self.get_risk_category_value(risk_key, key_value))
+```python
+  value = float(self.get_risk_category_value(risk_key, key_value))
+```
 
 Based on, for example, Risk_key, you can multiply the value of the value field by the appropriate weight.
 The value field value is then added to the table on which the risk calculation algorithms are executed.
@@ -868,9 +931,9 @@ SIEM correlation engine allows automatically scores organization security postur
 
 Incidents on the operation of the organization through appropriate points for caught incidents. Hazard situations are presented, using the so-called Mitre ATT / CK matrix. The Energy Logserver system, in addition to native integration with MITER, allows this knowledge to be correlated with other collected data and logs, creating even more complex techniques of behavior detection and analysis. Advanced approach allows for efficient analysis of security design estimation.
 
-The Incident module allows you to handle incidents created by triggered alert rules. 
+The Incident module allows you to handle incidents created by triggered alert rules.
 
-![](/media/media/image154.png)
+![incident_screen_1](/media/media/image154.png)
 
 Incident handling allows you to perform the following action:
 
@@ -893,9 +956,9 @@ Configuration parameter
 Example of configuration:
 
 ```yaml
-escalate_users:["user2", "user3"] 
+escalate_users:["user2", "user3"]
 escalate_after:
-	- hours: 6
+  - hours: 6
 ```
 
 #### Context menu for Alerts::Incidents
@@ -917,11 +980,13 @@ In this section, you will find steps and examples that will allow you to add cus
   onClick: this.runActionFunction,
 }
 ```
+
 You should pick the icon from available choices. After listing `ls /usr/share/kibana/built_assets/dlls/icon*` if you want to use:
-- `icon.editor_align_center-js.bundle.dll.js`  
-The for `icon: ` you should set:  
-- `editorAlignCenter`  
-Use the same transformation for each icon.
+
+- `icon.editor_align_center-js.bundle.dll.js`
+   The for `icon:` you should set:
+- `editorAlignCenter`
+   Use the same transformation for each icon.
 
 ##### Action function template
 
@@ -930,6 +995,7 @@ runActionFunction = item => {
   // Functino logic to run => information from "item" object can be used here
 };
 ```
+
 Object "item" contains information about the incident that action was used on.
 
 ##### Steps to add the first custom action to the codebase
@@ -939,8 +1005,6 @@ Object "item" contains information about the incident that action was used on.
    ```bash
    cp /usr/share/kibana/plugins/alerts/public/reactui/incidenttab.js ~/incidenttab.js.bak
    ```
-
-   
 
 2. Working example for the onClick function and action item:
 
@@ -966,7 +1030,7 @@ Object "item" contains information about the incident that action was used on.
      }
      navigator.geolocation.getCurrentPosition(success, err, opt);
    }
-   
+
    const customActions = [
      {
        name: 'Show my location',
@@ -978,8 +1042,6 @@ Object "item" contains information about the incident that action was used on.
    incidentactions.push(...customActions);
    ```
 
-   
-
 3. The "showMyLocation" function code should be placed in `/usr/share/kibana/plugins/alerts/public/reactui/incidenttab.js` under:
 
    ```javascript
@@ -987,13 +1049,11 @@ Object "item" contains information about the incident that action was used on.
        const updateIncident = incident;
        this.setState({ showIncidentModal: true, updateIncident });
      };
-   
+
      // paste function here
-   
+
      render() {
    ```
-
-   
 
 4. Custom action with a `push` function should be placed:
 
@@ -1007,13 +1067,11 @@ Object "item" contains information about the incident that action was used on.
            onClick: this.note,
          },
        ];
-   
+
        // insert HERE your action with function 'push'
-   
+
        const incidentcolumns = [
    ```
-
-   
 
 5. For the changes to take effect run below commands on the client serwer (as root or with sudo):
 
@@ -1026,19 +1084,13 @@ Object "item" contains information about the incident that action was used on.
    # in case of errors restore backup
    ```
 
-   
-
 6. You should now be able to see an additional item in the action context menu in GUI Alerts::Incidents:
 
-   ![](/media/media/image202.png)
+   ![incident_new_action](/media/media/image202.png)
 
-   
+7. Running the action will resolve into an alert:
 
-7. Running the action will resolve into an alert:  
-
-   ![](/media/media/image203.png)
-
-   
+   ![incident_new_action2](/media/media/image203.png)
 
 ##### Steps to add a second and subsequent custom actions
 
@@ -1055,16 +1107,16 @@ Object "item" contains information about the incident that action was used on.
      endT.setHours(24);
      const alertDashboardPath =
        '/app/kibana#/dashboard/777ace50-d200-11e8-98f8-31520a7f9701';
-     const timeQuery = 
+     const timeQuery =
        `_g=(time:(from:'${startT.toISOString()}',to:'${endT.toISOString()}'))`;
-     const nameQuery = 
+     const nameQuery =
        `_a=(query:(language:lucene,query:'rule_name:${encodeURIComponent(
          ruleName
        )}'))`;
      const dashboardLocation = `${alertDashboardPath}?${timeQuery}&${nameQuery}`;
      window.open(dashboardLocation, '_blank');
    };
-   ``` 
+   ```
 
 3. Execute identicly as in the last section.
 
@@ -1088,17 +1140,15 @@ Object "item" contains information about the incident that action was used on.
    incidentactions.push(...customActions);
    ```
 
-   
-
 5. Execute identicly as in the last section.
 
 6. Now both actions should be present on the context menu:
 
-   ![](/media/media/image204.png)
+   ![incident_new_action3](/media/media/image204.png)
 
 7. Using it will open dashboard in new tab:
 
-   ![](/media/media/image205.png)
+   ![incident_new_action4](/media/media/image205.png)
 
 ##### System update
 
@@ -1159,8 +1209,6 @@ health status index       uuid                   pri rep docs.count docs.deleted
 green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
 ```
 
-
-
 ### Calendar function
 
 The alert rule can be executed based on a schedule called Calendar.
@@ -1182,10 +1230,9 @@ calendar:
 
 If `aggregation` is used in the alert definition, remember that the aggregation schedule should be the same as the defined calendar.
 
-
-
 ### Windows Events ID repository
-```
+
+```md
 +--------------------+-------------------------------+----------+----------------------------------------+------------------+-----------+------------------------------------------------------------------------------+---------------------------+
 | Category           | Subcategory                   | Event ID | Dashboard                              | Type             | Event Log | Describe                                                                     | Event ID for Windows 2003 |
 +--------------------+-------------------------------+----------+----------------------------------------+------------------+-----------+------------------------------------------------------------------------------+---------------------------+
@@ -1369,7 +1416,7 @@ curl -XPUT -H 'Content-Type: application/json' -u logserver:logserver 'http://12
 
 ##### Importing Kibana dashboards
 
-```bask
+```bash
 curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@overview.json
 curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@security.json
 curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@sources.json
@@ -1389,15 +1436,15 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
 
 <table id="id1" class="colwidths-given docutils" border="1"><colgroup> <col width="2%" /> <col width="5%" /> <col width="22%" /> <col width="20%" /> <col width="6%" /> <col width="9%" /> <col width="12%" /> <col width="4%" /> <col width="20%" /> </colgroup>
 <thead valign="bottom">
-	<tr class="row-odd">
-		<th class="head">Nr.</th>
-		<th class="head">Architecture/Application</th>
-		<th class="head">Rule Name</th>
-		<th class="head">Index name</th>
-		<th class="head">Description</th>
-		<th class="head">Rule type</th>
-		<th class="head">Rule Definition</th>
-	</tr>
+  <tr class="row-odd">
+    <th class="head">Nr.</th>
+    <th class="head">Architecture/Application</th>
+    <th class="head">Rule Name</th>
+    <th class="head">Index name</th>
+    <th class="head">Description</th>
+    <th class="head">Rule type</th>
+    <th class="head">Rule Definition</th>
+  </tr>
 </thead>
 <tbody valign="top">
   <tr class="row-even">
@@ -1664,8 +1711,8 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
 </td>
 <td><p class="first last">Windows - Admin task as user</p>
 </td>
-<td><p class="first last">Alert when admin task is initiated by regular user.  
-Windows event id 4732 is verified towards static admin list. If the user does not belong to admin list AND the event is seen than we generate alert. 
+<td><p class="first last">Alert when admin task is initiated by regular user.
+Windows event id 4732 is verified towards static admin list. If the user does not belong to admin list AND the event is seen than we generate alert.
 Static Admin list is a logstash  disctionary file that needs to be created manually. During Logstash lookup a field user.role:admin is added to an event.
 4732: A member was added to a security-enabled local group</p>
 </td>
@@ -2319,7 +2366,6 @@ The driver loaded events provides information about a driver being loaded on the
 </tbody>
 </table>
 
-
 #### Network Switch SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -2538,7 +2584,6 @@ The driver loaded events provides information about a driver being loaded on the
 </tr>
 </tbody>
 </table>
-
 
 #### Cisco ASA devices SIEM rules
 
@@ -2784,7 +2829,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Linux Mail SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -2889,7 +2933,6 @@ num_events: 20</p>
 </tr>
 </tbody>
 </table>
-
 
 #### Linux DNS Bind SIEM Rules
 
@@ -3000,7 +3043,6 @@ blacklist-ioc:
 </tr>
 </tbody>
 </table>
-
 
 #### Fortigate Devices SIEM rules
 
@@ -3417,7 +3459,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Linux Apache SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -3636,7 +3677,6 @@ filter:
 </tr>
 </tbody>
 </table>
-
 
 #### RedHat / CentOS system SIEM rules
 
@@ -4025,8 +4065,6 @@ filter:
 </tbody>
 </table>
 
-
-
 #### Checkpoint devices SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -4405,7 +4443,6 @@ doc_type: doc</p>
 </tbody>
 </table>
 
-
 #### Cisco ESA devices SIEM rule
 
 <table border="1" class="docutils" id="id1">
@@ -4583,7 +4620,6 @@ doc_type: doc</p>
 </tbody>
 </table>
 
-
 #### Forcepoint devices SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -4627,20 +4663,20 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Forcepoint HIGH alert\n\n When: {}\n Analyzed by: {}\n User name: {}\n Source: {}\nDestination: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Forcepoint HIGH alert\n\n When: {}\n Analyzed by: {}\n User name: {}\n Source: {}\nDestination: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - Analyzed_by
   - user
   - Source
   - Destination
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “Severity:HIGH”</p>
@@ -4662,20 +4698,20 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Forcepoint MEDIUM alert\n\n When: {}\n Analyzed by: {}\n User name: {}\n Source: {}\nDestination: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Forcepoint MEDIUM alert\n\n When: {}\n Analyzed by: {}\n User name: {}\n Source: {}\nDestination: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - Analyzed_by
   - user
   - Source
   - Destination
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “Severity:MEDIUM”</p>
@@ -4697,20 +4733,20 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Forcepoint LOW alert\n\n When: {}\n Analyzed by: {}\n User name: {}\n Source: {}\nDestination: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Forcepoint LOW alert\n\n When: {}\n Analyzed by: {}\n User name: {}\n Source: {}\nDestination: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - Analyzed_by
   - user
   - Source
   - Destination
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “Severity:LOW”</p>
@@ -4732,20 +4768,20 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Email blocked\n\n When: {}\n Analyzed by: {}\n File name: {}\n Source: {}\nDestination: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Email blocked\n\n When: {}\n Analyzed by: {}\n File name: {}\n Source: {}\nDestination: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - Analyzed_by
   - File_Name
   - Source
   - Destination
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “Action:Blocked and Channel:Endpoint Email”</p>
@@ -4767,20 +4803,20 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Data transfer to removable device blocked\n\n When: {}\n Analyzed by: {}\n File name: {}\n Source: {}\nDestination: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Data transfer to removable device blocked\n\n When: {}\n Analyzed by: {}\n File name: {}\n Source: {}\nDestination: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - Analyzed_by
   - File_Name
   - Source
   - Destination
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “Action:Blocked and Channel:Endpoint Removable Media”</p>
@@ -4788,7 +4824,6 @@ kibana4_end_timedelta:
 </tr>
 </tbody>
 </table>
-
 
 #### Oracle Database Engine SIEM rules
 
@@ -5215,7 +5250,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Paloalto devices SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -5429,7 +5463,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Microsoft Exchange SIEM rules
 
 <table border="1" class="docutils" id="id1">
@@ -5532,7 +5565,7 @@ query_key: [“exchange.message-subject-agg”, “exchange.sender-address”]</
 </td>
 <td><p class="first last">filter:
  - query_string:
-     query: “NOT exchange.recipient-address:public&#64;company.com AND NOT exchange.sender-address:(*&#64;company.com) AND exchange.event-id:SEND AND exchange.data.atch:[1 TO *] AND _exists_:exchange AND exchange.message-subject:(/.*invoice.*/ OR /.*payment.*/ OR /.*faktur.*/)”
+     query: “NOT exchange.recipient-address:public&#64;company.com AND NOT exchange.sender-address:(*&#64;company.com) AND exchange.event-id:SEND AND exchange.data.atch:[1 TO *] AND_exists_:exchange AND exchange.message-subject:(/.*invoice.*/ OR /.*payment.*/ OR /.*faktur.*/)”
 query_key: [“exchange.sender-address”]</p>
 </td>
 </tr>
@@ -5586,7 +5619,7 @@ filter:
 ignore_null: true
 filter:
  - query_string:
-     query: “NOT exchange.recipient-address:(*&#64;company.com) AND _exists_:exchange.recipient-address AND exchange.event-id:AGENTINFO AND NOT exchange.sender-address:(bok&#64;* OR postmaster&#64;*) AND exchange.data.atch:[1 TO *] AND exchange.recipient-count:1 AND exchange.recipient-address:(*&#64;gmail.com OR *&#64;wp.pl OR *&#64;o2.pl OR *&#64;interia.pl OR *&#64;op.pl OR *&#64;onet.pl OR *&#64;vp.pl OR *&#64;tlen.pl OR *&#64;onet.eu OR *&#64;poczta.fm OR *&#64;interia.eu OR *&#64;hotmail.com OR *&#64;gazeta.pl OR *&#64;yahoo.com OR *&#64;icloud.com OR *&#64;outlook.com OR *&#64;autograf.pl OR *&#64;neostrada.pl OR *&#64;vialex.pl OR *&#64;go2.pl OR *&#64;buziaczek.pl OR *&#64;yahoo.pl OR *&#64;post.pl OR *&#64;wp.eu OR *&#64;me.com OR *&#64;yahoo.co.uk OR *&#64;onet.com.pl OR *&#64;tt.com.pl OR *&#64;spoko.pl OR *&#64;amorki.pl OR *&#64;7dots.pl OR *&#64;googlemail.com OR *&#64;gmx.de OR *&#64;upcpoczta.pl OR *&#64;live.com OR *&#64;piatka.pl OR *&#64;opoczta.pl OR *&#64;web.de OR *&#64;protonmail.com OR *&#64;poczta.pl OR *&#64;hot.pl OR *&#64;mail.ru OR *&#64;yahoo.de OR *&#64;gmail.pl OR *&#64;02.pl OR *&#64;int.pl OR *&#64;adres.pl OR *&#64;10g.pl OR *&#64;ymail.com OR *&#64;data.pl OR *&#64;aol.com OR *&#64;gmial.com OR *&#64;hotmail.co.uk)”
+   query: “NOT exchange.recipient-address:(*&#64;company.com) AND _exists_:exchange.recipient-address AND exchange.event-id:AGENTINFO AND NOT exchange.sender-address:(bok&#64;* OR postmaster&#64;*) AND exchange.data.atch:[1 TO *] AND exchange.recipient-count:1 AND exchange.recipient-address:(*&#64;gmail.com OR *&#64;wp.pl OR *&#64;o2.pl OR *&#64;interia.pl OR *&#64;op.pl OR *&#64;onet.pl OR *&#64;vp.pl OR *&#64;tlen.pl OR *&#64;onet.eu OR *&#64;poczta.fm OR *&#64;interia.eu OR *&#64;hotmail.com OR *&#64;gazeta.pl OR *&#64;yahoo.com OR *&#64;icloud.com OR *&#64;outlook.com OR *&#64;autograf.pl OR *&#64;neostrada.pl OR *&#64;vialex.pl OR *&#64;go2.pl OR *&#64;buziaczek.pl OR *&#64;yahoo.pl OR *&#64;post.pl OR *&#64;wp.eu OR *&#64;me.com OR *&#64;yahoo.co.uk OR *&#64;onet.com.pl OR *&#64;tt.com.pl OR *&#64;spoko.pl OR *&#64;amorki.pl OR *&#64;7dots.pl OR *&#64;googlemail.com OR *&#64;gmx.de OR *&#64;upcpoczta.pl OR *&#64;live.com OR *&#64;piatka.pl OR *&#64;opoczta.pl OR *&#64;web.de OR *&#64;protonmail.com OR *&#64;poczta.pl OR *&#64;hot.pl OR *&#64;mail.ru OR *&#64;yahoo.de OR *&#64;gmail.pl OR *&#64;02.pl OR *&#64;int.pl OR *&#64;adres.pl OR *&#64;10g.pl OR *&#64;ymail.com OR *&#64;data.pl OR *&#64;aol.com OR *&#64;gmial.com OR *&#64;hotmail.co.uk)”
 whitelist:
   - allowed&#64;example.com
   - allowed&#64;example2.com</p>
@@ -5594,7 +5627,6 @@ whitelist:
 </tr>
 </tbody>
 </table>
-
 
 #### Juniper Devices SIEM Rules
 
@@ -5722,7 +5754,6 @@ include:
 </tbody>
 </table>
 
-
 #### Fudo SIEM Rules
 
 <table border="1" class="docutils" id="id1">
@@ -5843,7 +5874,6 @@ include:
 </tr>
 </tbody>
 </table>
-
 
 #### Squid SIEM Rules
 
@@ -6001,8 +6031,6 @@ include:
 </tbody>
 </table>
 
-
-
 #### McAfee SIEM Rules
 
 <table border="1" class="docutils" id="id1">
@@ -6158,7 +6186,6 @@ include:
 </tr>
 </tbody>
 </table>
-
 
 #### Microsoft  DNS Server SIEM Rules
 
@@ -6446,7 +6473,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Microsoft DHCP SIEM Rules
 
   <table border="1" class="docutils" id="id1">
@@ -6718,7 +6744,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Linux DHCP Server SIEM Rules
 
 <table border="1" class="docutils" id="id1">
@@ -6823,7 +6848,6 @@ doc_type: doc</p>
 </tr>
 </tbody>
 </table>
-
 
 #### Cisco VPN devices SIEM Rules
 
@@ -7031,7 +7055,6 @@ filter:
 </tbody>
 </table>
 
-
 #### Netflow SIEM Rules
 
 <table border="1" class="docutils" id="id1">
@@ -7192,7 +7215,7 @@ filter:
   - query:
       query_string:
         query: “netflow.dst.port:161”
-query_key: “netflow.src.ip”  
+query_key: “netflow.src.ip”
 use_count_query: true
 doc_type: “doc”</p>
 </td>
@@ -7220,7 +7243,7 @@ filter:
   - query:
       query_string:
         query: “netflow.dst.port:25”
-query_key: “netflow.src.ip”  
+query_key: “netflow.src.ip”
 use_count_query: true
 doc_type: “doc”</p>
 </td>
@@ -7248,7 +7271,7 @@ filter:
   - query:
       query_string:
         query: “netflow.dst.port:53”
-query_key: “netflow.src.ip”  
+query_key: “netflow.src.ip”
 use_count_query: true
 doc_type: “doc”</p>
 </td>
@@ -7312,7 +7335,6 @@ doc_type: “doc”</p>
 </tbody>
 </table>
 
-
 #### MikroTik devices SIEM Rules
 
 <table border="1" class="docutils" id="id1">
@@ -7356,18 +7378,18 @@ doc_type: “doc”</p>
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “System error\n\n When: {}\n Device IP: {}\n From: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “System error\n\n When: {}\n Device IP: {}\n From: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - host
-  - login.ip 
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - login.ip
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “topic2:error and topic3:critical”</p>
@@ -7389,20 +7411,20 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Login error\n\n When: {}\n Device IP: {}\n From: {}\n by: {}\n to account: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Login error\n\n When: {}\n Device IP: {}\n From: {}\n by: {}\n to account: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - host
-  - login.ip 
+  - login.ip
   - login.method
-  - user 
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - user
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “topic2:error and topic3:critical and login.status:login failure”</p>
@@ -7424,20 +7446,20 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Wifi auth issue\n\n When: {}\n Device IP: {}\n Interface: {}\n MAC: {}\n ACL info: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Wifi auth issue\n\n When: {}\n Device IP: {}\n Interface: {}\n MAC: {}\n ACL info: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - host
   - interface
   - wlan.mac
   - wlan.ACL
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “wlan.status:reject or wlan.action:banned”</p>
@@ -7459,19 +7481,19 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">any</p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Dhcp offering fail\n\n When: {}\n Client lease: {}\n for MAC: {}\n to MAC: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Dhcp offering fail\n\n When: {}\n Client lease: {}\n for MAC: {}\n to MAC: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - dhcp.ip
   - dhcp.mac
   - dhcp.mac2
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “dhcp.status:without success”</p>
@@ -7479,7 +7501,6 @@ kibana4_end_timedelta:
 </tr>
 </tbody>
 </table>
-
 
 #### Microsoft SQL Server SIEM Rules
 
@@ -7525,18 +7546,18 @@ kibana4_end_timedelta:
 <td><p class="first last"></p>
 </td>
 <td><p class="first last">Rule definition
-alert_text_type: alert_text_only 
-alert_text: “Logon error\n\n When: {}\n Error code: {}\n Severity: {}\n\n{}\n” 
-alert_text_args: 
+alert_text_type: alert_text_only
+alert_text: “Logon error\n\n When: {}\n Error code: {}\n Severity: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - mssql.error.code
   - mssql.error.severity
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “mssql.error.code:* and mssql.error.severity:*”</p>
@@ -7558,19 +7579,19 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last"></p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Login failed\n\n When: {}\n User login: {}\n Reason: {}\n Client: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Login failed\n\n When: {}\n User login: {}\n Reason: {}\n Client: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
   - mssql.login.user
   - mssql.error.reason
   - mssql.error.client
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “mssql.login.status:failed and mssql.login.user:*”</p>
@@ -7592,16 +7613,16 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last"></p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Server is going down\n\n When: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Server is going down\n\n When: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “mssql.server.status:shutdown”</p>
@@ -7623,16 +7644,16 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last"></p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “NET Framework runtime has been stopped.\n\n When: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “NET Framework runtime has been stopped.\n\n When: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “mssql.net.status:stopped”</p>
@@ -7654,16 +7675,16 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last"></p>
 </td>
-<td><p class="first last">alert_text_type: alert_text_only 
-alert_text: “Database Mirroring endpoint is in stopped state.\n\n When: {}\n\n{}\n” 
-alert_text_args: 
+<td><p class="first last">alert_text_type: alert_text_only
+alert_text: “Database Mirroring endpoint is in stopped state.\n\n When: {}\n\n{}\n”
+alert_text_args:
   - timestamp_timezone
-  - kibana_link 
-use_kibana4_dashboard: “link do saved search” 
-kibana4_start_timedelta: 
- minutes: 5 
-kibana4_end_timedelta: 
- minutes: 0 
+  - kibana_link
+use_kibana4_dashboard: “link do saved search”
+kibana4_start_timedelta:
+ minutes: 5
+kibana4_end_timedelta:
+ minutes: 0
  filter:
  - query_string:
         query: “mssql.db.status:stopped”</p>
@@ -7671,8 +7692,6 @@ kibana4_end_timedelta:
 </tr>
 </tbody>
 </table>
-
-
 
 #### Postgress SQL SIEM Rules
 
@@ -7958,7 +7977,6 @@ doc_type: doc</p>
 </tbody>
 </table>
 
-
 #### MySQL SIEM Rules
 
 <table border="1" class="docutils" id="id1">
@@ -8183,27 +8201,11 @@ doc_type: doc</p>
 </tr>
 </tbody>
 </table>
-# Alert Module #
-
-Energy Logserver allows you to create alerts, i.e. monitoring
-queries. These are constant queries that run in the background and
-when the conditions specified in the alert are met, the specify action
-is taken. 
-
-![](/media/media/image91.PNG)
-
-For example, if you want to know when more than 20
-„status:500" response code from on our homepage appear within an one
-hour, then we create an alert that check the number of occurrences of
-the „status:500" query for a specific index every 5 minutes. If the
-condition we are interested in is met, we send an action in the form
-of sending a message to our e-mail address. In the action, you can
-also set the launch of any script.
 
 ### Incident detection and mitigation time
 
-The Energy Logserver allows you to keep track of the time and actions taken in the incident you created. 
-A detected alert incident has the date the incident occurred `match_body.@timestamp` and the date and time the incident was detected `alert.time`. 
+The Energy Logserver allows you to keep track of the time and actions taken in the incident you created.
+A detected alert incident has the date the incident occurred `match_body.@timestamp` and the date and time the incident was detected `alert.time`.
 
 In addition, it is possible to enrich the alert event with the date and time of incident resolution `alert_solvedtime` using the following pipeline:
 
@@ -8261,6 +8263,7 @@ In addition, it is possible to enrich the alert event with the date and time of 
 ```
 
 ### Adding a tag to an existing alert
+
 We can add a tag to an existing alert using the dev tools.
 You can use belowe code.
 
@@ -8273,12 +8276,11 @@ POST alert/_update/example_document_id
 }
 ```
 
-![](https://user-images.githubusercontent.com/42172770/209844235-390cf973-cda7-41e6-8ff1-5636ba87a75a.png)
+![tag_screen1](https://user-images.githubusercontent.com/42172770/209844235-390cf973-cda7-41e6-8ff1-5636ba87a75a.png)
 
 You can get the corresponding document id in the discovery section.
 
-![](https://user-images.githubusercontent.com/42172770/209844638-2bb0b6fa-32d6-4430-bb6e-c2d4abef1db6.png)
-
+![tag_screen2](https://user-images.githubusercontent.com/42172770/209844638-2bb0b6fa-32d6-4430-bb6e-c2d4abef1db6.png)
 
 ## Siem Module
 
@@ -8337,7 +8339,7 @@ In this case, rule ``100100`` is used to look for alerts where the source IP add
 
 Below you can find a screenshot with two SIEM alerts: one that is triggered when a web attack is detected trying to exploit a PHP server vulnerability, and one that informs that the malicious actor has been blocked.
 
-![](/media/media/image240.png)
+![siem_screen1](/media/media/image240.png)
 
 ### Log data collection
 
@@ -8348,17 +8350,21 @@ The purpose of this process is the identification of application or system error
 The memory and CPU requirements of the SIEM agent are insignificant since its primary duty is to forward events to the manager. However, on the SIEM manager, CPU and memory consumption can increase rapidly depending on the events per second (EPS) that the manager has to analyze.
 
 #### How it works
+
 Log files
 The Log analysis engine can be configured to monitor specific files on the servers.
 
 Linux:
+
 ```xml
 <localfile>
   <location>/var/log/example.log</location>
   <log_format>syslog</log_format>
 </localfile>
 ```
+
 Windows:
+
 ```xml
 <localfile>
   <location>C:\myapp\example.log</location>
@@ -8369,6 +8375,7 @@ Windows:
 Windows event logs
 Wazuh can monitor classic Windows event logs, as well as the newer Windows event channels.
 Event log:
+
 ```xml
 <localfile>
   <location>Security</location>
@@ -8377,6 +8384,7 @@ Event log:
 ```
 
 Event channel:
+
 ```xml
 <localfile>
   <location>Microsoft-Windows-PrintService/Operational</location>
@@ -8388,6 +8396,7 @@ Remote syslog
 In order to integrate network devices such as routers, firewalls, etc, the log analysis component can be configured to receive log events through syslog. To do that we have two methods available:
 
 One option is for SIEM to receive syslog logs by a custom port:
+
 ```xml
 <ossec_config>
   <remote>
@@ -8420,11 +8429,13 @@ Analysis
 Pre-decoding
 
 In the pre-decoding phase of analysis, static information from well-known fields all that is extracted from the log header.
+
 ```bash
 Feb 14 12:19:04 localhost sshd[25474]: Accepted password for rromero from 192.168.1.133 port 49765 ssh2
 ```
 
 Extracted information:
+
 - hostname: 'localhost'
 - program_name: 'sshd'
 
@@ -8432,10 +8443,13 @@ Decoding
 
 In the decoding phase, the log message is evaluated to identify what type of log it is and known fields for that specific log type are then extracted.
 Sample log and its extracted info:
+
 ```bash
 Feb 14 12:19:04 localhost sshd[25474]: Accepted password for rromero from 192.168.1.133 port 49765 ssh2
 ```
+
 Extracted information:
+
 - program name: sshd
 - dstuser: rromero
 - srcip: 192.168.1.133
@@ -8455,6 +8469,7 @@ For the previous example, rule 5715 is matched:
 
 Alert
 Once a rule is matched, the manager will create an alert as below:
+
 ```bash
 ** Alert 1487103546.21448: - syslog,sshd,authentication_success,pci_dss_10.2.5,
 2017 Feb 14 12:19:06 localhost->/var/log/secure
@@ -8481,23 +8496,25 @@ This information is gathered by the Windows agent, including the event descripti
 
 Eventlog uses as well the Windows API to obtain events from Windows logs and return the information in a specific format.
 
-
-Windows Eventlog vs Windows Eventchannel
+Windows Eventlog vs Windows Eventchannel \
 Eventlog is supported on every Windows version and can monitor any logs except for particular Applications and Services Logs, this means that the information that can be retrieved is reduced to System, Application and Security channels.
 On the other hand, Eventchannel is maintained since Windows Vista and can monitor the Application and Services logs along with the basic Windows logs. In addition, the use of queries to filter by any field is supported for this log format.
 
 Monitor the Windows Event Log with Wazuh
 To monitor a Windows event log, it is necessary to provide the format as "eventlog" and the location as the name of the event log.
+
 ```xml
 <localfile>
     <location>Security</location>
     <log_format>eventlog</log_format>
 </localfile>
 ```
+
 These logs are obtained through Windows API calls and sent to the manager where they will be alerted if they match any rule.
 
 Monitor the Windows Event Channel with Wazuh
 Windows event channels can be monitored by placing their name at the location field from the localfile block and "eventchannel" as the log format.
+
 ```xml
 <localfile>
     <location>Microsoft-Windows-PrintService/Operational</location>
@@ -8525,7 +8542,7 @@ Table below shows available channels and providers to monitor included in the Wa
 </tr>
 </thead>
 <tbody valign="top">
-	
+
 <tr class="row-even"><td><p class="first last">1</p>
 </td>
 <td><p class="first last">Application</p>
@@ -8549,7 +8566,7 @@ Table below shows available channels and providers to monitor included in the Wa
 <td><p class="first last">This channel gathers information related to users and groups creation, login, logoff and audit policy modifications.</p>
 </td>
 </tr>
-	
+
 <tr class="row-even"><td><p class="first last">3</p>
 </td>
 <td><p class="first last">System</p>
@@ -8573,7 +8590,7 @@ Table below shows available channels and providers to monitor included in the Wa
 <td><p class="first last">Sysmon monitors system activity as process creation and termination, network connection and file changes.</p>
 </td>
 </tr>
-	
+
 <tr class="row-even"><td><p class="first last">5</p>
 </td>
 <td><p class="first last">Windows Defender</p>
@@ -8585,7 +8602,7 @@ Table below shows available channels and providers to monitor included in the Wa
 <td><p class="first last">The Windows Defender log file shows information about the scans passed, malware detection and actions taken against them.</p>
 </td>
 </tr>
-	
+
 <tr class="row-even"><td><p class="first last">6</p>
 </td>
 <td><p class="first last">McAfee</p>
@@ -8633,7 +8650,7 @@ Table below shows available channels and providers to monitor included in the Wa
 <td><p class="first last">Other channels (they are grouped in a generic Windows rule file).</p>
 </td>
 </tr>
-	
+
 <tr class="row-even"><td><p class="first last">10</p>
 </td>
 <td><p class="first last">Terminal Services</p>
@@ -8818,7 +8835,7 @@ For log files that change according to the date, you can also specify a strftime
 </localfile>
 ```
 
-Using environment variables 
+Using environment variables
 Environment variables like ```%WinDir%``` can be used in the location pattern. The following is an example of reading logs from an IIS server:
 
 ```xml
@@ -8895,10 +8912,11 @@ It is possible to hot-swap the monitored directories. This can be done for Linux
 
 Once, the directory path is removed from the syscheck configuration and the SIEM agent is being restarted, the data from the previously monitored path is no longer stored in the FIM database.
 
-Configuring scan time 
+Configuring scan time
 By default, syscheck scans when the SIEM starts, however, this behavior can be changed with the scan_on_start option.
 
 For the schedluled scans, syscheck has an option to configure the frequency of the system scans. In this example, syscheck is configured to run every 10 hours:
+
 ```xml
 <syscheck>
   <frequency>36000</frequency>
@@ -8927,7 +8945,7 @@ Real-time monitoring is configured with the ```realtime``` attribute of the ```d
 </syscheck>
 ```
 
-Configuring who-data monitoring 
+Configuring who-data monitoring
 Who-data monitoring is configured with the ```whodata``` attribute of the ```directories``` option. This attribute replaces the ```realtime``` attribute, which means that ```whodata``` implies real-time monitoring but adding the who-data information. This functionality uses Linux Audit subsystem and the Microsoft Windows SACL, so additional configurations might be necessary. Check the ```auditing who-data entry``` to get further information:
 
 ```xml
@@ -8935,7 +8953,8 @@ Who-data monitoring is configured with the ```whodata``` attribute of the ```dir
   <directories check_all="yes" whodata="yes">/etc</directories>
 </syscheck>
 ```
-Configuring reporting new files 
+
+Configuring reporting new files
 To report new files added to the system, syscheck can be configured with the alert_new_files option. By default, this feature is enabled on the monitored SIEM agent, but the option is not present in the syscheck section of the configuration:
 
 ```xml
@@ -8982,8 +9001,9 @@ Similar functionality, but for the Windows registries can be achieved by using t
 </syscheck>
 ```
 
-Configuring ignoring files via rules 
+Configuring ignoring files via rules
 An alternative method to ignore specific files scanned by syscheck is by using rules and setting the rule level to 0. By doing that the alert will be silenced:
+
 ```xml
 <rule id="100345" level="0">
   <if_group>syscheck</if_group>
@@ -8994,6 +9014,7 @@ An alternative method to ignore specific files scanned by syscheck is by using r
 
 Configuring the alert severity for the monitored files
 With a custom rule, the level of a syscheck alert can be altered when changes to a specific file or file pattern are detected:
+
 ```xml
 <rule id="100345" level="12">
   <if_group>syscheck</if_group>
@@ -9002,7 +9023,7 @@ With a custom rule, the level of a syscheck alert can be altered when changes to
 </rule>
 ```
 
-Configuring maximum recursion level allowed 
+Configuring maximum recursion level allowed
 It is possible to configure the maximum recursion level allowed for a specific directory by using the recursion_level attribute of the directories option. recursion_level value must be an integer between 0 and 320.
 
 An example configuration may look as follows:
@@ -9015,10 +9036,11 @@ An example configuration may look as follows:
 </syscheck>
 ```
 
-Configuring syscheck process priority 
+Configuring syscheck process priority
 To adjust syscheck CPU usage on the monitored system the ```process_priority``` option can be used. It sets the nice value for syscheck process. The default ```process_priority``` is set to 10.
 
 Setting ```process_priority``` value higher than the default, will give syscheck lower priority, less CPU resources and make it run slower. In the example below the nice value for syscheck process is set to maximum:
+
 ```xml
 <syscheck>
   <process_priority>19</process_priority>
@@ -9026,6 +9048,7 @@ Setting ```process_priority``` value higher than the default, will give syscheck
 ```
 
 Setting process_priority value lower than the default, will give syscheck higher priority, more CPU resources and make it run faster. In the example below the nice value for syscheck process is set to minimum:
+
 ```xml
 <syscheck>
   <process_priority>-20</process_priority>
@@ -9034,21 +9057,26 @@ Setting process_priority value lower than the default, will give syscheck higher
 
 Configuring where the database is to be stored
 When the SIEM agent starts it performs a first scan and generates its database. By default, the database is created in disk:
+
 ```xml
 <syscheck>
   <database>disk</database>
 </syscheck>
 ```
+
 Syscheck can be configured to store the database in memory instead by changing value of the database option:
+
 ```xml
 <syscheck>
   <database>memory</database>
 </syscheck>
 ```
+
 The main advantage of using in memory database is the performance as reading and writing operations are faster than performing them on disk. The corresponding disadvantage is that the memory must be sufficient to store the data.
 
 Configuring synchronization
 Synchronization can be configured to change the synchronization interval, the number of events per second, the queue size and the response timeout:
+
 ```xml
 <syscheck>
   <synchronization>
@@ -9064,7 +9092,7 @@ Synchronization can be configured to change the synchronization interval, the nu
 
 ### Active response
 
-#### How it works 
+#### How it works
 
 When is an active response triggered?
 
@@ -9076,38 +9104,46 @@ Each active response specifies where its associated command will be executed: on
 
 Active response configuration
 Active responses are configured in the manager by modifying the ossec.conf file as follows:
-1. Create a command
-- In order to configure an active response, a command must be defined that will initiate a certain script in response to a trigger.
-- To configure the active response, define the name of a command using the pattern below and then reference the script to be initiated. Next, define what data element(s) will be passed to the script.
-- Custom scripts that have the ability to receive parameters from the command line may also be used for an active response.
 
-Example:
-```xml
-<command>
-  <name>host-deny</name>
-  <executable>host-deny.sh</executable>
-  <expect>srcip</expect>
-  <timeout_allowed>yes</timeout_allowed>
-</command>
-```
-In this example, the command is called host-deny and initiates the host-deny.sh script. The data element is defined as srcip. This command is configured to allow a timeout after a specified period of time, making it a stateful response.
+1. Create a command
+
+   - In order to configure an active response, a command must be defined that will initiate a certain script in response to a trigger.
+   - To configure the active response, define the name of a command using the pattern below and then reference the script to be initiated. Next, define what data element(s) will be passed to the script.
+   - Custom scripts that have the ability to receive parameters from the command line may also be used for an active response.
+
+   Example:
+
+   ```xml
+   <command>
+     <name>host-deny</name>
+     <executable>host-deny.sh</executable>
+     <expect>srcip</expect>
+     <timeout_allowed>yes</timeout_allowed>
+   </command>
+   ```
+
+   In this example, the command is called host-deny and initiates the host-deny.sh script. The data element is defined as srcip. This command is configured to allow a timeout after a specified period of time, making it a stateful response.
 
 2. Define the active response
-The active response configuration defines when and where a command is going to be executed. A command will be triggered when a specific rule with a specific id, severity level or source matches the active response criteria. This configuration will further define where the action of the command will be initiated, meaning in which environment (agent, manager, local, or everywhere).
 
-Example:
-```xml
-<active-response>
-  <command>host-deny</command>
-  <location>local</location>
-  <level>7</level>
-  <timeout>600</timeout>
-</active-response>
-```
-In this example, the active response is configured to execute the command that was defined in the previous step. The where of the action is defined as the local host and the when is defined as any time the rule has a level higher than 6. The timeout that was allowed in the command configuration is also defined in the above example.
-The active response log can be viewed at ```/var/ossec/logs/active-responses.log```
+   The active response configuration defines when and where a command is going to be executed. A command will be triggered when a specific rule with a specific id, severity level or source matches the active response criteria. This configuration will further define where the action of the command will be initiated, meaning in which environment (agent, manager, local, or everywhere).
 
-Default Active response scripts
+   Example:
+
+   ```xml
+   <active-response>
+     <command>host-deny</command>
+     <location>local</location>
+     <level>7</level>
+     <timeout>600</timeout>
+   </active-response>
+   ```
+
+   In this example, the active response is configured to execute the command that was defined in the previous step. The where of the action is defined as the local host and the when is defined as any time the rule has a level higher than 6. The timeout that was allowed in the command configuration is also defined in the above example.
+   The active response log can be viewed at ```/var/ossec/logs/active-responses.log```
+
+#### Default Active response scripts
+
 Wazuh is pre-configured with the following scripts for Linux:
 
 <table border="1" class="colwidths-given docutils" id="id1">
@@ -9283,6 +9319,7 @@ An active response is configured in the ```ossec.conf``` file in the ```Active R
 In this example, the ```restart-ossec``` command is configured to use the ```restart-ossec.sh``` script with no data element. The active response is configured to initiate the ```restart-ossec``` command on the local host when the rule with ID 10005 fires. This is a Stateless response as no timeout parameter is defined.
 
 Command:
+
 ```xml
 <command>
   <name>restart-ossec</name>
@@ -9292,6 +9329,7 @@ Command:
 ```
 
 Active response:
+
 ```xml
 <active-response>
   <command>restart-ossec</command>
@@ -9304,6 +9342,7 @@ Windows automatic remediation.
 In this example, the ```win_rout-null``` command is configured to use the ```route-null.cmd``` script using the data element ```srcip```. The active response is configured to initiate the ```win_rout-null``` command on the local host when the rule has a higher alert level than 7. This is a Stateful response with a timeout set at 900 seconds.
 
 Command:
+
 ```xml
 <command>
   <name>win_route-null</name>
@@ -9314,6 +9353,7 @@ Command:
 ```
 
 Active response:
+
 ```xml
 <active-response>
   <command>win_route-null</command>
@@ -9327,6 +9367,7 @@ Block an IP with PF.
 In this example, the ```pf-block``` command is configured to use the ```pf.sh``` script using the data element ```srcip```. The active response is configured to initiate the ```pf-block``` command on agent 001 when a rule in either the "authentication_failed" or "authentication_failures" rule group fires. This is a Stateless response as no timeout parameter is defined.
 
 Command:
+
 ```xml
 <command>
   <name>pf-block</name>
@@ -9336,6 +9377,7 @@ Command:
 ```
 
 Active response:
+
 ```xml
 <active-response>
   <command>pf-block</command>
@@ -9349,6 +9391,7 @@ Add an IP to the iptables deny list.
 In this example, the ```firewall-drop``` command is configured to use the ```firewall-drop.sh``` script using the data element ```srcip```. The active response is configured to initiate the ```firewall-drop``` command on all systems when a rule in either the "authentication_failed" or "authentication_failures" rule group fires. This is a Stateful response with a timeout of 700 seconds. The ```<repeated_offenders>``` tag increases the timeout period for each subsequent offense by a specific IP address.
 
 Command:
+
 ```xml
 <command>
   <name>firewall-drop</command>
@@ -9358,6 +9401,7 @@ Command:
 ```
 
 Active response:
+
 ```xml
 <active-response>
   <command>firewall-drop</command>
@@ -9374,6 +9418,7 @@ The action of a stateful response continues for a specified period of time.
 In this example, the ```host-deny``` command is configured to use the ```host-deny.sh``` script using the data element ```srcip```. The active response is configured to initiate the ```host-deny``` command on the local host when a rule with a higher alert level than 6 is fired.
 
 Command:
+
 ```xml
 <command>
   <name>host-deny</name>
@@ -9384,6 +9429,7 @@ Command:
 ```
 
 Active response:
+
 ```xml
 <active-response>
   <command>host-deny</command>
@@ -9399,6 +9445,7 @@ The action of a stateless command is a one-time action that will not be undone.
 In this example, the ```mail-test``` command is configured to use the ```mail-test.sh``` script with no data element. The active response is configured to initiate the ```mail-test``` command on the server when the rule with ID 1002 fires.
 
 Command:
+
 ```xml
 <command>
   <name>mail-test</name>
@@ -9409,6 +9456,7 @@ Command:
 ```
 
 Active response:
+
 ```xml
 <active-response>
     <command>mail-test</command>
@@ -9424,10 +9472,11 @@ Active response:
 To be able to detect vulnerabilities, now agents are able to natively collect a list of installed applications, sending it periodically to the manager (where it is stored in local sqlite databases, one per agent). Also, the manager builds a global vulnerabilities database, from publicly available CVE repositories, using it later to cross-correlate this information with the agent's applications inventory data.
 
 The global vulnerabilities database is created automatically, currently pulling data from the following repositories:
-- https://canonical.com: Used to pull CVEs for Ubuntu Linux distributions.
-- https://access.redhat.com: Used to pull CVEs for Red Hat and CentOS Linux distributions.
-- https://www.debian.org: Used to pull CVEs for Debian Linux distributions.
-- https://nvd.nist.gov/: Used to pull CVEs from the National Vulnerability Database.
+
+- <https://canonical.com>: Used to pull CVEs for Ubuntu Linux distributions.
+- <https://access.redhat.com>: Used to pull CVEs for Red Hat and CentOS Linux distributions.
+- <https://www.debian.org>: Used to pull CVEs for Debian Linux distributions.
+- <https://nvd.nist.gov/>: Used to pull CVEs from the National Vulnerability Database.
 
 This database can be configured to be updated periodically, ensuring that the solution will check for the very latest CVEs.
 
@@ -9436,71 +9485,73 @@ Once the global vulnerability database (with the CVEs) is created, the detection
 #### Running a vulnerability scan
 
 1. Enable the agent module used to collect installed packages on the monitored system.
-It can be done by adding the following block of settings to your shared agent configuration file:
 
-```xml
-<wodle name="syscollector">
-  <disabled>no</disabled>
-  <interval>1h</interval>
-  <os>yes</os>
-  <packages>yes</packages>
-</wodle>
-```
+   It can be done by adding the following block of settings to your shared agent configuration file:
 
-If you want to scan vulnerabilities in Windows agents, you will also have to add the ```hotfixes``` scan:
+   ```xml
+   <wodle name="syscollector">
+     <disabled>no</disabled>
+     <interval>1h</interval>
+     <os>yes</os>
+     <packages>yes</packages>
+   </wodle>
+   ```
 
-```xml
-<wodle name="syscollector">
-  <disabled>no</disabled>
-  <interval>1h</interval>
-  <os>yes</os>
-  <packages>yes</packages>
-  <hotfixes>yes</hotfixes>
-</wodle>
-```
+   If you want to scan vulnerabilities in Windows agents, you will also have to add the ```hotfixes``` scan:
+
+   ```xml
+   <wodle name="syscollector">
+     <disabled>no</disabled>
+     <interval>1h</interval>
+     <os>yes</os>
+     <packages>yes</packages>
+     <hotfixes>yes</hotfixes>
+   </wodle>
+   ```
 
 2. Enable the manager module used to detect vulnerabilities.
-You can do this adding a block like the following to your manager configuration file:
 
-```xml
-<vulnerability-detector>
-    <enabled>yes</enabled>
-    <interval>5m</interval>
-    <ignore_time>6h</ignore_time>
-    <run_on_start>yes</run_on_start>
+   You can do this adding a block like the following to your manager configuration file:
 
-    <provider name="canonical">
-        <enabled>yes</enabled>
-        <os>trusty</os>
-        <os>xenial</os>
-        <os>bionic</os>
-        <os>focal</os>
-        <update_interval>1h</update_interval>
-    </provider>
+   ```xml
+   <vulnerability-detector>
+       <enabled>yes</enabled>
+       <interval>5m</interval>
+       <ignore_time>6h</ignore_time>
+       <run_on_start>yes</run_on_start>
 
-    <provider name="debian">
-        <enabled>yes</enabled>
-        <os>wheezy</os>
-        <os>stretch</os>
-        <os>jessie</os>
-        <os>buster</os>
-        <update_interval>1h</update_interval>
-    </provider>
+       <provider name="canonical">
+           <enabled>yes</enabled>
+           <os>trusty</os>
+           <os>xenial</os>
+           <os>bionic</os>
+           <os>focal</os>
+           <update_interval>1h</update_interval>
+       </provider>
 
-    <provider name="redhat">
-        <enabled>yes</enabled>
-        <update_from_year>2010</update_from_year>
-        <update_interval>1h</update_interval>
-    </provider>
+       <provider name="debian">
+           <enabled>yes</enabled>
+           <os>wheezy</os>
+           <os>stretch</os>
+           <os>jessie</os>
+           <os>buster</os>
+           <update_interval>1h</update_interval>
+       </provider>
 
-    <provider name="nvd">
-        <enabled>yes</enabled>
-        <update_from_year>2010</update_from_year>
-        <update_interval>1h</update_interval>
-    </provider>
+       <provider name="redhat">
+           <enabled>yes</enabled>
+           <update_from_year>2010</update_from_year>
+           <update_interval>1h</update_interval>
+       </provider>
 
-</vulnerability-detector>
-```
+       <provider name="nvd">
+           <enabled>yes</enabled>
+           <update_from_year>2010</update_from_year>
+           <update_interval>1h</update_interval>
+       </provider>
+
+   </vulnerability-detector>
+   ```
 
 Remember to restart the manager to apply the changes.
 
@@ -9508,12 +9559,11 @@ You can also check the vulnerability dashboards to have an overview of your agen
 
 ![image](https://user-images.githubusercontent.com/42172770/209840302-f405052b-d03e-430f-a56a-1d5882eaca8f.png)
 
-
 ## Tenable.sc
 
 Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
 
-![](/media/media/image166.png)
+![tenable_screen1](/media/media/image166.png)
 
 ### Configuration
 
@@ -9554,7 +9604,7 @@ Tenable.sc is vulnerability management tool, which make a scan systems and envir
 
 Qualys Guard is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Qualys Guard API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
 
-![](/media/media/image166.png)
+![qualys_screen1](/media/media/image166.png)
 
 ### Configuration
 
@@ -9589,7 +9639,7 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
 
   ```bash
   LOGSTASH_ADDR = ('127.0.0.1', 10001)
-  
+
   # connection settings
   conn = qualysapi.connect(
       username="emcas5ab1",
@@ -9597,7 +9647,6 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
       hostname="qualysguard.qg2.apps.qualys.eu"
   )
   ```
-
 
 ## UEBA
 
@@ -9609,20 +9658,20 @@ The module focus on actions and not the logs itself. Every user, host or other r
 
 Once tracking is done, SOC teams can investigate patterns for single action among many entities or many actions for a single user/entity. This unique approach creates an activity map for everyone working in the organization and for any resource. Created dataset is stored in time. All actions can be analysed for understanding the trend and comparing it with historical profile. UEBA is designed to give information about the common type of action that user or entity performs and allows to identify specific time slots for each. Any differences noted, abnormal occurances of an event can be a subject of automatic alerts. UEBA comes with defined dashboards which shows discovered actions and metrics for them.
 
-![](/media/media/image238.png)
+![ueba_screen1](/media/media/image238.png)
 
 It is easy to filter presented data with single username/host or a group of users/hosts using query syntax. With help of saved searches SOC can create own outlook to stay focused on users at high risk of an attack.
 Energy Logserver is made for working with data. UEBA gives new analytics approach, but what is more important it brings new metrics that we can work with. Artificial Intelligence functionality build in Energy Logserver help to calculate forecast for each action over single user or entire organization. In the same time thanks to extended set of rule types, Energy Logserver can correlate behavioral analysis with other data collected from environment. Working with Energy Logserver SIEM Plan with UEBA module greatly enlarge security analytics scope.
 
 ## BCM Remedy
 
-Energy Logserver creates incidents that require handling based on notifications from the Alert module. This can be done, for example, in the BMC Remedy system using API requests. 
+Energy Logserver creates incidents that require handling based on notifications from the Alert module. This can be done, for example, in the BMC Remedy system using API requests.
 
 BMC Remedy configuration details: [https://docs.bmc.com/docs/ars91/en/bmc-remedy-ar-system-rest-api-overview-609071509.html](https://docs.bmc.com/docs/ars91/en/bmc-remedy-ar-system-rest-api-overview-609071509.html) .
 
 To perform this incident notification in an external system.  You need to select in the configuration of the alert rule "Alert Method" "Command" and in the "Path to script/command" field enter the correct request.
 
-![](/media/media/image239.png)
+![bcm_screen1](/media/media/image239.png)
 
 It is possible to close the incident in the external system using a parameter added to the alert rule.
 
@@ -9667,7 +9716,7 @@ Find examples of these alerts in the `VirusTotal integrationalerts`_ section bel
 
 ## SIEM Custom integration
 
-The integrator tool is able to connect SIEM module with other external software. 
+The integrator tool is able to connect SIEM module with other external software.
 
 This is an example configuration for a custom integration in `ossec.conf`:
 
@@ -9685,19 +9734,18 @@ This is an example configuration for a custom integration in `ossec.conf`:
 
 To start the custom integration, the `ossec.conf` file, including the block integration component, has to be modified in the manager. The following parameters can be used:
 
- - name: Name of the script that performs the integration. In the case of a custom integration like the one discussed in this article, the name must start with “custom-“.
- - hook_url: URL provided by the software API to connect to the API itself. Its use is optional, since it can be included in the script.
- - api_key: Key of the API that enables us to use it. Its use is also optional for the same reason the use of the hook_url is optional.
- - level: Sets a level filter so that the script will not receive alerts below a certain level.
- - rule_id: Sets a filter for alert identifiers.
- - group: Sets an alert group filter.
- - event_location: Sets an alert source filter.
- - alert_format: Indicates that the script receives the alerts in JSON format (recommended). By default, the script will receive the alerts in full_log format.
+- name: Name of the script that performs the integration. In the case of a custom integration like the one discussed in this article, the name must start with “custom-“.
+- hook_url: URL provided by the software API to connect to the API itself. Its use is optional, since it can be included in the script.
+- api_key: Key of the API that enables us to use it. Its use is also ptional for the same reason the use of the hook_url is optional.
+- level: Sets a level filter so that the script will not receive alerts below a certain level.
+- rule_id: Sets a filter for alert identifiers.
+- group: Sets an alert group filter.
+- event_location: Sets an alert source filter.
+- alert_format: Indicates that the script receives the alerts in JSON format (recommended). By default, the script will receive the alerts in full_log format.
 
 ## License Service
 
 License service configuration is required when using the SIEM Plan license. To configure the License Service, set the following parameters in the configuration file:
-
 
 hosts - Elasticsearch cluster hosts IP,
 password - password for Logserver  user,
@@ -9716,4 +9764,3 @@ elasticsearch_connection:
 
   https: true
 ```
->>>>>>> Stashed changes
