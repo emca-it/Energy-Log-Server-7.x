@@ -2528,13 +2528,13 @@ output {
 }
 ```
 
-## Nerwork Flows
+## Network Flows
 
 The Energy Logserver has the ability to receive and process various types of network flows. For this purpose, the following input ports have been prepared:
 
 - IPFIX, Netflow v10 - 4739/TCP, 4739/UDP
 - NetFlow v5,9 - 2055/UDP
-- Sflow - 6343/UDP
+- sFlow - 6343/UDP
 
 Example of inputs configuration:
 
