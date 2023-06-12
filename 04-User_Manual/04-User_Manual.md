@@ -182,7 +182,7 @@ index pattern. Therefore, to start working with Energy Logserver
 application, we log in to it (by default the user:
 logserver/password:logserver).
 
-![](/media_base/image3.png)
+![](/media/media/image3.png)
 
 After logging in to the application click the button "Set up index pattern" to add new index patter in Kibana: 
 
