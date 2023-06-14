@@ -143,7 +143,7 @@ The diagnostic tool saves the results to `.tar` file located in the user's home 
 
 To verify of Elasticsearch service you can use following command:
 
-- Control of the Elastisearch system service via **systemd**:
+- Control of the Elasticsearch system service via **systemd**:
 
 		# sysetmctl status elasticsearch
   output:
@@ -221,7 +221,7 @@ output:
 
 		# tail -f /var/log/logstash/logstash-plain.log
 
-### Debuging ###
+### Debugging ###
 
 - dynamically update logging levels through the logging API (service restart not needed):
 
@@ -269,7 +269,10 @@ output:
 	      "non_heap_max_in_bytes" : 0                          
 	    },                                                     
 	    "gc_collectors" : [ "ParNew", "ConcurrentMarkSweep" ]  
-	  }                                                        # Verificatoin of Energy Logserver GUI service #
+	  }
+	 }
+
+### Verification of Energy Logserver GUI service #
 
 To verify of Energy Logserver GUI service you can use following command:
 
@@ -304,3 +307,29 @@ output:
 - Control the Energy Logserver GUI via **log file**:
 
 		# tail -f /var/log/messages
+
+## SIEM PLAN - Windows CP1250 decoding problem
+
+If Siem Agent works on operation system which works using non Latin-script alphabet, the encoding of latter could cause dropping documents by logstash. \
+In logstash log you can notice lines like the one below.
+
+```log
+[2023-06-01T15:36:02,091][WARN ][logstash.codecs.json     ] Received an event that has a different character encoding than you configured. {:text=>"{\\\"timestamp\\\":\\\"2023-06-01T15:36:01.214+0000\\\",\\\"agent\\\":{\\\"id\\\":\\\"002\\\",\\\"name\\\":\\\"win10_laptop\\\"},\\\"manager\\\":{\\\"name\\\":\\\"SiemPlan.local\\\"},\\\"id\\\":\\\"1549035361.0\\\",\\\"full_log\\\":\\\"{\\\\\\\"type\\\\\\\":\\\\\\\"program\\\\\\\",\\\\\\\"ID\\\\\\\":78741874,\\\\\\\"timestamp\\\\\\\":\\\\\\\"2023/06/01 15:36:00\\\\\\\",\\\\\\\"program\\\\\\\":{\\\\\\\"format\\\\\\\":\\\\\\\"win\\\\\\\",\\\\\\\"name\\\\\\\":\\\\\\\"Skype\\x99 7.34\\\\\\\",\\\\\\\"architecture\\\\\\\":\\\\\\\"i686\\\\\\\",\\\\\\\"version\\\\\\\":\\\\\\\"7.34.102\\\\\\\",\\\\\\\"vendor\\\\\\\":\\\\\\\"Skype Technologies S.A.\\\\\\\",\\\\\\\"install_time\\\\\\\":\\\\\\\"20180212\\\\\\\",\\\\\\\"location\\\\\\\":\\\\\\\"C:\\\\\\\\\\\\\\\\Program Files (x86)\\\\\\\\\\\\\\\\Skype\\\\\\\\\\\\\\\\\\\\\\\"}}\\\",\\\"decoder\\\":{\\\"name\\\":\\\"syscollector\\\"},\\\"location\\\":\\\"syscollector\\\"}", :expected_charset=>"UTF-8"}
+```
+
+This is caused by default Windows encoding `CP1250`. \
+You can change default encoding to `UTF-8` by following this steps:
+
+1. Go to Language settings
+    ![](/media/media/08-00-01-language.png) 
+
+1. Open Administrative language settings
+    ![](/media/media/08-00-02-admin-language.png)
+
+1. Click on `Change system locale...` button
+    ![](/media/media/08-00-03-region.png)
+
+1. Tick the checkbox `Use Unicode UTF-8..`
+    ![](/media/media/08-00-04-utf8.png)
+
+1. To make this change active you have to reboot system.

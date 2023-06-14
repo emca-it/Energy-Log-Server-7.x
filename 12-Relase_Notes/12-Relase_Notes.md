@@ -1,5 +1,66 @@
 # **CHANGELOG**
 
+
+## v7.3.0
+
+
+### NewFeatures
+
+- Multi-Language Support 
+
+
+### Improvements
+
+- Improved security by using response security headers
+- Network Probe: version lock prevents accidental updates
+- configuration-backup.sh activated by default
+
+
+### BugFixes
+
+- Reports: usage of "Include unmapped fields" cause "No data" when exporting csv 
+- Agents: corrected manifest file for downloading agents
+- Archive: error while restoring encrypted archives
+- Cerebro: corrected auto-login after redirect
+
+
+### Integrations
+
+- VMware: Integration with dedicated dashboard and alerts
+- AWS: Integration with dedicated dashboard and alerts
+- Ruckus Networks: Integration with dedicated dashboard and alerts
+- Added Beats templates to beats integration
+
+
+### SIEM Plan
+
+- WatchGuard: Integration with dedicated dashboard and alerts
+- IDS Suricata: Integration with dedicated dashboard and alerts
+- Alerts: updated rule database with 90 new alert rules including new Windows Security Group
+- Alerts: bugfix: Jira integration
+- Alerts: bugfix: duplication of alarms in specific cases
+- Alerts: bugfix: top_count_keys doesn't work properly with multiple query_keys
+- Alerts: bugfix: Broken Chain method TypeError
+- Alerts: bugfix: Exclude Fields for Logical/Chain body correlation
+- Alerts: NoLog rule for each alarm group
+
+
+### Network-Probe
+
+- Added support for sFlow - sfacctd service
+- Added IDS Suricata integration with dedicated dashboard and alerts
+
+
+### Security related
+
+- log4j - logstash-input-tcp
+
+
+### Required post upgrade
+
+- Recreate bundles/cache: ```rm -rf /usr/share/kibana/optimize/bundles/* && systemctl restart kibana```
+
+
 ## v7.2.0
 
 ### **Breaking changes**
