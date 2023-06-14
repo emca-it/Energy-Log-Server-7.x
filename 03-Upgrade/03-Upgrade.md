@@ -1,10 +1,21 @@
 # Upgrades #
 
  You can check the current version using the API command:
- 
+
 ```bash
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
+
+## Upgrade from version 7.2.0
+
+### Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+### Required post upgrade
+
+- Recreate bundles/cache: ```rm -rf /usr/share/kibana/optimize/bundles/* && systemctl restart kibana```
 
 ## Upgrade from version 7.1.3
 
@@ -26,7 +37,7 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 In this version, the name "wiki" has been replace by "e-doc".
 Due to this change user have to check if there are differences in config.yml and database.sqlite files.
 If the user made his own changes to one of these files before update after the update, the files with .rpmsave extension
-will appear in the /opt/wiki folder. 
+will appear in the /opt/wiki folder.
 
 1. In case there is config.yml.rpmsave file in /opt/wiki directory, follow the steps below:
    - Rename config.yml to config.yml.new: # mv /opt/e-doc/config.yml /opt/e-doc/config.yml.new
@@ -35,7 +46,7 @@ will appear in the /opt/wiki folder.
       a. new default path to db storage: "/opt/e-doc/database.sqlite"
       b. new default kibanaCredentials: "e-doc:e-doc"
 2. In case there is database.sqlite.rpmsave file in /opt/wiki directory, follow the steps below:
-   - Stop kibana service: # systemctl stop kibana 
+   - Stop kibana service: # systemctl stop kibana
    - Stop e-doc service: # systemctl stop e-doc
    - Replace database file: # mv /opt/wiki/database.sqlite.rpmsave /opt/e-doc/database.sqlite
    - Change permissions to the e-doc: # chown e-doc:e-doc /opt/e-doc/database.sqlite
@@ -51,13 +62,13 @@ Run upgrade script:
    ```bash
    ./install.sh -u
    ```
-   
+
 ### Required post upgrade
 
 - (SIEM only) Update user in license-service to `license`,
 - Update logtrail pipeline in Logstash configuration,
 - Migrate logtrail-* indices to new format (the next call will display the current status of the task):
-   
+
    ```bash
    for index in logtrail-kibana logtrail-alert logtrail-elasticsearch logtrail-logstash; do curl -XPOST "127.0.0.1:9200/_logserver/prepareindex/$index" -u logserver;done
    ```
@@ -85,21 +96,23 @@ Run upgrade script:
 
 #### Required post upgrade
 
-- Full restart of the cluster is necessary when upgrading from 7.0.6 or below. 
+- Full restart of the cluster is necessary when upgrading from 7.0.6 or below.
 - Role "wiki" has to be modified to contain only path: ".wiki" and all methods,
 - Configure the License Service according to the *Configuration* section.
 
 ## Upgrade from version 7.0.5
 
 ### General note
-1. Indices *.agents, audit, alert* indices currently uses rollover for rotation, after upgrade please use dedicated API for migration: 
+
+1. Indices *.agents, audit, alert* indices currently uses rollover for rotation, after upgrade please use dedicated API for migration:
 
 ```bash
 curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$indexname
 ```
 
-2. Wiki plugin require open port *tcp/5603*
-3. Update alert role to include index-paths: *".alert", "alert_status", "alert_error", ".alertrules_", ".risks", ".riskcategories", ".playbooks"*
+1. Wiki plugin require open port *tcp/5603*
+
+1. Update alert role to include index-paths: *".alert", "alert_status", "alert_error", ".alertrules_", ".risks", ".riskcategories", ".playbooks"*
 
 ### Preferred Upgrade steps
 
@@ -133,13 +146,12 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
    curl -XPOST '127.0.0.1:9200/_logserver/prepareindex/.agents' -u logserver
    ```
 
-6. Open tcp/5603 port for wikipedia plugin:
+6. Open tcp/5603 port for wiki plugin:
 
    ```bash
    firewall-cmd --zone=public --add-port=5603/tcp --permanent
    firewall-cmd --reload
    ```
-
 
 ### Alternative Upgrade steps (without install.sh script)
 
@@ -162,11 +174,11 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
    ```
 
 4. Start services:
-   
+
    ```bash
    systemctl start elasticsearch alert kibana cerebro wiki 
    ```
-   
+
 5. Migrate Audit index to new format (the next call will display the current status of the task):
 
    ```bash
@@ -185,7 +197,7 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
    curl -XPOST '127.0.0.1:9200/_logserver/prepareindex/.agents' -u logserver
    ```
 
-8. Open tcp/5603 port for wikipedia plugin:
+8. Open tcp/5603 port for wiki plugin:
 
    ```bash
    firewall-cmd --zone=public --add-port=5603/tcp --permanent
@@ -207,11 +219,11 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
 ### Preferred Upgrade steps
 
 1. Run upgrade script:
-   
+
    ```bash
    ./install.sh -u
    ```
-   
+
 2. Restart services:
 
    ```bash
@@ -237,6 +249,7 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
    ```
 
 6. Open `tcp/5603` port for Wikipedia plugin:
+
    ```bash
    firewall-cmd --zone=public --add-port=5603/tcp --permanent
    ```
@@ -248,52 +261,53 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
 ### Alternative Upgrade steps (without install.sh script)
 
 1. Stop services:
-   
+
    ```bash
    systemctl stop elasticsearch alert kibana cerebro
    ```
-   
+
 2. Upgrade client-node (includes alert engine):
-   
+
    ```bash
    yum update ./energy-logserver-client-node-7.0.5-1.el7.x86_64.rpm
    ```
-   
+
 3. Upgrade data-node:
-   
+
    ```bash
    yum update ./energy-logserver-data-node-7.0.5-1.el7.x86_64.rpm
    ```
-   
+
 4. Start services:
-   
+
    ```bash
    systemctl start elasticsearch alert kibana cerebro wiki
    ```
-   
+
 5. Migrate Audit index to new format (the next call will display the current status of the task):
-   
+
    ```bash
    curl -XPOST 'http://localhost:9200/_logserver/prepareindex/audit' -u $USER:$PASSWORD
    ```
-   
+
 6. Migrate Alert index to new format (the next call will display the current status of the task):
-   
+
    ```bash
    curl -XPOST 'http://localhost:9200/_logserver/prepareindex/alert' -u $USER:$PASSWORD
    ```
-   
+
 7. Migrate Agents index to new format (the next call will display the current status of the task):
-   
+
    ```bash
    curl -XPOST 'http://localhost:9200/_logserver/prepareindex/.agents' -u $USER:$PASSWORD
    ```
-   
+
 8. Open `tcp/5603` port for Wikipedia plugin:
+
    ```bash
    firewall-cmd --zone=public --add-port=5603/tcp --permanent
    ```
-   
+
    ```bash
    firewall-cmd --reload
    ```
@@ -302,18 +316,19 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
 
 ### General note
 
-1. Indicators of compromise (IOCs auto-update) require access to the software provider's servers. 
+1. Indicators of compromise (IOCs auto-update) require access to the software provider's servers.
 
 2. GeoIP Databases (auto-update) require access to the software provider's servers.
 
-3. Archive plugin require `ztsd` package to work: 
+3. Archive plugin require `ztsd` package to work:
 
    ```bash
    yum install zstd
    ```
+
 ### Upgrade steps
 
-1. Stop services   
+1. Stop services
 
    ```bash
    systemctl stop elasticsearch alert kibana cerebro
@@ -324,14 +339,15 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
    ```bash
    yum update ./energy-logserver-client-node-7.0.4-1.el7.x86_64.rpm
    ```
-3. Upgrade data-node:   
+
+3. Upgrade data-node:
 
    ```bash
    yum update ./energy-logserver-data-node-7.0.4-1.el7.x86_64.rpm
    ```
 
 4. Start services:
-   
+
    ```bash
    systemctl start elasticsearch alert kibana cerebro
    ```
@@ -343,9 +359,11 @@ curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/prepareindex/$i
 - Update the `kibana` role to include index-pattern `.kibana*`
 - Update the `alert` role to include index-pattern `.alertrules*` and `alert_status*`
 - Install `python36` which is required for the Alerting engine on client-node:
-```bash 
-yum install python3
-```
+
+    ```bash
+    yum install python3
+    ```
+
 - AD users should move their saved objects  from the `adrole`.
 - Indicators of compromise (IOCs auto-update) require access to the software provider's servers.
 - GeoIP Databases (auto-update) require access to the software provider's servers.
@@ -354,55 +372,60 @@ yum install python3
 
 - Stop services
 
-```bash
-systemctl stop elasticsearch alert kibana
-```
+    ```bash
+    systemctl stop elasticsearch alert kibana
+    ```
 
 - Upgrade client-node (includes alert engine)
 
-```bash
-yum update ./energy-logserver-client-node-7.0.3-1.el7.x86_64.rpm
-```
+    ```bash
+    yum update ./energy-logserver-client-node-7.0.3-1.el7.x86_64.rpm
+    ```
 
 - Login in the GUI Energy Logserver and go to the `Alert List`  on the `Alerts` tab and click `SAVE` button
 
-![](/media/media/image143.png)
+    ![](/media/media/image143.png)
 
 - Start  `alert` and `kibana` service
 
-```bash
-systemctl start alert kibana
-```
+    ```bash
+    systemctl start alert kibana
+    ```
 
 - Upgrade data-node
 
-```bash
-yum update ./energy-logserver-data-node-7.0.3-1.el7.x86_64.rpm
-```
+    ```bash
+    yum update ./energy-logserver-data-node-7.0.3-1.el7.x86_64.rpm
+    ```
 
 - Start services
 
-```bash
-systemctl start elasticsearch alert
-```
+    ```bash
+    systemctl start elasticsearch alert
+    ```
 
 **Extra note**
 
-If the Elasticsearch service has been started on the client-node, then it is necessary to update the **client.rpm** and **data.rpm** packages on the client node. 
+If the Elasticsearch service has been started on the client-node, then it is necessary to update the **client.rpm** and **data.rpm** packages on the client node.
 
 After update, you need to edit:
 
 ```bash
 /etc/elasticsearch/elasticsearch.yml
 ```
+
 and change:
+
 ```bash
 node.data: false
 ```
+
 Additionally, check the file:
+
 ```bash
 elasticsearch.yml.rpmnew
 ```
+
 and complete the configuration in `elasticsearch.yml` with additional lines.
 
 ## Upgrade from version 7.0.1
@@ -412,9 +435,11 @@ and complete the configuration in `elasticsearch.yml` with additional lines.
 - Update the `kibana` role to include index-pattern `.kibana*`
 - Update the `alert` role to include index-pattern `.alertrules*` and `alert_status*`
 - Install `python36` which is required for the Alerting engine
-```bash 
-yum install python3 on client-node
-```
+
+    ```bash
+    yum install python3 on client-node
+    ```
+
 - AD users should move their saved objects  from the `adrole`.
 - Indicators of compromise (IOCs auto-update) require access to the software provider's servers.
 - GeoIP Databases (auto-update) require access to the software provider's servers.
@@ -423,55 +448,60 @@ yum install python3 on client-node
 
 - Stop services
 
-```bash
-systemctl stop elasticsearch alert kibana
-```
+    ```bash
+    systemctl stop elasticsearch alert kibana
+    ```
 
 - Upgrade client-node (includes alert engine)
 
-```bash
-yum update ./energy-logserver-client-node-7.0.2-1.el7.x86_64.rpm
-```
+    ```bash
+    yum update ./energy-logserver-client-node-7.0.2-1.el7.x86_64.rpm
+    ```
 
 - Login in the GUI Energy Logserver and go to the `Alert List`  on the `Alerts` tab and click `SAVE` button
 
-![](/media/media/image143.png)
+    ![](/media/media/image143.png)
 
 - Start  `alert` and `kibana` service
 
-```bash
-systemctl start alert kibana
-```
+    ```bash
+    systemctl start alert kibana
+    ```
 
 - Upgrade data-node
 
-```bash
-yum update ./energy-logserver-data-node-7.0.2-1.el7.x86_64.rpm
-```
+    ```bash
+    yum update ./energy-logserver-data-node-7.0.2-1.el7.x86_64.rpm
+    ```
 
 - Start services
 
-```bash
-systemctl start elasticsearch alert
-```
+    ```bash
+    systemctl start elasticsearch alert
+    ```
 
 **Extra note**
 
-If the Elasticsearch service has been started on the client-node, then it is necessary to update the **client.rpm** and **data.rpm** packages on the client node. 
+If the Elasticsearch service has been started on the client-node, then it is necessary to update the **client.rpm** and **data.rpm** packages on the client node.
 
 After update, you need to edit:
 
 ```bash
 /etc/elasticsearch/elasticsearch.yml
 ```
+
 and change:
+
 ```bash
 node.data: false
 ```
+
 Additionally, check the file:
+
 ```bash
 elasticsearch.yml.rpmnew
 ```
+
 and complete the configuration in `elasticsearch.yml` with additional lines.
 
 ## Upgrade from 6.x
@@ -501,24 +531,24 @@ The update includes packages:
    systemctl stop logstash
    ```
 
-2. Flush sync for indices
+1. Flush sync for indices
 
    ```bash
    curl -sS -X POST "localhost:9200/_flush/synced?pretty" -u$USER:$PASSWORD
    ```
 
-3. Close all indexes with production data, except system indexes (the name starts with a dot `.`), example of query:
+1. Close all indexes with production data, except system indexes (the name starts with a dot `.`), example of query:
 
    ```bash
    for i in `curl -u$USER:$PASSWORD "localhost:9200/_cat/indices/winlogbeat*?h=i"` ; do curl -u$USER:$PASSWORD -X POST localhost:9200/$i/_close ; done
    ```
 
-4. Disable shard allocation
+1. Disable shard allocation
 
    ```bash
    curl -u$USER:$PASSWORD -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d' { "persistent": {"cluster.routing.allocation.enable": "none"}}'
    ```
-   
+
 1. Check Cluster Status
 
     ```bash
@@ -548,8 +578,8 @@ The update includes packages:
         "active_shards_percent_as_number" : 100.0
        }
     ```
-    
-6. Stop Elasticsearch service
+
+1. Stop Elasticsearch service
 
     ```bash
     systemctl stop elasticsearch
@@ -563,7 +593,7 @@ The update includes packages:
    scp ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm root@hostname:~/
    ```
 
-2. Upgrade Energy Logserver Package
+1. Upgrade Energy Logserver Package
 
    ```bash
    yum update ./energy-logserver-data-node-7.0.1-1.el7.x86_64.rpm
@@ -640,7 +670,7 @@ The update includes packages:
     - /etc/elasticsearch/elasticsearch.yml – verify elasticsearch configuration file
 
     - compare exiting /etc/elasticsearch/elasticsearch.yml and /etc/elasticsearch/elasticsearch.yml.rpmnew
-    
+
 1. Start and enable Elasticsearch service
     If everything went correctly, we will restart the Elasticsearch instance:
 
@@ -648,6 +678,7 @@ The update includes packages:
     systemctl restart elasticsearch
     systemctl reenable elasticsearch
     ```
+
     ```bash
     systemctl status elasticsearch
     ● elasticsearch.service - Elasticsearch
@@ -664,6 +695,7 @@ The update includes packages:
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: Defaulting to no-operation (NOP) logger implementation
     Mar 18 16:50:33 migration-01 elasticsearch[17195]: SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
     ```
+
 1. Check cluster/indices status and Elasticsearch version
 
     Invoke curl command to check the status of Elasticsearch:
@@ -726,22 +758,22 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
    systemctl statrt elasticsearch
    ```
 
-2. Delete .auth index
+1. Delete .auth index
 
    ```bash
    curl -u$USER:$PASSWORD -X DELETE localhost:9200/.auth
    ```
 
-4. Use `elasticdump` to get all templates and load it back
+1. Use `elasticdump` to get all templates and load it back
 
    - get templates
 
    ```bash
    /usr/share/kibana/elasticdump/elasticdump  --output=http://logserver:logserver@localhost:9200 --input=templates_elasticdump.json --type=template
    ```
-   
+
    - delete templates
-   
+
    ```bash
    for i in `curl -ss -ulogserver:logserver http://localhost:9200/_cat/templates | awk '{print $1}'`; do curl -ulogserver:logserver -XDELETE http://localhost:9200/_template/$i ; done
    ```
@@ -751,26 +783,26 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
    ```bash
    /usr/share/kibana/elasticdump/elasticdump  --input=http://logserver:logserver@localhost:9200 --output=templates_elasticdump.json --type=template
    ```
-   
-4. Open indexes that were closed before the upgrade, example of query:
+
+1. Open indexes that were closed before the upgrade, example of query:
 
    ```bash
    curl -ss -u$USER:$PASSWORD "http://localhost:9200/_cat/indices/winlogbeat*?h=i,s&s=i" |awk '{if ($2 ~ /close/) system("curl -ss -u$USER:$PASSWORD -XPOST http://localhost:9200/"$1"/_open?pretty")}'
    ```
 
-5. Start the Logstash service
+1. Start the Logstash service
 
    ```bash
    systemctl start logstash
    ```
 
-6. Enable Elasticsearch allocation
+1. Enable Elasticsearch allocation
 
    ```bash
    curl -sS -u$USER:$PASSWORD -X PUT "http://localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d' { "persistent": {"cluster.routing.allocation.enable": "none"}}'
    ```
 
-7. After starting on GUI remove aliases .kibana* (double version of index patterns)
+1. After starting on GUI remove aliases .kibana* (double version of index patterns)
 
    ```bash
    curl -u$USER:$PASSWORD "http://localhost:9200/.kibana_1/_alias/_all" -XDELETE
@@ -841,7 +873,7 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
       ```bash
       yum install net-tools mailx gtk3 libXScrnSaver ImageMagick ghostscript
       ```
-      
+
     - Install new package:
 
       ```bash
@@ -895,29 +927,28 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
       ```
 
 1. Start Energy Logserver GUI
-   
+
     Add service:
     - Kibana
     - Cerebro
     - Alert
-    
-    to autostart and add port ( 5602/TCP ) for Cerebro. 
+
+    to autostart and add port ( 5602/TCP ) for Cerebro.
     Run them and check status:
-    
+
     ```bash
     firewall-cmd –permanent –add-port 5602/tcp
     firewall-cmd –reload
     ```
 
+    ```bash
+        systemctl enable kibana cerebro alert
+        Created symlink from /etc/systemd/system/multi-user.target.wants/kibana.service to /usr/lib/systemd/system/kibana.service.
+        Created symlink from /etc/systemd/system/multi-user.target.wants/cerebro.service to /usr/lib/systemd/system/cerebro.service.
+        Created symlink from /etc/systemd/system/multi-user.target.wants/alert.service to /usr/lib/systemd/system/alert.service.
+    ```
 
-```bash
-    systemctl enable kibana cerebro alert
-    Created symlink from /etc/systemd/system/multi-user.target.wants/kibana.service to /usr/lib/systemd/system/kibana.service.
-    Created symlink from /etc/systemd/system/multi-user.target.wants/cerebro.service to /usr/lib/systemd/system/cerebro.service.
-    Created symlink from /etc/systemd/system/multi-user.target.wants/alert.service to /usr/lib/systemd/system/alert.service.
-```
-
-```bash
+    ```bash
     systemctl start kibana cerebro alert
     systemctl status kibana cerebro alert
     ● kibana.service - Kibana
@@ -946,7 +977,7 @@ If everything went correctly, we should see 100% allocated shards in cluster hea
                └─12401 /opt/alert/bin/python /opt/alert/bin/elastalert
     
     Mar 19 14:46:52 migration-01 systemd[1]: Started Alert.
-```
+    ```
 
 ## Downgrade
 
@@ -955,12 +986,15 @@ Follow the steps below:
 ```bash
 systemctl stop elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
 ```
+
 ```bash
 yum remove energy-logserver-*
 ```
+
 ```bash
 yum install old-version.rpm
 ```
+
 ```bash
 systemctl start elasticsearch kibana logstash wiki cerebro automation intelligence intelligence-scheduler skimmer alert
 ```
@@ -974,9 +1008,8 @@ OpenJDK 11 is supported by Logstash from version 6.8 so if you have an older ver
 To update Logstash, follow the steps below:
 
 1. Back up the following files
-	
-    - /etc/logstash/logstash.yml 
-    - /etc/logstash/piplines.yml
+    - /etc/logstash/logstash.yml
+    - /etc/logstash/pipelines.yml
     - /etc/logstash/conf.d
 
 2. Use the command to check custom Logstash plugins:
@@ -984,15 +1017,16 @@ To update Logstash, follow the steps below:
     ```bash
     /usr/share/bin/logstash-plugin list --verbose
     ```
+
     and note the result
 
 3. Install a newer version of Logstash according to the instructions:
 
-	https://www.elastic.co/guide/en/logstash/6.8/upgrading-logstash.html
-	
-	or 
-	
-	https://www.elastic.co/guide/en/logstash/current/upgrading-logstash.html
+    https://www.elastic.co/guide/en/logstash/6.8/upgrading-logstash.html
+
+    or
+
+    https://www.elastic.co/guide/en/logstash/current/upgrading-logstash.html
 
 4. Verify installed plugins:
 
@@ -1012,7 +1046,7 @@ To update Logstash, follow the steps below:
     systemctl start logstash
     ```
 
-### Elasticearch
+### Elasticsearch
 
 Energy Logserver can use OpenJDK version 10 or later.
 If you want to use OpenJSK version 10 or later, configure the Elasticsearch service as follows:
