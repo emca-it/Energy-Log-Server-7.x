@@ -6,6 +6,58 @@
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
 
+## Upgrade from version 7.3.0
+
+### **Breaking and major changes**
+
+- Complete database redefinition
+- Complete user interface redefinition
+- Complete SIEM Engine redefinition
+- Input layer uses Logstash-OSS 7.17.11
+- Support for Beats-OSS Agents => 7.17.11
+
+### Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+### Required post upgrade from version 7.3.0
+
+**ELASTICSEARCH**
+
+- `./install.sh` checks indexes compatibility before upgrading, if any problem exist please contact product support to guide you through the upgrade process.
+- Move required directives from `/etc/elasticsearch/elasticsearch.yml` to `/etc/elasticsearch/elasticsearch.yml.rpmnew` and replace `elasticsearch.yml`.
+- Move required directives from `/etc/sysconfig/elasticsearch` to `/etc/sysconfig/elasticsearch.rpmnew` and replace `/etc/sysconfig/elasticsearch`.
+- Elasticsearch keystore must be recreated if it is used.
+
+**KIBANA**
+
+- Move required directives from `/etc/kibana/kibana.yml` to `/etc/kibana/kibana.yml.rpmnew` and replace `kibana.yml`.
+- Clear browser cache on client side.
+- Kibana keystore must be recreated if it is used.
+
+**SIEM ENGINE**
+
+- Update automatically migrates connected agents [manager-site].
+- Connected agents can be updated at any time [client-site].
+- Move required directives from `/usr/share/kibana/plugins/wazuh/wazuh.yml.rpmsave` to `/usr/share/kibana/data/wazuh/config/wazuh.yml`.
+
+**LOGSTASH:**
+
+- No need to upgrade, if interested then:
+  - Backup `/etc/logstash`
+  - Uninstall old version: `# yum versionlock delete logstash-oss-7.17.11-1 && yum remove logstash-oss && rm -rf /etc/logstash /var/lib/logstash /usr/share/logstash`
+  - Install from fresh `./install.sh -i` - logstash section.
+
+- After updating logstash change in `/etc/logstash/conf.d/*`:
+  - `input-elasticsearch` => `input-logserver`
+  - `filter-elasticsearch` => `filter-logserver`
+  - `output-elasticsearch` => `output-logserver`
+
+**TRANSLATIONS**
+
+- Move `/usr/share/kibana/.i18nrc.json` to `/usr/share/kibana/translations/`.
+
 ## Upgrade from version 7.2.0
 
 ### Preferred Upgrade steps

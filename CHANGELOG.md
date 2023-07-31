@@ -1,12 +1,46 @@
 # **CHANGELOG**
 
-## v7.3.0
+## v7.4.0
 
+### Upgrades
+
+- Complete database redefinition:
+  - Segment replication
+  - Searchable snapshots
+  - Search backpressure feature can now cancel queries at the coordinator level
+
+- Complete user interface redefinition
+- Complete SIEM Engine redefinition:
+  - New manager
+  - New App
+  - New Agent
+
+- Input layer uses Logstash-OSS 7.17.11
+- Support for Beats OSS Agents => 7.17.11
 
 ### NewFeatures
 
-- Multi-Language Support 
+- Logserver: RBAC integration with Wazuh Engine (users can map roles between systems)
 
+### Improvements
+
+- CMDB: Browser-based Time Zone
+- Improved error handling when reloading a license (_logserver/license/reload_)
+- Archive: deleting tasks with multiselect option
+- Unification and organization of Energy Logserver system APIs
+- Alert: WebHook: added support for nested fields in http post payload
+- Agents: built-in agents templates updated to 7.17.11
+
+### BugFixes
+
+- CMDB: incorrect parsing of values in the date filter
+- Archive: blank line in index list on restore
+
+## v7.3.0
+
+### NewFeatures
+
+- Multi-Language Support
 
 ### Improvements
 
@@ -14,14 +48,12 @@
 - Network Probe: version lock prevents accidental updates
 - configuration-backup.sh activated by default
 
-
 ### BugFixes
 
-- Reports: usage of "Include unmapped fields" cause "No data" when exporting csv 
+- Reports: usage of "Include unmapped fields" cause "No data" when exporting csv
 - Agents: corrected manifest file for downloading agents
 - Archive: error while restoring encrypted archives
 - Cerebro: corrected auto-login after redirect
-
 
 ### Integrations
 
@@ -29,7 +61,6 @@
 - AWS: Integration with dedicated dashboard and alerts
 - Ruckus Networks: Integration with dedicated dashboard and alerts
 - Added Beats templates to beats integration
-
 
 ### SIEM Plan
 
@@ -43,29 +74,25 @@
 - Alerts: bugfix: Exclude Fields for Logical/Chain body correlation
 - Alerts: NoLog rule for each alarm group
 
-
 ### Network-Probe
 
 - Added support for sFlow - sfacctd service
 - Added IDS Suricata integration with dedicated dashboard and alerts
 
-
 ### Security related
 
 - log4j - logstash-input-tcp
 
-
 ### Required post upgrade
 
 - Recreate bundles/cache: ```rm -rf /usr/share/kibana/optimize/bundles/* && systemctl restart kibana```
-
 
 ## v7.2.0
 
 ### **Breaking changes**
 
 - Login: changed how gui access is granted for administrative users - access for any administrator has to be explicitly granted
-- Wiki portal renamed to E-Doc 
+- Wiki portal renamed to E-Doc
 
 ### NewFeatures
 
@@ -162,7 +189,7 @@
 
 ### NewFeatures
 
-- Energy SOAR: Redesigned and improved integration (Security Orchestration, Automation And Response) 
+- Energy SOAR: Redesigned and improved integration (Security Orchestration, Automation And Response)
 - Intelligence: Redesigned and improved Forecasting [experimental]
 - Masteragent: New feature: Configuration Templates
 - New plugin: CMDB - simple implementation of Configuration Management Database
@@ -183,8 +210,8 @@
 ### BugFixes
 
 - Login: Fixed problems with sharing Short Links
-- Discovery: Fixed problem with index-patterns name overlapping 
-- Index Management: Fixed execution time for builin logtrail policies 
+- Discovery: Fixed problem with index-patterns name overlapping
+- Index Management: Fixed execution time for builin logtrail policies
 - Masteragent: Fixed error when getting installed services
 
 ### Integrations
@@ -202,7 +229,7 @@
 - Alert: theHive project - Improved integration
 - Alert: Fixed exception for risk query
 - Alert: SIEM alert group changed to "Correlated"
-- Alert: Fixed problem with TypeError: deprecated_search() 
+- Alert: Fixed problem with TypeError: deprecated_search()
 - Alert: Fixed logs problem after rotating the file
 - Alert: Fixed permission problem in Run Once mode
 - Alert: Fixed indentation in query_string
@@ -224,7 +251,7 @@
 
 - es2csv - Breakthrough (50%) performance boost
 - es2csv - Renamed to els2csv
-- diagnostic-tool.sh - Added logs encryption 
+- diagnostic-tool.sh - Added logs encryption
 - diagnostic-tool.sh - Renamed to `support-tool.sh`
 - Skimmer: Indices_stats: run only on master node
 - Skimmer: Added two metrics: indices_stats_patterns and indices_stats_regex
@@ -246,7 +273,7 @@
 - Login: Fixed "unable to parse url" when using link sharing
 - Login: Corrected Session expired message
 - Login: gui-access role added to role-mappings.yml
-- Login: When logging using SSO auth, sending the entered password as a default action 
+- Login: When logging using SSO auth, sending the entered password as a default action
 - Skimmer: Index store value of _cat/shards in bytes
 - Skimmer: Disabled ssl handshake on logstash api
 - Logtrail: Corrected syntax highlighting
@@ -255,7 +282,6 @@
 - Wiki: Removed gui-access group
 - Index Management: Wait for updates before refreshing the list
 - Index Management: Fixed id problem during custom update
-
 
 ### Integrations
 
@@ -276,7 +302,7 @@
 ### Security related
 
 - http-proxy - CVE-2022-0155
-- xlsx - CVE-2021-32013 
+- xlsx - CVE-2021-32013
 - json-schema - CVE-2021-3918
 - lodash - CVE-2021-23337
 - json-schema - CVE-2021-3918
@@ -456,17 +482,20 @@
 ## v7.0.6
 
 ### NewFeatures
+
 - Alert: Added 5 alerts to detect SUNBURST attack
 - Incidents: Added the ability of transferring the calculated risk_value to be sent in any alarm method
-- Indidents: Added visibility of unassigned incidents based on user role - security-tenant role 
+- Indidents: Added visibility of unassigned incidents based on user role - security-tenant role
 - install.sh: Added the ability to update with ./install.sh -u
 
 ### Improvements
+
 - Object permission: Object filtering optimization
 - Reports: Date verification with scheduler enabled tasks
 - Reports: UI optimization
 
 ### BugFixes
+
 - Agents: CVE-2020-28168
 - Alert: Fixes problem with Syslog notifications
 - Alert: Fixes problem with Test Rule functionality
@@ -482,6 +511,7 @@
 ## v7.0.5
 
 ### NewFeatures
+
 - New plugin: Wiki - integration with wiki.js
 - Agents: Added index rotation using rollover function
 - Alert: Added counter with information about how many rules there are in a given group
@@ -507,8 +537,8 @@
 - Installation support for Centos7/8, RedHat7/8, Oracle Linux7/8, Scientific Linux 7, Centos Stream
 - iFrame embedding support: new directive login.isSameSite in kibana.yml ["Strict" or "None"]
 
-
 ### Improvements
+
 - Access management: Plugin Login for app management  will show itself as Config
 - Alert: Added support for nested fields in blacklist-ioc alert type
 - Alert: Alert Dashboard rewritten to alert_status pattern - allows you to filter visible alarms per user
@@ -569,16 +599,16 @@
 - small_backup.sh: Information about the completed operation is logged
 - Wazuh: Searching in the rule.description field
 
-
 ### BugFixes
+
 - Access Management: Cosmetic issue in apps select box for default roles (like admin, alert, intelligence, kibana etc.)
 - Alert: Category name did not appear on the "Risk" list
-- Alert: Description update for find_match alert type 
+- Alert: Description update for find_match alert type
 - Alert: Fixes bug where after renaming the alert it is not immediately visible on the list of alerts
 - Alert: Fixes bug where editing of alert, causes it returns to the Other group
 - Alert: Fixes incorrect function alertMethodData - problem with TestRule operation [itrs op5 alert-method]
-- Alert: Fixes problem with '[]' in rule name 
-- Alert: Fixes process status in Alert Status tab 
+- Alert: Fixes problem with '[]' in rule name
+- Alert: Fixes process status in Alert Status tab
 - Alert: In groups, if there is pagination, it is not possible to change the page - does not occur with the default group "Others"
 - Alert: Missing op5_url directive in /opt/alert/config.yaml [itrs op5 alert-method]
 - Alert: Missing smtp_auth_file directive in /opt/alert/config.yaml [itrs op5 alert-method]
@@ -588,7 +618,7 @@
 - Archive: Missing symlink to runTask.js
 - Cerebro: Fixes problems with PID file after cerebro crash
 - Cerebro: Overwrite config files after updating, now it should create /opt/cerebro/conf/application.conf.rpmnew
-- Config: SSO login misreads application names entered in Access Management 
+- Config: SSO login misreads application names entered in Access Management
 - Elasticsearch: Fixes "No value present" message log when not using a radius auth [properties.yml]
 - Elasticsearch: Fixes "nullPointerException" by adding default value for licenseFilePath [properties.yml]
 - Incidents: Fixes problem with vanishing status
@@ -602,12 +632,11 @@
 - Reports: Fixes Image Creation failed exception
 - Reports: Fixes permission problem for checkpass Reports API
 - Reports: Fixes problems with AD/Radius/LDAP users
-- Reports: Fixes problem with choosing the date for export 
+- Reports: Fixes problem with choosing the date for export
 - Reports: Fixes setting default index pattern for technical users when using https
 - Skimmer: Changed kafka.consumer_id to number in default mapping
 - Skimmer: Fixes in indices stats monitoring
 - Skimmer: Overwrite config files after updating, now it should create /opt/skimmer/skimmer.conf.rpmnew
-
 
 ## v7.0.4
 
@@ -667,7 +696,7 @@
 
 ## v7.0.3
 
-### New  Features 
+### NewFeatures
 
 - Alert: new type - Chain - create alert from underlying rules triggered in defined order
 - Alert: new type - Logical - create alert from underlying rules triggered with defined logic (OR,AND,NOR)
@@ -684,6 +713,7 @@
 - MasterAgent: added possibility for beats agents restart and the master agent itself (GUI)
 
 ### Improvements
+
 - Search and sort support for User List in Config section
 - Copy/Sync: now supports "insecure" mode (operations without certificates)
 - Fix for "add sample data & web sample dashboard" from Home Page -> changes in default-base-template
@@ -708,16 +738,17 @@
 - Centralization of previous alert code changes to single module
 
 ### BugFixes
+
 - Individual special characters caused problems in user passwords
 - Bad permissions for scheduler of Copy/Sync module has been corrected
 - Wrong Alert status in the alert status tab
 - Skimmer: forcemerge caused under 0 values for cluster_stats_indices_docs_per_sec metric
 - diagnostic-tool.sh: wrong name for the archive in output
-- Reports: export to csv support STOP action 
+- Reports: export to csv support STOP action
 - Reports: scroll errors in csv exports
 - Alert: .alertrules is not a required index for proper system operation
 - Alert: /opt/alerts/testrules is not a required directory for proper system operation
-- Alert: .riskcategories is not a required index for proper system operation 
+- Alert: .riskcategories is not a required index for proper system operation
 - Malfunction in Session Timeout
 - Missing directives service_principal_name in bundled properties.yml
 - Blacklist: Removal of the _doc_ type in blacklist template
@@ -728,7 +759,7 @@
 
 ## v7.0.2
 
-### New Features
+### NewFeatures
 
 - Manual incident - creating manual incidents from the Discovery section
 - New kibana plugin - Sync/Copy between clusters
