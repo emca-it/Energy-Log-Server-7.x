@@ -233,6 +233,10 @@ html_static_path = ['_static']
 #
 # html_search_scorer = 'scorer.js'
 html_context = {
+    "display_github": True, # Integrate GitHub
+    "github_user": "emca-it", # Username
+    "github_repo": "Energy-Log-Server-7.x", # Repo name
+    "github_version": "latest", # Version
     "conf_py_path": "/", # Path in the checkout to the docs root
 }
 # Output file base name for HTML help builder.
