@@ -5,8 +5,8 @@ Energy Logserver 7.x User Guide
         :maxdepth: 7
         :caption: Installation
 
-       ../00-00-00-About.md
-       ../01-Installation/01-Installation.md
+       00-00-00-About
+       01-Installation/01-Installation
 
 .. toctree::
         :maxdepth: 7
