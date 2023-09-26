@@ -1,0 +1,1 @@
+set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS%  -c . ..
