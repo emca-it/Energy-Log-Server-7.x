@@ -232,7 +232,9 @@ html_static_path = ['_static']
 # implements a search results scorer. If empty, the default will be used.
 #
 # html_search_scorer = 'scorer.js'
-
+html_context = {
+    "conf_py_path": "/", # Path in the checkout to the docs root
+}
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'energy-log-server-7x'
 
