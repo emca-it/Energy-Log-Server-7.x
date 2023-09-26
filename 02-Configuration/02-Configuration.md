@@ -6,36 +6,51 @@
 
 Edit file */etc/systemd/system/kibana.service*
 
+```bash
   User=newuser
   Group= newuser
+```
 
 Edit */etc/default/kibana*
 
+```bash
   user=" newuser "
   group=" newuser "
+```
 
 Add appropriate permission:
 
+```bash
   chown newuser: /usr/share/kibana/ /etc/kibana/ -R
+```
 
 ### Change Elasticsearch User
 
-Edit */usr/lib/tmpfiles.d/elasticsearch.conf* and change user name and group:
+Edit **/usr/lib/tmpfiles.d/elasticsearch.conf* and change user name and group:
 
+```bash
   d /var/run/elasticsearch 0755 newuser newuser –
+```
+
 Create directory:
 
+```bash
   mkdir /etc/systemd/system/elasticsearch.service.d/
+```
 
 Edit */etc/systemd/system/elasticsearch.service.d/01-user.conf*
 
+```bash
   [Service]
   User=newuser
   Group= newuser
+```
 
 Add appropriate permission:
 
+```bash
   chown -R newuser: /var/lib/elasticsearch /usr/share/elasticsearch /etc/elasticsearch /var/log/elasticsearch
+```
 
 ### Change Logstash User
 
@@ -55,9 +70,8 @@ Add appropriate permission:
 
 ## Plugins management
 
-Base installation of the Energy Logserver contains the
-*elasticsearch-auth* plugin.
-You can extend the basic Elasticsearch functionality by installing the custom plugins.
+Base installation of the Energy Logserver contains the *elasticsearch-auth* plugin.
+You can extend the basic Elasticsearch functionality by installing custom plugins.
 
 Plugins contain JAR files, but may also contain scripts and config files, and must be installed on every node in the cluster.
 
@@ -66,8 +80,7 @@ After installation, each node must be restarted before the plugin becomes visibl
 The Elasticsearch provides two categories of plugins:
 
 - Core Plugins - it is plugins that are part of the Elasticsearch project.
-
-- Community contributed - it is plugins that are external to the Elasticsearch project
+- Community-contributed - it is plugins that are external to the Elasticsearch project
 
 ### Installing Plugins
 
@@ -76,53 +89,48 @@ Core Elasticsearch plugins can be installed as follows:
  cd /usr/share/elasticsearch/
  bin/elasticsearch-plugin install [plugin_name]
 
-Example:
+Example: \
+Plugins from a custom link or filesystem can be installed as follows:
 
- bin/elasticsearch-plugin install ingest-geoip
-
- -> Downloading ingest-geoip from elastic
- [=================================================] 100%  
- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- @ WARNING: plugin requires additional permissions @
- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-- java.lang.RuntimePermission accessDeclaredMembers
-- java.lang.reflect.ReflectPermission suppressAccessChecks
- See <http://docs.oracle.com/javase/8/docs/technotes/guides/security/permissions.html>
- for descriptions of what these permissions allow and the associated risks.
-
- Continue with installation? [y/N]y
- -> Installed ingest-geoip
-
-Plugins from custom link or filesystem can be installed as follow:
-
+```bash
  cd /usr/share/elasticsearch/
  sudo bin/elasticsearch-plugin install [url]
+```
 
 Example:
 
+```bash
  sudo bin/elasticsearch-plugin install file:///path/to/plugin.zip
  bin\elasticsearch-plugin install file:///C:/path/to/plugin.zip
  sudo bin/elasticsearch-plugin install <http://some.domain/path/to/plugin.zip>
+```
 
 ### Listing plugins
 
 Listing currently loaded plugins
 
+```bash
  sudo bin/elasticsearch-plugin list
+```
 
 listing currently available core plugins:
 
+```bash
  sudo bin/elasticsearch-plugin list --help
+```
 
 ### Removing plugins
 
+```bash
  sudo bin/elasticsearch-plugin remove [pluginname]
+```
 
 ### Updating plugins
 
+```bash
  sudo bin/elasticsearch-plugin remove [pluginname]
  sudo bin/elasticsearch-plugin install [pluginname]
+```
 
 ## Transport layer encryption
 
@@ -131,60 +139,60 @@ listing currently available core plugins:
 1. Requirements for certificate configuration:
 
     - **To encrypt traffic (HTTP and transport layer) of Elasticsearch you have to generate certificate authority which will be used to sign each node certificate of a cluster.**
+    - **The Elasticsearch certificate has to be generated in pkcs8 RSA format.**
 
-    - **Elasticsearch certificate has to be generated in pkcs8 RSA format.**
-
-2. Example certificate configuration (Certificates will be valid for 10 years based on this example):
+1. To generate certificates use tlstool.sh script, which can be found in the `/usr/share/elasticsearch/utils/tlstool` directory. \
+Example certificate configuration for single node environment (certificates will be valid for 10 years) is listed below:
 
     ```bash
-    # To make this process easier prepare some variables:
-    DOMAIN=mylocal.domain
-    DOMAIN_IP=10.4.3.185 # This is required if certificate validation is used on trasport layer
-    COUNTRYNAME=PL
-    STATE=Poland
-    COMPANY=LOGTEST
+    ca:
+      root:
+        dn: CN=mylocal.domain.test,OU=Dev,O=EMCA Software,C=Poland
+        keysize: 2048
+        validityDays: 3650
+        pkPassword: none
+        file: rootCA.crt
 
-    # Generate CA key:
-    openssl genrsa -out rootCA.key 4096
+    defaults:
+      validityDays: 3650
+      pkPassword: none
+      httpsEnabled: true
+      reuseTransportCertificatesForHttp: true
+      verifyHostnames: true
+      resolveHostnames: false
 
-    # Create and sign root certificate:
-    echo -e "${COUNTRYNAME}\n${STATE}\n\n${COMPANY}\n\n\n\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
-
-    # Crete RSA key for domain:
-    openssl genrsa -out ${DOMAIN}.pre 2048
-
-    # Convert generated key to pkcs8 RSA key for domain hostname
-    # (if you do not want to encrypt the key add "-nocrypt" at the end of the command; otherwise it will be necessary to add this password later in every config file):
-    openssl pkcs8 -topk8 -inform pem -in ${DOMAIN}.pre -outform pem -out ${DOMAIN}.key
-
-    # Create a Certificate Signing Request (openssl.cnf can be in a different location; this is the default for CentOS 7.7):
-    openssl req -new -sha256 -key ${DOMAIN}.key -subj "/C=PL/ST=Poland/O=EMCA/CN=${DOMAIN}" -reqexts SAN -config <(cat /etc/pki/tls/openssl.cnf <(printf "[SAN] \nsubjectAltName=DNS:${DOMAIN},IP:${DOMAIN_IP}")) -out ${DOMAIN}.csr
-
-    # Generate Domain Certificate
-    openssl x509 -req -in ${DOMAIN}.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out ${DOMAIN}.crt -sha256 -extfile <(printf "[req]  \ndefault_bits=2048\ndistinguished_name=req_distinguished_name\nreq_extensions=req_ext\n[req_distinguished_name]\ncountryName=${COUNTRYNAME}\nstateOrProvinceName=${STATE}  \norganizationName=${COMPANY}\ncommonName=${DOMAIN}\n[req_ext]\nsubjectAltName=@alt_names\n[alt_names]\nDNS.1=${DOMAIN}\nIP=${DOMAIN_IP}\n") -days 3650 -extensions req_ext
-
-    # Verify the validity of the generated certificate
-    openssl x509 -in ${DOMAIN}.crt -text -noout
+    nodes:
+      - name: node1
+        dn: CN=mylocal.domain.test,OU=Dev,O=EMCA Software,C=Poland
+        ip: 127.0.0.1
     ```
 
-3. Right now you should have these files:
+    Other examples can be found in the `config`` directory of the TLS Tool. More details about the TLS Tool and documented options can be found [here.](#offline-tls-tool)
+
+    To use the above configuration run:
 
     ```bash
-    $ ls -1 | sort
-    mylocal.domain.test.crt
-    mylocal.domain.test.csr
-    mylocal.domain.test.key
-    mylocal.domain.test.pre
+    cd /usr/share/elasticsearch/utils/tlstool
+    bash tlstool.sh -c config/logserver.yml -ca -crt
+    ```
+
+    It will generate the necessary rootCA and server private key together with its certificate.
+
+1. Right now you should have these files:
+
+    ```bash
+    ls -1 | sort
+    node1.crt
+    node1.key
     rootCA.crt
     rootCA.key
-    rootCA.srl
     ```
 
-4. Create a directory to store required files (users: elasticsearch, kibana and logstash have to be able to read these files):
+1. Create a directory to store required files (users: elasticsearch, kibana, and logstash have to be able to read these files):
 
     ```bash
     mkdir /etc/elasticsearch/ssl
-    cp {mylocal.domain.test.crt,mylocal.domain.test.key,rootCA.crt} /etc/elasticsearch/ssl
+    cp out/{node1.*,rootCA.crt} /etc/elasticsearch/ssl
     chown -R elasticsearch:elasticsearch /etc/elasticsearch/ssl
     chmod 755 /etc/elasticsearch/ssl
     chmod 644 /etc/elasticsearch/ssl/*
@@ -194,42 +202,42 @@ listing currently available core plugins:
 
 1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
 
-- Transport layer encryption
+    - Transport layer encryption
 
-      ```yaml
+      ```yml
       logserverguard.ssl.transport.enabled: true
-      logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-      logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
-      logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+      logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/node1.crt"
+      logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/node1.key"
+      logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # If there is no password leave ""
       logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
       logserverguard.ssl.transport.enforce_hostname_verification: true
       logserverguard.ssl.transport.resolve_hostname: true
 
       logserverguard.ssl.transport.enabled_ciphers:
-       - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-       - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+        - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
 
       logserverguard.ssl.transport.enabled_protocols:
-       - "TLSv1.2"
+        - "TLSv1.2"
       ```
 
-- HTTP layer encryption
+    - HTTP layer encryption
 
       ```yaml
       logserverguard.ssl.http.enabled: true
-      logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-      logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
-      logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # if there is no password leve ""
+      logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/node1.crt"
+      logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/node1.key"
+      logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # If there is no password leave ""
       logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
 
       logserverguard.ssl.http.clientauth_mode: OPTIONAL
       logserverguard.ssl.http.enabled_ciphers:
-       - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-       - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+        - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
 
       logserverguard.ssl.http.enabled_protocols:
-       - "TLSv1.2"
+        - "TLSv1.2"
       ```
 
 1. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
@@ -240,13 +248,13 @@ listing currently available core plugins:
     # Elasticsearch trafic encryption
     # There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
     elasticsearch.ssl.verificationMode: full
-    elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/mylocal.domain.test.crt"
-    elasticsearch.ssl.key: "/etc/elasticsearch/ssl/mylocal.domain.test.key"
+    elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/node1.crt"
+    elasticsearch.ssl.key: "/etc/elasticsearch/ssl/node1.key"
     elasticsearch.ssl.keyPassphrase: "password_for_pemkey" # this line is not required if there is no password
     elasticsearch.ssl.certificateAuthorities: "/etc/elasticsearch/ssl/rootCA.crt"
     ```
 
-1. Append or uncomment below lines in `/opt/alert/config.yaml` and change paths to proper values:
+1. Append or uncomment the below lines in `/opt/alert/config.yaml` and change paths to proper values:
 
     ```yaml
     # Connect with TLS to Elasticsearch
@@ -256,12 +264,12 @@ listing currently available core plugins:
     verify_certs: True
 
     # Client certificate
-    client_cert: /etc/elasticsearch/ssl/mylocal.domain.test.crt
-    client_key: /etc/elasticsearch/ssl/mylocal.domain.test.key
+    client_cert: /etc/elasticsearch/ssl/node1.crt
+    client_key: /etc/elasticsearch/ssl/node1.key
     ca_certs: /etc/elasticsearch/ssl/rootCA.crt
     ```
 
-1. For CSV/HTML export to work properly rootCA.crt generated in first step has to be "installed" on the server. Below example for CentOS 7:
+1. For CSV/HTML export to work properly rootCA.crt generated in the first step has to be "installed" on the server. Below are example steps for CentOS 7:
 
     ```bash
     # Copy rootCA.crt and update CA trust store
@@ -287,7 +295,7 @@ listing currently available core plugins:
 
 #### Logstash/Beats
 
-You can either install CA to allow Logstash and Beats traffic or you can supply required certificates in config:
+You can either install CA to allow Logstash and Beats traffic or you can supply the required certificates in config:
 
 1. Logstash:
 
@@ -313,7 +321,7 @@ You can either install CA to allow Logstash and Beats traffic or you can supply 
     output.elasticsearch.ssl.certificate_authorities: ["/path/to/cacert/rootCA.crt"]
     ```
 
-Additionally, for any beats program to be able to write to elasticsearch, you will have to make changes to "enabled_ciphers" directive in "/etc/elasticsearch/elasticsearch.yml". This is done by commenting:
+Additionally, for any beats program to be able to write to elasticsearch, you will have to make changes to the "enabled_ciphers" directive in "/etc/elasticsearch/elasticsearch.yml". This is done by commenting:
   
   ```yaml
   logserverguard.ssl.http.enabled_ciphers:
@@ -322,17 +330,470 @@ Additionally, for any beats program to be able to write to elasticsearch, you wi
 
 Otherwise, the beat will not be able to send documents directly and if you want to avoid it you can send a document with Logstash first.
 
+## Offline TLS Tool
+
+The TLS Tool is a program that can be used for:
+  
+  - Generating Root and Intermediate CA's,
+  - Generating Node, Client, and Admin certificates,
+  - Generating CSRs,
+  - Validating certificates
+
+Besides the actual certificates the tool also generated configuration snippets which you can directly copy and paste into your `elasticsearch.yml`.
+
+### General usage
+
+The tls tool will read the node- and certificate configuration settings from a yaml file, and outputs the generated files in a configurable directory.
+
+You can choose to create the Root CA and (optional) intermediate CAs with your node certificates in one go. Or you can create the Root and intermediate CA first, and generate node certificates as you need them.
+
+You will find the script in:
+
+```bash
+<installation directory>/tlstool.sh
+```
+
+Default `<installation directory>` is `/usr/share/elasticsearch/utils/tlstool`.
+
+### Command line options
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 691px">
+<colgroup>
+<col style="width: 120px">
+<col style="width: 471px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-fymr">Name</th>
+    <th class="tg-fymr">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-lboi">-c,--config</td>
+    <td class="tg-lboi">Relative or absolute path to the configuration file. Required.</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-t,--target</td>
+    <td class="tg-lboi">Relative or absolute path to the output directory. Optional, default: out</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-v,--verbose</td>
+    <td class="tg-lboi">Enable detailed output, default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-f,--force</td>
+    <td class="tg-lboi">Force certificate generation despite of validation errors. default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-o,--overwrite</td>
+    <td class="tg-lboi">Overwrite existing node-, client and admin certificates if they are already present. default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-p,--pem</td>
+    <td class="tg-lboi">Change certificate file extension from ".crt" to ".pem". default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-ca,--create-ca</td>
+    <td class="tg-lboi">Create new Root and Intermediate CAs</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">-crt,--create-cert</td>
+    <td class="tg-0pky">Create certificates using an existing or newly created local certificate authority</td>
+  </tr>
+</tbody>
+</table>
+
+### Examples
+
+`<installation directory>/tlstool.sh -c config/tlsconfig.yml -ca -crt`
+
+Reads the configuration from `config/tlsconfig.yml` and generates the configured Root and intermediate CAs and the configured node, admin, and client certificates in one go. The generated files will be written to `out`.
+
+`<installation directory>/tlstool.sh -c config/tlsconfig.yml -ca`
+
+Reads the configuration from `config/tlsconfig.yml` and generates the configured Root and intermediate CAs only.
+
+`<installation directory>/tlstool.sh -c config/tlsconfig.yml -crt`
+
+Reads the configuration from `config/tlsconfig.yml` and generates node, admin, and client certificates only. The Root and (optional) intermediate CA certificates and keys need to be present in the output directory, and their filenames, keys and (optional) passwords have to be configured in `tlsconfig.yml`.
+
+### Root CA
+
+To configure the Root CA for all certificates, add the following lines to your configuration file:
+
+```yml
+ca:
+   root:
+      dn: CN=root.ca.example.com,OU=CA,O=Example Com\, Inc.,DC=example,DC=com
+      keysize: 2048
+      pkPassword: root-ca-password 
+      validityDays: 3650
+      file: root-ca.crt
+```
+
+Generated files:
+
+  - `root-ca.crt` - Root certificate
+  - `root-ca.key` - Private key of the Root CA
+  - `root-ca.readme` - Auto-generated passwords of the root and intermediate CAs
+
+Options:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 691px">
+<colgroup>
+<col style="width: 120px">
+<col style="width: 471px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-fymr">Name</th>
+    <th class="tg-fymr">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-lboi">dn</td>
+    <td class="tg-lboi">The complete Distinguished Name of the Root CA. If you have special characters in the DN, you need to quote them correctly. Mandatory.</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">keysize</td>
+    <td class="tg-lboi">The size of the private key. Default: 2048</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">pkPassword</td>
+    <td class="tg-lboi">Password of the private key. One of: "none", "auto" or a self-chosen password. Default: auto</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">file</td>
+    <td class="tg-lboi">File name of the certificate, optional. Default: "root-ca"</td>
+  </tr>
+</tbody>
+</table>
+
+The pkPassword can be one of:
+
+  - **none**: The generated private key will be unencrypted
+  - **auto**: A random password is generated automatically. After the certificates have been generated, you can find the password in root-ca.readme file. To use these new passwords again, you must edit the tool config file and set the generated passwords there.
+  - **other value**: Value other than none or auto are used as password directly
+
+### Intermediate CA
+
+In addition to the root CA you optionally also specify an intermediate CA. If an intermediate CA is configured, then the node, admin, and client certificates will be signed by the intermediate CA. If you do want to use an intermediate CA, remove the following section from the configuration. The certificates are then signed by the root CA directly.
+
+```yml
+ca:
+   intermediate:
+      dn: CN=signing.ca.example.com,OU=CA,O=Example Com\, Inc.,DC=example,DC=com
+      keysize: 2048
+      validityDays: 3650  
+      pkPassword: intermediate-ca-password
+      file: intermediate-ca.crt
+```
+
+Generated files:
+
+  - `intermediate-ca.crt` - Intermediate certificate
+  - `intermediate-ca.key` - Private key of the intermediate certificate
+  - `root-ca.readme` - Auto-generated passwords of the root and intermediate CAs
+
+### Node and Client certificates
+
+#### Global and default settings
+
+The default settings are applied to all generated certificates and configuration snippets. All values here are optional.
+
+```yml
+defaults:
+  validityDays: 730
+  pkPassword: auto
+  generatedPasswordLength: 12
+  nodesDn:
+    - "CN=*.example.com,OU=Ops,O=Example Com\\, Inc.,DC=example,DC=com"
+  nodeOid: "1.2.3.4.5.5"
+  httpsEnabled: true
+  reuseTransportCertificatesForHttp: false
+```
+
+Options:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-cly1{text-align:left;vertical-align:middle}
+.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 691px">
+<colgroup>
+<col style="width: 120px">
+<col style="width: 471px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-fymr">Name</th>
+    <th class="tg-fymr">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-lboi">validityDays</td>
+    <td class="tg-lboi">Validity of the generated certificates, in days. Default: 730. Can be overwritten for each certificate separately.</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">pkPassword</td>
+    <td class="tg-lboi">Password of the private key. One of: "none", "auto" or a self-chosen password. Default: auto. Can be overwritten for each certificate separately.</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">generatedPasswordLength</td>
+    <td class="tg-lboi">Length of the auto-generated password for the private keys. Only takes effect when pkPassword is set to auto. Default: 12. Can be overwritten for each certificate separately.</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">httpsEnabled</td>
+    <td class="tg-lboi">Whether to enable TLS on the REST layer or not. Default: true</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">reuseTransportCertificatesForHttp</td>
+    <td class="tg-lboi">If set to false, individual certificates for REST and Transport are generated. If set to true, the node certificates are also used on the REST layer. Default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">verifyHostnames</td>
+    <td class="tg-lboi">Set this to true to enable hostname verification. Default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">resolveHostnames</td>
+    <td class="tg-lboi">Set this to true to resolve hostnames against DNS. Default: false</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">signatureAlgorithm</td>
+    <td class="tg-lboi">Signature algorithm (for RSA default is SHA256withRSA, for EC its SHA256withECDSA)</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">useEllipticCurves</td>
+    <td class="tg-lboi">If set to true use elliptic curves instead of RSA. Default is false (since 1.7)</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">ellipticCurve</td>
+    <td class="tg-lboi">The curve to be used. Default is: NIST P-384 (since 1.7)</td>
+  </tr>
+</tbody>
+</table>
+
+#### Node certificates
+
+To generate node certificates, add the node name, the Distinguished Name, the hostname(s), and/or the IP address(es) in the `nodes` section:
+
+```yml
+nodes:
+  - name: node1
+    dn: CN=test.example.com,OU=Dev,O=EMCA Software,C=Poland
+    dns: test.example.com
+    ip: 10.0.2.1
+  - name: node2
+    dn: CN=node2.example.com,OU=Dev,O=EMCA Software,C=Poland
+    dns: 
+      - node2.example.com
+      - es2.example.com
+    ip: 
+      - 10.0.2.1
+      - 192.168.2.1
+  - name: node3
+    dn: CN=node3.example.com,OU=Dev,O=EMCA Software,C=Poland
+    dns: node3.example.com
+```
+
+Generated files:
+
+  - `[nodename].crt` - Node certificate
+  - `[nodename].key` - Private key of the node certificate
+  - `[nodename]_http.crt` - REST certificate, only generated if reuseTransportCertificatesForHttp is false
+  - `[nodename]_logserver_config_snippet.yml` - Logserver Guard configuration snippet for this node, add this to opensearch.yml
+
+Options:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 691px">
+<colgroup>
+<col style="width: 120px">
+<col style="width: 471px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-fymr">Name</th>
+    <th class="tg-fymr">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-lboi">name</td>
+    <td class="tg-lboi">Name of the node, will become part of the filenames. Mandatory</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">dn</td>
+    <td class="tg-lboi">The Distinguished Name of the certificate. If you have special characters in the DN, you need to quote them correctly. Mandatory</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">dns</td>
+    <td class="tg-lboi">The hostname(s) this certificate is valid for. Should match the hostname of the node. Optional, but recommended.</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">ip</td>
+    <td class="tg-lboi">The IP(s) this certificate is valid for. Optional. Prefer hostnames if possible.</td>
+  </tr>
+</tbody>
+</table>
+
+### Admin and client certificates
+
+To generate admin and client certificates, add the following lines to the configuration file:
+
+```yml
+clients:
+  - name: spock
+    dn: CN=spock.example.com,OU=Dev,O=EMCA Software,C=Poland
+  - name: kirk
+    dn: CN=kirk.example.com,OU=Dev,O=EMCA Software,C=Poland
+    admin: true
+```
+
+Generated files:
+
+  - `[name].crt` - Client certificate
+  - `[name].key` - Private key of the client certificate
+  - `client-certificates.readme` - Contains the auto-generated passwords for the certificates
+
+Options:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 691px">
+<colgroup>
+<col style="width: 120px">
+<col style="width: 471px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-fymr">Name</th>
+    <th class="tg-fymr">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-lboi">name</td>
+    <td class="tg-lboi">Name of the certificate, will become part of the file name</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">dn</td>
+    <td class="tg-lboi">The complete Distinguished Name of the certificate. If you have special characters in the DN, you need to quote them correctly</td>
+  </tr>
+  <tr>
+    <td class="tg-lboi">admin</td>
+    <td class="tg-lboi">If set to true, this certificate will be marked as an admin certificate in the generated configuration snippet.</td>
+  </tr>
+</tbody>
+</table>
+
+Note that you need to mark at least one client certificate as an admin certificate.
+
+### Documentation link
+
+To update the link that is inserted into the generated readme files:
+
+`documentationLink: "https://link-to-docs.com"`
+
+Options:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 691px">
+<colgroup>
+<col style="width: 120px">
+<col style="width: 471px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-fymr">Name</th>
+    <th class="tg-fymr">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-lboi">documentationLink</td>
+    <td class="tg-lboi">Link to the site. Optional.</td>
+  </tr>
+</tbody>
+</table>
+
+### Adding certificates after the first run
+
+You can always add more node- or admin certificates as you need them after the initial run of the tool. As a precondition
+
+  - the root CA and, if used, the intermediate certificates and keys must be present in the output folder
+  - the password of the root CA and, if used, the intermediate CA must be present in the config file
+
+If you use auto-generated passwords, copy them from the generated `root-ca.readme` file to the configuration file.
+
+Certificates that have already been generated in a previous run of the tool will be left untouched unless you run the tool with the `-o,--overwrite` switch. In this case, existing files are overwritten. If you have chosen to auto-generate passwords, new keys with auto-generated passwords are created.
+
+### Creating CSRs
+
+If you just want to create CSRs to submit them to your local CA, you can omit the CA part of the config complete. Just define the `default`, `node`, and `client` section, and run the TLS tool with the `-csr` switch.
+
 ## Browser layer encryption
 
-Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption for data-in-transit. While these terms are often used interchangeably, Energy Logserver GUI supports only TLS, which supersedes the old SSL protocols. Browsers send traffic to Energy Logserver  GUI and Energy Logserver GUI sends traffic to Elasticsearch database. These communication channels are configured separately to use TLS. TLS requires X.509 certificates to authenticate the communicating parties and perform encryption of data-in-transit. Each certificate contains a public key and has an associated — but separate — private key; these keys are used for cryptographic operations. Energy Logserver  GUI supports certificates and private keys in PEM format and support TLS 1.3 version.
+Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption for data-in-transit. While these terms are often used interchangeably, Energy Logserver GUI supports only TLS, which supersedes the old SSL protocols. Browsers send traffic to Energy Logserver  GUI and Energy Logserver GUI sends traffic to Elasticsearch database. These communication channels are configured separately to use TLS. TLS requires X.509 certificates to authenticate the communicating parties and perform encryption of data-in-transit. Each certificate contains a public key and has an associated — but separate — private key; these keys are used for cryptographic operations. Energy Logserver  GUI supports certificates and private keys in PEM format and supports the TLS 1.3 version.
 
 ### Configuration steps
 
 1. Obtain a server certificate and private key for Energy Logserver GUI.
 
-   Kibana will need to use this "server certificate" and corresponding private key when receiving connections from web browsers.
+   Kibana will need to use this "server certificate" and the corresponding private key when receiving connections from web browsers.
 
-   When you obtain a server certificate, you must set its subject alternative name (SAN) correctly to ensure that modern web browsers with hostname verification will trust it. You can set one or more SANs to the Energy Logserver GUI server’s fully-qualified domain name (FQDN), hostname, or IP address. When choosing the SAN, you should pick whichever attribute you will be using to connect to Kibana in your browser, which is likely the FQDN in a production environment.
+   When you obtain a server certificate, you must set its subject alternative name (SAN) correctly to ensure that modern web browsers with hostname verification will trust it. You can set one or more SANs to the Energy Logserver GUI server’s fully qualified domain name (FQDN), hostname, or IP address. When choosing the SAN, you should pick whichever attribute you will be using to connect to Kibana in your browser, which is likely the FQDN in a production environment.
 
 2. Configure Energy Logserver GUI to access the server certificate and private key.
 
@@ -365,43 +826,38 @@ Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption
 
 ### Node roles
 
-Every instance of Elasticsearch server is called a *node*.
+Every instance of the Elasticsearch server is called a *node*.
 A collection of connected nodes is called a *cluster*.
 All nodes know about all the other nodes in the cluster
 and can forward client requests to the appropriate node.
 
-Besides that, each node serves one or more purpose:
+Besides that, each node serves one or more purposes:
 
-- Master-eligible node - A node that has *node.master* set to true (default), which makes it eligible to be elected as the master node, which controls the cluster
-- Data node - A node that has *node.data* set to true (default). Data nodes hold data and perform data related operations such as CRUD, search, and aggregations
+- Master-eligible node - A node that has a *node.master* set to true (default), which makes it eligible to be elected as the master node, which controls the cluster
+- Data node - A node that has a *node.data* set to true (default). Data nodes hold data and perform data-related operations such as CRUD, search, and aggregations
 - Client node - A client node has both *node.master* and *node.data* set to false. It can neither hold data nor become the master node. It behaves as a “*smart router*” and is used to forward cluster-level requests to the master node and data-related requests (such as search) to the appropriate data nodes
 - Tribe node - A tribe node, configured via the *tribe.** settings, is a special type of client node that can connect to multiple clusters and perform search and other operations across all connected clusters.
 
 ### Naming convention
 
-Elasticsearch require little configuration before before going into work.
+Elasticsearch requires little configuration before going to work.
 
 The following settings must be considered before going to production:
 
-- **path.data** and **path.logs** - default locations of these files are:
-`/var/lib/elasticsearch`and `/var/log/elasticsearch`.
+- **path.data** and **path.logs** - default locations of these files are
+`/var/lib/elasticsearch` and `/var/log/elasticsearch`.
 - **cluster.name** - A node can only join a cluster when it shares its
 `cluster.name` with all the other nodes in the cluster. The default name
-is "elasticsearch", but you should change it to an appropriate name which
-describes the purpose of the cluster. You can do this in `/etc/elasticsearch/elasticsearch.yml` file.
+is "elasticsearch", but you should change it to an appropriate name that describes the purpose of the cluster. You can do this in the `/etc/elasticsearch/elasticsearch.yml` file.
 - **node.name** - By default, Elasticsearch will use the first seven characters of the randomly
-generated UUID as the node id. Node id is persisted and does not change when a node restarts.
-It is worth configuring a more human readable name: `node.name: prod-data-2`
+generated UUID as the node ID. Node ID is persisted and does not change when a node restarts.
+It is worth configuring a more human-readable name: `node.name: prod-data-2`
 in file `/etc/elstaicsearch/elasticsearch.yml`
-- **network.host** - parameter specifying network interfaces to which Elasticsearch can bind.
-Default is `network.host: ["_local_","_site_"]`.
+- **network.host** - parameter specifying network interfaces to which Elasticsearch can bind. The default is `network.host`: ["\_local\_", "\_site\_"].
 - **discovery** - Elasticsearch uses a custom discovery implementation called "Zen Discovery".
 There are two important settings:
-  - `discovery.zen.ping.unicast.hosts` - specify list of other nodes in the cluster that are
-      likely to be live and contactable;
-  - `discovery.zen.minimum_master_nodes` - to prevent data loss, you can configure this setting
-      so that each master-eligible node knows the minimum number of master-eligible nodes that must
-      be visible in order to form a cluster.
+  - `discovery.zen.ping.unicast.hosts` - specify a list of other nodes in the cluster that are likely to be live and contactable;
+  - `discovery.zen.minimum_master_nodes` - to prevent data loss, you can configure this setting so that each master-eligible node knows the minimum number of master-eligible nodes that must be visible to form a cluster.
 - **heap size** - By default, Elasticsearch tells the JVM to use a heap with a minimum (Xms) and maximum (Xmx)
 size of 1 GB. When moving to production, it is important to configure heap size to ensure that
 Elasticsearch has enough heap available
@@ -422,6 +878,15 @@ in the following configuration files on every node that will be connected to the
 - `/etc/elsticsearch/log4j2.properties`:
   - `logger: action: DEBUG` - for easier debugging.
 
+### TLS Certificates
+
+To generate TLS certificates for each node of the cluster, you can check the `logserver-cluster.yml` config that is provided with the `tlstool.sh`.
+
+```bash
+cd /usr/share/elasticsearch/utils/tlstool
+bash tlstool.sh -c config/logserver-cluster.yml -ca -crt
+```
+
 ### Example setup
 
 Example of the Elasticsearch cluster configuration:
@@ -437,34 +902,34 @@ Example of the Elasticsearch cluster configuration:
   discovery.zen.ping.multicast.enabled: false
   discovery.zen.ping.unicast.hosts: ["10.0.0.4:9300","10.0.0.5:9300","10.0.0.6:9300"]
 
-- to start the Elasticsearch cluster execute command:
+- to start the Elasticsearch cluster execute the command:
 
     ```bash
     systemctl restart elasticsearch
     ```
 
-- to check status of the Elasticsearch cluster execute command:
-    - check of the Elasticsearch cluster nodes status via tcp port:
+- to check the status of the Elasticsearch cluster execute the command:
+    - check the Elasticsearch cluster nodes status via TCP port:
   
         ```bash
          curl -XGET '127.0.0.1:9200/_cat/nodes?v'
 
-           host            ip           heap.percent ram.percent load node.role master name
-           10.0.0.4   10.0.0.4     18           91      0.00 -         -      elk01
-           10.0.0.5   10.0.0.5     66           91      0.00 d        *      elk02
-           10.0.0.6   10.0.0.6     43           86             0.65 d        m     elk03
-           10.0.0.7   10.0.0.7     45           77             0.26 d        m     elk04
+           host            ip   heap.percent ram.percent load node.role master name
+           10.0.0.4   10.0.0.4     18           91      0.00 -        -       elk01
+           10.0.0.5   10.0.0.5     66           91      0.00 d        *       elk02
+           10.0.0.6   10.0.0.6     43           86      0.65 d        m       elk03
+           10.0.0.7   10.0.0.7     45           77      0.26 d        m       elk04
         ```
 
-    - check status of the Elasticsearch cluster via log file:
+    - check the status of the Elasticsearch cluster via the log file:
 
         ```bash
         tail -f /var/log/elasticsearch/tm-lab.log (cluster.name)
         ```
 
-### Adding a new node to existing cluster
+### Adding a new node to the existing cluster
 
-Install the new Energy Logserver instance. The description of the installation can be found in the chapter "First configuration steps"
+Install the new Energy Logserver instance. The description of the installation can be found in the chapter "First Configuration Steps"
 
 Change the following parameters in the configuration file:
 
@@ -472,7 +937,7 @@ Change the following parameters in the configuration file:
 - `node.name:`name_of_the_node uniq for every node;
 - `node.master:`true_or_false
 - `node.data:`true_or_false
-- `discovery.zen.ping.unicast.hosts:`["10.0.0.4:9300","10.0.0.5:9300","10.0.0.6:9300"] - IP addresses and instances of nodes in the cluster.
+- `discovery.zen.ping.unicast.hosts:` [ "10.0.0.4:9300", "10.0.0.5:9300", "10.0.0.6:9300" ] - IP addresses and instances of nodes in the cluster.
 
 If you add a node with the role `data`, delete the contents of the `path.data` directory, by default in `/var/lib/elasticsearch`
 
@@ -488,30 +953,31 @@ The AD configuration should be done in the `/etc/elasticsearch/properties.yml`
 file.
 
 Below is a list of settings to be made in the `properties.yml` file
-(the commented section in the file in order for the AD settings to
+(the commented section in the file for the AD settings to
 start working, this fragment should be uncommented):
 
- |**Directive**                            | **Description**                      |
- | ------------------------------------------------------|---------------------------------------------------------------------------------------|
- | # LDAP                                  |                                      |
- | #ldaps:                                 |                                      |
- | # - name: \"example.com\"               |# domain that is configured           |
- | # host: \"127.0.0.1,127.0.0.2\"         |# list of server for this domain       |
- | # port: 389                             |# optional, default 389 for unencrypted session or 636 for encrypted sessions  |
- |# ssl\_enabled: false                    |# optional, default true              |
- |# ssl\_trust\_all\_certs: true           |# optional, default false             |
- |# ssl.keystore.file: \"path\"            |# path to the truststore store        |
- |# ssl.keystore.password: \"path\"        |# password to the trusted certificate store        |
- |# bind\_dn: [admin\@example.com]        |# account name administrator          |
- |# bind\_password: \"password\"           |# password for the administrator account       |
- |# search\_user\_base\_DN: \"OU=lab,DC=example,DC=com\" |# search for the DN user tree database       |
- |# user\_id\_attribute: \"uid             |# search for a user attribute optional, by default \"uid\"               |
- |# search\_groups\_base\_DN:\"OU=lab,DC=example,DC=com\"|# group database search. This is a catalog main, after which the groups will be sought.|
- |# unique\_member\_attribute: \"uniqueMember\"   |# optional, default\"uniqueMember\"       |
- |# connection\_pool\_size: 10                    |# optional, default 30         |
- |# connection\_timeout\_in\_sec: 10                   |# optional, default 1         |
- |# request\_timeout\_in\_sec: 10                      |# optional, default 1         |
- |# cache\_ttl\_in\_sec: 60                            |# optional, default 0 - cache disabled       |
+ ```yaml
+ldaps:  
+  - name: “example.com”  # domain that is configured 
+    host: “127.0.0.1,127.0.0.2”  # list of server for this domain  
+    #port: 389 # optional, default 389 for unencrypted session or 636 for encrypted sessions  
+    ssl_enabled: false  # optional, default true 
+    #ssl_trust_all_certs: true # optional, default false 
+    #ssl.keystore.file: “path” # path to the truststore store 
+    #ssl.keystore.password: “path” # password to the trusted certificate store 
+    bind_dn: [admin@example.com] # account name administrator 
+    bind_password: “password” # password for the administrator account 
+    search_user_base_DN: “OU=lab,DC=example,DC=com” # search for the DN user tree database 
+    #user_id_attribute: “uid # search for a user attribute optional, by default “uid” 
+    #search_groups_base_DN: ”OU=lab,DC=example,DC=com” # group database search. This is a catalog main, after which the groups will be sought. 
+    #unique_member_attribute: “uniqueMember” # optional, default”uniqueMember” 
+    connection_pool_size: 10 # optional, default 30 
+    connection_timeout_in_sec: 10 # optional, default 1 
+    request_timeout_in_sec: 10 # optional, default 1* 
+    cache_ttl_in_sec: 60 # optional, default 0 - cache disabled 
+    #authentication_only: true    # optional ignore role-mapping settings 
+    #default_authentication_roles: [ "roleName1", "roleName2" ]      # roles asigned to new users authenticating using this LDAP server, used when authentication_only = true
+ ```
 
 If we want to configure multiple domains, then in this configuration
 file we copy the \# LDAP section below and configure it for the next
@@ -522,48 +988,32 @@ like. (It is important to take the interpreter to read these values
 ​​correctly).
 
 ```yaml
- ldaps:
-         - name: "example1.com"
-           host: "127.0.0.1,127.0.0.2"
-           port: 389 # optional, default 389
-           ssl_enabled: false # optional, default true
-           ssl_trust_all_certs: true # optional, default false
-           bind_dn: "<admin@example1.com>"
-           bind_password: "password" # generate encrypted password with /usr/share/elasticsearch/pass-encrypter/pass-encrypter.sh
-           search_user_base_DN: "OU=lab,DC=example1,DC=com"
-           user_id_attribute: "uid" # optional, default "uid"
-           search_groups_base_DN: "OU=lab,DC=example1,DC=com"
-           unique_member_attribute: "uniqueMember" # optional, default "uniqueMember"
-           connection_pool_size: 10 # optional, default 30
-           connection_timeout_in_sec: 10 # optional, default 1
-           request_timeout_in_sec: 10 # optional, default 1
-           cache_ttl_in_sec: 60 # optional, default 0 - cache disabled
-           service_principal_name: "<esauth@example1.com>" # optional, for sso
-           service_principal_name_password : "password" # optional, for sso
-         - name: "example2.com" #DOMAIN 2
-           host: "127.0.0.1,127.0.0.2"
-           port: 389 # optional, default 389
-           ssl_enabled: false # optional, default true
-           ssl_trust_all_certs: true # optional, default false
-           bind_dn: "<admin@example2.com>"
-           bind_password: "password" # generate encrypted password with /usr/share/elasticsearch/pass-encrypter/pass-encrypter.sh
-           search_user_base_DN: "OU=lab,DC=example2,DC=com"
-           user_id_attribute: "uid" # optional, default "uid"
-           search_groups_base_DN: "OU=lab,DC=example2,DC=com"
-           unique_member_attribute: "uniqueMember" # optional, default "uniqueMember"
-           connection_pool_size: 10 # optional, default 30
-           connection_timeout_in_sec: 10 # optional, default 1
-           request_timeout_in_sec: 10 # optional, default 1
-           cache_ttl_in_sec: 60 # optional, default 0 - cache disabled
-           service_principal_name: "<esauth@example2.com>" # optional, for sso
-           service_principal_name_password : "password" # optional, for ssl
+ldaps:
+  - name: "example1.com" #DOMAIN 1
+    host: "127.0.0.1,127.0.0.2"
+    bind_dn: "esauth@example1.com"
+    bind_password: "password"
+    search_user_base_DN: "cn=Users,DC=example1,DC=com"
+    ssl_enabled: false
+  - name: "example2.com" #DOMAIN 2
+    host: "127.0.0.1,127.0.0.2"
+    bind_dn: "esauth@example2.com"
+    bind_password: "password"
+    search_user_base_DN: "cn=Users,DC=example2,DC=com"
+    ssl_enabled: false
 ```
 
 After completing the LDAP section entry in the `properties.yml` file,
-save the changes and restart the service with the command:
+save the changes and reload the module with the below command:
 
 ```bash
-systemctl restart elasticsearch
+curl -sS -uUSER:PASSWORD localhost:9200/_logserver/auth/reload -XPOST
+```
+
+Example:
+
+```bash
+curl -sS -ulogserver:logserver localhost:9200/_logserver/auth/reload -XPOST
 ```
 
 ### Configure SSL support for AD authentication
@@ -586,11 +1036,11 @@ Click the Next button
 
 Keep the setting as shown below and click Next
 
-![](/media/media/image82.png)
+![](/media/media/image83.png)
 
 Keep the setting as shown below and click Next.
 
-![](/media/media/image83.png)
+![](/media/media/image82.png)
 
 Give the name a certificate
 
@@ -609,7 +1059,7 @@ Use the following command to import a certificate file:
  keytool -import -alias adding_certificate_keystore -file certificate.cer -keystore certificatestore
 ```
 
-The values for RED should be changed accordingly.
+The values `certificat.cer` and `certificationstore` should be changed accordingly.
 
 By doing this, he will ask you to set a password for the trusted
 certificate store. Remember this password, because it must be set in
@@ -617,8 +1067,10 @@ the configuration of the Elasticsearch plugin. The following settings
 must be set in the `properties.yml` configuration for
 SSL:
 
+```yaml
  ssl.keystore.file: "<path to the trust certificate store>"
- ssl.keystore.password: "< password to the trust certificate store>"
+ ssl.keystore.password: "<password to the trust certificate store>"
+```
 
 ### Role mapping
 
@@ -634,41 +1086,35 @@ This variable points to the file `/etc/elasticsearch/role-mappings.yml`
 Below is the sample content for this file:
 
 ```yaml
-admin: 
-  - "CN=Admins,OU=lab,DC=dev,DC=it,DC=example,DC=com"
-bank:
-  - "CN=security,OU=lab,DC=dev,DC=it,DC=example,DC=com"
+# admin - superuser group
+admin:
+  - "CN=Admins,CN=Builtin,DC=example,DC=com"
+
+gui-access:
+  - "CN=Admins,CN=Builtin,DC=example,DC=com"
 ```
 
-**Attention. The role you define in the `role.mapping` file must be created in the Energy Logserver.**
+**Attention. The role you define in the `role-mapping.yml` file must be created in the Energy Logserver.**
 
-How to the mapping mechanism works ?
-An AD user log in to Energy Logserver. In the application there is a
-admin role, which through the file role-mapping .yml binds to the name
-of the admin role to which the Admins container from AD is assigned.
-It is enough for the user from the AD account to log in to the
-application with the privileges that are assigned to admin role in
-the Energy Logserver. At the same time, if it is the first login in
-the Energy Logserver, an account is created with an entry that informs the
-application administrator that is was created by logging in with AD.
+How to the mapping mechanism work? \
+An AD user logs in to Energy Logserver. In the application, there is a `gui-access` role, which through the file `role-mapping.yml` binds to the name of an AD group of which the user is a member. Additionally, this AD group binds to the Energy Logserver admin role, which points to permission granted to the user in the application.
 
-Similar, the mechanism will work if we have a role with an arbitrary
-name created in Energy Logserver Logistics and connected to the name of the
-role-mappings.yml and existing in AD any container.
+Similarly, the mechanism will work for any other role in the application. Important in this configuration is to add every AD group to `gui-access` which grants permission to log in and at least one more role which grants permission to some data.
 
-Below a screenshot of the console on which are marked accounts that
-were created by users logging in from AD
+The `gui-access` role is not visible in GUI, it's only used to grant permission to log in.
+
+If field `authentication_only` is `true`, user roles will not be mapped and they will be taken from the `default_authentication_roles` field. When the `default_authentication_roles` field is not added in properties.yaml, a user without a role will be created.
+
+Below is a screenshot of the console on which are marked accounts that were created by users logging in from AD
 
 ![](/media/media/image85_js.png)
 
-If you map roles with from several domains, for example
-dev.example1.com, dev.example2.com then in User List we will see which
-user from which domain with which role logged in Energy Logserver.
+If you map roles from several domains, for example, dev.example1.com, and dev.example2.com then in the User List we will see which user from which domain with which role logged in Energy Logserver.
 
 ### Password encryption
 
-For security reason you can provide the encrypted password for Active Directory integration.
-To do this use *pass-encrypter.sh* script that is located in the *Utils* directory in installation folder.
+For security reasons, you can provide the encrypted password for Active Directory integration.\
+To do this use *pass-encrypter.sh* script that is located in the *Utils* directory in the installation folder.
 
 1. Installation of *pass-encrypter*
 
@@ -701,11 +1147,11 @@ The default configuration file is located at /etc/elasticsearch/properties.yml:
 #radius.port: 1812
 ```
 
-Use appropriate secret based on config file in Radius server. The secret is configured on `clients.conf` in Radius server.
+Use appropriate secret based on config file in Radius server. The secret is configured on `clients.conf` in the Radius server.
 
-In this case, since the plugin will try to do Radius auth then client IP address should be the IP address where the Elasticsearch is deployed.
+In this case, since the plugin will try to do Radius auth, the client IP address should be the IP address where the Elasticsearch is deployed.
 
-Every user by default at present get the admin role
+Every user by default at present gets the admin role
 
 ## Authentication with LDAP
 
@@ -715,9 +1161,9 @@ To use OpenLDAP authorization, install or update Energy Logserver 7.0.2.
 
 The default configuration file is located at `/etc/elasticsearch/properties.yml`:
 
-- ldap_groups_search  - Enable Open LDAP authorization. The `ldap_groups_search` switch with true / false values.
+- ldap_groups_search  - Enable Open LDAP authorization. The `ldap_groups_search` switch with true/false values.
 
-- search filter - you can define `search_filter` for each domain. When polling the LDAP / AD server, the placeholder is changed to `userId` (everything before @domain) of the user who is trying to login. Sample search_filter:
+- search filter - you can define `search_filter` for each domain. When polling the LDAP / AD server, the placeholder is changed to the `userId` (everything before @domain) of the user who is trying to log in. Sample search_filter:
 
   ```bash
   search_filter: "(&(objectClass=inetOrgPerson)(cn=%s))"
@@ -731,7 +1177,7 @@ The default configuration file is located at `/etc/elasticsearch/properties.yml`
 
 - max_connections - for each domain (must be> = 1), this is the maximum number of connections that will be created with the LDAP / AD server for a given domain. Initially, one connection is created, if necessary another, up to the maximum number of connections set. If max_connections is not given, the default value = 10 will be used.
 
-- ldap_groups_search - filter will be used to search groups on the AD / LDAP server of which the user is trying to login. An example of groups_search_filter that works quite universally is:
+- ldap_groups_search - filter will be used to search groups on the AD / LDAP server to which the user is trying to log in. An example of groups_search_filter that works quite universally is:
 
   ```bash
   groups_search_filter: "(|(uniqueMember=%s)(member=%s))"
@@ -765,99 +1211,108 @@ The default configuration file is located at `/etc/elasticsearch/properties.yml`
   
   ```
 
-    When the password is longer than 20 characters, we recommend using our pass-encrypter, otherwise backslash must be escaped with another backslash. Endpoint `role-mapping/_reload` has been changed to `_role-mapping/reload`. This is a unification of API conventions, in accordance with Elasticsearch conventions.
+    When the password is longer than 20 characters, we recommend using our pass-encrypter, otherwise, the backslash must be escaped with another backslash. Endpoint `role-mapping/_reload` has been changed to `_role-mapping/reload`. This is a unification of API conventions, following Elasticsearch conventions.
 
 ## Configuring Single Sign On (SSO)
 
-In order to configure SSO, the system should be accessible by domain name URL, not IP address nor localhost.
+To configure SSO, the system should be accessible by domain name URL, not IP address or localhost.
 
-**Ok :**`https://loggui.com:5601/login`. \
-**Wrong :** `https://localhost:5601/login`, `https://10.0.10.120:5601/login`
+**Ok:** `https://loggui.com:5601/login`. \
+**Wrong:** `https://localhost:5601/login`, `https://10.0.10.120:5601/login`
 
-In order to enable SSO on your system follow below steps. The configuration is made for AD: `dev.example.com`, GUI URL: `loggui.com`
+To enable SSO on your system follow the below steps. The configuration is made for AD: `example.com`, GUI URL: `loggui.com`
 
 ### Configuration steps
 
-1. Create an **User** Account for Elasticsearch auth plugin
+1. Create a **User** Account for Elasticsearch auth plugin
 
-   In this step, a Kerberos Principal representing Elasticsearch auth plugin is created on the Active Directory. The principal name would be `name@DEV.EXAMPLE.COM`, while the  `DEV.EXAMPLE.COM` is the administrative name of the realm. In our case, the principal name will be `esauth@DEV.EXAMPLE.COM`.
+   In this step, a Kerberos Principal representing the Elasticsearch auth plugin is created on the Active Directory. The principal name would be `name@EXAMPLE.COM`, while the `EXAMPLE.COM` is the administrative name of the realm.
 
-   Create User in AD. Set "Password never expires" and "Other encryption options" as shown below:
+   In our case, the principal name will be `esauth@EXAMPLE.COM`.
+
+   Create a User in AD. Set "Account never expires" and enable support for Kerberos encryption as shown below.
 
    ![](/media/media/image107_js.png)
 
-1. Define Service Principal Name (SPN) and Create a Keytab file for it
+1. Define the Service Principal Name (SPN) and Create a keytab file for it
 
    Use the following command to create the keytab file and SPN:
 
-   ```cmd
-   C:> ktpass -out c:\Users\Administrator\esauth.keytab -princ HTTP/loggui.com@DEV.EXAMPLE.COM -mapUser esauth -mapOp set -pass 'Sprint$123' -crypto ALL -pType KRB5_NT_PRINCIPAL
-   ```
+   > ```C:> ktpass -out c:\Users\Administrator\```**esauth.keytab** `-princ` **HTTP/loggui.com@EXAMPLE.COM** `-mapUser` **esauth** ```-mapOp set -pass``` '**Sprint$123**' -crypto ALL -pType KRB5_NT_PRINCIPAL
 
-   Values highlighted in bold should be adjusted for your system. The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user: \
-   `chmod 640 /etc/elasticsearch/esauth.keytab` \
-   `chown elasticsearch: /etc/elasticsearch/esauth.keytab`
+   Values highlighted in bold should be adjusted for your system.
+
+   The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user:
+
+   ```bash
+   chmod 640 /etc/elasticsearch/esauth.keytab
+   chown elasticsearch: /etc/elasticsearch/esauth.keytab
+   ```
 
 1. Create a file named *krb5Login.conf*:
 
     ```bash
     com.sun.security.jgss.initiate{
         com.sun.security.auth.module.Krb5LoginModule required
-        principal="esauth@DEV.EXAMPLE.COM" useKeyTab=true
+        principal="esauth@EXAMPLE.COM" useKeyTab=true
         keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
         };
     com.sun.security.jgss.krb5.accept {
         com.sun.security.auth.module.Krb5LoginModule required
-        principal="esauth@DEV.EXAMPLE.COM" useKeyTab=true
+        principal="esauth@EXAMPLE.COM" useKeyTab=true
         keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
         };
     ```
 
-    Principal user and keyTab location should be changed as per the values   created in the step 2. Make sure the domain is in UPPERCASE as shown above.
-    The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance `/etc/elasticsearch/` with read permissions for elasticsearch  user:
+    The principal user and keyTab location should be changed as per the values created in Step 2. Make sure the domain is in UPPERCASE as shown above. \
+    The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance, `/etc/elasticsearch/` with read permissions for the elasticsearch user:
 
     ```bash
     sudo chmod 640 /etc/elasticsearch/krb5Login.conf
     sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
     ```
 
-1. Append the following JVM arguments (on Elasticsearch node in */etc/sysconfig/elasticsearch*)
+1. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
 
-   ```cmd
-   > -Dsun.security.krb5.debug=true -Djava.security.krb5.realm=**DEV.EXAMPLE.COM** -Djava.security.krb5.kdc=**AD_HOST_IP_ADDRESS** -Djava.security.auth.login.config=**/etc/elasticsearch/krb5Login.conf** -Djavax.security.auth.useSubjectCredsOnly=false
-   ```
+   -Dsun.security.krb5.debug=false \
+   -Djava.security.krb5.realm=**EXAMPLE.COM** \
+   -Djava.security.krb5.kdc=**AD_HOST_IP_ADDRESS** \
+   -Djava.security.auth.login.config=/etc/elasticsearch/krb5Login.conf \
+   -Djavax.security.auth.useSubjectCredsOnly=false
 
-   Change the appropriate values in the bold. This JVM arguments has to be set for Elasticsearch server.
+   Change the appropriate values realm and IP address. Those JVM arguments have to be set for the Elasticsearch server.
 
-1. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for ldap in elasticsearch.yml or properties.yml file wherever the ldap settings are configured:
+1. Authentication options if ```authentication_only: true``` is set
+
+   If a user does not exist, Logserver will create the user without a role.
+   Role in `role-mapping.yml` would be ignored and role `gui-access` from ```default_authentication_roles: ["gui-access"]``` will be assigned.
+
+1. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for LDAP in properties.yml file:
 
    ```yaml
-   sso.domain: "dev.example.com"
+   sso.domain: "example.com"
    ldaps:
-   - name: "dev.example.com"
+   - name: "example.com"
        host: "IP_address"
-       port: 389                                                 # optional, default 389
-       ssl_enabled: false                                        # optional, default    true
-       ssl_trust_all_certs: false                                 # optional, default false
-       bind_dn: "Administrator@dev.example.com"                     # optional, skip for anonymous bind
-       bind_password: "administrator_password"                                 # optional, skip for anonymous bind
-       search_user_base_DN: "OU=lab,DC=dev,DC=it,DC=example,DC=com"
-       user_id_attribute: "uid"                                  # optional, default "uid"
-       search_groups_base_DN: "OU=lab,DC=dev,DC=it,DC=example,DC=com"
-       unique_member_attribute: "uniqueMember"                   # optional, default "uniqueMember"
-       service_principal_name: "esauth@DEV.EXAMPLE.COM"
-       service_principal_name_password : "Sprint$123"
+       port: 389                                      # optional, default 389
+       ssl_enabled: false                             # optional, default    true
+       ssl_trust_all_certs: false                     # optional, default false
+       bind_dn: "esauth@example.com"                  # optional, skip for anonymous bind
+       bind_password: "password"                       # optional, skip for anonymous bind
+       search_user_base_DN: "cn=Users,DC=example,DC=com"
+       user_id_attribute: "uid"                       # optional, default "uid"
+       unique_member_attribute: "uniqueMember"        # optional, default "uniqueMember"
    ```
 
-   Note: At this moment, SSO works for only single domain. So you have to mention for what domain SSO should work in the above property `sso.domain`
+   Note: At this moment, SSO works for only a single domain. So you have to mention for what domain SSO should work in the above property `sso.domain`
 
-1. To apply the changes restart Elasticsearch service
+1. After completing the LDAP section entry in the properties.yml file, save the changes and send a request  for reload authentication  data with the command:
 
    ```bash
-   sudo systemctl restart elasticsearch.service
+   curl -sS -u**user**:**password** localhost:9200/_logserver/auth/reload -XPOST
    ```
 
-1. Enable SSO feature  in `kibana.yml` file:
+1. Enable the SSO feature in the `kibana.yml` file:
 
    ```bash
    kibana.sso_enabled: true
@@ -873,25 +1328,25 @@ In order to enable SSO on your system follow below steps. The configuration is m
 
 #### Internet Explorer configuration
 
-1. Go to `Internet Options` from `Tools` menu and click on `Security` Tab:
+1. Go to `Internet Options` from the `Tools` menu and click on `Security` Tab:
 
     ![](/media/media/image108.png)
 
-1. Select `Local intranet`, click on `Site` -> `Advanced` -> `Add` the url:
+1. Select `Local intranet`, click on `Site` -> `Advanced` -> Provide correct URL -> Click `Add`:
 
     ![](/media/media/image109_js.png)
 
     After adding the site click close.
 
-1. Click on custom level and select the option as shown below:
+1. Click on the custom level and select the option as shown below:
 
     ![](/media/media/image110_js.png)
 
 #### Chrome configuration
 
-For Chrome, the settings are taken from IE browser.
+For Chrome, the settings are taken from the IE browser.
 
-#### Firefox configuration
+#### Firefox Configuration
 
 Update the following config:
 
@@ -932,8 +1387,7 @@ which is used by Energy Logserver to send reports (Section 5.3 of the
 The *postfix* configuration directory for CentOS is */etc/postfix*. It
 contains files:
 
-**main.cf** - the main configuration file for the program specifying
- the basics parameters
+**main.cf** - the main configuration file for the program specifying the basic parameters
 
  Some of its directives:
  </br>
@@ -961,8 +1415,7 @@ contains files:
 
  **master.cf** - defines the configuration settings for the master
  daemon and the way it should work with other agents to deliver mail.
- For each service installed in the master.cf file there are seven
- columns that define how the service should be used.
+ For each service installed in the master.cf file seven columns define how the service should be used.
 
 </br>
 </br>
@@ -981,8 +1434,8 @@ contains files:
 </br>
 </br>
 
-**access** - can be used to control access based on e-mail address,
- host address, domain or network address.
+**access** - can be used to control access based on an e-mail address,
+ host address, domain, or network address.
 
 *Examples of entries in the file*
 
@@ -1036,7 +1489,7 @@ contains files:
 ```
 
 **generic** - mapping of outgoing e-mails to local users. The syntax
- is the same as a canonical file. After you make change to this file,
+ is the same as a canonical file. After you make a change to this file,
  you must also run the postmap command.
 
 ```bash
@@ -1052,13 +1505,13 @@ contains files:
  The syntax of the file is the same as canonical and generic files.
 
  Assuming the user1 was moved from example.com to example.net, you can
- forward all emails received on the old address to the new address:
+ forward all emails received at the old address to the new address:
 
  Example of an entry in the file:
 
   <user1@example.com> <user1@example.net>
 
- After you make change to this file, you must also run the postmap
+ After you make a change to this file, you must also run the postmap
  command.
 
 ```bash
@@ -1069,8 +1522,7 @@ ll /etc/postfix/relocated*
   -rw-r\--r\--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
 ```
 
-**transport** -- mapping between e-mail addresses and server through
- which these e-mails are to be sent (next hops) int the transport
+**transport** -- mapping between e-mail addresses and the server through which these e-mails are to be sent (next hops) in the transport
  format: nexthop.
 
  Example of an entry in the file:
@@ -1092,7 +1544,7 @@ ll /etc/postfix/transport*
  the account of another user or multiple users. It can also be used to
  implement the domain alias mechanism.
 
- *Examples of the entry in the file:*
+ *Examples of the entries in the file:*
 
  Redirecting email for user1, to root users and user3:
 
@@ -1105,7 +1557,7 @@ user1 root, user3
 
   <user1@example.com> root
 
- After you make change to this file, you must also run the postmap
+ After you make a change to this file, you must also run the postmap
  command:
 
 ```bash
@@ -1120,8 +1572,7 @@ user1 root, user3
 ### Basic *postfix* configuration
 
 Base configuration of *postfix* application you can make in
-`/etc/postfix/main.cfg` configuration file, which must complete
-with the following entry:
+`/etc/postfix/main.cfg` configuration file, which must be completed with the following entry:
 
 - section *# RECEIVING MAIL*
 
@@ -1136,10 +1587,10 @@ with the following entry:
   relayhost = [IP mail server]:25 (port number)
   ```
 
-I the next step you must complete the canonical file
-of *postfix*
+In the next step, you must complete the canonical file
+of the *postfix*
 
-At the end you should restart the *postfix*:
+At the end, you should restart the *postfix*:
 
 ```bash
  systemctl restart postfix
@@ -1181,44 +1632,44 @@ You need to give appropriate permissions:
   chmod 400 /etc/postfix/sasl_passwd
   ```
 
-and map configuration to database:
+and map configuration to the database:
   
   ```bash
   postmap /etc/postfix/sasl_passwd
   ```
 
-next you need to generate a ca cert file:
+next, you need to generate a CA cert file:
 
   ```bash
   cat /etc/ssl/certs/Example\_Server\_CA.pem | tee -a etc/postfix/cacert.pem
   ```
 
-And finally, you need to restart postfix
+Finally, you need to restart the postfix
 
   ```bash
   /etc/init.d/postfix restart
   ```
 
-## Custom notification on workstation
+## Custom notification on the workstation
 
-The mechanism of *personalization of notification at the workstation* will be implemented by combining alerting mechanisms, triggering integrated commands and triggering interaction scripts allowing for the transfer of a personalized notification to the workstation.
-The notifications will use the specific script, which has the ability to inform all logged in users or the selected one about the detection of individual incidents.
+The mechanism of *personalization of notification at the workstation* will be implemented by combining alerting mechanisms, triggering integrated commands, and triggering interaction scripts allowing for the transfer of a personalized notification to the workstation.
+The notifications will use a specific script, which can inform all logged-in users or the selected one about the detection of individual incidents.
 
 Configuration steps
 
 1. Create a new alert rule or edit an existing one according to the instruction: [Creating Alerts](https://kb.energylogserver.com/en/latest/06-SIEM_Plan/06-SIEM_Plan.html#creating-alerts),
 
-1. In `Alert Method` field select the `Command` method,
+1. In the `Alert`` Method` field select the `Command` method,
 
-1. Add the following script name to `Path to script/command` filed:
+1. Add the following script name to `Path to script/command` field:
 
    ```notifyworkstation.py```
 
 ## Agents module
 
-Before use ensure that you have all required files
+Before use ensure that you have all the required files
 
-- Script for creating necessary certificates:  ./agents/masteragent/certificates/generate_certs.sh;
+- Tool for generating the necessary certificates: `/usr/share/elasticsearch/utils/tlstool/tlstool.sh`;
 - Logstash utilities:
 
     ```conf
@@ -1228,54 +1679,65 @@ Before use ensure that you have all required files
 
 - Linux Agent files: `./agents/masteragent/agents/linux/masteragent`:
 
-Executable: `MasterBeatAgent.jar` \
-Configuration File for MasterAgent (server): `MasterBeatAgent.conf` \
-Configuration File for Agent (client): `agent.conf` \
-Service file: `masteragent.service`
+  - Executable: `MasterBeatAgent.jar` \
+  - Configuration File for MasterAgent (server): `MasterBeatAgent.conf` \
+  - Configuration File for Agent (client): `agent.conf` \
+  - Service file: `masteragent.service`
 
 ### Preparations
 
-EVERY COMMAND HAVE TO BE EXECUTED FROM /INSTALL DIRECTORY.
+EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
-1. Generate the certificates using generate_certs.sh script from `./agents/masteragent/certificates directory`.
+1. Generate the certificates using `tlstools.sh` script from `/usr/share/elasticsearch/utils/tlstool/`.
 
-    - Fill DOMAIN, DOMAIN_IP, COUNTRYNAME, STATE, COMPANY directives at the beginning of the script. Note that DOMAIN_IP represents IP of host running logstash.
-    - Generate certs:
+    - Update the IP of the node directive, by replacing `<logstash ip address`> with the logstash server ip in the provided masteragent.yml config (`/usr/share/elasticsearch/utils/tlstool/config/masteragent.yml`).
+    - Generate certs using masteragent configuration (by default it will be saved to the `out/` dir):
 
-        `# bash ./agents/masteragent/certificates/generate_certs.sh`
+        ```bash
+        /usr/share/elasticsearch/utils/tlstool/tlstool.sh -c /usr/share/elasticsearch/utils/tlstool/config/masteragent.yml -ca -crt -t agents/masteragent/certificates
+        ```
 
-    - Set KeyStore password of your choice that is utilized to securely store certificates.
+    - Create KeyStore and TrustStore. Set the KeyStore password of your choice that is utilized to securely store certificates:
+
+        ```bash
+        cd agents/masteragent/certificates
+        keytool -import -file rootCA.crt -alias root -keystore root.jks -storetype jks
+        openssl pkcs12 -export -in localhost.crt -inkey localhost.key -out node_name.p12 -name localhost -certfile rootCA.crt
+        cd -
+        ```
+
+    - Set the KeyStore password of your choice that is utilized to securely store certificates.
     - Type 'yes' when "Trust this certificate?" monit will be shown.
-    - Set TrustStore password of your choice that is used to secure CAs. Remember entered passwords - they'll be used later!
+    - Set the TrustStore password of your choice that is used to secure CAs. Remember entered passwords - they'll be used later!
 
 1. Configure firewall to enable communication on used ports (defaults: TCP 8080 -> logstash, TCP 8081 -> agent's server).
 
-    - These ports can be changed, but must reflect "port" and "logstash" directives from agent.conf file to ensure connection with agent.
+    - These ports can be changed but must reflect "port" and "logstash" directives from an agent.conf file to ensure a connection with the agent.
     - Commands for default ports:
 
       ```bash
-      # firewall-cmd --permanent --zone public --add-port 8080/tcp
-      # firewall-cmd --permanent --zone public --add-port 8081/tcp
+      firewall-cmd --permanent --zone public --add-port 8080/tcp
+      firewall-cmd --permanent --zone public --add-port 8081/tcp
       ```
 
 1. Configure Logstash:
 
     - Copy files:
 
-        `# cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/`
+        `cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/`
 
     - Copy pipeline configuration:
 
       ```bash
-      # cp -rf ./integrations/masteragent/*.yml.off /etc/logstash/pipelines.d/masteragent.yml
-      # cat ./integrations/masteragent/masteragent.yml.off >> /etc/logstash/pipelines.yml`
+      cp -rf ./integrations/masteragent/*.yml.off /etc/logstash/pipelines.d/masteragent.yml
+      cat ./integrations/masteragent/masteragent.yml.off >> /etc/logstash/pipelines.yml
       ```
 
     - Configure SSL connection, by copying previously generated certificates:
 
       ```bash
-      # mkdir -p /etc/logstash/conf.d/masteragent/ssl
-      # /bin/cp -rf ./agents/masteragent/certificates/localhost.* ./agents/masteragent/certificates/rootCA.crt /etc/logstash/conf.d/masteragent/ssl/
+      mkdir -p /etc/logstash/conf.d/masteragent/ssl
+      /bin/cp -rf ./agents/masteragent/certificates/localhost.* ./agents/masteragent/certificates/rootCA.crt /etc/logstash/conf.d/masteragent/ssl/
       ```
 
     - Set permissions:
@@ -1304,7 +1766,7 @@ EVERY COMMAND HAVE TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
     `# chown -R kibana:kibana /opt/agents`
 
-- Update configuration file with KeyStore/TrustStore paths and passwords. Use your preferred editor eg. vim:
+- Update the configuration file with KeyStore/TrustStore paths and passwords. Use your preferred editor eg. vim:
 
     `# vim /opt/agents/agent.conf`
 
@@ -1332,7 +1794,7 @@ Linux Agent - software installed on clients running on Linux OS:
 
     `# /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/`
 
-1. Update configuration file with KeyStore/TrustStore paths and passwords. Also update IP and port (by default 8080 is used) of the logstash host that agent will connect to with 'logstash' directive. Use your preferred editor eg. vim:
+1. Update the configuration file with KeyStore/TrustStore paths and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive. Use your preferred editor eg. vim:
 
     `# vim /opt/masteragent/agent.conf`
 
@@ -1344,7 +1806,7 @@ Linux Agent - software installed on clients running on Linux OS:
     # systemctl start masteragent
     ```
 
-1. Finally verify in Kibana 'Agents' plugin if newly added agent is present. Check masteragent logs executing:
+1. Finally, verify in the Kibana 'Agents' plugin if a newly added agent is present. Check masteragent logs executing:
 
     `# journalctl -fu masteragent`
 
@@ -1369,11 +1831,11 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
 1. Copy node_name.p12 and root.jks files from the `./install/agents/masteragent/certificates` to desired directory.
 
-1. Update "`C:\Program Files\MasterAgent\agent.conf`" file with KeyStore/TrustStore paths from previous step and passwords. Also update IP and port (by default 8080 is used) of the logstash host that agent will connect to with 'logstash' directive.
+1. Update the "`C:\Program Files\MasterAgent\agent.conf`" file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive.
 
 1. Start PowerShell as an administrator:
 
-    To install agent you can use interchangeably the following methods:
+    To install an agent you can use interchangeably the following methods:
 
     - Method 1 - use installer:
 
@@ -1387,21 +1849,21 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
       `# New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"`
 
-1. Finally verify in Kibana '`Agents`' plugin if newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in `C:\Program Files\MasterAgent` directory after service start. Also check the service status:
+1. Finally, verify in the Kibana '`Agents`' plugin if a newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in the `C:\Program Files\MasterAgent` directory after the service starts. Also, check the service status:
 
       `.\agents.exe status`
 
 ### Beats - configuration templates
 
-1. Go to the `Agents` that is located in main menu. Then go to `Templates` and click `Add template` button.
+1. Go to the `Agents` which is located in the main menu. Then go to `Templates` and click the `Add template` button.
 
     ![](/media/media/image242.png)
 
-1. Click `Create new` file button at the bottom.
+1. Click the `Create new` file button at the bottom.
 
     ![](/media/media/image243.png)
 
-1. you will see form to create file that will be on client system. \
+1. you will see the form to create a file that will be on a client system. \
     There are inputs such as:
     - Destination Path,
     - File name,
@@ -1410,11 +1872,11 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
     - Content.
     ![](/media/media/image244.png)
 
-1. Remember that you must provide the exact path to your directory in Destination Path field
+1. Remember that you must provide the exact path to your directory in the Destination Path field
 
     ![](/media/media/image245.png)
 
-1. After that add your file to template by checking it from `Available files` list and clicking `Add` and then `Create new file`.
+1. After that add your file to the template by checking it from the `Available files` list and clicking `Add` and then `Create new file`.
 
     ![](/media/media/image246.png)
 
@@ -1426,7 +1888,7 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
     ![](/media/media/image248.png)
 
-1. Last step is apply template by checking it from list and clicking `Apply` button.
+1. The last step is to apply the template by checking it from the list and clicking the `Apply` button.
 
     ![](/media/media/image249.png)
 
@@ -1675,9 +2137,9 @@ processors:
 
 Each condition receives a field to compare. You can specify multiple fields under the same condition by using ```AND``` between the fields (for example, ```field1 AND field2```).
 
-For each field, you can specify a simple field name or a nested map, for example ```dns.question.name```.
+For each field, you can specify a simple field name or a nested map, for example, ```dns.question.name```.
 
-See Exported fields for a list of all the fields that are exported by Winlogbeat.
+See Exported Fields for a list of all the fields that are exported by Winlogbeat.
 
 The supported conditions are:
 
@@ -1726,7 +2188,7 @@ regexp:
 
 ###### range
 
-The range condition checks if the field is in a certain ```range``` of values. The condition supports ```lt, lte, gt and gte```. The condition accepts only integer or float values.
+The range condition checks if the field is in a certain ```range``` of values. The condition supports ```lt, lte, gt, and gte```. The condition accepts only integer or float values.
 
 For example, the following condition checks for failed HTTP transactions by comparing the ```http.response.code``` field with 400.
 
@@ -1762,7 +2224,7 @@ The ```network``` condition checks if the field is in a certain IP network range
 - ```link_local_unicast``` - Matches link-local unicast addresses.
 - ```link_local_multicast``` - Matches link-local multicast addresses.
 - ```private``` - Matches private address ranges defined in RFC 1918 (IPv4) and RFC 4193 (IPv6).
-- ```public``` - Matches addresses that are not loopback, unspecified, IPv4 broadcast, link local unicast, link local multicast, interface local multicast, or private.
+- ```public``` - Matches addresses that are not loopback, unspecified, IPv4 broadcast, link-local unicast, link-local multicast, interface local multicast, or private.
 - ```unspecified``` - Matches unspecified addresses (either the IPv4 address "0.0.0.0" or the IPv6 address "::").
 
 The following condition returns true if the source.ip value is within the private address space.
@@ -1779,7 +2241,7 @@ network:
   destination.ip: '192.168.1.0/24'
 ```
 
-And this condition returns true when ```destination.ip``` is within any of the given subnets.
+This condition returns true when ```destination.ip``` is within any of the given subnets.
 
 ```yml
 network:
@@ -1798,7 +2260,7 @@ has_fields: ['http.response.code']
 
 ###### or
 
-The ```or``` operator receives a list of conditions.
+The `or` operator receives a list of conditions.
 
 ```yml
 or:
@@ -1898,7 +2360,7 @@ Number of events the queue can store.
 The default value is ```4096``` events.
 
 ```flush.min_events```
-Minimum number of events required for publishing. If this value is set to 0, the output can start publishing events without additional waiting times. Otherwise the output has to wait for more events to become available.
+Minimum number of events required for publishing. If this value is set to 0, the output can start publishing events without additional waiting times. Otherwise, the output has to wait for more events to become available.
 
 The default value is ```2048```.
 
@@ -1907,7 +2369,7 @@ Maximum wait time for flush.min_events to be fulfilled. If set to 0s, events wil
 The default value is 1s.
 
 Configure disk queue
-The disk queue stores pending events on the disk rather than main memory. This allows Beats to queue a larger number of events than is possible with the memory queue, and to save events when a Beat or device is restarted. This increased reliability comes with a performance tradeoff, as every incoming event must be written and read from the device’s disk. However, for setups where the disk is not the main bottleneck, the disk queue gives a simple and relatively low-overhead way to add a layer of robustness to incoming event data.
+The disk queue stores pending events on the disk rather than the main memory. This allows Beats to queue a larger number of events than is possible with the memory queue, and to save events when a Beat or device is restarted. This increased reliability comes with a performance tradeoff, as every incoming event must be written and read from the device’s disk. However, for setups where the disk is not the main bottleneck, the disk queue gives a simple and relatively low-overhead way to add a layer of robustness to incoming event data.
 
 The disk queue is expected to replace the file spool in a future release.
 
@@ -1918,7 +2380,7 @@ queue.disk:
   max_size: 10GB
 ```
 
-The queue will use up to the specified maximum size on disk. It will only use as much space as required. For example, if the queue is only storing 1GB of events, then it will only occupy 1GB on disk no matter how high the maximum is. Queue data is deleted from disk after it has been successfully sent to the output.
+The queue will be used up to the specified maximum size on the disk. It will only use as much space as required. For example, if the queue is only storing 1GB of events, then it will only occupy 1GB on disk no matter how high the maximum is. Queue data is deleted from the disk after it has been successfully sent to the output.
 
 Configuration options
 
@@ -1932,12 +2394,12 @@ The default value is ```"${path.data}/diskqueue"```.
 ```max_size (required)```
 The maximum size the queue should use on disk. Events that exceed this maximum will either pause their input or be discarded, depending on the input’s configuration.
 
-A value of 0 means that no maximum size is enforced, and the queue can grow up to the amount of free space on the disk. This value should be used with caution, as completely filling a system’s main disk can make it inoperable. It is best to use this setting only with a dedicated data or backup partition that will not interfere with Winlogbeat or the rest of the host system.
+A value of 0 means that no maximum size is enforced, and the queue can grow up to the amount of free space on the disk. This value should be used with caution, as filling a system’s main disk can make it inoperable. It is best to use this setting only with a dedicated data or backup partition that will not interfere with Winlogbeat or the rest of the host system.
 
 The default value is ```10GB```.
 
 ```segment_size```
-Data added to the queue is stored in segment files. Each segment contains some number of events waiting to be sent to the outputs, and is deleted when all its events are sent. By default, segment size is limited to 1/10 of the maximum queue size. Using a smaller size means that the queue will use more data files, but they will be deleted more quickly after use. Using a larger size means some data will take longer to delete, but the queue will use fewer auxiliary files. It is usually fine to leave this value unchanged.
+Data added to the queue is stored in segment files. Each segment contains some number of events waiting to be sent to the outputs and is deleted when all its events are sent. By default, segment size is limited to 1/10 of the maximum queue size. Using a smaller size means that the queue will use more data files, but they will be deleted more quickly after use. Using a larger size means some data will take longer to delete, but the queue will use fewer auxiliary files. It is usually fine to leave this value unchanged.
 
 The default value is ```max_size / 10```.
 
@@ -1952,12 +2414,11 @@ The number of events the queue should accept and store in memory while waiting f
 The default value is ```2048```.
 
 ```retry_interval```
-Some disk errors may block operation of the queue, for example a permission error writing to the data directory, or a disk full error while writing an event. In this case, the queue reports the error and retries after pausing for the time specified in retry_interval.
+Some disk errors may block the operation of the queue, for example, a permission error writing to the data directory, or a disk full error while writing an event. In this case, the queue reports the error and retries after pausing for the time specified in retry_interval.
 
 The default value is ```1s``` (one second).
 
-```max_retry_interval```
-When there are multiple consecutive errors writing to the disk, the queue increases the retry interval by factors of 2 up to a maximum of max_retry_interval. Increase this value if you are concerned about logging too many errors or overloading the host system if the target disk becomes unavailable for an extended time.
+```max_retry_interval``` When multiple consecutive errors are written to the disk, the queue increases the retry interval by factors of 2 up to a maximum of max_retry_interval. Increase this value if you are concerned about logging too many errors or overloading the host system if the target disk becomes unavailable for an extended time.
 
 The default value is ```30s``` (thirty seconds).
 
@@ -2108,7 +2569,7 @@ Editing the file: `C:\Program Files\Filebeat\filebeat.yml`:
     sc start filebeat
     ```
 
-You can enable, disable and list Filebeat modules using the following command:
+You can enable, disable, and list Filebeat modules using the following command:
 
 ```cmd
 cd 'C:\Program Files\Filebeat'
@@ -2238,7 +2699,7 @@ Editing the file: `C:\Program Files\Merticbeat\metricbeat.yml`:
     sc start metricbeat
     ```
 
-You can enable, disable and list Metricbeat modules using the following command:
+You can enable, disable, and list Metricbeat modules using the following command:
 
 ```cmd
 cd 'C:\Program Files\Metricbeat'
@@ -2382,7 +2843,7 @@ packetbeat.exe test output
 
 1. Copy the Filebeat installer from the installation directory `install/Agents/beats/linux/filebeat-oss-7.17.8-x86_64.rpm`
 
-1. Install filebeat with following command:
+1. Install filebeat with the following command:
 
    ```bash
    yum install -y filebeat-oss-7.17.8-x86_64.rpm
@@ -2486,7 +2947,7 @@ Editing the file: `/etc/filebeat/filebeat.yml`:
     systemctl start filebeat
     ```
 
-You can enable, disable and list Filebeat modules using the following command:
+You can enable, disable, and list Filebeat modules using the following command:
 
 ```bash
 filebeat modules list
@@ -2507,7 +2968,7 @@ filebeat test output
 
 1. Copy the Metricbeat installer from the installation directory `install/Agents/beats/linux/metricbeat-oss-7.17.8-x86_64.rpm`
 
-2. Install Metricbeat with following command:
+2. Install Metricbeat with the following command:
 
    ```bash
    yum install -y metricbeat-oss-7.17.8-x86_64.rpm
@@ -2595,7 +3056,7 @@ Start Filebeat service:
 systemctl start metricbeat
 ```
 
-You can enable, disable and list Metricbeat modules using the following command:
+You can enable, disable, and list Metricbeat modules using the following command:
 
 ```cmd
 metricbeat modules list
@@ -2616,7 +3077,7 @@ metricbeat test output
 
 1. Copy the Packetbeat installer from the installation directory `install/Agents/beats/linux/packetbeat-oss-7.17.8-x86_64.rpm`
 
-2. Install Packetbeat with following command:
+2. Install Packetbeat with the following command:
 
    ```bash
    yum install -y packetbeat-oss-7.17.8-x86_64.rpm
@@ -2739,7 +3200,7 @@ To install the Kafka, follow the steps below:
    https://www.apache.org/dyn/closer.cgi?path=/kafka/3.2.0/kafka_2.13-3.2.0.tgz
    ```
 
-4. Unpack installation files to `/opt/kafka` directory:
+4. Unpack installation files to the `/opt/kafka` directory:
 
    ```bash
    tar -xzvf kafka_2.13-3.2.0.tgz -C /opt/
@@ -2883,7 +3344,7 @@ To install the Kafka, follow the steps below:
    keytool -keystore server.keystore.jks -alias {alias_name} -certreq -file cert-file -ext SAN=DNS:{FQDN},IP:{server_IP}
    ```
 
-5. Sing in certificate
+5. Sign in certificate
 
    Complete:
     - The name of the alias;
@@ -3036,11 +3497,11 @@ To install the Kafka, follow the steps below:
 
 ### Log retention for Kafka topic
 
-The Kafka durably persists all published records—whether or not they have been consumed—using a configurable retention period. For example, if the retention policy is set to two days, then for the two days after a record is published, it is available for consumption, after which it will be discarded to free up space. Kafka's performance is effectively constant with respect to data size so storing data for a long time is not a problem.
+The Kafka durably persists all published records—whether or not they have been consumed—using a configurable retention period. For example, if the retention policy is set to two days, then for the two days after a record is published, it is available for consumption, after which it will be discarded to free up space. Kafka's performance is effectively constant concerning data size so storing data for a long time is not a problem.
 
 ## Event Collector
 
-The Event Collector allows to get events from remote Windows computers and store them in the Energy Logserver indexes. The destination log path for the events is a property of the subscription. The Energy Logserver Event Collector allows to define an event subscription on an Energy Logserver collector without defining the event source computers. Multiple remote event source computers can then be set up (using for example a group policy setting) to forward events to the Energy Logserver. The Event Collector don't require installation of any additional applications/agents on Windows source hosts.
+The Event Collector allows you to get events from remote Windows computers and store them in the Energy Logserver indexes. The destination log path for the events is a property of the subscription. The Energy Logserver Event Collector allows to definition of an event subscription on an Energy Logserver collector without defining the event source computers. Multiple remote event source computers can then be set up (using for example a group policy setting) to forward events to the Energy Logserver. The Event Collector doesn't require installation of any additional applications/agents on Windows source hosts.
 
 ### Configuration steps
 
@@ -3062,7 +3523,7 @@ cd /opt/wec/certgen
 vim server-certopts.cnf
 ```
 
-- Set `DNS.1` and `IP.1` for WEC server:
+- Set `DNS.1` and `IP.1` for the WEC server:
 
   ```bash
   [req]
@@ -3134,7 +3595,7 @@ vim server-certopts.cnf
 
 #### Event Collector Configuration
 
-- Copy server certificate and server key to Event Collector installation directory:
+- Copy the server certificate and server key to the Event Collector installation directory:
 
   ```bash
   cp server.crt server.key /opt/wec/sub_manager/certificates/
@@ -3166,7 +3627,7 @@ vim server-certopts.cnf
       port: 5614
   ```
 
-  - set the output  to saving events to local file:
+  - set the output to saving events to a local file:
 
   ```bash
   outputfile: /var/log/wec/events-{:%Y-%d-%m}.log
@@ -3261,7 +3722,7 @@ vim server-certopts.cnf
 
 5. The `PKCS #12` archive contains the CA certificate as well.
 
-6. Move the CA certificate  to the `Trusted Root Certification Authorities` node after the import.
+6. Move the CA certificate to the `Trusted Root Certification Authorities` node after the import.
 
 7. Give `NetworkService` access to the private key  file of the client authentication certificate:
 
@@ -3269,17 +3730,17 @@ vim server-certopts.cnf
    - In `CompMgmt.msc`, under `Local Users and Groups`, click `Groups > Event Log Readers` to open `Event Log Readers Properties`.
    - Add the "NETWORK SERVICE" account to the `Event Log Readers group`.
 
-   8.1. For domain controller use "Group Policy Manger Editor" and edit: "Default Domain Controller Policy":
+   8.1. For domain controller use "Group Policy Manager Editor" and edit: "Default Domain Controller Policy":
 
     - From `Computer Configuration` > `Policy`, expand `Windows Settings` > `Security Settings` > `Restricted Groups`;
-    - From contest menu add: `Add Group`
+    - From the contest menu add: `Add Group`
     - Add the following configuration:
        - Group = `BUILTIN\Event Log Readers`
           - Members = `NT Authority\NETWORK SERVICE`
 
-9. Make sure collector server is reachable from windows machine
+9. Make sure the collector server is reachable from the Windows machine
 
-10. Run `winrm qc` and accept changes on windows machine
+10. Run `winrm qc` and accept changes on the Windows machine
 
 11. Run `winrm set winrm/config/client/auth @{Certificate="true"}` on windows machine to enable certificate authentication
 
@@ -3302,7 +3763,7 @@ vim server-certopts.cnf
 
     NOTE: If you wish to set up multiple subscriptions because you want to forward Windows events to multiple event collectors (such as WEC), then you can do that here.
 
-15. Run the `cmd` console with administrative privileges and make following command
+15. Run the `cmd` console with administrative privileges and make the following command
 
     ```cmd
     gpupdate /force
@@ -3310,13 +3771,13 @@ vim server-certopts.cnf
 
 #### Logstash pipeline configuration
 
-Create directory for Event Collector pipeline configuration files:
+Create a directory for Event Collector pipeline configuration files:
 
 ```bash
 mkdir /etc/logstash/conf.d/syslog_wec
 ```
 
-Copy the following Logstash configuration files to pipeline directory:
+Copy the following Logstash configuration files to the pipeline directory:
 
 ```bash
 cp 001-input-wec.conf /etc/logstash/conf.d/syslog_wec/
@@ -3348,7 +3809,7 @@ systemctl restart logstash
 
 #### Elasticsearch template
 
-Install the Elasticsearch template for Event Collector data index:
+Install the Elasticsearch template for the Event Collector data index:
 
 ```bash
 curl -ulogserver:logserver -X PUT "http://localhost:9200/_template/syslog_wec?pretty" -H 'Content-Type: application/json' -d@template_wec.json
@@ -3358,13 +3819,13 @@ curl -ulogserver:logserver -X PUT "http://localhost:9200/_template/syslog_wec?pr
 
 1. Browse to Event Viewer
 
-2. Right click **Subscriptions** and **create subscription**
+1. Right-click **Subscriptions** and **create subscription**
 
-3. Click on Select Events and choose the type of logs that you want, for example: Event Level, Event Logs, Include Exclude Event ID, Keyword, etc.
+1. Click on Select Events and choose the type of logs that you want, for example, Event Level, Event Logs, Include Exclude Event ID, Keyword, etc.
 
-4. Switch to XML view tab;
+1. Switch to XML view tab;
 
-5. Copy the value of the `Select Path` key, for example:
+1. Copy the value of the `Select Path` key, for example:
 
    ```xml
    <QueryList>
@@ -3380,7 +3841,7 @@ curl -ulogserver:logserver -X PUT "http://localhost:9200/_template/syslog_wec?pr
    *[System[(Level=1  or Level=2 or Level=3) and (EventID=4672 or EventID=4624 or EventID=4634)]]
    ```
 
-6. Paste the above definition into the Event Collector configuration file in `filters` section:
+1. Paste the above definition into the Event Collector configuration file in the `filters` section:
 
    ```bash
    vim /etc/wec/config.yaml
@@ -3393,7 +3854,7 @@ curl -ulogserver:logserver -X PUT "http://localhost:9200/_template/syslog_wec?pr
    
    ```
 
-   Restart Event Collector service
+   Restart the Event Collector service
 
    ```bash
    systemctl restart wec
@@ -3440,7 +3901,7 @@ Configuration file: `/opt/cerebro/conf/application.conf`
    play.ws.ssl.loose.acceptAnyCertificate=true
    ```
 
-- SSL access to cerebro
+- SSL access to Cerebro
 
    ```bash
       http = {
@@ -3503,11 +3964,11 @@ You can restrict access to specific fields in documents for a user role. For exa
 
     ![](/media/media/image251.png)
 
-1. After that you will see new role in `Role list` tab.
+1. After that, you will see the new role in the `Role list` tab.
 
     ![](/media/media/image252.png)
 
-1. Add your user to new `Role`
+1. Add your user to the new `Role`
 
     ![](/media/media/image253.png)
 
@@ -3543,7 +4004,7 @@ The GUI language can be changed as follows:
 
    `# systemctl restart kibana`
 
-6. Finally the result should be as shown in the picture:
+6. Finally, the result should be as shown in the picture:
 
    ![](/media/media/image255.png)
 
@@ -3553,8 +4014,8 @@ Source file to use as a base for translations: `/usr/share/kibana/translations/e
 
 #### Bullet points for translations
 
-For the translation to work you have to follow this steps. \
-Omitting some may result in missing translation in some parts of application or empty screen when entering a broken portion of an app.
+For the translation to work you have to follow these steps. \
+Omitting some may result in missing translation in some parts of an application or an empty screen when entering a broken portion of an app.
 
 The file with translation is JSON.
 
@@ -3569,9 +4030,9 @@ Translated values have the following structure:
 
 ```
 
-Every key is meant to be unique. There can be only one value for each key. In `messages` object, each key have a "text" value, not a number and not an object.
+Every key is meant to be unique. There can be only one value for each key. In the `messages` object, each key has a "text" value, not a number and not an object.
 
-But there are some structures in source file that you will use as a base of of your translation that have to be addressed during the process in order to achieve that.
+But there are some structures in a source file that you will use as a base of your translation that have to be addressed during the process to achieve that.
 
 1. Objects
 
@@ -3586,7 +4047,7 @@ But there are some structures in source file that you will use as a base of of y
     }
     ```
 
-    This have to be transformed as described above - a key `common.ui.aggTypes.buckets.filtersTitle` has to have a text assigned to it. The value that needs to be translated is in field "text" and "comment" described to you how the value needs to be translated. The result of such will be:
+    This has to be transformed as described above - a key `common.ui.aggTypes.buckets.filtersTitle` has to have a text assigned to it. The value that needs to be translated is in the fields "text" and "comment" described to you how the value needs to be translated. The result of such will be:
 
     ```json
     {
@@ -3608,7 +4069,7 @@ But there are some structures in source file that you will use as a base of of y
 
     Any text that is encapsulated in `{}` has to be left as is. Those values are substituted by the application.
 
-1. How to treat complicated structures, eg.: plurals etc.
+1. How to treat complicated structures, eg.: plurals, etc.
 
    ```json
    {
@@ -3618,11 +4079,11 @@ But there are some structures in source file that you will use as a base of of y
    }
    ```
 
-   As of now there is a single example of the above. Contrary to the last point the value in `{}` has to be translated for that key. So `{hit}` and `{hits}`.
+   As of now, there is a single example of the above. Contrary to the last point the value in `{}` has to be translated for that key. So `{hit}` and `{hits}`.
 
 1. React compliant filenames
 
-    In the application codebase there are methods that will take translated keys and substitute them. But many of those will work only if the name of the translation file will be one of:
+    In the application codebase, some methods will take translated keys and substitute them. But many of those will work only if the name of the translation file is one of:
       - `en`
       - `en-US`
       - `en-xa`
@@ -3651,19 +4112,19 @@ But there are some structures in source file that you will use as a base of of y
 1. Can I just paste everything into a basic(or advanced) translation software? \
      ~No. There are some points to follow for the translation file to work at all.
 
-1. I have a following error - is the application broken:
+1. I have the following error - is the application broken:
     - **Error formatting message: A message must be provided as a String or AST** \
      ~It is possible you have not followed point 1 - you have left some object structures in your file.
     - **Blank  page in GUI** \
-     ~It is usually cause by not following point 2 -some variable names were changed.
+     ~It is usually caused by not following point 2 -some variable names were changed.
 
-1. I have set "i18n.locale" in configuration file but the app is not translated. \
-     ~You may have forgot to put reference for your file in `.i18nrc.json` file.
+1. I have set "i18n.locale" in the configuration file but the app is not translated. \
+     ~You may have forgotten to put a reference for your file in `.i18nrc.json` file.
 
 #### Known issues
 
 1. Some text may not be translated in **Management -> Advanced settings** even though keys for them are present in translation files.
 
-1. Same thing may happen in **Discover -> View surrounding documents**.
+1. The same thing may happen in **Discover -> View surrounding documents**.
 
 1. Not an issue but plugin names (links on the left menu) do not translate.

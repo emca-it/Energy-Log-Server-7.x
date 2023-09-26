@@ -9715,7 +9715,6 @@ To perform this incident notification in an external system.  You need to select
 
 ![](/media/media/image239.png)
 
-
 ## SIEM Virtus Total integration
 
 This integration utilizes the VirusTotal API to detect malicious content within the files monitored by **File Integrity Monitoring**. This integration functions as described below:
