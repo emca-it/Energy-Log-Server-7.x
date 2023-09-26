@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-logger -n HOST_IP_ARCHER -t logger -p daemon.alert -T "CEF:0|EnergyLogServer|EnergyLogServer|${19}|${18}| TimeStamp=$1 DeviceVendor/Product=$2-$3 Message=$4 TransportProtocol=$5 Aggregated:$6 AttackerAddress=$7 AttackerMAC=$8 AttackerPort=$9 TargetMACAddress=${10} TargetPort=${11} TargetAddress=${12} FlexString1=${13} Link=${14} ${15} $1 ${16} $7 ${17}"
