@@ -53,7 +53,7 @@ root_doc = 'index'
 
 # General information about the project.
 project = u'Energy-Log-Server-7.x'
-copyright = str(datetime.now().year), EMCA Software'
+copyright = str(datetime.now().year)+', EMCA Software'
 author = 'EMCA-IT'
 
 # The version info for the project you're documenting, acts as replacement for
