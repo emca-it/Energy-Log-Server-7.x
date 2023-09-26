@@ -266,7 +266,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (root_doc, 'energy-log-server-7x.tex', u'Energy-Log-Server-7.x Documentation',
+    (master_doc, 'energy-log-server-7x.tex', u'Energy-Log-Server-7.x Documentation',
      u'', 'manual'),
 ]
 
@@ -297,7 +297,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 #man_pages = [
-#    (root_doc, 'test', 'test Documentation',
+#    (master_doc, 'test', 'test Documentation',
 #     [author], 1)
 #]
 
@@ -312,7 +312,7 @@ latex_documents = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 #texinfo_documents = [
-#     (root_doc, 'test', 'test Documentation',
+#     (master_doc, 'test', 'test Documentation',
 #      author, 'test', 'One line description of project.',
 #     'Miscellaneous'),
 #]
