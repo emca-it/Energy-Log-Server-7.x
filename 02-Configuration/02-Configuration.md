@@ -301,7 +301,7 @@ You can either install CA to allow Logstash and Beats traffic or you can supply 
 
     ```yml
     output {
-      elasticsearch {
+      logserver {
         hosts => "https://mylocal.domain.test:9200"
         ssl => true
         index => "winlogbeat-%{+YYYY.MM}"
