@@ -1048,12 +1048,14 @@ The table below contains built-in user accounts and default passwords:
    - Update the Logstash pipeline configuration files (*.conf) in the output sections:
 
      ```bash
-     vi /etc/logstash/conf.d/*.conf
-     elasticsearch {
-      hosts => ["localhost:9200"]
-      index => "syslog-%{+YYYY.MM}"
-      user => "logstash"
-      password => "new_password"
+     vi /etc/logstash/conf.d/*/*.conf
+     output {
+      elasticsearch {
+        hosts => ["localhost:9200"]
+        index => "syslog-%{+YYYY.MM}"
+        user => "logstash"
+        password => "new_password"
+      }
      }
      ```
 
