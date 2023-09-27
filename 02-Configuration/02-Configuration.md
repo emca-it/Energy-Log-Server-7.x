@@ -494,7 +494,7 @@ The pkPassword can be one of:
 
   - **none**: The generated private key will be unencrypted
   - **auto**: A random password is generated automatically. After the certificates have been generated, you can find the password in root-ca.readme file. To use these new passwords again, you must edit the tool config file and set the generated passwords there.
-  - **other value**: Value other than none or auto are used as password directly
+  - **other value**: Values other than none or auto are used as password directly
 
 ### Intermediate CA
 
@@ -1233,6 +1233,7 @@ To enable SSO on your system follow the below steps. The configuration is made f
    Create a User in AD. Set "Account never expires" and enable support for Kerberos encryption as shown below.
 
    ![](/media/media/image107_js.png)
+  <br>
 
 1. Define the Service Principal Name (SPN) and Create a keytab file for it
 
@@ -1248,6 +1249,8 @@ To enable SSO on your system follow the below steps. The configuration is made f
    chmod 640 /etc/elasticsearch/esauth.keytab
    chown elasticsearch: /etc/elasticsearch/esauth.keytab
    ```
+
+   <br>
 
 1. Create a file named *krb5Login.conf*:
 
@@ -1271,6 +1274,8 @@ To enable SSO on your system follow the below steps. The configuration is made f
     sudo chmod 640 /etc/elasticsearch/krb5Login.conf
     sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
     ```
+  
+    <br>
 
 1. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
 
@@ -1281,11 +1286,13 @@ To enable SSO on your system follow the below steps. The configuration is made f
    -Djavax.security.auth.useSubjectCredsOnly=false
 
    Change the appropriate values realm and IP address. Those JVM arguments have to be set for the Elasticsearch server.
+   <br>
 
 1. Authentication options if ```authentication_only: true``` is set
 
    If a user does not exist, Logserver will create the user without a role.
    Role in `role-mapping.yml` would be ignored and role `gui-access` from ```default_authentication_roles: ["gui-access"]``` will be assigned.
+   <br>
 
 1. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for LDAP in properties.yml file:
 
@@ -1305,6 +1312,7 @@ To enable SSO on your system follow the below steps. The configuration is made f
    ```
 
    Note: At this moment, SSO works for only a single domain. So you have to mention for what domain SSO should work in the above property `sso.domain`
+   <br>
 
 1. After completing the LDAP section entry in the properties.yml file, save the changes and send a request  for reload authentication  data with the command:
 
@@ -1312,17 +1320,23 @@ To enable SSO on your system follow the below steps. The configuration is made f
    curl -sS -u**user**:**password** localhost:9200/_logserver/auth/reload -XPOST
    ```
 
+   <br>
+
 1. Enable the SSO feature in the `kibana.yml` file:
 
    ```bash
    kibana.sso_enabled: true
    ```
 
+   <br>
+
 1. After that Kibana has to be restarted:
 
    ```bash
    sudo systemctl restart kibana.service
    ```
+
+   <br>
 
 ### Client (Browser) Configuration
 
@@ -1351,6 +1365,288 @@ For Chrome, the settings are taken from the IE browser.
 Update the following config:
 
 ![](/media/media/image111_js.png)
+
+### KBC error codes
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-qahb{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 666px">
+<colgroup>
+<col style="width: 160px">
+<col style="width: 506px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-qahb">KDC error codes</th>
+    <th class="tg-qahb">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">0</td>
+    <td class="tg-0pky">No error<br></td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">1</td>
+    <td class="tg-0pky">Client entry is expired</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">2</td>
+    <td class="tg-0pky">Server entry is expired</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">3</td>
+    <td class="tg-0pky">Protocol version is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Client key is encrypted in an old master key</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">5</td>
+    <td class="tg-0pky">Server key is encrypted in an old master key</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">6</td>
+    <td class="tg-0pky">Client is not defined in the security registry</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">7</td>
+    <td class="tg-0pky">Server is not defined in the security registry</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">8</td>
+    <td class="tg-0pky">Principal is not unique in the security registry</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">9</td>
+    <td class="tg-0pky">No key is available for the principal</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">10</td>
+    <td class="tg-0pky">Ticket is not eligible for postdating</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">11</td>
+    <td class="tg-0pky">Ticket is never valid</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">12</td>
+    <td class="tg-0pky">Request rejected due to KDC policy</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">13</td>
+    <td class="tg-0pky">Request option is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">14</td>
+    <td class="tg-0pky">Encryption type is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">15</td>
+    <td class="tg-0pky">Checksum type is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">16</td>
+    <td class="tg-0pky">Preauthentication type is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">17</td>
+    <td class="tg-0pky">Transited data type is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">18</td>
+    <td class="tg-0pky">Client account is revoked</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">19</td>
+    <td class="tg-0pky">Server account is revoked</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">20</td>
+    <td class="tg-0pky">TGT is revoked</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">21</td>
+    <td class="tg-0pky">Client account is not valid yet</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">22</td>
+    <td class="tg-0pky">Server account is not valid yet</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">23</td>
+    <td class="tg-0pky">Password is expired</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">24</td>
+    <td class="tg-0pky">Preauthentication failed</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">25</td>
+    <td class="tg-0pky">Preauthentication required</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">26</td>
+    <td class="tg-0pky">Supplied authentication ticket is not for the requested server</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">27</td>
+    <td class="tg-0pky">Server requires user-to-user protocol</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">31</td>
+    <td class="tg-0pky">Decryption integrity check failed</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">32</td>
+    <td class="tg-0pky">Ticket is expired</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">33</td>
+    <td class="tg-0pky">Ticket is not valid yet</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">34</td>
+    <td class="tg-0pky">Request is a replay of a previous request</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">35</td>
+    <td class="tg-0pky">Supplied authentication ticket is not for the current realm</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">36</td>
+    <td class="tg-0pky">Ticket and authenticator do not match</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">37</td>
+    <td class="tg-0pky">Clock skew is too great</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">38</td>
+    <td class="tg-0pky">Incorrect network address</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">39</td>
+    <td class="tg-0pky">Protocol version mismatch</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">40</td>
+    <td class="tg-0pky">Invalid message type</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">41</td>
+    <td class="tg-0pky">Message stream has been modified</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">42</td>
+    <td class="tg-0pky">Message is out of order</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">44</td>
+    <td class="tg-0pky">Key version is not available</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">45</td>
+    <td class="tg-0pky">Service key is not available</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">46</td>
+    <td class="tg-0pky">Mutual authentication failed</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">47</td>
+    <td class="tg-0pky">Incorrect message direction</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">48</td>
+    <td class="tg-0pky">Alternative authentication method required</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">49</td>
+    <td class="tg-0pky">Incorrect message sequence number</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">50</td>
+    <td class="tg-0pky">Inappropriate checksum type</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">60</td>
+    <td class="tg-0pky">Generic error detected</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">61</td>
+    <td class="tg-0pky">Field is too long</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">62</td>
+    <td class="tg-0pky">Client certificate is not acceptable</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">63</td>
+    <td class="tg-0pky">KDC certificate is not trusted or does not meet requirements</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">64</td>
+    <td class="tg-0pky">Certificate signature not valid</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">65</td>
+    <td class="tg-0pky">Client Diffie-Hellman key parameters not accepted</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">70</td>
+    <td class="tg-0pky">Client certificate could not be verified</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">71</td>
+    <td class="tg-0pky">Client certificate chain validation error occurred</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">72</td>
+    <td class="tg-0pky">Client certificate chain contains a revoked certificate</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">73</td>
+    <td class="tg-0pky">Revocation status for the certificate chain could not be determined</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">75</td>
+    <td class="tg-0pky">Kerberos client name does not match name bound to the client certificate</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">76</td>
+    <td class="tg-0pky">Kerberos KDC name does not match name bound to the KDC certificate</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">77</td>
+    <td class="tg-0pky">Key purpose restricts certificate usage</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">78</td>
+    <td class="tg-0pky">Certificate signature digest algorithm is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">79</td>
+    <td class="tg-0pky">PKAuthenticator is missing the required paChecksum</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">80</td>
+    <td class="tg-0pky">The signedData digest algorithm is not supported</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">81</td>
+    <td class="tg-0pky">The Public Key encryption delivery method is not supported</td>
+  </tr>
+</tbody>
+</table>
 
 ## Default home page
 
@@ -1488,9 +1784,8 @@ contains files:
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-qahb{border-color:inherit;color:#333333;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-ie02{border-color:inherit;color:#333333;text-align:left;vertical-align:middle}
-.tg .tg-t3tv{color:#333333;text-align:left;vertical-align:middle}
+.tg .tg-qahb{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-ie02{border-color:inherit;text-align:left;vertical-align:middle}
 </style>
 <table class="tg" style="undefined;table-layout: fixed; width: 719px">
 <colgroup>
@@ -1510,7 +1805,7 @@ contains files:
   </tr>
   <tr>
     <td class="tg-ie02">type</td>
-    <td class="tg-ie02">The transport mechanism to be user.</td>
+    <td class="tg-ie02">The transport mechanism to be used.</td>
   </tr>
   <tr>
     <td class="tg-ie02">private</td>
@@ -1530,7 +1825,7 @@ contains files:
   </tr>
   <tr>
     <td class="tg-ie02">maxproc</td>
-    <td class="tg-ie02">The maximum number of processes on which the service can be forked (to divide in branches)</td>
+    <td class="tg-ie02">The maximum number of processes on which the service can be forked (to divide into branches)</td>
   </tr>
   <tr>
     <td class="tg-ie02">command + args</td>
@@ -1555,8 +1850,8 @@ contains files:
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-jn0s{color:#333333;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-t3tv{color:#333333;text-align:left;vertical-align:middle}
+.tg .tg-jn0s{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-t3tv{border-color:inherit;text-align:left;vertical-align:middle}
 </style>
 <table class="tg" style="undefined;table-layout: fixed; width: 558px">
 <colgroup>
