@@ -1,5 +1,65 @@
 # **CHANGELOG**
 
+## v7.4.1
+
+### NewFeatures
+
+- Reports: DOCX support!
+
+### Improvements
+
+- Alert: multi-language support for alert rules
+- API: gui-access role is required to interact with the API
+- tlstool.sh: new ssl certificate management tool
+
+### BugFixes
+
+- Archive: support for "secure" and "insecure" mode (without valid certificates)
+- GUI: better-handled exceptions for custom plugins
+- GUI: defaultAppId directive has been restored
+- GUI: invalid directory for keystore
+- GUI: Module Access Control permission fix
+- GUI: users have aliases for different indexes after migration
+- Index Management: missing verification for "on save" action
+- Index Management: errors during rollover
+- Index Management: filtering using the "Enabled" column
+- Index Management: unable to update job after changing cron
+- Integrations: improved command for importing dashboards
+- Reports: custom logo moves the visualization on the dashboard
+- Reports: deleting reports (multi, single) does not refresh the list
+- Reports: enabling and disabling periodic reports by users
+- Reports: incorrect visualization titles are inserted when creating a Data Table report
+- Reports: long comment goes off the page when creating a PDF report
+- Reports: long title goes off the page when creating a PDF report
+- Reports: not translated statuses in the task list
+- Reports: problem with Tag Cloud visualization when creating PDF report
+- Reports: reports role paths to update, now require `.reports`
+- Scheduler: status table sorted by "start date" instead of "name"
+- Timeline/Timelion: regex not working due to an incorrectly built package
+
+### SIEM Plan
+
+- Alerts: bugfix: incorrect \_id of the edited alert causes duplicates
+- Alerts: bugfix: unable to retrieve a list of risk key fields when updating a rule
+- SIEM Engine: better-handled exceptions in RBAC integration
+
+### Security related fixes
+
+- CVE-2023-32002
+- CVE-2023-32006
+- CVE-2023-32559
+- CVE-2021-32014
+- CVE-2021-32012
+- CVE-2021-32013
+- CVE-2023-30533
+- CVE-2022-24785
+- CVE-2022-31129
+- CVE-2022-24785
+- CVE-2022-31129
+- CVE-2023-22467
+- CVE-2023-30533
+- CVE-2023-26115
+
 ## v7.4.0
 
 ### Upgrades
