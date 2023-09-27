@@ -71,7 +71,9 @@ You may to recover it from default installation folder with following steps:
 
 1. Start all Elasticsearch instance
 
-        systemctl start elasticsearch
+    ```bash
+    systemctl start elasticsearch
+    ```
 
 1. Wait for yellow state of Elasticsearch cluster and then enable shard allocation
 
@@ -157,7 +159,7 @@ To verify of Elasticsearch service you can use following command:
 
 - Control of the Elasticsearch system service via **systemd**:
 
-        # sysetmctl status elasticsearch
+        sysetmctl status elasticsearch
   output:
 
           ● elasticsearch.service - Elasticsearch
@@ -170,7 +172,7 @@ To verify of Elasticsearch service you can use following command:
 
 - Control of Elasticsearch instance via **tcp port**:
 
-          # curl -XGET '127.0.0.1:9200/'
+          curl -XGET '127.0.0.1:9200/'
 
   output:
 
@@ -192,7 +194,7 @@ To verify of Elasticsearch service you can use following command:
 
 - Control of Elasticsearch instance via **log file**:
 
-        # tail -f /var/log/elasticsearch/elasticsearch.log
+        tail -f /var/log/elasticsearch/elasticsearch.log
 
 - other control commands via ***curl* application**:
 
@@ -206,7 +208,7 @@ To verify of Logstash service you can use following command:
 
 - control Logstash service via **systemd**:
 
-        # systemctl status logstash
+        systemctl status logstash
 
 output:
 
@@ -219,7 +221,7 @@ output:
 
 - control Logstash service via **port tcp**:
 
-        # curl -XGET '127.0.0.1:9600'
+        curl -XGET '127.0.0.1:9600'
 
     output:
 
@@ -231,7 +233,7 @@ output:
 
 - control Logstash service via **log file**:
 
-        # tail -f /var/log/logstash/logstash-plain.log
+        tail -f /var/log/logstash/logstash-plain.log
 
 ### Debugging ###
 
@@ -257,7 +259,7 @@ output:
 
 - get information about load of the Logstash:
 
-        *# curl -XGET '127.0.0.1:9600/_node/jvm?pretty=true'*
+        curl -XGET '127.0.0.1:9600/_node/jvm?pretty=true'
 
 output:
 
@@ -290,7 +292,7 @@ To verify of Energy Logserver GUI service you can use following command:
 
 - control the Energy Logserver GUI service via **systemd**:
 
-        # systemctl status kibana
+        systemctl status kibana
 
 output:
 
@@ -303,7 +305,7 @@ output:
 
 - control the Energy Logserver GUI via **port tcp/http**:
 
-        # curl -XGET '127.0.0.1:5601/'
+        curl -XGET '127.0.0.1:5601/'
 
 output:
 
@@ -318,7 +320,7 @@ output:
 
 - Control the Energy Logserver GUI via **log file**:
 
-        # tail -f /var/log/messages
+        tail -f /var/log/messages
 
 ## SIEM PLAN - Windows CP1250 decoding problem
 
