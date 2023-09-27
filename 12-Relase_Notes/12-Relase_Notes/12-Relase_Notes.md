@@ -1,5 +1,40 @@
 # **CHANGELOG**
 
+## v7.4.0
+
+### Upgrades
+
+- Complete database redefinition:
+  - Segment replication
+  - Searchable snapshots
+  - Search backpressure feature can now cancel queries at the coordinator level
+
+- Complete user interface redefinition
+- Complete SIEM Engine redefinition:
+  - New manager
+  - New App
+  - New Agent
+
+- Input layer uses Logstash-OSS 7.17.11
+- Support for Beats OSS Agents => 7.17.11
+
+### NewFeatures
+
+- Logserver: RBAC integration with Wazuh Engine (users can map roles between systems)
+
+### Improvements
+
+- CMDB: Browser-based Time Zone
+- Improved error handling when reloading a license (_logserver/license/reload_)
+- Archive: deleting tasks with multiselect option
+- Unification and organization of Energy Logserver system APIs
+- Alert: WebHook: added support for nested fields in http post payload
+- Agents: built-in agents templates updated to 7.17.11
+
+### BugFixes
+
+- CMDB: incorrect parsing of values in the date filter
+- Archive: blank line in index list on restore
 
 ## v7.3.0
 

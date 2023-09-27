@@ -835,7 +835,7 @@ Besides that, each node serves one or more purposes:
 
 - Master-eligible node - A node that has a *node.master* set to true (default), which makes it eligible to be elected as the master node, which controls the cluster
 - Data node - A node that has a *node.data* set to true (default). Data nodes hold data and perform data-related operations such as CRUD, search, and aggregations
-- Client node - A client node has both *node.master* and *node.data* set to false. It can neither hold data nor become the master node. It behaves as a “*smart router*” and is used to forward cluster-level requests to the master node and data-related requests (such as search) to the appropriate data nodes
+- Client node - A client node has both *node.master* and *node.data* set to false. It can neither hold data nor become the master node. It behaves as a "*smart router*" and is used to forward cluster-level requests to the master node and data-related requests (such as search) to the appropriate data nodes
 - Tribe node - A tribe node, configured via the *tribe.** settings, is a special type of client node that can connect to multiple clusters and perform search and other operations across all connected clusters.
 
 ### Naming convention
@@ -958,19 +958,19 @@ start working, this fragment should be uncommented):
 
  ```yaml
 ldaps:  
-  - name: “example.com”  # domain that is configured 
-    host: “127.0.0.1,127.0.0.2”  # list of server for this domain  
+  - name: "example.com"  # domain that is configured 
+    host: "127.0.0.1,127.0.0.2"  # list of server for this domain  
     #port: 389 # optional, default 389 for unencrypted session or 636 for encrypted sessions  
     ssl_enabled: false  # optional, default true 
     #ssl_trust_all_certs: true # optional, default false 
-    #ssl.keystore.file: “path” # path to the truststore store 
-    #ssl.keystore.password: “path” # password to the trusted certificate store 
+    #ssl.keystore.file: "path" # path to the truststore store 
+    #ssl.keystore.password: "path" # password to the trusted certificate store 
     bind_dn: [admin@example.com] # account name administrator 
-    bind_password: “password” # password for the administrator account 
-    search_user_base_DN: “OU=lab,DC=example,DC=com” # search for the DN user tree database 
-    #user_id_attribute: “uid # search for a user attribute optional, by default “uid” 
-    #search_groups_base_DN: ”OU=lab,DC=example,DC=com” # group database search. This is a catalog main, after which the groups will be sought. 
-    #unique_member_attribute: “uniqueMember” # optional, default”uniqueMember” 
+    bind_password: "password" # password for the administrator account 
+    search_user_base_DN: "OU=lab,DC=example,DC=com" # search for the DN user tree database 
+    #user_id_attribute: "uid # search for a user attribute optional, by default "uid" 
+    #search_groups_base_DN: "OU=lab,DC=example,DC=com" # group database search. This is a catalog main, after which the groups will be sought. 
+    #unique_member_attribute: "uniqueMember" # optional, default "uniqueMember" 
     connection_pool_size: 10 # optional, default 30 
     connection_timeout_in_sec: 10 # optional, default 1 
     request_timeout_in_sec: 10 # optional, default 1* 
@@ -1482,16 +1482,62 @@ contains files:
 </br>
 </br>
 
-  |Column           |     Description
-  |---------------- | --------------------------------------------------------------------------------------------
-  |service          |    The name of the service
-  |type             |    The transport mechanism to be user.
-  |private          |    Is the service only for user by Postfix.
-  |unpriv           |    Can the service be run by ordinary users
-  |chroot           |    Whether the service is to change the main directory (chroot) for the mail. Queue.
-  |wakeup           |    Wake up interval for the service.
-  |maxproc          |    The maximum number of processes on which the service can be forked (to divide in branches)
-  |command + args   |   A command associated with the service plus any argument
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-qahb{border-color:inherit;color:#333333;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-ie02{border-color:inherit;color:#333333;text-align:left;vertical-align:middle}
+.tg .tg-t3tv{color:#333333;text-align:left;vertical-align:middle}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 719px">
+<colgroup>
+<col style="width: 157px">
+<col style="width: 562px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-qahb">Column</th>
+    <th class="tg-qahb">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-ie02">service</td>
+    <td class="tg-ie02">The name of the service</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">type</td>
+    <td class="tg-ie02">The transport mechanism to be user.</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">private</td>
+    <td class="tg-ie02">Is the service only for user by Postfix.</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">unpriv</td>
+    <td class="tg-ie02">Can the service be run by ordinary users</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">chroot</td>
+    <td class="tg-ie02">Whether the service is to change the main directory (chroot) for the mail. Queue.</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">wakeup</td>
+    <td class="tg-ie02">Wake up interval for the service.</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">maxproc</td>
+    <td class="tg-ie02">The maximum number of processes on which the service can be forked (to divide in branches)</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">command + args</td>
+    <td class="tg-ie02">A command associated with the service plus any argument</td>
+  </tr>
+</tbody>
+</table>
 
 </br>
 </br>
@@ -1550,8 +1596,8 @@ contains files:
 
   ll /etc/postfix/access*
   
-   -rw-r\--r\--. 1 root root 20876 Jan 26 2014 /etc/postfix/access
-   -rw-r\--r\--. 1 root root 12288 Feb 12 07:47 /etc/postfix/access.db
+   -rw-r--r--. 1 root root 20876 Jan 26 2014 /etc/postfix/access
+   -rw-r--r--. 1 root root 12288 Feb 12 07:47 /etc/postfix/access.db
 ```
 
 **canonical** - mapping incoming e-mails to local users.
