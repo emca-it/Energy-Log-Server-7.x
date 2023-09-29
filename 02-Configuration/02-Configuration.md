@@ -301,7 +301,7 @@ You can either install CA to allow Logstash and Beats traffic or you can supply 
 
     ```yml
     output {
-      elasticsearch {
+      logserver {
         hosts => "https://mylocal.domain.test:9200"
         ssl => true
         index => "winlogbeat-%{+YYYY.MM}"
@@ -435,7 +435,7 @@ To configure the Root CA for all certificates, add the following lines to your c
 ```yml
 ca:
    root:
-      dn: CN=root.ca.example.com,OU=CA,O=Example Com\, Inc.,DC=example,DC=com
+      dn: CN=root.ca.example.com,OU=CA,O=Example Com, Inc.,DC=example,DC=com
       keysize: 2048
       pkPassword: root-ca-password 
       validityDays: 3650
@@ -503,7 +503,7 @@ In addition to the root CA you optionally also specify an intermediate CA. If an
 ```yml
 ca:
    intermediate:
-      dn: CN=signing.ca.example.com,OU=CA,O=Example Com\, Inc.,DC=example,DC=com
+      dn: CN=signing.ca.example.com,OU=CA,O=Example Com, Inc.,DC=example,DC=com
       keysize: 2048
       validityDays: 3650  
       pkPassword: intermediate-ca-password
@@ -528,7 +528,7 @@ defaults:
   pkPassword: auto
   generatedPasswordLength: 12
   nodesDn:
-    - "CN=*.example.com,OU=Ops,O=Example Com\\, Inc.,DC=example,DC=com"
+    - "CN=*.example.com,OU=Ops,O=Example Com, Inc.,DC=example,DC=com"
   nodeOid: "1.2.3.4.5.5"
   httpsEnabled: true
   reuseTransportCertificatesForHttp: false
@@ -1678,7 +1678,9 @@ To set the default application for the GUI home page, please do the following:
 
 The default e-mail client that installs with the Linux CentOS system,
 which is used by Energy Logserver to send reports (Section 5.3 of the
-[Reports](/05-00-00-Reports/05-03-00-PDF_Report.md) chapter), is ***postfix***.# Configuration file for **postfix** mail client #
+[Reports](/05-00-00-Reports/05-03-00-PDF_Report.md) chapter), is ***postfix***.
+
+#### Configuration file for **postfix** mail client
 
 The *postfix* configuration directory for CentOS is */etc/postfix*. It
 contains files:
@@ -1694,8 +1696,8 @@ contains files:
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-1wig{font-weight:bold;text-align:left;vertical-align:top}
-.tg .tg-t3tv{color:#333333;text-align:left;vertical-align:middle}
+.tg .tg-1wig{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-t3tv{text-align:left;vertical-align:middle}
 </style>
 <table class="tg" style="undefined;table-layout: fixed; width: 700px">
 <colgroup>
@@ -1902,11 +1904,15 @@ contains files:
  To forward emails to user1 to the
  [user1@yahoo.com] mailbox:
 
-   `user1 user1\@yahoo.com`
+   ```bash
+   user1 user1@yahoo.com
+   ```
 
  To forward all emails for example.org to another example.com domain:
 
-   `@example.org @example.com`
+   ```bash
+   @example.org @example.com
+   ```
 
  After making changes to the canonical file, you must convert its
  contents to the canonical.db database with the postmap command:
@@ -1916,8 +1922,8 @@ contains files:
 
   ll /etc/postfix/canonical*
 
-  -rw-r\--r\--. 1 root root 11681 2014-06-10 /etc/postfix/canonical
-  -rw-r\--r\--. 1 root root 12288 07-31 20:56 /etc/postfix/canonical.db
+  -rw-r--r--. 1 root root 11681 2014-06-10 /etc/postfix/canonical
+  -rw-r--r--. 1 root root 12288 07-31 20:56 /etc/postfix/canonical.db
 ```
 
 **generic** - mapping of outgoing e-mails to local users. The syntax
@@ -1929,8 +1935,8 @@ contains files:
 
   ll /etc/postfix/generic*
 
-  -rw-r\--r\--. 1 root root 9904 2014-06-10 /etc/postfix/generic
-  -rw-r\--r\--. 1 root root 12288 07-31 21:15 /etc/postfix/generic.db
+  -rw-r--r--. 1 root root 9904 2014-06-10 /etc/postfix/generic
+  -rw-r--r--. 1 root root 12288 07-31 21:15 /etc/postfix/generic.db
 ```
 
 **relocated** -- information about users who have been transferred.
@@ -1941,7 +1947,9 @@ contains files:
 
  Example of an entry in the file:
 
+  ```bash
   <user1@example.com> <user1@example.net>
+  ```
 
  After you make a change to this file, you must also run the postmap
  command.
@@ -1950,16 +1958,18 @@ contains files:
 postmap /etc/postfix/relocated
 ll /etc/postfix/relocated*
 
-  -rw-r\--r\--. 1 root root 6816 2014-06-10 /etc/postfix/relocated
-  -rw-r\--r\--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
+  -rw-r--r--. 1 root root 6816 2014-06-10 /etc/postfix/relocated
+  -rw-r--r--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
 ```
 
 **transport** -- mapping between e-mail addresses and the server through which these e-mails are to be sent (next hops) in the transport
  format: nexthop.
 
  Example of an entry in the file:
-
+  
+  ```bash
   <user1@example.com> smtp:host1.example.com
+  ```
 
  After you make changes to this file, you must also run the postmap
  command.
@@ -1968,8 +1978,8 @@ ll /etc/postfix/relocated*
 postmap /etc/postfix/transport
 ll /etc/postfix/transport*
 
-  -rw-r\--r\--. 1 root root 12549 2014-06-10 /etc/postfix/transport
-  -rw-r\--r\--. 1 root root 12288 07-31 21:32 /etc/postfix/transport.db
+  -rw-r--r--. 1 root root 12549 2014-06-10 /etc/postfix/transport
+  -rw-r--r--. 1 root root 12288 07-31 21:32 /etc/postfix/transport.db
 ```
 
 **virtual** - user to redirect e-mails intended for a certain user to
@@ -1981,30 +1991,32 @@ ll /etc/postfix/transport*
  Redirecting email for user1, to root users and user3:
 
 ```conf
-user1 root, user3
+user1 root,user3
 ```
 
  Redirecting email for user 1 in the example.com domain to the root
  user:
-
+  
+  ```bash
   <user1@example.com> root
+  ```
 
  After you make a change to this file, you must also run the postmap
  command:
 
-```bash
+   ```bash
    postmap /etc/postfix/virtual
 
    ll /etc/postfix/virtual
 
-  -rw-r\--r\--. 1 root root 12494 2014-06-10 /etc/postfix/virtual
-  -rw-r\--r\--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
-```
+  -rw-r--r--. 1 root root 12494 2014-06-10 /etc/postfix/virtual
+  -rw-r--r--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
+  ```
 
-### Basic *postfix* configuration
+#### Basic *postfix* configuration
 
 Base configuration of *postfix* application you can make in
-`/etc/postfix/main.cfg` configuration file, which must be completed with the following entry:
+`/etc/postfix/main.cf` configuration file, which must be completed with the following entry:
 
 - section *# RECEIVING MAIL*
 
@@ -2028,7 +2040,7 @@ At the end, you should restart the *postfix*:
  systemctl restart postfix
 ```
 
-### Example of postfix configuration with SSL encryption enabled
+#### Example of postfix configuration with SSL encryption enabled
 
 To configure email delivery with SSL encryption you need to make
 the following changes in the *postfix* configuration files:
@@ -2052,10 +2064,11 @@ entries in addition to standard (unchecked entries):
   smtpd_recipient_restrictions = permit_sasl_authenticated
   ```
 
-- **`/etc/postfix/sasl/passwd`** - file should define the data for authorized
+- **`/etc/postfix/sasl_passwd`** - file should define the data for authorized
 
    ```bash
-   [smtp.example.com\]:587 [USER@example.com:PASS]
+   [smtp.example.com]:587 [USER@example.com:PASS]
+   [smtp.example.com]:587 username:password
    ```
 
 You need to give appropriate permissions:
@@ -2068,18 +2081,20 @@ and map configuration to the database:
   
   ```bash
   postmap /etc/postfix/sasl_passwd
+  postmap /etc/postfix/canonical
+  postmap /etc/postfix/generic
   ```
 
 next, you need to generate a CA cert file:
 
   ```bash
-  cat /etc/ssl/certs/Example\_Server\_CA.pem | tee -a etc/postfix/cacert.pem
+  cat /etc/ssl/certs/Example_Server_CA.pem | tee -a etc/postfix/cacert.pem
   ```
 
 Finally, you need to restart the postfix
 
   ```bash
-  /etc/init.d/postfix restart
+  systemctl restart postfix
   ```
 
 ## Custom notification on the workstation
@@ -2111,9 +2126,9 @@ Before use ensure that you have all the required files
 
 - Linux Agent files: `./agents/masteragent/agents/linux/masteragent`:
 
-  - Executable: `MasterBeatAgent.jar` \
-  - Configuration File for MasterAgent (server): `MasterBeatAgent.conf` \
-  - Configuration File for Agent (client): `agent.conf` \
+  - Executable: `MasterBeatAgent.jar`
+  - Configuration File for MasterAgent (server): `MasterBeatAgent.conf`
+  - Configuration File for Agent (client): `agent.conf`
   - Service file: `masteragent.service`
 
 ### Preparations
@@ -2156,7 +2171,9 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
     - Copy files:
 
-        `cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/`
+      ```bash
+      cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/
+      ```
 
     - Copy pipeline configuration:
 
@@ -2174,33 +2191,43 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
     - Set permissions:
 
-        `# chown -R logstash:logstash /etc/logstash/conf.d/masteragent`
+      ```bash
+      chown -R logstash:logstash /etc/logstash/conf.d/masteragent
+      ```
 
     - Restart service:
 
-        `# systemctl restart logstash`
+      ```bash
+      systemctl restart logstash
+      ```
 
 ### Installation of MasterAgent - Server Side
 
 - Copy executable and config:
 
     ```bash
-    # mkdir -p /opt/agents
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/agents
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.conf /opt/agents/agent.conf
+    mkdir -p /opt/agents
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/agents
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.conf /opt/agents/agent.conf
     ```
 
 - Copy certificates:
 
-    `# /bin/cp -rf ./agents/masteragent/certificates/node_name.p12 ./agents/masteragent/certificates/root.jks /opt/agents/`
+    ```bash
+    /bin/cp -rf ./agents/masteragent/certificates/node_name.p12 ./agents/masteragent/certificates/root.jks /opt/agents/
+    ```
 
 - Set permissions:
 
-    `# chown -R kibana:kibana /opt/agents`
+    ```bash
+    chown -R kibana:kibana /opt/agents
+    ```
 
 - Update the configuration file with KeyStore/TrustStore paths and passwords. Use your preferred editor eg. vim:
 
-    `# vim /opt/agents/agent.conf`
+    ```bash
+    vim /opt/agents/agent.conf
+    ```
 
 ### Installation of Agent - Client Side
 
@@ -2212,35 +2239,43 @@ Linux Agent - software installed on clients running on Linux OS:
 
 1. Install net-tools package to use Agent on Linux RH / Centos:
 
-    `# yum install net-tools`
+    ```bash
+    yum install net-tools
+    ```
 
 1. Copy executable and config:
 
     ```bash
-    # mkdir -p /opt/masteragent
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/agent.conf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/masteragent
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/masteragent.service /usr/lib/systemd/system/masteragent.service
+    mkdir -p /opt/masteragent
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/agent.conf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/masteragent
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/masteragent.service /usr/lib/systemd/system/masteragent.service
     ```
 
 1. Copy certificates:
 
-    `# /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/`
+    ```bash
+    /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/
+    ```
 
 1. Update the configuration file with KeyStore/TrustStore paths and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive. Use your preferred editor eg. vim:
 
-    `# vim /opt/masteragent/agent.conf`
+    ```bash
+    vim /opt/masteragent/agent.conf
+    ```
 
 1. Enable masteragent service:
 
     ```bash
-    # systemctl daemon-reload
-    # systemctl enable masteragent
-    # systemctl start masteragent
+    systemctl daemon-reload
+    systemctl enable masteragent
+    systemctl start masteragent
     ```
 
 1. Finally, verify in the Kibana 'Agents' plugin if a newly added agent is present. Check masteragent logs executing:
 
-    `# journalctl -fu masteragent`
+    ```bash
+    journalctl -fu masteragent
+    ```
 
 #### Windows
 
@@ -2263,7 +2298,7 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
 1. Copy node_name.p12 and root.jks files from the `./install/agents/masteragent/certificates` to desired directory.
 
-1. Update the "`C:\Program Files\MasterAgent\agent.conf`" file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive.
+1. Update the `C:\Program Files\MasterAgent\agent.conf` file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive.
 
 1. Start PowerShell as an administrator:
 
@@ -2271,15 +2306,17 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
     - Method 1 - use installer:
 
-      ```bash
-      # cd "C:\Program Files\MasterAgent"
-      # .\agents.exe install
-      # .\agents.exe start
+      ```ps
+      cd "C:\Program Files\MasterAgent"
+      .\agents.exe install
+      .\agents.exe start
       ```
 
     - Method 2 - manually creating service:
 
-      `# New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"`
+      ```ps
+      New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"
+      ```
 
 1. Finally, verify in the Kibana '`Agents`' plugin if a newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in the `C:\Program Files\MasterAgent` directory after the service starts. Also, check the service status:
 
@@ -2550,7 +2587,7 @@ Editing the file: `C:\Program Files\Winlogbeat\winlogbeat.yml`:
 
 Test configuration:
 
-```cmd
+```ps
 cd 'C:\Program Files\Winlogbeat'
 winlogbeat.exe test config
 winlogbeat.exe test output
@@ -3233,7 +3270,7 @@ Editing the file: `C:\Program Files\Packetbeat\packetbeat.yml`:
 1. Run the `PowerShell` console as Administrator and execute the following commands:
 
     ```powershell
-    cd 'C:\Program Files\\Packetbeat'
+    cd 'C:\Program Files\Packetbeat'
     .\install-service-packetbeat.ps1
     
     Security warning
