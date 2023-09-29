@@ -982,19 +982,81 @@ object, and the Save button to save the selection.
 
 ### Default user and passwords
 
-The table below contains built-in user accounts and default passwords:
-
-|Address                |User         |Password     |Role         |Description                                     |Usage          |
-|-----------------------|-------------|-------------|-------------|------------------------------------------------|---------------|
-|https://localhost:5601 |logserver    |logserver    |logserver    |A built-in *superuser* account                  |               |
-|                       |alert        |alert        |alert        |A built-in account for  the Alert module        |               |  
-|                       |intelligence |intelligece  |intelligence |A built-in account for the Intelligence module  | authorizing communication with elasticsearch server |
-|                       |scheduler    |scheduler    |scheduler    |A built-in account for the Scheduler module     |
-|                       |logstash     |logstash     |logstash     |A built-in account for authorized comuunication form Logstash |
-|                       |cerebro      |     |system acconut only     |A built-in account for authorized comuunication from Cerebro moudule |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tysj{text-align:left;vertical-align:top}
+.tg .tg-qahb{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-i91a{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-ie02{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-qahb">Address</th>
+    <th class="tg-qahb">User</th>
+    <th class="tg-qahb">Password</th>
+    <th class="tg-qahb">Role</th>
+    <th class="tg-qahb">Description</th>
+    <th class="tg-qahb">Usage</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-i91a"><a href="https://localhost:5601/" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none">https://localhost:5601</span></a></td>
+    <td class="tg-ie02">logserver</td>
+    <td class="tg-ie02">logserver</td>
+    <td class="tg-ie02">logserver</td>
+    <td class="tg-ie02">A built-in superuser account</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">alert</td>
+    <td class="tg-ie02">alert</td>
+    <td class="tg-ie02">alert</td>
+    <td class="tg-ie02">A built-in account for the Alert module</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">intelligence</td>
+    <td class="tg-ie02">intelligece</td>
+    <td class="tg-ie02">intelligence</td>
+    <td class="tg-ie02">A built-in account for the Intelligence module</td>
+    <td class="tg-ie02">authorizing communication with elasticsearch server</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">scheduler</td>
+    <td class="tg-ie02">scheduler</td>
+    <td class="tg-ie02">scheduler</td>
+    <td class="tg-ie02">A built-in account for the Scheduler module</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">A built-in account for authorized comuunication form Logstash</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">cerebro</td>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">system acconut only</td>
+    <td class="tg-ie02">A built-in account for authorized comuunication from Cerebro moudule</td>
+    <td class="tg-ie02"></td>
+  </tr>
+</tbody>
+</table>
 
 ### Changing the password for the system account
-
 
 1. Account **Logserver**
 
@@ -2280,11 +2342,37 @@ For registering new algorithm:
 
 Form fields:
 
-| Field   | Description                                                                                                      |
-|---------|------------------------------------------------------------------------------------------------------------------|
-| Code    | Short name for algorithm                                                                                         |
-| Name    | Algorithm name                                                                                                   |
-| Command | Command to execute. The command must be in the directory pointed to by the parameter elastscheduler.commandpath. |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-kwiq{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-21f3{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-21f3">Field</th>
+    <th class="tg-21f3">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-kwiq">Code</td>
+    <td class="tg-kwiq">Short name for algorithm</td>
+  </tr>
+  <tr>
+    <td class="tg-kwiq">Name</td>
+    <td class="tg-kwiq">Algorithm name</td>
+  </tr>
+  <tr>
+    <td class="tg-kwiq">Command</td>
+    <td class="tg-kwiq">Command to execute. The command must be in the directory pointed to by the parameter elastscheduler.commandpath.</td>
+  </tr>
+</tbody>
+</table>
 
 Energy Logserver execute command:
 
@@ -2303,64 +2391,299 @@ Config file:
 
 Json document:
 
-| Field                  | Value                                                                               | Screen field (description)                                           |
-|------------------------|-------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| algorithm_type         | GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           | Algorithm. For customs method field Code from Create algorithm form. |
-| model_name             | Not empty string.                                                                   | AI Rule Name.                                                        |
-| search                 | Search id.                                                                          | Choose search.                                                       |
-| label_field.field      |                                                                                     | Feature to analyse.                                                  |
-| max_probes             | Integer value                                                                       | Max probes                                                           |
-| time_frame             | 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day | Time frame                                                           |
-| value_type             | min, max, avg, count                                                                | Value type                                                           |
-| max_predictions        | Integer value                                                                       | Max predictions                                                      |
-| threshold              | Integer value                                                                       | Threshold                                                            |
-| automatic_cron         | Cron format string                                                                  | Automatic cycle                                                      |
-| automatic_enable       | true/false                                                                          | Enable                                                               |
-| automatic              | true/false                                                                          | Automatic                                                            |
-| start_date             | YYYY-MM-DD HH:mm or now                                                             | Start date                                                           |
-| multiply_by_values     | Array of string values                                                              | Multiply by values                                                   |
-| multiply_by_field      | None or full field name eg.: system.cpu                                             | Multiply by field                                                    |
-| selectedroles          | Array of roles name                                                                 | Role                                                                 |
-| last_execute_timestamp |                                                                                     | Last execute                                                         |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-fvzj{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-b9ha{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-fvzj">Field</th>
+    <th class="tg-fvzj">Value</th>
+    <th class="tg-fvzj">Screen field (description)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-b9ha">algorithm_type</td>
+    <td class="tg-b9ha">GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL</td>
+    <td class="tg-b9ha">Algorithm. For customs method field Code from Create algorithm form.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">model_name</td>
+    <td class="tg-b9ha">Not empty string.</td>
+    <td class="tg-b9ha">AI Rule Name.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">search</td>
+    <td class="tg-b9ha">Search id.</td>
+    <td class="tg-b9ha">Choose search.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">label_field.field</td>
+    <td class="tg-b9ha"></td>
+    <td class="tg-b9ha">Feature to analyse.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">max_probes</td>
+    <td class="tg-b9ha">Integer value</td>
+    <td class="tg-b9ha">Max probes</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">time_frame</td>
+    <td class="tg-b9ha">1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day</td>
+    <td class="tg-b9ha">Time frame</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">value_type</td>
+    <td class="tg-b9ha">min, max, avg, count</td>
+    <td class="tg-b9ha">Value type</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">max_predictions</td>
+    <td class="tg-b9ha">Integer value</td>
+    <td class="tg-b9ha">Max predictions</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">threshold</td>
+    <td class="tg-b9ha">Integer value</td>
+    <td class="tg-b9ha">Threshold</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">automatic_cron</td>
+    <td class="tg-b9ha">Cron format string</td>
+    <td class="tg-b9ha">Automatic cycle</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">automatic_enable</td>
+    <td class="tg-b9ha">true/false</td>
+    <td class="tg-b9ha">Enable</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">automatic</td>
+    <td class="tg-b9ha">true/false</td>
+    <td class="tg-b9ha">Automatic</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">start_date</td>
+    <td class="tg-b9ha">YYYY-MM-DD HH:mm or now</td>
+    <td class="tg-b9ha">Start date</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">multiply_by_values</td>
+    <td class="tg-b9ha">Array of string values</td>
+    <td class="tg-b9ha">Multiply by values</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">multiply_by_field</td>
+    <td class="tg-b9ha">None or full field name eg.: system.cpu</td>
+    <td class="tg-b9ha">Multiply by field</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">selectedroles</td>
+    <td class="tg-b9ha">Array of roles name</td>
+    <td class="tg-b9ha">Role</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">last_execute_timestamp</td>
+    <td class="tg-b9ha"></td>
+    <td class="tg-b9ha">Last execute</td>
+  </tr>
+</tbody>
+</table>
 
-| Not screen fields     |                                     |
-|-----------------------|-------------------------------------|
-| preparation_date      | Document preparation date.          |
-| machine_state_uid     | AI rule machine state uid.          |
-| path_to_logs          | Path to ai machine logs.            |
-| path_to_machine_state | Path to ai machine state files.     |
-| searchSourceJSON      | Query string.                       |
-| processing_time       | Process operation time.             |
-| last_execute_mili     | Last executed time in milliseconds. |
-| pid                   | Process pid if ai rule is running.  |
-| exit_code             | Last executed process exit code.    |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-b9ha{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Not screen fields</th>
+    <th class="tg-ua3b"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-b9ha">preparation_date</td>
+    <td class="tg-b9ha">Document preparation date.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">machine_state_uid</td>
+    <td class="tg-b9ha">AI rule machine state uid.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">path_to_logs</td>
+    <td class="tg-b9ha">Path to ai machine logs.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">path_to_machine_state</td>
+    <td class="tg-b9ha">Path to ai machine state files.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">searchSourceJSON</td>
+    <td class="tg-b9ha">Query string.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">processing_time</td>
+    <td class="tg-b9ha">Process operation time.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">last_execute_mili</td>
+    <td class="tg-b9ha">Last executed time in milliseconds.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">pid</td>
+    <td class="tg-b9ha">Process pid if ai rule is running.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">exit_code</td>
+    <td class="tg-b9ha">Last executed process exit code.</td>
+  </tr>
+</tbody>
+</table>
 
 The command must update the process status document in the system during operation. It is an elastic partial document update.
 
-| Process status         | Field (POST body)          | Description                                    |
-|------------------------|----------------------------|------------------------------------------------|
-| START                  | doc.pid                    | System process id                              |
-|                        | doc.last_execute_timestamp | Current timestamp. yyyy-MM-dd HH:mm            |
-|                        | doc.last_execute_mili      | Current timestamp in millisecunds.             |
-| END PROCESS WITH ERROR | doc.error_description      | Error description.                             |
-|                        | doc.error_message          | Error message.                                 |
-|                        | doc.exit_code              | System process exit code.                      |
-|                        | doc.pid                    | Value 0.                                     |
-|                        | doc.processing_time        | Time of execute process in seconds.            |
-| END PROCESS OK         | doc.pid                    | Value 0.                                     |
-|                        | doc.exit_code              | System process exit code. Value 0 for success. |
-|                        | doc.processing_time        | Time of execute process in seconds.            |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Process status</th>
+    <th class="tg-ua3b">Field (POST body)</th>
+    <th class="tg-ua3b">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">START</td>
+    <td class="tg-pnl2">doc.pid</td>
+    <td class="tg-pnl2">System process id</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.last_execute_timestamp</td>
+    <td class="tg-pnl2">Current timestamp. yyyy-MM-dd HH:mm</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.last_execute_mili</td>
+    <td class="tg-pnl2">Current timestamp in millisecunds.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">END PROCESS WITH ERROR</td>
+    <td class="tg-pnl2">doc.error_description</td>
+    <td class="tg-pnl2">Error description.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.error_message</td>
+    <td class="tg-pnl2">Error message.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.exit_code</td>
+    <td class="tg-pnl2">System process exit code.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.pid</td>
+    <td class="tg-pnl2">Value 0.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.processing_time</td>
+    <td class="tg-pnl2">Time of execute process in seconds.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">END PROCESS OK</td>
+    <td class="tg-pnl2">doc.pid</td>
+    <td class="tg-pnl2">Value 0.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.exit_code</td>
+    <td class="tg-pnl2">System process exit code. Value 0 for success.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.processing_time</td>
+    <td class="tg-pnl2">Time of execute process in seconds.</td>
+  </tr>
+</tbody>
+</table>
 
 The command must insert data for a prediction chart.
 
-| Field             | Value             | Description                                            |
-|-------------------|-------------------|--------------------------------------------------------|
-| model_name        | Not empty string. | AI Rule Name.                                          |
-| preparationUID    | Not empty string. | Unique prediction id                                   |
-| machine_state_uid | Not empty string. | AI rule machine state uid.                             |
-| model_uid         | Not empty string. | Model uid from config file                             |
-| method_name       | Not empty string. | User friendly algorithm name.                          |
-| <field>           | Json              | Field calculated. For example: system.cpu.idle.pct_pre |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-pjk6{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Value</th>
+    <th class="tg-ua3b">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">model_name</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">AI Rule Name.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">preparationUID</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">Unique prediction id</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">machine_state_uid</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">AI rule machine state uid.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">model_uid</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">Model uid from config file</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">method_name</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">User friendly algorithm name.</td>
+  </tr>
+  <tr>
+    <td class="tg-pjk6"></td>
+    <td class="tg-pnl2">Json</td>
+    <td class="tg-pnl2">Field calculated. For example: system.cpu.idle.pct_pre</td>
+  </tr>
+</tbody>
+</table>
 
 Document sample:
 
@@ -2401,7 +2724,7 @@ Document sample:
   "sort": [
     1559323800000
   ]
-}
+}s
 ```
 
 ## Archive
@@ -2425,19 +2748,20 @@ archive.archivefolderpath: '/var/lib/elastic_archive_test'
 ```
 
 Archives will be saved inside above directory in the subdirectories that describes year and month of its creation. For example:
-```
+
+```bash
 /var/lib/elastic_archive_test
 ├── 2022
 │   └── 08
-│       ├── enc3_2022-08-15.json.zstd
-│       └── skimmer-2022.08_2022-08-06.json.zstd
+│       ├── enc3_2022-08-15.json.zstd
+│       └── skimmer-2022.08_2022-08-06.json.zstd
 └── 2023
     ├── 05
-    │   ├── enc1_2023-05-25.json.zstd
-    │   ├── enc2_2023-05-25.json.zstd
-    │   └── skimmer-2023.05_2023-05-25.json.zstd
+    │   ├── enc1_2023-05-25.json.zstd
+    │   ├── enc2_2023-05-25.json.zstd
+    │   └── skimmer-2023.05_2023-05-25.json.zstd
     └── 07
-        └── skimmer-2023.07_2023-07-30.json.zstd
+        └── skimmer-2023.07_2023-07-30.json.zstd
 ```
 
 ### Archive Task
@@ -2449,10 +2773,11 @@ Archives will be saved inside above directory in the subdirectories that describ
 2. On the "Archive" tab select "Create Task" and define the following parameters:
 
    - `Index pattern` - for the indices that will be archived, for example, `syslog*`
-   - `Timestamp Field` - time field of the indices (default __@timestamp__)
+   - `Timestamp Field` - time field of the indices (default **@timestamp**)
    - `Older than (days)` - number of days after which documents will be archived
    - `Field names filter` - filter fields that should be archived
    - `Encrypt archives` - after enabling encryption, prompt with two password fields will be shown.
+
    - `Schedule task` (crontab format) - the work schedule of the ordered task.
 
    ![](/media/media/04_archive_create-archive-task.png)
@@ -2476,14 +2801,14 @@ The Archive Search module can search archive files for the specific content and 
 1. From the main navigation go to the `Archive` module.
 2. On the `Search` tab select `Create Task` and define the following parameters:
 
-   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__) 
+   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default **last 14 days**)
    - `Search text` - field for entering the text to be searched
    - `File name` - list of archive files that will be searched
    - `Enable searching in encrypted archives` - enable option to search in encrypted archives
 
 ![](/media/media/04_archive_create-search-task.png)
 
-The table footer shows the total number of found files for the specified date range.
+The table footer shows the total number of found files for the specified date range
 
 #### Task list
 
@@ -2493,7 +2818,7 @@ The searching process can take a long time. On the `Task List`, you can follow t
 
 ### Archive Restore
 
-The Archive Restore module moves data from the archive to the Elasticsearch index and makes it available online.
+The Archive Restore module moves data from the archive to the Elasticsearch index and make it online.
 
 #### Create Restore task
 
@@ -2501,10 +2826,10 @@ The Archive Restore module moves data from the archive to the Elasticsearch inde
 
 2. On the `Restore` tab select `Create Task` and define the following parameters:
 
-- `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__)
-- `Destination index` - If a destination index does not exist it will be created. If exists data will be appended
-- `File name` - list of archive files that will be recovered to Elasticsearch index
-- `Enable restoring from encrypted archives` - enable option to restore data from encrypted archives
+  - `Select range of listed archives` - files that matches selected range will be displayed in the list (default **last 14 days**)
+  - `Destination index` - If a destination index does not exist it will be created. If exists data will be appended
+  - `File name` - list of archive files that will be recovered to Elasticsearch index
+  - `Enable restoring from encrypted archives` - enable option to restore data from encrypted archives
 
 ![](/media/media/04_archive_create-restore-task.png)
 
@@ -2525,16 +2850,16 @@ When creating Search or Restore tasks, during selection of archives to use, some
 
 ![](/media/media/04_archive_archives-list.png)
 
-When particular archive's metadata could not be found following icon will be displayed: 
+When particular archive's metadata could not be found following icon will be displayed:
 ![](/media/media/04_archive_missing-metadata-icon.png)
 
 That archive can be used for task creation, but there are some issues to keep in mind:
-- encryption status of the archive without metadata cannot be established (can be either encrypted or not)
-- when task has enabled encryption handling (e.g. `Enable restoring from encrypted archives` or  `Enable searching in encrypted archives`), archives will be decrypted with provided password. If archive was not decrypted, an error is expected
-- when archive is potentially encrypted and password is not provided, an error is expected.
 
-On the other hand, when metadata is present, but archive itself could not be located, following icon will be displayed: 
-![](/media/media/04_archive_missing-archive-icon.png)
+  - encryption status of the archive without metadata cannot be established (can be either encrypted or not)
+  - when task has enabled encryption handling (e.g. `Enable restoring from encrypted archives` or  `Enable searching in encrypted archives`), archives will be decrypted with provided password. If archive was not decrypted, an error is expected
+  - when archive is potentially encrypted and password is not provided, an error is expected.
+
+On the other hand, when metadata is present, but archive itself could not be located, following icon will be displayed: ![](/media/media/04_archive_missing-archive-icon.png)
 
 That archive cannot be used for task creation and so cannot be selected.
 
@@ -2556,29 +2881,31 @@ Moreover, in the metadata files can be found current process id (`pid`), total d
 
 1. List archive folder and find filename generated by uncompleted task.
 
-  ```bash
-  ls -la /archivefolderpath/
-  -rw-r--r--. 1 kibana kibana          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
-  21_2022-12-21.json.zstd  
-  ```
+    ```bash
+    ls -la /archivefolderpath/
+    -rw-r--r--. 1 kibana kibana          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
+    21_2022-12-21.json.zstd  
+    ```
 
 1. Find document in `.archive` index using filename from previous step
 
-  `curl -s -k -X GET -ulogserver:... http://127.0.0.1:9200/.archive/_search?size=10000 |jq '.'| grep -B4 "prd-srv-win-ad-2022.12.21"`
+    `curl -s -k -X GET -ulogserver:... http://127.0.0.1:9200/.archive/_search?size=10000 |jq '.'| grep -B4 "prd-srv-win-ad-2022.12.21"`
 
 1. Write down it's ID
 
-  ```json
-  "_id": "Q8teA4cBj_ghAWXFcMJA",
-        "_score": 1.0,
-        "_source": {
-          "date": "2023-03-21T08:52:13.502Z",
-          "filename": "prd-srv-win-ad-2022.12.21_2022-12-21.json.zstd", 
-  ```
+    ```json
+    "_id": "Q8teA4cBj_ghAWXFcMJA",
+          "_score": 1.0,
+          "_source": {
+            "date": "2023-03-21T08:52:13.502Z",
+            "filename": "prd-srv-win-ad-2022.12.21_2022-12-21.json.zstd", 
+    ```
 
 1. Remove documen using saved ID
 
-  `curl -s -k -X DELETE -ulogserver:... http://127.0.0.1:9200/.archive/_doc/Q8teA4cBj_ghAWXFcMJA`
+    ```bash
+    curl -s -k -X DELETE -ulogserver:... http://127.0.0.1:9200/.archive/_doc/Q8teA4cBj_ghAWXFcMJA
+    ```
 
 ### Command Line tools
 
@@ -4248,8 +4575,8 @@ This plugin supports the following configuration options plus the Common Options
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-9odp{border-color:#000000;color:#000000;font-weight:bold;text-align:left;vertical-align:bottom}
-.tg .tg-pjk6{border-color:#000000;color:#000000;text-align:left;vertical-align:top}
+.tg .tg-9odp{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-pjk6{border-color:inherit;color:inherit;text-align:left;vertical-align:top}
 </style>
 <table class="tg" style="undefined;table-layout: fixed; width: 690px">
 <colgroup>
