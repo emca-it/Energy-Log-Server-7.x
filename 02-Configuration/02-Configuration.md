@@ -1678,7 +1678,9 @@ To set the default application for the GUI home page, please do the following:
 
 The default e-mail client that installs with the Linux CentOS system,
 which is used by Energy Logserver to send reports (Section 5.3 of the
-[Reports](/05-00-00-Reports/05-03-00-PDF_Report.md) chapter), is ***postfix***.# Configuration file for **postfix** mail client #
+[Reports](/05-00-00-Reports/05-03-00-PDF_Report.md) chapter), is ***postfix***.
+
+#### Configuration file for **postfix** mail client
 
 The *postfix* configuration directory for CentOS is */etc/postfix*. It
 contains files:
@@ -2001,7 +2003,7 @@ user1 root, user3
   -rw-r\--r\--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
 ```
 
-### Basic *postfix* configuration
+#### Basic *postfix* configuration
 
 Base configuration of *postfix* application you can make in
 `/etc/postfix/main.cf` configuration file, which must be completed with the following entry:
@@ -2028,7 +2030,7 @@ At the end, you should restart the *postfix*:
  systemctl restart postfix
 ```
 
-### Example of postfix configuration with SSL encryption enabled
+#### Example of postfix configuration with SSL encryption enabled
 
 To configure email delivery with SSL encryption you need to make
 the following changes in the *postfix* configuration files:
