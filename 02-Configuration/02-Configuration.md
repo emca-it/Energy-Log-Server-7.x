@@ -1233,7 +1233,7 @@ To enable SSO on your system follow the below steps. The configuration is made f
    Create a User in AD. Set "Account never expires" and enable support for Kerberos encryption as shown below.
 
    ![](/media/media/image107_js.png)
-  <br>
+   <br>
 
 1. Define the Service Principal Name (SPN) and Create a keytab file for it
 
