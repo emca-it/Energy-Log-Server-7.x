@@ -2497,6 +2497,8 @@ Json document:
 </tbody>
 </table>
 
+</br>
+
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -2552,6 +2554,7 @@ Json document:
   </tr>
 </tbody>
 </table>
+</br>
 
 The command must update the process status document in the system during operation. It is an elastic partial document update.
 
@@ -2630,6 +2633,7 @@ The command must update the process status document in the system during operati
   </tr>
 </tbody>
 </table>
+</br>
 
 The command must insert data for a prediction chart.
 
@@ -2684,6 +2688,7 @@ The command must insert data for a prediction chart.
   </tr>
 </tbody>
 </table>
+</br>
 
 Document sample:
 
@@ -2724,7 +2729,7 @@ Document sample:
   "sort": [
     1559323800000
   ]
-}s
+}
 ```
 
 ## Archive
