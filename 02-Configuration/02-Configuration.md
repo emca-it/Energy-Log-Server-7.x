@@ -2004,7 +2004,7 @@ user1 root, user3
 ### Basic *postfix* configuration
 
 Base configuration of *postfix* application you can make in
-`/etc/postfix/main.cfg` configuration file, which must be completed with the following entry:
+`/etc/postfix/main.cf` configuration file, which must be completed with the following entry:
 
 - section *# RECEIVING MAIL*
 
@@ -2052,10 +2052,11 @@ entries in addition to standard (unchecked entries):
   smtpd_recipient_restrictions = permit_sasl_authenticated
   ```
 
-- **`/etc/postfix/sasl/passwd`** - file should define the data for authorized
+- **`/etc/postfix/sasl_passwd`** - file should define the data for authorized
 
    ```bash
-   [smtp.example.com\]:587 [USER@example.com:PASS]
+   [smtp.example.com]:587 [USER@example.com:PASS]
+   [smtp.example.com]:587 username:password
    ```
 
 You need to give appropriate permissions:
@@ -2068,6 +2069,8 @@ and map configuration to the database:
   
   ```bash
   postmap /etc/postfix/sasl_passwd
+  postmap /etc/postfix/canonical
+  postmap /etc/postfix/generic
   ```
 
 next, you need to generate a CA cert file:
@@ -2079,7 +2082,7 @@ next, you need to generate a CA cert file:
 Finally, you need to restart the postfix
 
   ```bash
-  /etc/init.d/postfix restart
+  systemctl restart postfix
   ```
 
 ## Custom notification on the workstation
