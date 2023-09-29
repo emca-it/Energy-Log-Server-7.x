@@ -2468,15 +2468,15 @@ The searching process will can take a long time. On the `Task List`, you can fol
 
 ![](/media/media/image159.png)
 
-### Archive Upload
+### Archive Restore
 
-The Archive Upload module moves data from the archive to the Elasticsearch index and make it online.
+The Archive Restore module moves data from the archive to the Elasticsearch index and makes it available online.
 
-#### Create Upload task
+#### Create Restore task
 
 1. From the main navigation go to the `Archive` module.
 
-2. On the `Upload` tab select `Create Task` and define the following parameters:
+2. On the `Restore` tab select `Create Task` and define the following parameters:
 
 - `Destination index` - If a destination index does not exist it will be created. If exists data will be appended.
 - `File name` - list of archive files that will be recovered to Elasticsearch index.
