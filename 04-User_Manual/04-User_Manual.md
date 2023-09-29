@@ -2424,6 +2424,22 @@ remove the comment from the following line and set the correct path to the archi
 archive.archivefolderpath: '/var/lib/elastic_archive_test'
 ```
 
+Archives will be saved inside above directory in the subdirectories that describes year and month of its creation. For example:
+```
+/var/lib/elastic_archive_test
+├── 2022
+│   └── 08
+│       ├── enc3_2022-08-15.json.zstd
+│       └── skimmer-2022.08_2022-08-06.json.zstd
+└── 2023
+    ├── 05
+    │   ├── enc1_2023-05-25.json.zstd
+    │   ├── enc2_2023-05-25.json.zstd
+    │   └── skimmer-2023.05_2023-05-25.json.zstd
+    └── 07
+        └── skimmer-2023.07_2023-07-30.json.zstd
+```
+
 ### Archive Task
 
 #### Create Archive task
@@ -2460,12 +2476,14 @@ The Archive Search module can search archive files for the specific content and 
 1. From the main navigation go to the `Archive` module.
 2. On the `Search` tab select `Create Task` and define the following parameters:
 
-   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__)
+   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__) 
    - `Search text` - field for entering the text to be searched
    - `File name` - list of archive files that will be searched
    - `Enable searching in encrypted archives` - enable option to search in encrypted archives
 
 ![](/media/media/04_archive_create-search-task.png)
+
+The table footer shows the total number of found files for the specified date range.
 
 #### Task list
 
@@ -2483,16 +2501,42 @@ The Archive Restore module moves data from the archive to the Elasticsearch inde
 
 2. On the `Restore` tab select `Create Task` and define the following parameters:
 
-- `Destination index` - If a destination index does not exist it will be created. If exists data will be appended.
-- `File name` - list of archive files that will be recovered to Elasticsearch index.
+- `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__)
+- `Destination index` - If a destination index does not exist it will be created. If exists data will be appended
+- `File name` - list of archive files that will be recovered to Elasticsearch index
+- `Enable restoring from encrypted archives` - enable option to restore data from encrypted archives
 
-![](/media/media/image160.png)
+![](/media/media/04_archive_create-restore-task.png)
+
+The table footer shows the total number of found files for the specified date range.
 
 #### Task List
 
 The process will index data back into Elasticsearch. Depend on archive size the process can take long time. On the `Task List` you can follow the status of the recovery process. Also you can view result and delete tasks.
 
-![](/media/media/image161.png)
+![](/media/media/04_archive_restore-task-list.png)
+
+### Search/Restore task with archives without metadata
+
+When creating Search or Restore tasks, during selection of archives to use, some warnings could be seen. Following screenshot presents list of archives with enabled filter that shows only archives with warnings:
+
+- `missing metadata`
+- `missing archive file`
+
+![](/media/media/04_archive_archives-list.png)
+
+When particular archive's metadata could not be found following icon will be displayed: 
+![](/media/media/04_archive_missing-metadata-icon.png)
+
+That archive can be used for task creation, but there are some issues to keep in mind:
+- encryption status of the archive without metadata cannot be established (can be either encrypted or not)
+- when task has enabled encryption handling (e.g. `Enable restoring from encrypted archives` or  `Enable searching in encrypted archives`), archives will be decrypted with provided password. If archive was not decrypted, an error is expected
+- when archive is potentially encrypted and password is not provided, an error is expected.
+
+On the other hand, when metadata is present, but archive itself could not be located, following icon will be displayed: 
+![](/media/media/04_archive_missing-archive-icon.png)
+
+That archive cannot be used for task creation and so cannot be selected.
 
 ### Identifying progress of archivisation/restoration process
 
