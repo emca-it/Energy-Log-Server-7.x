@@ -1918,8 +1918,8 @@ contains files:
 
   ll /etc/postfix/canonical*
 
-  -rw-r\--r\--. 1 root root 11681 2014-06-10 /etc/postfix/canonical
-  -rw-r\--r\--. 1 root root 12288 07-31 20:56 /etc/postfix/canonical.db
+  -rw-r--r--. 1 root root 11681 2014-06-10 /etc/postfix/canonical
+  -rw-r--r--. 1 root root 12288 07-31 20:56 /etc/postfix/canonical.db
 ```
 
 **generic** - mapping of outgoing e-mails to local users. The syntax
@@ -1931,8 +1931,8 @@ contains files:
 
   ll /etc/postfix/generic*
 
-  -rw-r\--r\--. 1 root root 9904 2014-06-10 /etc/postfix/generic
-  -rw-r\--r\--. 1 root root 12288 07-31 21:15 /etc/postfix/generic.db
+  -rw-r--r--. 1 root root 9904 2014-06-10 /etc/postfix/generic
+  -rw-r--r--. 1 root root 12288 07-31 21:15 /etc/postfix/generic.db
 ```
 
 **relocated** -- information about users who have been transferred.
@@ -1952,8 +1952,8 @@ contains files:
 postmap /etc/postfix/relocated
 ll /etc/postfix/relocated*
 
-  -rw-r\--r\--. 1 root root 6816 2014-06-10 /etc/postfix/relocated
-  -rw-r\--r\--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
+  -rw-r--r--. 1 root root 6816 2014-06-10 /etc/postfix/relocated
+  -rw-r--r--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
 ```
 
 **transport** -- mapping between e-mail addresses and the server through which these e-mails are to be sent (next hops) in the transport
@@ -1970,8 +1970,8 @@ ll /etc/postfix/relocated*
 postmap /etc/postfix/transport
 ll /etc/postfix/transport*
 
-  -rw-r\--r\--. 1 root root 12549 2014-06-10 /etc/postfix/transport
-  -rw-r\--r\--. 1 root root 12288 07-31 21:32 /etc/postfix/transport.db
+  -rw-r--r--. 1 root root 12549 2014-06-10 /etc/postfix/transport
+  -rw-r--r--. 1 root root 12288 07-31 21:32 /etc/postfix/transport.db
 ```
 
 **virtual** - user to redirect e-mails intended for a certain user to
@@ -1999,8 +1999,8 @@ user1 root, user3
 
    ll /etc/postfix/virtual
 
-  -rw-r\--r\--. 1 root root 12494 2014-06-10 /etc/postfix/virtual
-  -rw-r\--r\--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
+  -rw-r--r--. 1 root root 12494 2014-06-10 /etc/postfix/virtual
+  -rw-r--r--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
 ```
 
 #### Basic *postfix* configuration
