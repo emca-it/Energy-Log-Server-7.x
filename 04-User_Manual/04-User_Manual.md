@@ -2439,13 +2439,13 @@ archive.archivefolderpath: '/var/lib/elastic_archive_test'
    - `Encrypt archives` - after enabling encryption, prompt with two password fields will be shown.
    - `Schedule task` (crontab format) - the work schedule of the ordered task.
 
-   ![](/media/media/04-archive_create-archive-task.png)
+   ![](/media/media/04_archive_create-archive-task.png)
 
 #### Task List
 
 In the `Task List`, you can follow the current status of ordered tasks. You can modify the task scheduler or delete a single or many tasks at once.
 
-![](/media/media/04-archive_archive-task-list.png)
+![](/media/media/04_archive_archive-task-list.png)
 
 If the archiving task finds an existing archive file that matches the data being archived, it will check the number of documents in the archive and the number of documents in the index. If there is a difference in the number of documents then new documents will be added to the archive file.
 
@@ -2460,16 +2460,18 @@ The Archive Search module can search archive files for the specific content and 
 1. From the main navigation go to the `Archive` module.
 2. On the `Search` tab select `Create Task` and define the following parameters:
 
-   - `Search text` - field for entering the text to be searched.
-   - `File name` - list of archive files that will be searched.
+   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__)
+   - `Search text` - field for entering the text to be searched
+   - `File name` - list of archive files that will be searched
+   - `Enable searching in encrypted archives` - enable option to search in encrypted archives
 
-![](/media/media/image158.png)
+![](/media/media/04_archive_create-search-task.png)
 
 #### Task list
 
-The searching process will can take a long time. On the `Task List`, you can follow the status of the searching process. Also, you can view results and delete tasks.
+The searching process can take a long time. On the `Task List`, you can follow the status of the searching process. Also, you can view results and delete tasks.
 
-![](/media/media/image159.png)
+![](/media/media/04_archive_search-task-list.png)
 
 ### Archive Restore
 
