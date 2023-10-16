@@ -791,7 +791,7 @@ will be possible to download the report.
 ![](/media/media/image45.png)
 
 By clicking the Download button, the report is downloaded to the disk
-or we can open it in the PDF file browser. There is also to option
+or we can open it in the PDF file browser. There is also the option
 of deleting the report with the Delete button.
 
 ![](/media/media/image46.png)
