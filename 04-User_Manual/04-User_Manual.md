@@ -6255,7 +6255,7 @@ The original goal of this codec was to allow joining of multiline messages from 
 
 ## SQL/PPL API
 
-Use the SQL and PPL API to send queries to the SQL plugin. Use the `_sql` endpoint to send queries in SQL, and the `_ppl` endpoint to send queries in PPL. For both of these, you can also use the `_explain` endpoint to translate your query into [OpenSearch domain-specific language]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/) (DSL) or to troubleshoot errors.
+Use the SQL and PPL API to send queries to the SQL plugin. Use the `_sql` endpoint to send queries in SQL, and the `_ppl` endpoint to send queries in PPL. For both of these, you can also use the `_explain` endpoint to translate your query into [OpenSearch domain-specific language](https://opensearch.org/docs/latest/opensearch/query-dsl/) (DSL) or to troubleshoot errors.
 
 ---
 
@@ -6277,8 +6277,8 @@ Sends an SQL/PPL query to the SQL plugin. You can pass the format for the respon
 
 Parameter | Data Type | Description
 :--- | :--- | :---
-[format]({{site.url}}{{site.baseurl}}/search-plugins/sql/response-formats/) | String | The format for the response. The `_sql` endpoint supports `jdbc`, `csv`, `raw`, and `json` formats. The `_ppl` endpoint supports `jdbc`, `csv`, and `raw` formats. Default is `jdbc`.
-sanitize | Boolean | Specifies whether to escape special characters in the results. See [Response formats]({{site.url}}{{site.baseurl}}/search-plugins/sql/response-formats/) for more information. Default is `true`.
+[format](https://opensearch.org/docs/latest/search-plugins/sql/response-formats/) | String | The format for the response. The `_sql` endpoint supports `jdbc`, `csv`, `raw`, and `json` formats. The `_ppl` endpoint supports `jdbc`, `csv`, and `raw` formats. Default is `jdbc`.
+sanitize | Boolean | Specifies whether to escape special characters in the results. See [Response formats](https://opensearch.org/docs/latest/search-plugins/sql/response-formats/) for more information. Default is `true`.
 
 #### Request fields
 
@@ -6417,11 +6417,11 @@ schema | Array | Specifies the field names and types for all fields.
 data_rows | 2D array | An array of results. Each result represents one matching row (document).
 total | Integer | The total number of rows (documents) in the index.
 size | Integer | The number of results to return in one response.
-status | String | The HTTP response status OpenSearch returns after running the query.
+status | String | The HTTP response status Energy Logserver returns after running the query.
 
 #### Explain API
 
-The SQL plugin has an `explain` feature that shows how a query is executed against OpenSearch, which is useful for debugging and development. A POST request to the `_plugins/_sql/_explain` or `_plugins/_ppl/_explain` endpoint returns [OpenSearch domain-specific language]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/) (DSL) in JSON format, explaining the query.
+The SQL plugin has an `explain` feature that shows how a query is executed against Energy Logserver, which is useful for debugging and development. A POST request to the `_plugins/_sql/_explain` or `_plugins/_ppl/_explain` endpoint returns [OpenSearch domain-specific language](https://opensearch.org/docs/latest/opensearch/query-dsl/) (DSL) in JSON format, explaining the query.
 You can execute the explain API operation either in command line using `curl` or in the Dashboards console, like in the example below. 
 
 #### Sample explain request for an SQL query
@@ -6486,7 +6486,7 @@ POST _plugins/_ppl/_explain
 }
 ```
 
-For queries that require post-processing, the `explain` response includes a query plan in addition to the OpenSearch DSL. For those queries that don't require post processing, you can see a complete DSL.
+For queries that require post-processing, the `explain` response includes a query plan in addition to the Energy Logserver DSL. For those queries that don't require post processing, you can see a complete DSL.
 
 #### Paginating results
 
@@ -6603,7 +6603,7 @@ POST /_plugins/_sql/close
 }'
 ```
 
-The response is an acknowledgement from OpenSearch:
+The response is an acknowledgement from Energy Logserver:
 
 ```json
 {"succeeded":true}
@@ -6611,7 +6611,7 @@ The response is an acknowledgement from OpenSearch:
 
 #### Filtering results
 
-You can use the `filter` parameter to add more conditions to the OpenSearch DSL directly.
+You can use the `filter` parameter to add more conditions to the Energy Logserver DSL directly.
 
 The following SQL query returns the names and account balances of all customers. The results are then filtered to contain only those customers with less than $10,000 balance. 
 
@@ -6665,7 +6665,7 @@ The response contains the matching results:
 }
 ```
 
-You can use the Explain API to see how this query is executed against OpenSearch:
+You can use the Explain API to see how this query is executed against Energe Logserver:
 
 ```json
 POST /_plugins/_sql/_explain 
@@ -6681,7 +6681,7 @@ POST /_plugins/_sql/_explain
 }'
 ```
 
-The response contains the Boolean query in OpenSearch DSL that corresponds to the query above:
+The response contains the Boolean query in Enegry Logserver DSL that corresponds to the query above:
 
 ```json
 {
@@ -6738,7 +6738,7 @@ POST /_plugins/_sql/_explain
 }
 ```
 
-The response contains the Boolean query in OpenSearch DSL that corresponds to the SQL query above:
+The response contains the Boolean query in Enegry Logserver DSL that corresponds to the SQL query above:
 
 ```json
 {
@@ -6831,7 +6831,7 @@ In the response, the `schema` contains the field names and types, and the `datar
 }
 ```
 
-If an error of any type occurs, OpenSearch returns the error message.
+If an error of any type occurs, Enegry Logserver returns the error message.
 
 The following query searches for a non-existent field `unknown`:
 
@@ -6855,9 +6855,9 @@ The response contains the error message and the cause of the error:
 }
 ```
 
-#### OpenSearch DSL JSON format
+#### Enegry Logserver DSL JSON format
 
-If you set the format to `json`, the original OpenSearch response is returned in JSON format. Because this is the native response from OpenSearch, extra effort is needed to parse and interpret it.
+If you set the format to `json`, the original Enegry Logserver response is returned in JSON format. Because this is the native response from Enegry Logserver, extra effort is needed to parse and interpret it.
 
 #### Example request
 
@@ -6872,7 +6872,7 @@ POST _plugins/_sql?format=json
 
 #### Example response
 
-The response is the original response from OpenSearch:
+The response is the original response from Enegry Logserver:
 
 ```json
 {
@@ -6947,7 +6947,7 @@ Hattie,Bond,36
 ```
 #### Sanitizing results in CSV format
 
-By default, OpenSearch sanitizes header cells (field names) and data cells (field contents) according to the following rules:
+By default, Enegry Logserver sanitizes header cells (field names) and data cells (field contents) according to the following rules:
 
 - If a cell starts with `+`, `-`, `=` , or `@`, the sanitizer inserts a single quote (`'`) at the start of the cell.
 - If a cell contains one or more commas (`,`), the sanitizer surrounds the cell with double quotes (`"`).
@@ -7019,7 +7019,7 @@ Dale|Adams|33
 Hattie|Bond|36
 ```
 
-By default, OpenSearch sanitizes results in `raw` format according to the following rule:
+By default, Enegry Logserver sanitizes results in `raw` format according to the following rule:
 
 - If a data cell contains one or more pipe characters (`|`), the sanitizer surrounds the cell with double quotes.
 
@@ -7056,15 +7056,15 @@ The query returns cells with the `|` character surrounded by quotation marks:
 
 #### Workbench
 
-The easiest way to get familiar with the SQL plugin is to use **Query Workbench** in OpenSearch Dashboards to test various queries. To learn more, see [Workbench]({{site.url}}{{site.baseurl}}/search-plugins/sql/workbench/).
+The easiest way to get familiar with the SQL plugin is to use **Query Workbench** in Enegry Logserver to test various queries. To learn more, see [Workbench](search-plugins/sql/workbench/).
 
-![OpenSearch Dashboards SQL UI plugin]({{site.url}}{{site.baseurl}}/images/sql.png)
+![OpenSearch Dashboards SQL UI plugin](https://opensearch.org/docs/latest/images/sql.png)
 
-#### SQL and OpenSearch terminology
+#### SQL and Enegry Logserver terminology
 
-Here’s how core SQL concepts map to OpenSearch:
+Here’s how core SQL concepts map to Enegry Logserver:
 
-SQL | OpenSearch
+SQL | Enegry Logserver
 :--- | :---
 Table | Index
 Row | Document
@@ -7072,7 +7072,7 @@ Column | Field
 
 #### REST API
 
-For a complete  REST API reference for the SQL plugin, see [SQL/PPL API]({{site.url}}{{site.baseurl}}/search-plugins/sql/sql-ppl-api). 
+For a complete  REST API reference for the SQL plugin, see [SQL/PPL API](search-plugins/sql/sql-ppl-api). 
 
 To use the SQL plugin with your own applications, send requests to the `_plugins/_sql` endpoint:
 
@@ -7107,7 +7107,7 @@ To run the above query in the command line, use the [curl](https://curl.haxx.se/
 curl -XPOST https://localhost:9200/_plugins/_sql -u 'admin:admin' -k -H 'Content-Type: application/json' -d '{"query": "SELECT * FROM my-index* LIMIT 50"}'
 ```
 
-You can specify the [response format]({{site.url}}{{site.baseurl}}/search-plugins/sql/response-formats) as JDBC, standard OpenSearch JSON, CSV, or raw. By default, queries return data in JDBC format. The following query sets the format to JSON:
+You can specify the [response format](https://opensearch.org/docs/latest/search-plugins/sql/response-formats) as JDBC, standard Enegry Logserver JSON, CSV, or raw. By default, queries return data in JDBC format. The following query sets the format to JSON:
 
 ```json
 POST _plugins/_sql?format=json
@@ -7152,22 +7152,22 @@ FROM index_name
 ##### Fundamentals
 
 Apart from the predefined keywords of SQL, the most basic elements are literal and identifiers.
-A literal is a numeric, string, date or boolean constant. An identifier is an OpenSearch index or field name.
+A literal is a numeric, string, date or boolean constant. An identifier is an Enegry Logserver index or field name.
 With arithmetic operators and SQL functions, use literals and identifiers to build complex expressions.
 
 Rule `expressionAtom`:
 
-![expressionAtom]({{site.url}}{{site.baseurl}}/images/expressionAtom.png)
+![expressionAtom](media/media/images/expressionAtom.png)
 
 The expression in turn can be combined into a predicate with logical operator. Use a predicate in the `WHERE` and `HAVING` clause to filter out data by specific conditions.
 
 Rule `expression`:
 
-![expression]({{site.url}}{{site.baseurl}}/images/expression.png)
+![expression](media/media/images/expression.png)
 
 Rule `predicate`:
 
-![expression]({{site.url}}{{site.baseurl}}/images/predicate.png)
+![expression](media/media/images/predicate.png)
 
 ##### Execution Order
 
@@ -7191,11 +7191,11 @@ Specify the fields to be retrieved.
 
 Rule `selectElements`:
 
-![selectElements]({{site.url}}{{site.baseurl}}/images/selectElements.png)
+![selectElements](media/media/images/selectElements.png)
 
 Rule `selectElement`:
 
-![selectElements]({{site.url}}{{site.baseurl}}/images/selectElement.png)
+![selectElements](media/media/images/selectElement.png)
 
 *Example 1*: Use `*` to retrieve all fields in an index:
 
@@ -7262,9 +7262,9 @@ You can specify subqueries within the `FROM` clause.
 
 Rule `tableName`:
 
-![tableName]({{site.url}}{{site.baseurl}}/images/tableName.png)
+![tableName](media/media/tableName.png)
 
-*Example 1*: Use index aliases to query across indexes. To learn about index aliases, see [Index Alias]({{site.url}}{{site.baseurl}}/opensearch/index-alias/).
+*Example 1*: Use index aliases to query across indexes. To learn about index aliases, see [Index Alias](https://opensearch.org/docs/latest/opensearch/index-alias/).
 In this sample query, `acc` is an alias for the `accounts` index:
 
 ```sql
@@ -7313,8 +7313,8 @@ Specify a condition to filter the results.
 `>=` | Greater than or equal to.
 `<=` | Less than or equal to.
 `IN` | Specify multiple `OR` operators.
-`BETWEEN` | Similar to a range query. For more information about range queries, see [Range query]({{site.url}}{{site.baseurl}}/query-dsl/term/range/).
-`LIKE` | Use for full-text search. For more information about full-text queries, see [Full-text queries]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index/).
+`BETWEEN` | Similar to a range query. For more information about range queries, see [Range query](https://opensearch.org/docs/latest/query-dsl/term/range/).
+`LIKE` | Use for full-text search. For more information about full-text queries, see [Full-text queries](opensearch/query-dsl/full-text/index/).
 `IS NULL` | Check if the field value is `NULL`.
 `IS NOT NULL` | Check if the field value is `NOT NULL`.
 
@@ -7332,7 +7332,7 @@ WHERE account_number = 1
 | :---
 | 1
 
-*Example 2*: OpenSearch allows for flexible schema，so documents in an index may have different fields. Use `IS NULL` or `IS NOT NULL` to retrieve only missing fields or existing fields. OpenSearch does not differentiate between missing fields and fields explicitly set to `NULL`:
+*Example 2*: Enegry Logserver allows for flexible schema，so documents in an index may have different fields. Use `IS NULL` or `IS NOT NULL` to retrieve only missing fields or existing fields. Enegry Logserver does not differentiate between missing fields and fields explicitly set to `NULL`:
 
 ```sql
 SELECT account_number, employer
@@ -7437,7 +7437,7 @@ ORDER BY account_number DESC
 | 6
 | 1
 
-*Example 2*: Specify if documents with missing fields are to be put at the beginning or at the end of the results. The default behavior of OpenSearch is to return nulls or missing fields at the end. To push them before non-nulls, use the `IS NOT NULL` operator:
+*Example 2*: Specify if documents with missing fields are to be put at the beginning or at the end of the results. The default behavior of Enegry Logserver is to return nulls or missing fields at the end. To push them before non-nulls, use the `IS NOT NULL` operator:
 
 ```sql
 SELECT employer
@@ -7456,7 +7456,7 @@ ORDER BY employer IS NOT NULL
 
 Specify the maximum number of documents that you want to retrieve. Used to prevent fetching large amounts of data into memory.
 
-*Example 1*: If you pass in a single argument, it's mapped to the `size` parameter in OpenSearch and the `from` parameter is set to 0.
+*Example 1*: If you pass in a single argument, it's mapped to the `size` parameter in Enegry Logserver and the `from` parameter is set to 0.
 
 ```sql
 SELECT account_number
@@ -7468,7 +7468,7 @@ ORDER BY account_number LIMIT 1
 | :---
 | 1
 
-*Example 2*: If you pass in two arguments, the first is mapped to the `from` parameter and the second to the `size` parameter in OpenSearch. You can use this for simple pagination for small indexes, as it's inefficient for large indexes.
+*Example 2*: If you pass in two arguments, the first is mapped to the `from` parameter and the second to the `size` parameter in Enegry Logserver. You can use this for simple pagination for small indexes, as it's inefficient for large indexes.
 Use `ORDER BY` to ensure the same order between pages:
 
 ```sql
@@ -7494,12 +7494,12 @@ Redirect_from:
 
 ### Complex queries
 
-Besides simple SFW (`SELECT-FROM-WHERE`) queries, the SQL plugin supports complex queries such as subquery, join, union, and minus. These queries operate on more than one OpenSearch index. To examine how these queries execute behind the scenes, use the `explain` operation.
+Besides simple SFW (`SELECT-FROM-WHERE`) queries, the SQL plugin supports complex queries such as subquery, join, union, and minus. These queries operate on more than one Enegry Logserver index. To examine how these queries execute behind the scenes, use the `explain` operation.
 
 
 #### Joins
 
-OpenSearch SQL supports inner joins, cross joins, and left outer joins.
+Enegry Logserver SQL supports inner joins, cross joins, and left outer joins.
 
 ##### Constraints
 
@@ -7531,11 +7531,11 @@ The `JOIN` clause combines columns from one or more indexes using values common 
 
 Rule `tableSource`:
 
-![tableSource]({{site.url}}{{site.baseurl}}/images/tableSource.png)
+![tableSource](media/media/images/tableSource.png)
 
 Rule `joinPart`:
 
-![joinPart]({{site.url}}{{site.baseurl}}/images/joinPart.png)
+![joinPart](media/media/images/joinPart.png)
 
 ##### Example 1: Inner join
 
@@ -7556,7 +7556,7 @@ JOIN employees_nested e
 
 Explain:
 
-The `explain` output is complicated, because a `JOIN` clause is associated with two OpenSearch DSL queries that execute in separate query planner frameworks. You can interpret it by examining the `Physical Plan` and `Logical Plan` objects.
+The `explain` output is complicated, because a `JOIN` clause is associated with two Enegry Logserver DSL queries that execute in separate query planner frameworks. You can interpret it by examining the `Physical Plan` and `Logical Plan` objects.
 
 ```json
 {
@@ -7918,12 +7918,12 @@ Redirect_from:
 
 ### Functions
 
-The SQL language supports all SQL plugin [common functions]({{site.url}}{{site.baseurl}}/search-plugins/sql/functions/), including [relevance search]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text/), but also introduces a few function synonyms, which are available in SQL only.
-These synonyms are provided by the `V1` engine. For more information, see [Limitations]({{site.url}}{{site.baseurl}}/search-plugins/sql/limitation).
+The SQL language supports all SQL plugin [common functions](https://opensearch.org/docs/latest/search-plugins/sql/functions/), including [relevance search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/), but also introduces a few function synonyms, which are available in SQL only.
+These synonyms are provided by the `V1` engine. For more information, see [Limitations](https://opensearch.org/docs/latest/search-plugins/sql/limitation).
 
 #### Match query
 
-The `MATCHQUERY` and `MATCH_QUERY` functions are synonyms for the [`MATCH`]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text#match) relevance function. They don't accept additional arguments but provide an alternate syntax.
+The `MATCHQUERY` and `MATCH_QUERY` functions are synonyms for the [`MATCH`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#match) relevance function. They don't accept additional arguments but provide an alternate syntax.
 
 ##### Syntax
 
@@ -7967,7 +7967,7 @@ The results contain documents in which the address contains "Holmes":
 
 #### Multi-match
 
-There are three synonyms for [`MULTI_MATCH`]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text#multi-match), each with a slightly different syntax. They accept a query string and a fields list with weights. They can also accept additional optional parameters.
+There are three synonyms for [`MULTI_MATCH`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#multi-match), each with a slightly different syntax. They accept a query string and a fields list with weights. They can also accept additional optional parameters.
 
 ##### Syntax
 
@@ -7999,7 +7999,7 @@ You can specify the following options in any order:
 
 #### Query string
 
-The `QUERY` function is a synonym for [`QUERY_STRING`]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text#query-string).
+The `QUERY` function is a synonym for [`QUERY_STRING`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#query-string).
 
 ##### Syntax
 
@@ -8027,7 +8027,7 @@ You can specify the following options in any order:
 
 ##### Example of using `query_string` in SQL and PPL queries:
 
-The following is a sample REST API search request in OpenSearch DSL.
+The following is a sample REST API search request in Enegry Logserver DSL.
 
 ```json
 GET accounts/_search
@@ -8059,7 +8059,7 @@ The results contain addresses that contain "Lane" or "Street":
 
 #### Match phrase
 
-The `MATCHPHRASEQUERY` function is a synonym for [`MATCH_PHRASE`]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text#query-string).
+The `MATCHPHRASEQUERY` function is a synonym for [`MATCH_PHRASE`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#query-string).
 
 ##### Syntax
 
@@ -8151,14 +8151,14 @@ SQL plugin supports JSON by following [PartiQL](https://partiql.org/) specificat
 
 #### Querying nested collection
 
-PartiQL extends SQL to allow you to query and unnest nested collections. In OpenSearch, this is very useful to query a JSON index with nested objects or fields.
+PartiQL extends SQL to allow you to query and unnest nested collections. In Enegry Logserver, this is very useful to query a JSON index with nested objects or fields.
 
 To follow along, use the `bulk` operation to index some sample data:
 
 ```json
 POST employees_nested/_bulk?refresh
 {"index":{"_id":"1"}}
-{"id":3,"name":"Bob Smith","title":null,"projects":[{"name":"SQL Spectrum querying","started_year":1990},{"name":"SQL security","started_year":1999},{"name":"OpenSearch security","started_year":2015}]}
+{"id":3,"name":"Bob Smith","title":null,"projects":[{"name":"SQL Spectrum querying","started_year":1990},{"name":"SQL security","started_year":1999},{"name":"Enegry Logserver security","started_year":2015}]}
 {"index":{"_id":"2"}}
 {"id":4,"name":"Susan Smith","title":"Dev Mgr","projects":[]}
 {"index":{"_id":"3"}}
@@ -8243,7 +8243,7 @@ Result set:
 
 | employeeName | projectName
 :--- | :---
-Bob Smith | OpenSearch Security
+Bob Smith | Enegry Logserver Security
 Bob Smith | SQL security
 Jane Smith | Hello security
 Jane Smith | SQL security
@@ -8373,11 +8373,11 @@ To see basic metadata about your indexes, use the `SHOW` and `DESCRIBE` commands
 
 Rule `showStatement`:
 
-![showStatement]({{site.url}}{{site.baseurl}}/images/showStatement.png)
+![showStatement](media/media/images/showStatement.png)
 
 Rule `showFilter`:
 
-![showFilter]({{site.url}}{{site.baseurl}}/images/showFilter.png)
+![showFilter](media/media/images/showFilter.png)
 
 ##### Example 1: See metadata for indexes
 
@@ -8444,7 +8444,7 @@ Redirect_from:
 
 Aggregate functions operate on subsets defined by the `GROUP BY` clause. In the absence of a `GROUP BY` clause, aggregate functions operate on all elements of the result set. You can use aggregate functions in the `GROUP BY`, `SELECT`, and `HAVING` clauses.
 
-OpenSearch supports the following aggregate functions.
+Enegry Logserver supports the following aggregate functions.
 
 Function | Description
 :--- | :---
@@ -8459,7 +8459,7 @@ Function | Description
 `STDDEV_POP` | Returns the population standard deviation of the results. Returns 0 when there is only one row of results.
 `STDDEV_SAMP` | Returns the sample standard deviation of the results. Returns null when there is only one row of results.
 
-The examples below reference an `employees` table. You can try out the examples by indexing the following documents into OpenSearch using the bulk index operation:
+The examples below reference an `employees` table. You can try out the examples by indexing the following documents into Enegry Logserver using the bulk index operation:
 
 ```json
 PUT employees/_bulk?refresh
@@ -8731,7 +8731,7 @@ PUT _plugins/_query/settings
 
 Rule `singleDeleteStatement`:
 
-![singleDeleteStatement]({{site.url}}{{site.baseurl}}/images/singleDeleteStatement.png)
+![singleDeleteStatement](media/media/images/singleDeleteStatement.png)
 
 ##### Example
 
@@ -8814,7 +8814,7 @@ redirect_from:
 
 Piped Processing Language (PPL) is a query language that lets you use pipe (`|`) syntax to explore, discover, and query data stored in Energy Logserver.
 
-To quickly get up and running with PPL, use **Query Workbench** in Energy Logserver Dashboards. To learn more, see [Workbench]({{site.url}}{{site.baseurl}}/search-plugins/sql/workbench/).
+To quickly get up and running with PPL, use **Query Workbench** in Energy Logserver Dashboards. To learn more, see [Workbench](https://opensearch.org/docs/latest/search-plugins/sql/workbench/).
 
 The PPL syntax consists of commands delimited by the pipe character (`|`) where data flows from left to right through each pipeline.
 
@@ -8859,7 +8859,7 @@ Hattie      | Bond
 Nanette     | Bates
 Dale        | Adams
 
-![PPL query workbench]({{site.url}}{{site.baseurl}}/images/ppl.png)
+![PPL query workbench](media/media/images/ppl.png)
 
 
 ---
@@ -8947,7 +8947,7 @@ redirect_from:
 
 ### Commands
 
-`PPL` supports all [`SQL` common]({{site.url}}{{site.baseurl}}/search-plugins/sql/functions/) functions, including [relevance search]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text/), but also introduces few more functions (called `commands`) which are available in `PPL` only.
+`PPL` supports all [`SQL` common](https://opensearch.org/docs/latest/search-plugins/sql/functions/) functions, including [relevance search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/), but also introduces few more functions (called `commands`) which are available in `PPL` only.
 
 #### dedup
 
@@ -9650,7 +9650,7 @@ redirect_from:
 ### Identifiers
 
 An identifier is an ID to name your database objects, such as index names, field names, aliases, and so on.
-OpenSearch supports two types of identifiers: regular identifiers and delimited identifiers.
+Enegry Logserver supports two types of identifiers: regular identifiers and delimited identifiers.
 
 #### Regular identifiers
 
@@ -9658,7 +9658,7 @@ A regular identifier is a string of characters that starts with an ASCII letter 
 The next character can either be a letter, digit, or underscore (_). It can't be a reserved keyword.
 Whitespace and other special characters are also not allowed.
 
-OpenSearch supports the following regular identifiers:
+Enegry Logserver supports the following regular identifiers:
 
 1. Identifiers prefixed by a dot `.` sign. Use to hide an index. For example `.opensearch-dashboards`.
 2. Identifiers prefixed by an `@` sign. Use for meta fields generated by Logstash ingestion.
@@ -9708,7 +9708,7 @@ source=`accounts` | fields `account_number`;
 
 #### Case sensitivity
 
-Identifiers are case sensitive. They must be exactly the same as what's stored in OpenSearch.
+Identifiers are case sensitive. They must be exactly the same as what's stored in Enegry Logserver.
 
 For example, if you run `source=Accounts`, you'll get an index not found exception because the actual index name is in lower case.
 
@@ -9722,9 +9722,9 @@ nav_order: 7
 
 ### Data types
 
-The following table shows the data types supported by the SQL plugin and how each one maps to SQL and OpenSearch data types:
+The following table shows the data types supported by the SQL plugin and how each one maps to SQL and Enegry Logserver data types:
 
-| OpenSearch SQL Type | OpenSearch Type | SQL Type
+| Enegry Logserver SQL Type | Enegry Logserver Type | SQL Type
 :--- | :--- | :---
 boolean |	boolean |	BOOLEAN
 byte |	byte |	TINYINT
@@ -9745,15 +9745,15 @@ binary | binary | VARBINARY
 object | struct | STRUCT
 nested | array | STRUCT
 
-In addition to this list, the SQL plugin also supports the `datetime` type, though it doesn't have a corresponding mapping with OpenSearch or SQL.
+In addition to this list, the SQL plugin also supports the `datetime` type, though it doesn't have a corresponding mapping with Enegry Logserver or SQL.
 To use a function without a corresponding mapping, you must explicitly convert the data type to one that does.
 
 
 #### Date and time types
 
-The date and time types represent a time period: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`, and `INTERVAL`. By default, the OpenSearch DSL uses the `date` type as the only date-time related type that contains all information of an absolute time point.
+The date and time types represent a time period: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`, and `INTERVAL`. By default, the Enegry Logserver DSL uses the `date` type as the only date-time related type that contains all information of an absolute time point.
 
-To integrate with SQL, each type other than the `timestamp` type holds part of the time period information. To use date-time functions, see [datetime]({{site.url}}{{site.baseurl}}/search-plugins/sql/functions#date-and-time). Some functions might have restrictions for the input argument type.
+To integrate with SQL, each type other than the `timestamp` type holds part of the time period information. To use date-time functions, see [datetime](https://opensearch.org/docs/latest/search-plugins/sql/functions#date-and-time). Some functions might have restrictions for the input argument type.
 
 
 #### Date
@@ -10020,7 +10020,7 @@ Functions marked with * are only available in SQL.
 
 #### Relevance-based search (full-text search)
 
-These functions are only available in the `WHERE` clause. For their descriptions and usage examples in SQL and PPL, see [Full-text search]({{site.url}}{{site.baseurl}}/search-plugins/sql/full-text/).
+These functions are only available in the `WHERE` clause. For their descriptions and usage examples in SQL and PPL, see [Full-text search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/).
 
 
 ---
@@ -10034,9 +10034,9 @@ redirect_from:
 
 ### Full-text search
 
-Use SQL commands for full-text search. The SQL plugin supports a subset of full-text queries available in OpenSearch.
+Use SQL commands for full-text search. The SQL plugin supports a subset of full-text queries available in Enegry Logserver.
 
-To learn about full-text queries in OpenSearch, see [Full-text queries]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index).
+To learn about full-text queries in Enegry Logserver, see [Full-text queries](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index).
 
 #### Match
 
@@ -10063,7 +10063,7 @@ You can specify the following options in any order:
 - `zero_terms_query`
 - `boost`
 
-Refer to the `match` query [documentation]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index#match) for parameter descriptions and supported values.
+Refer to the `match` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match) for parameter descriptions and supported values.
 
 #### Example 1: Search the `message` field for the text "this is a test":
 
@@ -10251,7 +10251,7 @@ You can specify the following options for `QUERY_STRING` in any order:
 - `tie_breaker`
 - `time_zone`
 
-Refer to the `query_string` query [documentation]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index#query-string) for parameter descriptions and supported values.
+Refer to the `query_string` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#query-string) for parameter descriptions and supported values.
 
 #### Example of using `query_string` in SQL and PPL queries:
 
@@ -10308,7 +10308,7 @@ The `MATCHPHRASE`/`MATCH_PHRASE` functions let you specify the following options
 - `zero_terms_query`
 - `boost`
 
-Refer to the `match_phrase` query [documentation]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index#match-phrase) for parameter descriptions and supported values.
+Refer to the `match_phrase` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match-phrase) for parameter descriptions and supported values.
 
 #### Example of using `match_phrase` in SQL and PPL queries:
 
@@ -10343,7 +10343,7 @@ SOURCE=accounts | WHERE match_phrase(address, '880 Holmes Lane') | FIELDS accoun
 
 #### Simple query string
 
-The `simple_query_string` function maps to the `simple_query_string` query in OpenSearch. It returns the documents that match a provided text, number, date or boolean value with a given field or fields.
+The `simple_query_string` function maps to the `simple_query_string` query in Enegry Logserver. It returns the documents that match a provided text, number, date or boolean value with a given field or fields.
 The **^** lets you *boost* certain fields. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields.
 
 #### Syntax
@@ -10376,7 +10376,7 @@ You can specify the following options for `SIMPLE_QUERY_STRING` in any order:
 - `minimum_should_match`
 - `quote_field_suffix`
 
-Refer to the `simple_query_string` query [documentation]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index#simple-query-string) for parameter descriptions and supported values.
+Refer to the `simple_query_string` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#simple-query-string) for parameter descriptions and supported values.
 
 #### *Example* of using `simple_query_string` in SQL and PPL queries:
 
@@ -10427,7 +10427,7 @@ The `MATCH_PHRASE_PREFIX` function lets you specify the following options in any
 - `zero_terms_query`
 - `boost`
 
-Refer to the `match_phrase_prefix` query [documentation]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index#match-phrase-prefix) for parameter descriptions and supported values.
+Refer to the `match_phrase_prefix` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match-phrase-prefix) for parameter descriptions and supported values.
 
 #### *Example* of using `match_phrase_prefix` in SQL and PPL queries:
 
@@ -10483,7 +10483,7 @@ The `MATCH_BOOL_PREFIX` function lets you specify the following options in any o
 - `analyzer`
 - `operator`
 
-Refer to the `match_bool_prefix` query [documentation]({{site.url}}{{site.baseurl}}/opensearch/query-dsl/full-text/index#match-boolean-prefix)  for parameter descriptions and supported values.
+Refer to the `match_bool_prefix` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match-boolean-prefix)  for parameter descriptions and supported values.
 
 #### Example of using `match_bool_prefix` in SQL and PPL queries:
 
