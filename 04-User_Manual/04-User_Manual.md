@@ -7157,17 +7157,17 @@ With arithmetic operators and SQL functions, use literals and identifiers to bui
 
 Rule `expressionAtom`:
 
-![expressionAtom](media/media/images/expressionAtom.png)
+![expressionAtom](media/media/expressionAtom.png)
 
 The expression in turn can be combined into a predicate with logical operator. Use a predicate in the `WHERE` and `HAVING` clause to filter out data by specific conditions.
 
 Rule `expression`:
 
-![expression](media/media/images/expression.png)
+![expression](media/media/expression.png)
 
 Rule `predicate`:
 
-![expression](media/media/images/predicate.png)
+![expression](media/media/predicate.png)
 
 ##### Execution Order
 
@@ -7191,11 +7191,11 @@ Specify the fields to be retrieved.
 
 Rule `selectElements`:
 
-![selectElements](media/media/images/selectElements.png)
+![selectElements](media/media/selectElements.png)
 
 Rule `selectElement`:
 
-![selectElements](media/media/images/selectElement.png)
+![selectElements](media/media/selectElement.png)
 
 *Example 1*: Use `*` to retrieve all fields in an index:
 
@@ -7531,11 +7531,11 @@ The `JOIN` clause combines columns from one or more indexes using values common 
 
 Rule `tableSource`:
 
-![tableSource](media/media/images/tableSource.png)
+![tableSource](media/media/tableSource.png)
 
 Rule `joinPart`:
 
-![joinPart](media/media/images/joinPart.png)
+![joinPart](media/media/joinPart.png)
 
 ##### Example 1: Inner join
 
@@ -8373,11 +8373,11 @@ To see basic metadata about your indexes, use the `SHOW` and `DESCRIBE` commands
 
 Rule `showStatement`:
 
-![showStatement](media/media/images/showStatement.png)
+![showStatement](media/media/showStatement.png)
 
 Rule `showFilter`:
 
-![showFilter](media/media/images/showFilter.png)
+![showFilter](media/media/showFilter.png)
 
 ##### Example 1: See metadata for indexes
 
@@ -8731,7 +8731,7 @@ PUT _plugins/_query/settings
 
 Rule `singleDeleteStatement`:
 
-![singleDeleteStatement](media/media/images/singleDeleteStatement.png)
+![singleDeleteStatement](media/media/singleDeleteStatement.png)
 
 ##### Example
 
@@ -8859,7 +8859,7 @@ Hattie      | Bond
 Nanette     | Bates
 Dale        | Adams
 
-![PPL query workbench](media/media/images/ppl.png)
+![PPL query workbench](media/media/ppl.png)
 
 
 ---
