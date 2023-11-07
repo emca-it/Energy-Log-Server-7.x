@@ -6768,13 +6768,6 @@ The response contains the Boolean query in Enegry Logserver DSL that corresponds
 
 ```
 
----
-layout: default
-title: Response formats
-parent: SQL and PPL
-nav_order: 2
----
-
 ### Response formats
 
 The SQL plugin provides the `jdbc`, `csv`, `raw`, and `json` response formats that are useful for different purposes. The `jdbc` format is widely used because it provides the schema information and adds more functionality, such as pagination. Besides the JDBC driver, various clients can benefit from a detailed and well-formatted response.
@@ -7054,10 +7047,6 @@ The query returns cells with the `|` character surrounded by quotation marks:
 
 ## SQL
 
-#### Workbench
-
-The easiest way to get familiar with the SQL plugin is to use **Query Workbench** in Enegry Logserver to test various queries. To learn more, see [Workbench](search-plugins/sql/workbench/).
-
 ![OpenSearch Dashboards SQL UI plugin](https://opensearch.org/docs/latest/images/sql.png)
 
 #### SQL and Enegry Logserver terminology
@@ -7072,7 +7061,6 @@ Column | Field
 
 #### REST API
 
-For a complete  REST API reference for the SQL plugin, see [SQL/PPL API](search-plugins/sql/sql-ppl-api). 
 
 To use the SQL plugin with your own applications, send requests to the `_plugins/_sql` endpoint:
 
@@ -7118,15 +7106,6 @@ POST _plugins/_sql?format=json
 
 See the rest of this guide for more information about request parameters, settings, supported operations, and tools.
 
----
-layout: default
-title: Basic Queries
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 5
-Redirect_from:
-  - /search-plugins/sql/basic/
----
 
 
 ### Basic queries
@@ -7314,7 +7293,7 @@ Specify a condition to filter the results.
 `<=` | Less than or equal to.
 `IN` | Specify multiple `OR` operators.
 `BETWEEN` | Similar to a range query. For more information about range queries, see [Range query](https://opensearch.org/docs/latest/query-dsl/term/range/).
-`LIKE` | Use for full-text search. For more information about full-text queries, see [Full-text queries](opensearch/query-dsl/full-text/index/).
+`LIKE` | Use for full-text search. For more information about full-text queries.
 `IS NULL` | Check if the field value is `NULL`.
 `IS NOT NULL` | Check if the field value is `NOT NULL`.
 
@@ -7482,15 +7461,6 @@ ORDER BY account_number LIMIT 1, 1
 | 6
 
 
----
-layout: default
-title: Complex Queries
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 6
-Redirect_from:
-  - /search-plugins/sql/complex/
----
 
 ### Complex queries
 
@@ -7906,15 +7876,6 @@ Amber | Duke | 32
 Dale | Adams | 33
 Hattie | Bond | 36
 
----
-layout: default
-title: Functions
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 7
-Redirect_from:
-  - /search-plugins/sql/functions/
----
 
 ### Functions
 
@@ -8135,15 +8096,6 @@ The results contain documents that match the wildcard expression:
 1 | 880 Holmes Lane
 
 
----
-layout: default
-title: JSON Support
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 8
-redirect_from:
-  - /search-plugins/sql/partiql/
----
 
 ### JSON Support
 
@@ -8355,15 +8307,6 @@ Bob Smith |
 Jane Smith |
 
 
----
-layout: default
-title: Metadata Queries
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 9
-redirect_from:
-  - /search-plugins/sql/metadata/
----
 
 ### Metadata queries
 
@@ -8430,15 +8373,6 @@ docker-cluster | null | accounts | email | null | text | null | null | null | 10
 docker-cluster | null | accounts | lastname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 11 |  | null | null | null | null | NO | 	 
 
 
----
-layout: default
-title: Aggregate Functions
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 11
-Redirect_from:
-  - /search-plugins/sql/aggregations/
----
 
 ### Aggregate functions
 
@@ -8698,16 +8632,6 @@ If all employees in the employee table belonged to the same department, the resu
  |
 
 
----
-layout: default
-title: Delete
-parent: SQL
-grand_parent: SQL and PPL
-nav_order: 12
-Redirect_from:
-  - /search-plugins/sql/delete/
----
-
 
 ### Delete
 
@@ -8794,21 +8718,6 @@ Result set:
 The `datarows` field shows the number of documents deleted.
 
 
----
-layout: default
-title: PPL &ndash; Piped Processing Language
-parent: SQL and PPL
-nav_order: 5
-has_children: true
-has_toc: false
-redirect_from:
-  - /search-plugins/sql/ppl/
-  - /search-plugins/ppl/
-  - /observability-plugin/ppl/
-  - /search-plugins/ppl/index/
-  - /search-plugins/ppl/endpoint/
-  - /search-plugins/ppl/protocol/
----
 
 ### PPL &ndash; Piped Processing Language
 
@@ -8862,13 +8771,6 @@ Dale        | Adams
 ![PPL query workbench](media/media/ppl.png)
 
 
----
-layout: default
-title: Syntax
-parent: PPL &ndash; Piped Processing Language
-grand_parent: SQL and PPL
-nav_order: 1
----
 
 ### PPL syntax
 
@@ -8935,15 +8837,6 @@ search source=accounts account_number=1 or gender=\"F\";
 | 13 | Nanette | 789 Madison Street | 32838 | F | Nogal | Quility | VA | 28 | null | Bates |
 
 
----
-layout: default
-title: Commands
-parent: PPL &ndash; Piped Processing Language
-grand_parent: SQL and PPL
-nav_order: 2
-redirect_from:
- - /search-plugins/ppl/commands/
----
 
 ### Commands
 
@@ -9627,25 +9520,6 @@ search source=accounts | top 1 age by gender;
 
 The `top` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
 
----
-layout: default
-title: SQL and PPL CLI
-parent: SQL and PPL
-nav_order: 3
-redirect_from:
- - /search-plugins/sql/cli/
----
-
-
----
-layout: default
-title: Identifiers
-parent: SQL and PPL
-nav_order: 6
-redirect_from:
-  - /search-plugins/ppl/identifiers/
----
-
 
 ### Identifiers
 
@@ -9713,12 +9587,6 @@ Identifiers are case sensitive. They must be exactly the same as what's stored i
 For example, if you run `source=Accounts`, you'll get an index not found exception because the actual index name is in lower case.
 
 
----
-layout: default
-title: Data Types
-parent: SQL and PPL
-nav_order: 7
----
 
 ### Data types
 
@@ -9833,14 +9701,6 @@ The SQL plugin supports the following conversion rules for each of the types:
 - Converting from a `timestamp` type to a `date` type extracts the date value and converting to a `time` type extracts the time value. Converting from a `timestamp` type to `datetime` type extracts only the `datetime` value and leaves out the timezone value. For example, conversion of `2020-08-17 14:09:00` UTC to a `date` type is `2020-08-17`, to a `time` type is `14:09:00`, and to a `datetime` type is `2020-08-17 14:09:00`.
 
 
----
-layout: default
-title: Functions
-parent: SQL and PPL
-nav_order: 10
-redirect_from:
-  - /search-plugins/sql/functions/
----
 
 ### Functions
 
@@ -10023,14 +9883,6 @@ Functions marked with * are only available in SQL.
 These functions are only available in the `WHERE` clause. For their descriptions and usage examples in SQL and PPL, see [Full-text search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/).
 
 
----
-layout: default
-title: Full-Text Search
-parent: SQL and PPL
-nav_order: 11
-redirect_from:
-  - /search-plugins/sql/sql-full-text/
----
 
 ### Full-text search
 
