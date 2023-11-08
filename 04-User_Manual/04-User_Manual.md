@@ -7041,7 +7041,7 @@ The query returns cells with the `|` character surrounded by quotation marks:
 
 SQL in Energy Logserver bridges the gap between traditional relational database concepts and the flexibility of Energy Logserver’s document-oriented data storage. This integration gives you the ability to use your SQL knowledge to query, analyze, and extract insights from your  data.
 
-#### SQL and Energy Logserver terminology
+**SQL and Energy Logserver terminology**
 
 Here’s how core SQL concepts map to Energy Logserver:
 
@@ -7051,7 +7051,7 @@ Table | Index
 Row | Document
 Column | Field
 
-#### REST API
+**REST API**
 
 To use the SQL plugin with your own applications, send requests to the `_plugins/_sql` endpoint:
 
@@ -7151,11 +7151,11 @@ FROM index
       LIMIT size
 ```
 
-#### Select
+##### Select
 
 Specify the fields to be retrieved.
 
-##### Syntax
+###### Syntax
 
 Rule `selectElements`:
 
@@ -7221,12 +7221,12 @@ FROM accounts
 | 33
 | 36
 
-#### From
+##### From
 
 Specify the index that you want search.
 You can specify subqueries within the `FROM` clause.
 
-##### Syntax
+###### Syntax
 
 Rule `tableName`:
 
@@ -7268,7 +7268,7 @@ FROM account*
 | 13
 | 18
 
-#### Where
+##### Where
 
 Specify a condition to filter the results.
 
@@ -7319,7 +7319,7 @@ DELETE FROM accounts
 WHERE age > 30
 ```
 
-#### Group By
+##### Group By
 
 Group documents with the same field value into buckets.
 
@@ -7368,7 +7368,7 @@ GROUP BY ABS(age)
 2 | 33.0
 3 | 36.0
 
-#### Having
+##### Having
 
 Use the `HAVING` clause to aggregate inside each bucket based on aggregation functions (`COUNT`, `AVG`, `SUM`, `MIN`, and `MAX`).
 The `HAVING` clause filters results from the `GROUP BY` clause:
@@ -7386,7 +7386,7 @@ GROUP BY age HAVING MIN(balance) > 10000
 0 | 28 | 32838
 1 | 32 | 39225
 
-#### Order By
+##### Order By
 
 Use the `ORDER BY` clause to sort results into your desired order.
 
@@ -7420,7 +7420,7 @@ ORDER BY employer IS NOT NULL
 | Pyrami
 | Quility
 
-#### Limit
+##### Limit
 
 Specify the maximum number of documents that you want to retrieve. Used to prevent fetching large amounts of data into memory.
 
@@ -8388,13 +8388,13 @@ PUT employees/_bulk?refresh
 {"employee_id":18,"department":2, "firstname":"Dale", "lastname":"Adams", "sales":4180, "sale_date":"2022-11-05"}
 ```
 
-#### GROUP BY
+##### GROUP BY
 
 The `GROUP BY` clause defines subsets of a result set. Aggregate functions operate on these subsets and return one result row for each subset.
 
 You can use an identifier, ordinal, or expression in the `GROUP BY` clause.
 
-##### Using an identifier in GROUP BY
+###### Using an identifier in GROUP BY
 
 You can specify the field name (column name) to aggregate on in the `GROUP BY` clause. For example, the following query returns the department numbers and the total sales for each department:
 
@@ -8409,7 +8409,7 @@ GROUP BY department;
 1 | 58700  |
 2 | 37018 |
 
-##### Using an ordinal in GROUP BY
+###### Using an ordinal in GROUP BY
 
 You can specify the column number to aggregate on in the `GROUP BY` clause. The column number is determined by the column position in the `SELECT` clause. For example, the following query is equivalent to the query above. It returns the department numbers and the total sales for each department. It groups the results by the first column of the result set, which is `department`:
 
@@ -8424,7 +8424,7 @@ GROUP BY 1;
 1 | 58700  |
 2 | 37018 |
 
-##### Using an expression in GROUP BY
+###### Using an expression in GROUP BY
 
 You can use an expression in the `GROUP BY` clause. For example, the following query returns the average sales for each year:
 
@@ -8440,11 +8440,11 @@ GROUP BY year(sale_date);
 | 2021 | 22455.0 |
 | 2022 | 16484.0  |
 
-#### SELECT
+##### SELECT
 
 You can use aggregate expressions in the `SELECT` clause either directly or as part of a larger expression. In addition, you can use expressions as arguments of aggregate functions.
 
-##### Using aggregate expressions directly in SELECT
+###### Using aggregate expressions directly in SELECT
 
 The following query returns the average sales for each department:
 
@@ -8459,7 +8459,7 @@ GROUP BY department;
 1 | 14675.0 |
 2 | 18509.0 |
 
-##### Using aggregate expressions as part of larger expressions in SELECT
+###### Using aggregate expressions as part of larger expressions in SELECT
 
 The following query calculates the average commission for the employees of each department as 5% of the average sales:
 
@@ -8474,7 +8474,7 @@ GROUP BY department;
 1 | 733.75 |
 2 | 925.45 |
 
-##### Using expressions as arguments to aggregate functions
+###### Using expressions as arguments to aggregate functions
 
 The following query calculates the average commission amount for each department. First it calculates the commission amount for each `sales` value as 5% of the `sales`. Then it determines the average of all commission values:
 
@@ -8489,7 +8489,7 @@ GROUP BY department;
 1 | 733.75 |
 2 | 925.45 |
 
-#### COUNT
+##### COUNT
 
 The `COUNT` function accepts arguments, such as `*`, or literals, such as `1`.
 The following table describes how various forms of the `COUNT` function operate.
@@ -8513,13 +8513,13 @@ GROUP BY year(sale_date);
 2021 | 2
 2022 | 3
 
-#### HAVING
+##### HAVING
 
 Both `WHERE` and `HAVING` are used to filter results. The `WHERE` filter is applied before the `GROUP BY` phase, so you cannot use aggregate functions in a `WHERE` clause. However, you can use the `WHERE` clause to limit the rows to which the aggregate is then applied.
 
 The `HAVING` filter is applied after the `GROUP BY` phase, so you can use the `HAVING` clause to limit the groups that are included in the results.
 
-##### HAVING with GROUP BY
+###### HAVING with GROUP BY
 
 You can use aggregate expressions or their aliases defined in a `SELECT` clause in a `HAVING` condition.
 
@@ -8591,7 +8591,7 @@ HAVING sales > 40000;
 :--- | :---
 1 | 58700 |
 
-##### HAVING without GROUP BY
+###### HAVING without GROUP BY
 
 You can use a `HAVING` clause without a `GROUP BY` clause. In this case, the whole set of data is to be considered one group. The following query will return `True` if there is more than one value in the `department` column:
 
