@@ -6253,34 +6253,26 @@ The original goal of this codec was to allow joining of multiline messages from 
     }
 ```
 
-## SQL/PPL API
+## SQL
 
-Use the SQL and PPL API to send queries to the SQL plugin. Use the `_sql` endpoint to send queries in SQL, and the `_ppl` endpoint to send queries in PPL. For both of these, you can also use the `_explain` endpoint to translate your query into [OpenSearch domain-specific language](https://opensearch.org/docs/latest/opensearch/query-dsl/) (DSL) or to troubleshoot errors.
+Energy Logserver SQL lets you write queries in SQL rather than the Query domain-specific language (DSL)
 
----
+### SQL/PPL API
 
-#### Table of contents
-- TOC
-{:toc}
-
-
----
+Use the SQL and PPL API to send queries to the SQL plugin. Use the `_sql` endpoint to send queries in SQL, and the `_ppl` endpoint to send queries in PPL. For both of these, you can also use the `_explain` endpoint to translate your query into  Domain-specific language (DSL) or to troubleshoot errors.
 
 #### Query API
 
-Introduced 1.0
-{: .label .label-purple }
-
 Sends an SQL/PPL query to the SQL plugin. You can pass the format for the response as a query parameter.
 
-#### Query parameters
+##### Query parameters
 
 Parameter | Data Type | Description
 :--- | :--- | :---
-[format](https://opensearch.org/docs/latest/search-plugins/sql/response-formats/) | String | The format for the response. The `_sql` endpoint supports `jdbc`, `csv`, `raw`, and `json` formats. The `_ppl` endpoint supports `jdbc`, `csv`, and `raw` formats. Default is `jdbc`.
-sanitize | Boolean | Specifies whether to escape special characters in the results. See [Response formats](https://opensearch.org/docs/latest/search-plugins/sql/response-formats/) for more information. Default is `true`.
+[format](#response-formats) | String | The format for the response. The `_sql` endpoint supports `jdbc`, `csv`, `raw`, and `json` formats. The `_ppl` endpoint supports `jdbc`, `csv`, and `raw` formats. Default is `jdbc`.
+sanitize | Boolean | Specifies whether to escape special characters in the results. See [Response formats](#response-formats) for more information. Default is `true`.
 
-#### Request fields
+##### Request fields
 
 Field | Data Type | Description  
 :--- | :--- | :---
@@ -6288,7 +6280,7 @@ query | String | The query to be executed. Required.
 [filter](#filtering-results) | JSON object | The filter for the results. Optional.
 [fetch_size](#paginating-results) | integer | The number of results to return in one response. Used for paginating results. Default is 1,000. Optional. Only supported for the `jdbc` response format.
 
-#### Example request
+###### Example request
 
 ```json
 POST /_plugins/_sql 
@@ -6297,7 +6289,7 @@ POST /_plugins/_sql
 }
 ```
 
-#### Example response
+###### Example response
 
 The response contains the schema and the results:
 
@@ -6409,11 +6401,11 @@ The response contains the schema and the results:
 }
 ```
 
-#### Response fields
+##### Response fields
 
 Field | Data Type | Description  
 :--- | :--- | :---
-schema | Array | Specifies the field names and types for all fields. 
+schema | Array | Specifies the field names and types for all fields.
 data_rows | 2D array | An array of results. Each result represents one matching row (document).
 total | Integer | The total number of rows (documents) in the index.
 size | Integer | The number of results to return in one response.
@@ -6421,10 +6413,10 @@ status | String | The HTTP response status Energy Logserver returns after runnin
 
 #### Explain API
 
-The SQL plugin has an `explain` feature that shows how a query is executed against Energy Logserver, which is useful for debugging and development. A POST request to the `_plugins/_sql/_explain` or `_plugins/_ppl/_explain` endpoint returns [OpenSearch domain-specific language](https://opensearch.org/docs/latest/opensearch/query-dsl/) (DSL) in JSON format, explaining the query.
-You can execute the explain API operation either in command line using `curl` or in the Dashboards console, like in the example below. 
+The SQL plugin has an `explain` feature that shows how a query is executed against Energy Logserver, which is useful for debugging and development. A POST request to the `_plugins/_sql/_explain` or `_plugins/_ppl/_explain` endpoint returns Domain-specific language (DSL) in JSON format, explaining the query.
+You can execute the explain API operation either in command line using `curl` or in the Dashboards console, like in the example below.
 
-#### Sample explain request for an SQL query
+##### Sample explain request for an SQL query
 
 ```json
 POST _plugins/_sql/_explain
@@ -6433,7 +6425,7 @@ POST _plugins/_sql/_explain
 }
 ```
 
-#### Sample SQL query explain response
+##### Sample SQL query explain response
 
 ```json
 {
@@ -6455,7 +6447,7 @@ POST _plugins/_sql/_explain
 }
 ```
 
-#### Sample explain request for a PPL query
+##### Sample explain request for a PPL query
 
 ```json
 POST _plugins/_ppl/_explain
@@ -6464,7 +6456,7 @@ POST _plugins/_ppl/_explain
 }
 ```
 
-#### Sample PPL query explain response
+##### Sample PPL query explain response
 
 ```json
 {
@@ -6495,7 +6487,7 @@ To get back a paginated response, use the `fetch_size` parameter. The value of `
 The `fetch_size` parameter is only supported for the `jdbc` response format.
 {: .note }
 
-#### Example
+##### Example
 
 The following request contains an SQL query and specifies to return five results at a time:
 
@@ -6589,8 +6581,7 @@ The next response contains only the `datarows` of the results and a new `cursor`
 }
 ```
 
-The `datarows` can have more than the `fetch_size` number of records in case nested fields are flattened. 
-{: .note }
+The `datarows` can have more than the `fetch_size` number of records in case nested fields are flattened.
 
 The last page of results has only `datarows` and no `cursor`. The `cursor` context is automatically cleared on the last page.
 
@@ -6613,7 +6604,7 @@ The response is an acknowledgement from Energy Logserver:
 
 You can use the `filter` parameter to add more conditions to the Energy Logserver DSL directly.
 
-The following SQL query returns the names and account balances of all customers. The results are then filtered to contain only those customers with less than $10,000 balance. 
+The following SQL query returns the names and account balances of all customers. The results are then filtered to contain only those customers with less than $10,000 balance.
 
 ```json
 POST /_plugins/_sql/ 
@@ -6681,7 +6672,7 @@ POST /_plugins/_sql/_explain
 }'
 ```
 
-The response contains the Boolean query in Enegry Logserver DSL that corresponds to the query above:
+The response contains the Boolean query in Energy Logserver DSL that corresponds to the query above:
 
 ```json
 {
@@ -6738,7 +6729,7 @@ POST /_plugins/_sql/_explain
 }
 ```
 
-The response contains the Boolean query in Enegry Logserver DSL that corresponds to the SQL query above:
+The response contains the Boolean query in Energy Logserver DSL that corresponds to the SQL query above:
 
 ```json
 {
@@ -6776,7 +6767,7 @@ The SQL plugin provides the `jdbc`, `csv`, `raw`, and `json` response formats th
 
 By default, the SQL plugin returns the response in the standard JDBC format. This format is provided for the JDBC driver and clients that need both the schema and the result set to be well formatted.
 
-#### Example request
+##### Example request
 
 The following query does not specify the response format, so the format is set to `jdbc`:
 
@@ -6787,7 +6778,7 @@ POST _plugins/_sql
 }
 ```
 
-#### Example response
+##### Example response
 
 In the response, the `schema` contains the field names and types, and the `datarows` field contains the result set:
 
@@ -6824,7 +6815,7 @@ In the response, the `schema` contains the field names and types, and the `datar
 }
 ```
 
-If an error of any type occurs, Enegry Logserver returns the error message.
+If an error of any type occurs, Energy Logserver returns the error message.
 
 The following query searches for a non-existent field `unknown`:
 
@@ -6848,11 +6839,11 @@ The response contains the error message and the cause of the error:
 }
 ```
 
-#### Enegry Logserver DSL JSON format
+#### Energy Logserver DSL JSON format
 
-If you set the format to `json`, the original Enegry Logserver response is returned in JSON format. Because this is the native response from Enegry Logserver, extra effort is needed to parse and interpret it.
+If you set the format to `json`, the original Energy Logserver response is returned in JSON format. Because this is the native response from Energy Logserver, extra effort is needed to parse and interpret it.
 
-#### Example request
+##### Example request
 
 The following query sets the response format to `json`:
 
@@ -6863,9 +6854,9 @@ POST _plugins/_sql?format=json
 }
 ```
 
-#### Example response
+##### Example response
 
-The response is the original response from Enegry Logserver:
+The response is the original response from Energy Logserver:
 
 ```json
 {
@@ -6918,9 +6909,9 @@ The response is the original response from Enegry Logserver:
 
 #### CSV format
 
-You can also specify to return results in CSV format. 
+You can also specify to return results in CSV format.
 
-#### Example request
+##### Example request
 
 ```json
 POST /_plugins/_sql?format=csv
@@ -6929,7 +6920,7 @@ POST /_plugins/_sql?format=csv
 }
 ```
 
-#### Example response
+##### Example response
 
 ```text
 firstname,lastname,age
@@ -6938,14 +6929,15 @@ Amber,Duke,32
 Dale,Adams,33
 Hattie,Bond,36
 ```
-#### Sanitizing results in CSV format
 
-By default, Enegry Logserver sanitizes header cells (field names) and data cells (field contents) according to the following rules:
+##### Sanitizing results in CSV format
+
+By default, Energy Logserver sanitizes header cells (field names) and data cells (field contents) according to the following rules:
 
 - If a cell starts with `+`, `-`, `=` , or `@`, the sanitizer inserts a single quote (`'`) at the start of the cell.
 - If a cell contains one or more commas (`,`), the sanitizer surrounds the cell with double quotes (`"`).
 
-#### Example 
+##### Example
 
 The following query indexes a document with cells that either start with special characters or contain commas:
 
@@ -6994,7 +6986,7 @@ The response contains the results in the original CSV format:
 
 You can use the raw format to pipe the results to other command line tools for post-processing.
 
-#### Example request
+##### Example request
 
 ```json
 POST /_plugins/_sql?format=raw
@@ -7003,7 +6995,7 @@ POST /_plugins/_sql?format=raw
 }
 ```
 
-#### Example response
+##### Example response
 
 ```text
 Nanette|Bates|28
@@ -7012,11 +7004,11 @@ Dale|Adams|33
 Hattie|Bond|36
 ```
 
-By default, Enegry Logserver sanitizes results in `raw` format according to the following rule:
+By default, Energy Logserver sanitizes results in `raw` format according to the following rule:
 
 - If a data cell contains one or more pipe characters (`|`), the sanitizer surrounds the cell with double quotes.
 
-#### Example 
+##### Example
 
 The following query indexes a document with pipe characters (`|`) in its fields:
 
@@ -7045,22 +7037,21 @@ The query returns cells with the `|` character surrounded by quotation marks:
 "671 Bristol Street| Dente| TN"|"Bond|"|"|Hattie"
 ```
 
-## SQL
+#### SQL
 
-![OpenSearch Dashboards SQL UI plugin](https://opensearch.org/docs/latest/images/sql.png)
+SQL in Energy Logserver bridges the gap between traditional relational database concepts and the flexibility of Energy Logserver’s document-oriented data storage. This integration gives you the ability to use your SQL knowledge to query, analyze, and extract insights from your  data.
 
-#### SQL and Enegry Logserver terminology
+##### SQL and Energy Logserver terminology
 
-Here’s how core SQL concepts map to Enegry Logserver:
+Here’s how core SQL concepts map to Energy Logserver:
 
-SQL | Enegry Logserver
+SQL | Energy Logserver
 :--- | :---
 Table | Index
 Row | Document
 Column | Field
 
-#### REST API
-
+##### REST API
 
 To use the SQL plugin with your own applications, send requests to the `_plugins/_sql` endpoint:
 
@@ -7089,13 +7080,13 @@ POST _plugins/_sql
 }
 ```
 
-To run the above query in the command line, use the [curl](https://curl.haxx.se/) command:
+To run the above query in the command line, use the curl command:
 
 ```bash
 curl -XPOST https://localhost:9200/_plugins/_sql -u 'admin:admin' -k -H 'Content-Type: application/json' -d '{"query": "SELECT * FROM my-index* LIMIT 50"}'
 ```
 
-You can specify the [response format](https://opensearch.org/docs/latest/search-plugins/sql/response-formats) as JDBC, standard Enegry Logserver JSON, CSV, or raw. By default, queries return data in JDBC format. The following query sets the format to JSON:
+You can specify the [response format](#response-formats) as JDBC, standard Energy Logserver JSON, CSV, or raw. By default, queries return data in JDBC format. The following query sets the format to JSON:
 
 ```json
 POST _plugins/_sql?format=json
@@ -7106,15 +7097,13 @@ POST _plugins/_sql?format=json
 
 See the rest of this guide for more information about request parameters, settings, supported operations, and tools.
 
-
-
-### Basic queries
+##### Basic queries
 
 Use the `SELECT` clause, along with `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` to search and aggregate data.
 
 Among these clauses, `SELECT` and `FROM` are required, as they specify which fields to retrieve and which indexes to retrieve them from. All other clauses are optional. Use them according to your needs.
 
-##### Syntax
+###### Syntax
 
 The complete syntax for searching and aggregating data is as follows:
 
@@ -7128,27 +7117,27 @@ FROM index_name
 [LIMIT [offset, ] size]
 ```
 
-##### Fundamentals
+###### Fundamentals
 
 Apart from the predefined keywords of SQL, the most basic elements are literal and identifiers.
-A literal is a numeric, string, date or boolean constant. An identifier is an Enegry Logserver index or field name.
+A literal is a numeric, string, date or boolean constant. An identifier is an Energy Logserver index or field name.
 With arithmetic operators and SQL functions, use literals and identifiers to build complex expressions.
 
 Rule `expressionAtom`:
 
-![expressionAtom](media/media/expressionAtom.png)
+![expressionAtom](/media/media/expressionAtom.png)
 
 The expression in turn can be combined into a predicate with logical operator. Use a predicate in the `WHERE` and `HAVING` clause to filter out data by specific conditions.
 
 Rule `expression`:
 
-![expression](media/media/expression.png)
+![expression](/media/media/expression.png)
 
 Rule `predicate`:
 
-![expression](media/media/predicate.png)
+![expression](/media/media/predicate.png)
 
-##### Execution Order
+###### Execution Order
 
 These SQL clauses execute in an order different from how they appear:
 
@@ -7162,19 +7151,19 @@ FROM index
       LIMIT size
 ```
 
-#### Select
+##### Select
 
 Specify the fields to be retrieved.
 
-##### Syntax
+###### Syntax
 
 Rule `selectElements`:
 
-![selectElements](media/media/selectElements.png)
+![selectElements](/media/media/selectElements.png)
 
 Rule `selectElement`:
 
-![selectElements](media/media/selectElement.png)
+![selectElements](/media/media/selectElement.png)
 
 *Example 1*: Use `*` to retrieve all fields in an index:
 
@@ -7186,7 +7175,7 @@ FROM accounts
 | account_number | firstname | gender | city | balance | employer | state | email | address | lastname | age
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :---
 | 1 | Amber | M | Brogan | 39225 | Pyrami | IL | amberduke@pyrami.com | 880 Holmes Lane | Duke | 32
-| 16 | Hattie | M | Dante | 5686 | Netagy | TN | hattiebond@netagy.com | 671 Bristol Street | 	Bond | 36
+| 16 | Hattie | M | Dante | 5686 | Netagy | TN | hattiebond@netagy.com | 671 Bristol Street | Bond | 36
 | 13 | Nanette | F | Nogal | 32838 | Quility | VA | nanettebates@quility.com | 789 Madison Street | Bates | 28
 | 18 | Dale | M | Orick | 4180 |  | MD | daleadams@boink.com | 467 Hutchinson Court | Adams | 33
 
@@ -7232,18 +7221,18 @@ FROM accounts
 | 33
 | 36
 
-#### From
+##### From
 
 Specify the index that you want search.
 You can specify subqueries within the `FROM` clause.
 
-##### Syntax
+###### Syntax
 
 Rule `tableName`:
 
-![tableName](media/media/tableName.png)
+![tableName](/media/media/tableName.png)
 
-*Example 1*: Use index aliases to query across indexes. To learn about index aliases, see [Index Alias](https://opensearch.org/docs/latest/opensearch/index-alias/).
+*Example 1*: Use index aliases to query across indexes.
 In this sample query, `acc` is an alias for the `accounts` index:
 
 ```sql
@@ -7279,7 +7268,7 @@ FROM account*
 | 13
 | 18
 
-#### Where
+##### Where
 
 Specify a condition to filter the results.
 
@@ -7292,7 +7281,7 @@ Specify a condition to filter the results.
 `>=` | Greater than or equal to.
 `<=` | Less than or equal to.
 `IN` | Specify multiple `OR` operators.
-`BETWEEN` | Similar to a range query. For more information about range queries, see [Range query](https://opensearch.org/docs/latest/query-dsl/term/range/).
+`BETWEEN` | Similar to a range query.
 `LIKE` | Use for full-text search. For more information about full-text queries.
 `IS NULL` | Check if the field value is `NULL`.
 `IS NOT NULL` | Check if the field value is `NOT NULL`.
@@ -7311,7 +7300,7 @@ WHERE account_number = 1
 | :---
 | 1
 
-*Example 2*: Enegry Logserver allows for flexible schema，so documents in an index may have different fields. Use `IS NULL` or `IS NOT NULL` to retrieve only missing fields or existing fields. Enegry Logserver does not differentiate between missing fields and fields explicitly set to `NULL`:
+*Example 2*: Energy Logserver allows for flexible schema，so documents in an index may have different fields. Use `IS NULL` or `IS NOT NULL` to retrieve only missing fields or existing fields. Energy Logserver does not differentiate between missing fields and fields explicitly set to `NULL`:
 
 ```sql
 SELECT account_number, employer
@@ -7330,7 +7319,7 @@ DELETE FROM accounts
 WHERE age > 30
 ```
 
-#### Group By
+##### Group By
 
 Group documents with the same field value into buckets.
 
@@ -7379,7 +7368,7 @@ GROUP BY ABS(age)
 2 | 33.0
 3 | 36.0
 
-#### Having
+##### Having
 
 Use the `HAVING` clause to aggregate inside each bucket based on aggregation functions (`COUNT`, `AVG`, `SUM`, `MIN`, and `MAX`).
 The `HAVING` clause filters results from the `GROUP BY` clause:
@@ -7397,7 +7386,7 @@ GROUP BY age HAVING MIN(balance) > 10000
 0 | 28 | 32838
 1 | 32 | 39225
 
-#### Order By
+##### Order By
 
 Use the `ORDER BY` clause to sort results into your desired order.
 
@@ -7416,7 +7405,7 @@ ORDER BY account_number DESC
 | 6
 | 1
 
-*Example 2*: Specify if documents with missing fields are to be put at the beginning or at the end of the results. The default behavior of Enegry Logserver is to return nulls or missing fields at the end. To push them before non-nulls, use the `IS NOT NULL` operator:
+*Example 2*: Specify if documents with missing fields are to be put at the beginning or at the end of the results. The default behavior of Energy Logserver is to return nulls or missing fields at the end. To push them before non-nulls, use the `IS NOT NULL` operator:
 
 ```sql
 SELECT employer
@@ -7431,11 +7420,11 @@ ORDER BY employer IS NOT NULL
 | Pyrami
 | Quility
 
-#### Limit
+##### Limit
 
 Specify the maximum number of documents that you want to retrieve. Used to prevent fetching large amounts of data into memory.
 
-*Example 1*: If you pass in a single argument, it's mapped to the `size` parameter in Enegry Logserver and the `from` parameter is set to 0.
+*Example 1*: If you pass in a single argument, it's mapped to the `size` parameter in Energy Logserver and the `from` parameter is set to 0.
 
 ```sql
 SELECT account_number
@@ -7447,7 +7436,7 @@ ORDER BY account_number LIMIT 1
 | :---
 | 1
 
-*Example 2*: If you pass in two arguments, the first is mapped to the `from` parameter and the second to the `size` parameter in Enegry Logserver. You can use this for simple pagination for small indexes, as it's inefficient for large indexes.
+*Example 2*: If you pass in two arguments, the first is mapped to the `from` parameter and the second to the `size` parameter in Energy Logserver. You can use this for simple pagination for small indexes, as it's inefficient for large indexes.
 Use `ORDER BY` to ensure the same order between pages:
 
 ```sql
@@ -7460,18 +7449,15 @@ ORDER BY account_number LIMIT 1, 1
 | :---
 | 6
 
+#### Complex queries
 
+Besides simple SFW (`SELECT-FROM-WHERE`) queries, the SQL plugin supports complex queries such as subquery, join, union, and minus. These queries operate on more than one Energy Logserver index. To examine how these queries execute behind the scenes, use the `explain` operation.
 
-### Complex queries
+##### Joins
 
-Besides simple SFW (`SELECT-FROM-WHERE`) queries, the SQL plugin supports complex queries such as subquery, join, union, and minus. These queries operate on more than one Enegry Logserver index. To examine how these queries execute behind the scenes, use the `explain` operation.
+Energy Logserver SQL supports inner joins, cross joins, and left outer joins.
 
-
-#### Joins
-
-Enegry Logserver SQL supports inner joins, cross joins, and left outer joins.
-
-##### Constraints
+###### Constraints
 
 Joins have a number of constraints:
 
@@ -7480,34 +7466,34 @@ Joins have a number of constraints:
 1. Within an ON clause, you can only use AND conditions.
 1. In a WHERE statement, don't combine trees that contain multiple indexes. For example, the following statement works:
 
-   ```
+   ```sql
    WHERE (a.type1 > 3 OR a.type1 < 0) AND (b.type2 > 4 OR b.type2 < -1)
    ```
 
    The following statement does not:
 
-   ```
+   ```sql
    WHERE (a.type1 > 3 OR b.type2 < 0) AND (a.type1 > 4 OR b.type2 < -1)
    ```
 
 1. You can't use GROUP BY or ORDER BY for results.
 1. LIMIT with OFFSET (e.g. `LIMIT 25 OFFSET 25`) is not supported.
 
-##### Description
+###### Description
 
 The `JOIN` clause combines columns from one or more indexes using values common to each.
 
-##### Syntax
+###### Syntax
 
 Rule `tableSource`:
 
-![tableSource](media/media/tableSource.png)
+![tableSource](/media/media/tableSource.png)
 
 Rule `joinPart`:
 
-![joinPart](media/media/joinPart.png)
+![joinPart](/media/media/joinPart.png)
 
-##### Example 1: Inner join
+###### Example 1: Inner join
 
 Inner join creates a new result set by combining columns of two indexes based on your join predicates. It iterates the two indexes and compares each document to find the ones that satisfy the join predicates. You can optionally precede the `JOIN` clause with an `INNER` keyword.
 
@@ -7526,7 +7512,7 @@ JOIN employees_nested e
 
 Explain:
 
-The `explain` output is complicated, because a `JOIN` clause is associated with two Enegry Logserver DSL queries that execute in separate query planner frameworks. You can interpret it by examining the `Physical Plan` and `Logical Plan` objects.
+The `explain` output is complicated, because a `JOIN` clause is associated with two Energy Logserver DSL queries that execute in separate query planner frameworks. You can interpret it by examining the `Physical Plan` and `Logical Plan` objects.
 
 ```json
 {
@@ -7602,7 +7588,7 @@ Result set:
 :--- | :--- | :--- | :--- | :---
 6 | Hattie | Bond | 6 | Jane Smith
 
-##### Example 2: Cross join
+###### Example 2: Cross join
 
 Cross join, also known as cartesian join, combines each document from the first index with each document from the second.
 The result set is the the cartesian product of documents of both indexes.
@@ -7638,7 +7624,7 @@ Result set:
 18 | Dale | Adams | 4 | Susan Smith
 18 | Dale | Adams | 6 | Jane Smith
 
-##### Example 3: Left outer join
+###### Example 3: Left outer join
 
 Use left outer join to retain rows from the first index if it does not satisfy the join predicate. The keyword `OUTER` is optional.
 
@@ -7662,12 +7648,12 @@ Result set:
 13 | Nanette | Bates | null | null
 18 | Dale | Adams | null | null
 
-#### Subquery
+##### Subquery
 
 A subquery is a complete `SELECT` statement used within another statement and enclosed in parenthesis.
 From the explain output, you can see that some subqueries are actually transformed to an equivalent join query to execute.
 
-##### Example 1: Table subquery
+###### Example 1: Table subquery
 
 SQL query:
 
@@ -7811,7 +7797,7 @@ Result set:
 Amber | Duke | 39225
 Nanette | Bates | 32838
 
-##### Example 2: From subquery
+###### Example 2: From subquery
 
 SQL query:
 
@@ -7876,17 +7862,16 @@ Amber | Duke | 32
 Dale | Adams | 33
 Hattie | Bond | 36
 
-
-### Functions
+#### Functions
 
 The SQL language supports all SQL plugin [common functions](https://opensearch.org/docs/latest/search-plugins/sql/functions/), including [relevance search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/), but also introduces a few function synonyms, which are available in SQL only.
 These synonyms are provided by the `V1` engine. For more information, see [Limitations](https://opensearch.org/docs/latest/search-plugins/sql/limitation).
 
-#### Match query
+##### Match query
 
 The `MATCHQUERY` and `MATCH_QUERY` functions are synonyms for the [`MATCH`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#match) relevance function. They don't accept additional arguments but provide an alternate syntax.
 
-##### Syntax
+###### Syntax
 
 To use `matchquery` or `match_query`, pass in your search query and the field name that you want to search against:
 
@@ -7902,7 +7887,7 @@ You can specify the following options in any order:
 - `analyzer`
 - `boost`
 
-##### Example
+###### Example
 
 You can use `MATCHQUERY` to replace `MATCH`:
 
@@ -7926,11 +7911,11 @@ The results contain documents in which the address contains "Holmes":
 :--- | :---
 1 | 880 Holmes Lane
 
-#### Multi-match
+##### Multi-match
 
-There are three synonyms for [`MULTI_MATCH`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#multi-match), each with a slightly different syntax. They accept a query string and a fields list with weights. They can also accept additional optional parameters.
+There are three synonyms for `MULTI_MATCH`, each with a slightly different syntax. They accept a query string and a fields list with weights. They can also accept additional optional parameters.
 
-##### Syntax
+###### Syntax
 
 ```sql
 multimatch('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
@@ -7938,11 +7923,11 @@ multi_match('query'=query_expression[, 'fields'=field_expression][, option=<opti
 multimatchquery('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
 ```
 
-The `fields` parameter is optional and can contain a single field or a comma-separated list (whitespace characters are not allowed). The weight for each field is optional and is specified after the field name. It should be delimited by the `caret` character -- `^` -- without whitespace. 
+The `fields` parameter is optional and can contain a single field or a comma-separated list (whitespace characters are not allowed). The weight for each field is optional and is specified after the field name. It should be delimited by the `caret` character -- `^` -- without whitespace.
 
-##### Example
+###### Example
 
-The following queries show the `fields` parameter of a multi-match query with a single field and a field list: 
+The following queries show the `fields` parameter of a multi-match query with a single field and a field list:
 
 ```sql
 multi_match('fields' = "Tags^2,Title^3.4,Body,Comments^0.3", ...)
@@ -7958,21 +7943,21 @@ You can specify the following options in any order:
 - `tie_breaker`
 - `operator`
 
-#### Query string
+##### Query string
 
-The `QUERY` function is a synonym for [`QUERY_STRING`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#query-string).
+The `QUERY` function is a synonym for 'QUERY_STRING`.
 
-##### Syntax
+###### Syntax
 
 ```sql
 query('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
 ```
 
-The `fields` parameter is optional and can contain a single field or a comma-separated list (whitespace characters are not allowed). The weight for each field is optional and is specified after the field name. It should be delimited by the `caret` character -- `^` -- without whitespace. 
+The `fields` parameter is optional and can contain a single field or a comma-separated list (whitespace characters are not allowed). The weight for each field is optional and is specified after the field name. It should be delimited by the `caret` character -- `^` -- without whitespace.
 
-##### Example
+###### Example
 
-The following queries show the `fields` parameter of a multi-match query with a single field and a field list: 
+The following queries show the `fields` parameter of a multi-match query with a single field and a field list:
 
 ```sql
 query('fields' = "Tags^2,Title^3.4,Body,Comments^0.3", ...)
@@ -7986,9 +7971,9 @@ You can specify the following options in any order:
 - `slop`
 - `default_field`
 
-##### Example of using `query_string` in SQL and PPL queries:
+###### Example of using `query_string` in SQL and PPL queries:
 
-The following is a sample REST API search request in Enegry Logserver DSL.
+The following is a sample REST API search request in Energy Logserver DSL.
 
 ```json
 GET accounts/_search
@@ -8018,11 +8003,11 @@ The results contain addresses that contain "Lane" or "Street":
 6 | 671 Bristol Street
 13 | 789 Madison Street
 
-#### Match phrase
+##### Match phrase
 
-The `MATCHPHRASEQUERY` function is a synonym for [`MATCH_PHRASE`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#query-string).
+The `MATCHPHRASEQUERY` function is a synonym for `MATCH_PHRASE`.
 
-##### Syntax
+###### Syntax
 
 ```sql
 matchphrasequery(query_expression, field_expression[, option=<option_value>]*)
@@ -8034,11 +8019,11 @@ You can specify the following options in any order:
 - `boost`
 - `slop`
 
-#### Score query
+##### Score query
 
 To return a relevance score along with every matching document, use the `SCORE`, `SCOREQUERY`, or `SCORE_QUERY` functions.
 
-##### Syntax
+###### Syntax
 
 The `SCORE` function expects two arguments. The first argument is the [`MATCH_QUERY`](#match-query) expression. The second argument is an optional floating-point number to boost the score (the default value is 1.0):
 
@@ -8048,7 +8033,7 @@ SCOREQUERY(match_query_expression, score)
 SCORE_QUERY(match_query_expression, score)
 ```
 
-##### Example
+###### Example
 
 The following example uses the `SCORE` function to boost the documents' scores:
 
@@ -8068,18 +8053,18 @@ The results contain matches with corresponding scores:
 6 | 671 Bristol Street | 100
 13 | 789 Madison Street | 100
 
-#### Wildcard query
+##### Wildcard query
 
 To search documents by a given wildcard, use the `WILDCARDQUERY` or `WILDCARD_QUERY` functions.
 
-##### Syntax
+###### Syntax
 
 ```sql
 wildcardquery(field_expression, query_expression[, boost=<value>])
 wildcard_query(field_expression, query_expression[, boost=<value>])
 ```
 
-##### Example
+###### Example
 
 The following example uses a wildcard query:
 
@@ -8095,29 +8080,27 @@ The results contain documents that match the wildcard expression:
 :--- | :---
 1 | 880 Holmes Lane
 
-
-
-### JSON Support
+#### JSON Support
 
 SQL plugin supports JSON by following [PartiQL](https://partiql.org/) specification, a SQL-compatible query language that lets you query semi-structured and nested data for any data format. The SQL plugin only supports a subset of the PartiQL specification.
 
-#### Querying nested collection
+##### Querying nested collection
 
-PartiQL extends SQL to allow you to query and unnest nested collections. In Enegry Logserver, this is very useful to query a JSON index with nested objects or fields.
+PartiQL extends SQL to allow you to query and unnest nested collections. In Energy Logserver, this is very useful to query a JSON index with nested objects or fields.
 
 To follow along, use the `bulk` operation to index some sample data:
 
 ```json
 POST employees_nested/_bulk?refresh
 {"index":{"_id":"1"}}
-{"id":3,"name":"Bob Smith","title":null,"projects":[{"name":"SQL Spectrum querying","started_year":1990},{"name":"SQL security","started_year":1999},{"name":"Enegry Logserver security","started_year":2015}]}
+{"id":3,"name":"Bob Smith","title":null,"projects":[{"name":"SQL Spectrum querying","started_year":1990},{"name":"SQL security","started_year":1999},{"name":"Energy Logserver security","started_year":2015}]}
 {"index":{"_id":"2"}}
 {"id":4,"name":"Susan Smith","title":"Dev Mgr","projects":[]}
 {"index":{"_id":"3"}}
 {"id":6,"name":"Jane Smith","title":"Software Eng 2","projects":[{"name":"SQL security","started_year":1998},{"name":"Hello security","started_year":2015,"address":[{"city":"Dallas","state":"TX"}]}]}
 ```
 
-##### Example 1: Unnesting a nested collection
+###### Example 1: Unnesting a nested collection
 
 This example finds the nested document (`projects`) with a field value (`name`) that satisfies the predicate (contains `security`). Because each parent document can have more than one nested documents, the nested document that matches is flattened. In other words, the final result is the cartesian product between the parent and nested documents.
 
@@ -8195,12 +8178,12 @@ Result set:
 
 | employeeName | projectName
 :--- | :---
-Bob Smith | Enegry Logserver Security
+Bob Smith | Energy Logserver Security
 Bob Smith | SQL security
 Jane Smith | Hello security
 Jane Smith | SQL security
 
-##### Example 2: Unnesting in existential subquery
+###### Example 2: Unnesting in existential subquery
 
 To unnest a nested collection in a subquery to check if it satisfies a condition:
 
@@ -8306,9 +8289,7 @@ Result set:
 Bob Smith |
 Jane Smith |
 
-
-
-### Metadata queries
+#### Metadata queries
 
 To see basic metadata about your indexes, use the `SHOW` and `DESCRIBE` commands.
 
@@ -8316,11 +8297,11 @@ To see basic metadata about your indexes, use the `SHOW` and `DESCRIBE` commands
 
 Rule `showStatement`:
 
-![showStatement](media/media/showStatement.png)
+![showStatement](/media/media/showStatement.png)
 
 Rule `showFilter`:
 
-![showFilter](media/media/showFilter.png)
+![showFilter](/media/media/showFilter.png)
 
 ##### Example 1: See metadata for indexes
 
@@ -8336,7 +8317,6 @@ SHOW TABLES LIKE %
 docker-cluster | null | accounts | BASE TABLE | null | null | null | null | null | null
 docker-cluster  | null | employees_nested | BASE TABLE | null | null | null | null | null | null
 
-
 ##### Example 2: See metadata for a specific index
 
 To see metadata for an index name with a prefix of `acc`:
@@ -8349,7 +8329,6 @@ SHOW TABLES LIKE acc%
 :--- | :---
 docker-cluster | null | accounts | BASE TABLE | null | null | null | null | null | null
 
-
 ##### Example 3: See metadata for fields
 
 To see metadata for field names that match a specific pattern, use the `DESCRIBE` command:
@@ -8361,24 +8340,22 @@ DESCRIBE TABLES LIKE accounts
 | TABLE_CAT | TABLE_SCHEM | TABLE_NAME | COLUMN_NAME | DATA_TYPE | TYPE_NAME | COLUMN_SIZE | BUFFER_LENGTH | DECIMAL_DIGITS | NUM_PREC_RADIX | NULLABLE | REMARKS | COLUMN_DEF | SQL_DATA_TYPE | SQL_DATETIME_SUB | CHAR_OCTET_LENGTH | ORDINAL_POSITION | IS_NULLABLE | SCOPE_CATALOG | SCOPE_SCHEMA | SCOPE_TABLE | SOURCE_DATA_TYPE | IS_AUTOINCREMENT | IS_GENERATEDCOLUMN
 :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :---
 docker-cluster | null | accounts | account_number | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 1 |  | null | null | null | null | NO |
-docker-cluster | null | accounts | firstname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 2 |  | null | null | null | null | NO | 	 
-docker-cluster | null | accounts | address | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 3 |  | null | null | null | null | NO | 	 
-docker-cluster | null | accounts | balance | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 4 |  | null | null | null | null | NO | 	 
-docker-cluster | null | accounts | gender | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 5 |  | null | null | null | null | NO | 	
-docker-cluster | null | accounts | city | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 6 |  | null | null | null | null | NO | 	 
-docker-cluster | null | accounts | employer | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 7 |  | null | null | null | null | NO | 	
-docker-cluster | null | accounts | state | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 8 |  | null | null | null | null | NO | 	   
-docker-cluster | null | accounts | age | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 9 |  | null | null | null | null | NO | 	
-docker-cluster | null | accounts | email | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 10 |  | null | null | null | null | NO | 	
-docker-cluster | null | accounts | lastname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 11 |  | null | null | null | null | NO | 	 
+docker-cluster | null | accounts | firstname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 2 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | address | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 3 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | balance | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 4 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | gender | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 5 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | city | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 6 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | employer | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 7 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | state | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 8 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | age | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 9 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | email | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 10 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | lastname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 11 |  | null | null | null | null | NO |
 
-
-
-### Aggregate functions
+#### Aggregate functions
 
 Aggregate functions operate on subsets defined by the `GROUP BY` clause. In the absence of a `GROUP BY` clause, aggregate functions operate on all elements of the result set. You can use aggregate functions in the `GROUP BY`, `SELECT`, and `HAVING` clauses.
 
-Enegry Logserver supports the following aggregate functions.
+Energy Logserver supports the following aggregate functions.
 
 Function | Description
 :--- | :---
@@ -8393,7 +8370,7 @@ Function | Description
 `STDDEV_POP` | Returns the population standard deviation of the results. Returns 0 when there is only one row of results.
 `STDDEV_SAMP` | Returns the sample standard deviation of the results. Returns null when there is only one row of results.
 
-The examples below reference an `employees` table. You can try out the examples by indexing the following documents into Enegry Logserver using the bulk index operation:
+The examples below reference an `employees` table. You can try out the examples by indexing the following documents into Energy Logserver using the bulk index operation:
 
 ```json
 PUT employees/_bulk?refresh
@@ -8413,16 +8390,17 @@ PUT employees/_bulk?refresh
 
 #### GROUP BY
 
-The `GROUP BY` clause defines subsets of a result set. Aggregate functions operate on these subsets and return one result row for each subset. 
+The `GROUP BY` clause defines subsets of a result set. Aggregate functions operate on these subsets and return one result row for each subset.
 
 You can use an identifier, ordinal, or expression in the `GROUP BY` clause.
 
 ##### Using an identifier in GROUP BY
 
-You can specify the field name (column name) to aggregate on in the `GROUP BY` clause. For example, the following query returns the department numbers and the total sales for each department: 
+You can specify the field name (column name) to aggregate on in the `GROUP BY` clause. For example, the following query returns the department numbers and the total sales for each department:
+
 ```sql
-SELECT department, sum(sales) 
-FROM employees 
+SELECT department, sum(sales)
+FROM employees
 GROUP BY department;
 ```
 
@@ -8511,7 +8489,7 @@ GROUP BY department;
 1 | 733.75 |
 2 | 925.45 |
 
-##### COUNT
+#### COUNT
 
 The `COUNT` function accepts arguments, such as `*`, or literals, such as `1`.
 The following table describes how various forms of the `COUNT` function operate.
@@ -8539,7 +8517,7 @@ GROUP BY year(sale_date);
 
 Both `WHERE` and `HAVING` are used to filter results. The `WHERE` filter is applied before the `GROUP BY` phase, so you cannot use aggregate functions in a `WHERE` clause. However, you can use the `WHERE` clause to limit the rows to which the aggregate is then applied.
 
-The `HAVING` filter is applied after the `GROUP BY` phase, so you can use the `HAVING` clause to limit the groups that are included in the results. 
+The `HAVING` filter is applied after the `GROUP BY` phase, so you can use the `HAVING` clause to limit the groups that are included in the results.
 
 ##### HAVING with GROUP BY
 
@@ -8631,9 +8609,7 @@ If all employees in the employee table belonged to the same department, the resu
 :--- |
  |
 
-
-
-### Delete
+#### Delete
 
 The `DELETE` statement deletes documents that satisfy the predicates in the `WHERE` clause.
 If you don't specify the `WHERE` clause, all documents are deleted.
@@ -8655,7 +8631,7 @@ PUT _plugins/_query/settings
 
 Rule `singleDeleteStatement`:
 
-![singleDeleteStatement](media/media/singleDeleteStatement.png)
+![singleDeleteStatement](/media/media/singleDeleteStatement.png)
 
 ##### Example
 
@@ -8717,13 +8693,11 @@ Result set:
 
 The `datarows` field shows the number of documents deleted.
 
-
-
-### PPL &ndash; Piped Processing Language
+### PPL - Piped Processing Language
 
 Piped Processing Language (PPL) is a query language that lets you use pipe (`|`) syntax to explore, discover, and query data stored in Energy Logserver.
 
-To quickly get up and running with PPL, use **Query Workbench** in Energy Logserver Dashboards. To learn more, see [Workbench](https://opensearch.org/docs/latest/search-plugins/sql/workbench/).
+To quickly get up and running with PPL, use **SQL** in Energy Logserver Dashboards.
 
 The PPL syntax consists of commands delimited by the pipe character (`|`) where data flows from left to right through each pipeline.
 
@@ -8749,7 +8723,7 @@ PUT accounts/_bulk?refresh
 {"account_number":18,"balance":4180,"firstname":"Dale","lastname":"Adams","age":33,"gender":"M","address":"467 Hutchinson Court","email":"daleadams@boink.com","city":"Orick","state":"MD"}
 ```
 
-Go to **Query Workbench** and select **PPL**.
+Go to **SQL** and select **PPL**.
 
 The following example returns `firstname` and `lastname` fields for documents in an `accounts` index with `age` greater than 18:
 
@@ -8768,18 +8742,16 @@ Hattie      | Bond
 Nanette     | Bates
 Dale        | Adams
 
-![PPL query workbench](media/media/ppl.png)
+![PPL query workbench](/media/media/ppl.png)
 
-
-
-### PPL syntax
+#### PPL syntax
 
 Every PPL query starts with the `search` command. It specifies the index to search and retrieve documents from. Subsequent commands can follow in any order.
 
 Currently, `PPL` supports only one `search` command, which can be omitted to simplify the query.
 { : .note}
 
-#### Syntax
+##### Syntax
 
 ```sql
 search source=<index> [boolean-expression]
@@ -8792,7 +8764,7 @@ Field | Description | Required
 `index` | Specifies which index to query from. | No
 `bool-expression` | Specifies an expression that evaluates to a Boolean value. | No
 
-#### Examples
+##### Examples
 
 **Example 1: Search through accounts index**
 
@@ -8805,8 +8777,6 @@ search source=accounts
 ```
 
 In the following examples, angle brackets `< >` enclose required arguments and square brackets `[ ]` enclose optional arguments.
-{: .note }
-
 
 **Example 2: Get all documents**
 
@@ -8836,17 +8806,15 @@ search source=accounts account_number=1 or gender=\"F\";
 | 1 | Amber | 880 Holmes Lane | 39225 | M | Brogan | Pyrami | IL | 32 | amberduke@pyrami.com | Duke |
 | 13 | Nanette | 789 Madison Street | 32838 | F | Nogal | Quility | VA | 28 | null | Bates |
 
+#### Commands
 
+`PPL` supports all [`SQL` common](#functions) functions, including [relevance search](#full-text-search), but also introduces few more functions (called `commands`) which are available in `PPL` only.
 
-### Commands
-
-`PPL` supports all [`SQL` common](https://opensearch.org/docs/latest/search-plugins/sql/functions/) functions, including [relevance search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/), but also introduces few more functions (called `commands`) which are available in `PPL` only.
-
-#### dedup
+##### dedup
 
 The `dedup` (data deduplication) command removes duplicate documents defined by a field from the search result.
 
-#### Syntax
+###### Syntax
 
 ```sql
 dedup [int] <field-list> [keepempty=<bool>] [consecutive=<bool>]
@@ -8871,7 +8839,6 @@ search source=accounts | dedup gender | fields account_number, gender;
 :--- | :--- |
 1 | M
 13 | F
-
 
 **Example 2: Keep two duplicate documents**
 
@@ -8928,15 +8895,15 @@ search source=accounts | dedup gender consecutive=true | fields account_number, 
 13 | F
 18 | M
 
-#### Limitations
+###### Limitations
 
 The `dedup` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
 
-#### eval
+##### eval
 
 The `eval` command evaluates an expression and appends its result to the search result.
 
-#### Syntax
+###### Syntax
 
 ```sql
 eval <field>=<expression> ["," <field>=<expression> ]...
@@ -8992,8 +8959,7 @@ search source=accounts | eval doubleAge = age * 2, ddAge = doubleAge * 2 | field
 | 28    | 56   | 112
 | 33    | 66   | 132
 
-
-#### Limitation
+##### Limitation
 
 The ``eval`` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
 
@@ -9001,7 +8967,7 @@ The ``eval`` command is not rewritten to Energy Logserver DSL, it is only execut
 
 Use the `fields` command to keep or remove fields from a search result.
 
-#### Syntax
+##### Syntax
 
 ```sql
 fields [+|-] <field-list>
@@ -9042,12 +9008,11 @@ search source=accounts | fields account_number, firstname, lastname | fields - a
 | Nanette | Bates
 | Dale    | Adams
 
-
 #### parse
 
-Use the `parse` command to parse a text field using regular expression and append the result to the search result. 
+Use the `parse` command to parse a text field using regular expression and append the result to the search result.
 
-#### Syntax
+##### Syntax
 
 ```sql
 parse <field> <regular-expression>
@@ -9071,12 +9036,12 @@ fetched rows / total rows = 4/4
 
 | email | host  
 :--- | :--- |
-| amberduke@pyrami.com  | pyrami.com 
-| hattiebond@netagy.com | netagy.com 
-| null                  | null          
-| daleadams@boink.com   | boink.com  
+| amberduke@pyrami.com  | pyrami.com
+| hattiebond@netagy.com | netagy.com
+| null                  | null
+| daleadams@boink.com   | boink.com
 
-*Example 2*: Override the existing field
+**Example 2: Override the existing field**
 
 The example shows how to override the existing address field with street number removed.
 
@@ -9087,9 +9052,9 @@ fetched rows / total rows = 4/4
 
 | address
 :--- |
-| Holmes Lane      
-| Bristol Street   
-| Madison Street   
+| Holmes Lane
+| Bristol Street
+| Madison Street
 | Hutchinson Court
 
 **Example 3: Filter and sort be casted parsed field**
@@ -9101,26 +9066,26 @@ os> source=accounts | parse address '(?<streetNumber>\d+) (?<street>.+)' | where
 fetched rows / total rows = 3/3
 ```
 
-| streetNumber | street  
+| streetNumber | street
 :--- | :--- |
-| 671 | Bristol Street 
-| 789 | Madison Street 
-| 880 | Holmes Lane  
+| 671 | Bristol Street
+| 789 | Madison Street
+| 880 | Holmes Lane
 
-#### Limitations
+##### Limitations
 
 A few limitations exist when using the parse command:
 
 - Fields defined by parse cannot be parsed again. For example, `source=accounts | parse address '\d+ (?<street>.+)' | parse street '\w+ (?<road>\w+)' ;` will fail to return any expressions.
 - Fields defined by parse cannot be overridden with other commands. For example, when entering `source=accounts | parse address '\d+ (?<street>.+)' | eval street='1' | where street='1' ;` `where` will not match any documents since `street` cannot be overridden.
-- The text field used by parse cannot be overridden. For example, when entering `source=accounts | parse address '\d+ (?<street>.+)' | eval address='1' ;` `street` will not be parse since address is overridden. 
+- The text field used by parse cannot be overridden. For example, when entering `source=accounts | parse address '\d+ (?<street>.+)' | eval address='1' ;` `street` will not be parse since address is overridden.
 - Fields defined by parse cannot be filtered/sorted after using them in the `stats` command. For example, `source=accounts | parse email '.+@(?<host>.+)' | stats avg(age) by host | where host=pyrami.com ;` `where` will not parse the domain listed.
 
 #### rename
 
 Use the `rename` command to rename one or more fields in the search result.
 
-#### Syntax
+##### Syntax
 
 ```sql
 rename <source-field> AS <target-field>["," <source-field> AS <target-field>]...
@@ -9161,7 +9126,7 @@ search source=accounts | rename account_number as an, employer as emp | fields a
 | 13   | Quility
 | 18   | null
 
-#### Limitations
+##### Limitations
 
 The `rename` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
 
@@ -9169,7 +9134,7 @@ The `rename` command is not rewritten to Energy Logserver DSL, it is only execut
 
 Use the `sort` command to sort search results by a specified field.
 
-#### Syntax
+##### Syntax
 
 ```sql
 sort [count] <[+|-] sort-field>...
@@ -9268,10 +9233,9 @@ Function | NULL | MISSING
 `MAX` | Ignore | Ignore
 `MIN` | Ignore | Ignore
 
+##### Syntax
 
-#### Syntax
-
-```
+```bash
 stats <aggregation>... [by-clause]...
 ```
 
@@ -9347,7 +9311,7 @@ search source=accounts | stats max(age), min(age) by gender;
 
 Use the `where` command with a bool expression to filter the search result. The `where` command only returns the result when the bool expression evaluates to true.
 
-#### Syntax
+##### Syntax
 
 ```sql
 where <boolean-expression>
@@ -9374,7 +9338,7 @@ search source=accounts | where account_number=1 or gender=\"F\" | fields account
 
 Use the `head` command to return the first N number of results in a specified search order.
 
-#### Syntax
+##### Syntax
 
 ```sql
 head [N]
@@ -9411,7 +9375,7 @@ search source=accounts | fields firstname, age | head 2;
 | Amber  | 32
 | Hattie | 36
 
-#### Limitations
+##### Limitations
 
 The `head` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
 
@@ -9420,7 +9384,7 @@ The `head` command is not rewritten to Energy Logserver DSL, it is only executed
 Use the `rare` command to find the least common values of all fields in a field list.
 A maximum of 10 results are returned for each distinct set of values of the group-by fields.
 
-#### Syntax
+##### Syntax
 
 ```sql
 rare <field-list> [by-clause]
@@ -9458,15 +9422,15 @@ search source=accounts | rare age by gender;
 | M  | 32
 | M  | 33
 
-#### Limitations
+##### Limitations
 
 The `rare` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
 
-#### top {#top-command}
+#### top
 
 Use the `top` command to find the most common values of all fields in the field list.
 
-#### Syntax
+##### Syntax
 
 ```sql
 top [N] <field-list> [by-clause]
@@ -9516,15 +9480,14 @@ search source=accounts | top 1 age by gender;
 | F  | 28
 | M  | 32
 
-#### Limitations
+##### Limitations
 
 The `top` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
-
 
 ### Identifiers
 
 An identifier is an ID to name your database objects, such as index names, field names, aliases, and so on.
-Enegry Logserver supports two types of identifiers: regular identifiers and delimited identifiers.
+Energy Logserver supports two types of identifiers: regular identifiers and delimited identifiers.
 
 #### Regular identifiers
 
@@ -9532,12 +9495,12 @@ A regular identifier is a string of characters that starts with an ASCII letter 
 The next character can either be a letter, digit, or underscore (_). It can't be a reserved keyword.
 Whitespace and other special characters are also not allowed.
 
-Enegry Logserver supports the following regular identifiers:
+Energy Logserver supports the following regular identifiers:
 
 1. Identifiers prefixed by a dot `.` sign. Use to hide an index. For example `.opensearch-dashboards`.
-2. Identifiers prefixed by an `@` sign. Use for meta fields generated by Logstash ingestion.
-3. Identifiers with hyphen `-` in the middle. Use for index names with date information.
-4. Identifiers with star `*` present. Use for wildcard match of index patterns.
+1. Identifiers prefixed by an `@` sign. Use for meta fields generated by Logstash ingestion.
+1. Identifiers with hyphen `-` in the middle. Use for index names with date information.
+1. Identifiers with star `*` present. Use for wildcard match of index patterns.
 
 For regular identifiers, you can use the name without any back tick or escape characters.
 In this example, `source`, `fields`, `account_number`, `firstname`, and `lastname` are all identifiers. Out of these, the `source` field is a reserved identifier.
@@ -9548,11 +9511,10 @@ SELECT account_number, firstname, lastname FROM accounts;
 
 | account_number | firstname | lastname |
 :--- | :--- |
-| 1  | Amber | Duke       
+| 1  | Amber | Duke
 | 6  | Hattie | Bond
 | 13 | Nanette | Bates
 | 18 | Dale | Adams
-
 
 #### Delimited identifiers
 
@@ -9564,8 +9526,8 @@ If the index name includes a dot (`.`), for example, `log-2021.01.11`, use delim
 Typical examples of using delimited identifiers:
 
 1. Identifiers with reserved keywords.
-2. Identifiers with a `.` present. Similarly, `-` to include date information.
-3. Identifiers with other special characters. For example, Unicode characters.
+1. Identifiers with a `.` present. Similarly, `-` to include date information.
+1. Identifiers with other special characters. For example, Unicode characters.
 
 To quote an index name with back ticks:
 
@@ -9575,35 +9537,33 @@ source=`accounts` | fields `account_number`;
 
 | account_number |
 :--- |
-| 1  |       
+| 1  |
 | 6  |
 | 13 |
 | 18 |
 
 #### Case sensitivity
 
-Identifiers are case sensitive. They must be exactly the same as what's stored in Enegry Logserver.
+Identifiers are case sensitive. They must be exactly the same as what's stored in Energy Logserver.
 
 For example, if you run `source=Accounts`, you'll get an index not found exception because the actual index name is in lower case.
 
-
-
 ### Data types
 
-The following table shows the data types supported by the SQL plugin and how each one maps to SQL and Enegry Logserver data types:
+The following table shows the data types supported by the SQL plugin and how each one maps to SQL and Energy Logserver data types:
 
-| Enegry Logserver SQL Type | Enegry Logserver Type | SQL Type
+| Energy Logserver SQL Type | Energy Logserver Type | SQL Type
 :--- | :--- | :---
-boolean |	boolean |	BOOLEAN
-byte |	byte |	TINYINT
-short |	byte |	SMALLINT
-integer |	integer |	INTEGER
-long | long |	BIGINT
-float |	float |	REAL
+boolean | boolean | BOOLEAN
+byte | byte | TINYINT
+short | byte | SMALLINT
+integer | integer | INTEGER
+long | long | BIGINT
+float | float | REAL
 half_float | float | FLOAT
 scaled_float | float | DOUBLE
 double | double | DOUBLE
-keyword |	string | VARCHAR
+keyword | string | VARCHAR
 text | text | VARCHAR
 date | timestamp | TIMESTAMP
 date_nanos | timestamp | TIMESTAMP
@@ -9613,16 +9573,14 @@ binary | binary | VARBINARY
 object | struct | STRUCT
 nested | array | STRUCT
 
-In addition to this list, the SQL plugin also supports the `datetime` type, though it doesn't have a corresponding mapping with Enegry Logserver or SQL.
+In addition to this list, the SQL plugin also supports the `datetime` type, though it doesn't have a corresponding mapping with Energy Logserver or SQL.
 To use a function without a corresponding mapping, you must explicitly convert the data type to one that does.
-
 
 #### Date and time types
 
-The date and time types represent a time period: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`, and `INTERVAL`. By default, the Enegry Logserver DSL uses the `date` type as the only date-time related type that contains all information of an absolute time point.
+The date and time types represent a time period: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`, and `INTERVAL`. By default, the Energy Logserver DSL uses the `date` type as the only date-time related type that contains all information of an absolute time point.
 
-To integrate with SQL, each type other than the `timestamp` type holds part of the time period information. To use date-time functions, see [datetime](https://opensearch.org/docs/latest/search-plugins/sql/functions#date-and-time). Some functions might have restrictions for the input argument type.
-
+To integrate with SQL, each type other than the `timestamp` type holds part of the time period information. Some functions might have restrictions for the input argument type.
 
 #### Date
 
@@ -9673,7 +9631,6 @@ The `interval` type has two classes of intervals: year-week intervals and day-ti
 - Year-week intervals store years, quarters, months, and weeks.
 - Day-time intervals store days, hours, minutes, seconds, and microseconds.
 
-
 #### Convert between date and time types
 
 Apart from the `interval` type, all date and time types can be converted to each other. The conversion might alter the value or cause some information loss. For example, when extracting the `time` value from a `datetime` value, or converting a `date` value to a `datetime` value, and so on.
@@ -9699,8 +9656,6 @@ The SQL plugin supports the following conversion rules for each of the types:
 **Convert from timestamp**
 
 - Converting from a `timestamp` type to a `date` type extracts the date value and converting to a `time` type extracts the time value. Converting from a `timestamp` type to `datetime` type extracts only the `datetime` value and leaves out the timezone value. For example, conversion of `2020-08-17 14:09:00` UTC to a `date` type is `2020-08-17`, to a `time` type is `14:09:00`, and to a `datetime` type is `2020-08-17 14:09:00`.
-
-
 
 ### Functions
 
@@ -9769,6 +9724,7 @@ The SQL plugin supports the following common functions shared across the SQL and
 | `tan`     | `tan(number T) -> double`             | `SELECT tan(0.5)`      |
 
 #### Date and time
+
 Functions marked with * are only available in SQL.
 
 | Function             | Specification                                                                          | Example                                                                             |
@@ -9880,15 +9836,11 @@ Functions marked with * are only available in SQL.
 
 #### Relevance-based search (full-text search)
 
-These functions are only available in the `WHERE` clause. For their descriptions and usage examples in SQL and PPL, see [Full-text search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/).
-
-
+These functions are only available in the `WHERE` clause. For their descriptions and usage examples in SQL and PPL, see [Full-text search](#full-text-search).
 
 ### Full-text search
 
-Use SQL commands for full-text search. The SQL plugin supports a subset of full-text queries available in Enegry Logserver.
-
-To learn about full-text queries in Enegry Logserver, see [Full-text queries](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index).
+Use SQL commands for full-text search. The SQL plugin supports a subset of full-text queries available in Energy Logserver.
 
 #### Match
 
@@ -9915,9 +9867,9 @@ You can specify the following options in any order:
 - `zero_terms_query`
 - `boost`
 
-Refer to the `match` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match) for parameter descriptions and supported values.
+Refer to the `match` query for parameter descriptions and supported values.
 
-#### Example 1: Search the `message` field for the text "this is a test":
+##### Example 1: Search the `message` field for the text "this is a test":
 
 ```json
 GET my_index/_search
@@ -9930,16 +9882,19 @@ GET my_index/_search
 }
 ```
 
-*SQL query:*
+**SQL query:**
+
 ```sql
 SELECT message FROM my_index WHERE match(message, "this is a test")
 ```
-*PPL query:*
-```ppl
+
+**PPL query:**
+
+```bash
 SOURCE=my_index | WHERE match(message, "this is a test") | FIELDS message
 ```
 
-#### Example 2: Search the `message` field with the `operator` parameter:
+##### Example 2: Search the `message` field with the `operator` parameter:
 
 ```json
 GET my_index/_search
@@ -9955,16 +9910,19 @@ GET my_index/_search
 }
 ```
 
-*SQL query:*
+**SQL query:**
+
 ```sql
 SELECT message FROM my_index WHERE match(message, "this is a test", operator='and')
 ```
-*PPL query:*
-```ppl
+
+**PPL query:**
+
+```bash
 SOURCE=my_index | WHERE match(message, "this is a test", operator='and') | FIELDS message
 ```
 
-#### Example 3: Search the `message` field with the `operator` and `zero_terms_query` parameters:
+##### Example 3: Search the `message` field with the `operator` and `zero_terms_query` parameters:
 
 ```json
 GET my_index/_search
@@ -9981,11 +9939,14 @@ GET my_index/_search
 }
 ```
 
-*SQL query:*
+**SQL query:**
+
 ```sql
 SELECT message FROM my_index WHERE match(message, "this is a test", operator='and', zero_terms_query='all')
 ```
-*PPL query:*
+
+**PPL query:**
+
 ```sql
 SOURCE=my_index | WHERE match(message, "this is a test", operator='and', zero_terms_query='all') | FIELDS message
 ```
@@ -9994,7 +9955,7 @@ SOURCE=my_index | WHERE match(message, "this is a test", operator='and', zero_te
 
 To search for text in multiple fields, use `MULTI_MATCH` function. This function maps to the `multi_match` query used in search engine, to returns the documents that match a provided text, number, date or boolean value with a given field or fields.
 
-#### Syntax
+##### Syntax
 
 The `MULTI_MATCH` function lets you *boost* certain fields using **^** character. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields. The syntax allows to specify the fields in double quotes, single quotes,  surrounded by backticks, or unquoted. Use star ``"*"`` to search all fields. Star symbol should be quoted.
 
@@ -10029,7 +9990,7 @@ You can specify the following options for `MULTI_MATCH` in any order:
 
 Please, refer to `multi_match` query [documentation](#multi-match) for parameter description and supported values.
 
-#### For example, REST API search for `Dale` in either the `firstname` or `lastname` fields:
+##### For example, REST API search for `Dale` in either the `firstname` or `lastname` fields:
 
 ```json
 GET accounts/_search
@@ -10042,13 +10003,17 @@ GET accounts/_search
   }
 }
 ```
+
 could be called from *SQL* using `multi_match` function
+
 ```sql
 SELECT firstname, lastname
 FROM accounts
 WHERE multi_match(['*name'], 'Dale')
 ```
+
 or `multi_match` *PPL* function
+
 ```sql
 SOURCE=accounts | WHERE multi_match(['*name'], 'Dale') | fields firstname, lastname
 ```
@@ -10057,12 +10022,12 @@ SOURCE=accounts | WHERE multi_match(['*name'], 'Dale') | fields firstname, lastn
 :--- | :---
 Dale | Adams
 
-#### Query string
+##### Query string
 
 To split text based on operators, use the `QUERY_STRING` function. The `QUERY_STRING` function supports logical connectives, wildcard, regex, and proximity search.
 This function maps to the to the `query_string` query used in search engine, to return the documents that match a provided text, number, date or boolean value with a given field or fields.
 
-#### Syntax
+##### Syntax
 
 The `QUERY_STRING` function has syntax similar to `MATCH_QUERY` and lets you *boost* certain fields using **^** character. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields. The syntax allows to specify the fields in double quotes, single quotes,  surrounded by backticks, or unquoted. Use star ``"*"`` to search all fields. Star symbol should be quoted.
 
@@ -10103,9 +10068,7 @@ You can specify the following options for `QUERY_STRING` in any order:
 - `tie_breaker`
 - `time_zone`
 
-Refer to the `query_string` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#query-string) for parameter descriptions and supported values.
-
-#### Example of using `query_string` in SQL and PPL queries:
+##### Example of using `query_string` in SQL and PPL queries:
 
 The REST API search request
 
@@ -10145,7 +10108,7 @@ SOURCE=accounts | WHERE query_string(['address'], 'Lane Street', default_operato
 
 To search for exact phrases, use `MATCHPHRASE` or `MATCH_PHRASE` functions.
 
-#### Syntax
+##### Syntax
 
 ```sql
 matchphrasequery(field_expression, query_expression)
@@ -10160,11 +10123,10 @@ The `MATCHPHRASE`/`MATCH_PHRASE` functions let you specify the following options
 - `zero_terms_query`
 - `boost`
 
-Refer to the `match_phrase` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match-phrase) for parameter descriptions and supported values.
-
-#### Example of using `match_phrase` in SQL and PPL queries:
+##### Example of using `match_phrase` in SQL and PPL queries:
 
 The REST API search request
+
 ```json
 GET accounts/_search
 {
@@ -10177,13 +10139,17 @@ GET accounts/_search
   }
 }
 ```
+
 could be called from *SQL*
+
 ```sql
 SELECT account_number, address
 FROM accounts
 WHERE match_phrase(address, '880 Holmes Lane')
 ```
+
 or *PPL*
+
 ```sql
 SOURCE=accounts | WHERE match_phrase(address, '880 Holmes Lane') | FIELDS account_number, address
 ```
@@ -10192,13 +10158,12 @@ SOURCE=accounts | WHERE match_phrase(address, '880 Holmes Lane') | FIELDS accoun
 :--- | :---
 1 | 880 Holmes Lane
 
-
 #### Simple query string
 
-The `simple_query_string` function maps to the `simple_query_string` query in Enegry Logserver. It returns the documents that match a provided text, number, date or boolean value with a given field or fields.
+The `simple_query_string` function maps to the `simple_query_string` query in Energy Logserver. It returns the documents that match a provided text, number, date or boolean value with a given field or fields.
 The **^** lets you *boost* certain fields. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields.
 
-#### Syntax
+##### Syntax
 
 The syntax allows to specify the fields in double quotes, single quotes,  surrounded by backticks, or unquoted. Use star ``"*"`` to search all fields. Star symbol should be quoted.
 
@@ -10228,11 +10193,10 @@ You can specify the following options for `SIMPLE_QUERY_STRING` in any order:
 - `minimum_should_match`
 - `quote_field_suffix`
 
-Refer to the `simple_query_string` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#simple-query-string) for parameter descriptions and supported values.
-
-#### *Example* of using `simple_query_string` in SQL and PPL queries:
+##### *Example* of using `simple_query_string` in SQL and PPL queries:
 
 The REST API search request
+
 ```json
 GET accounts/_search
 {
@@ -10244,13 +10208,17 @@ GET accounts/_search
   }
 }
 ```
+
 could be called from *SQL*
+
 ```sql
 SELECT account_number, address
 FROM accounts
 WHERE simple_query_string(['address'], 'Lane Street', default_operator='OR')
 ```
+
 or from *PPL*
+
 ```sql
 SOURCE=accounts | WHERE simple_query_string(['address'], 'Lane Street', default_operator='OR') | fields account_number, address
 ```
@@ -10265,7 +10233,7 @@ SOURCE=accounts | WHERE simple_query_string(['address'], 'Lane Street', default_
 
 To search for phrases by given prefix, use `MATCH_PHRASE_PREFIX` function to make a prefix query out of the last term in the query string.
 
-#### Syntax
+##### Syntax
 
 ```sql
 match_phrase_prefix(field_expression, query_expression[, option=<option_value>]*)
@@ -10279,11 +10247,10 @@ The `MATCH_PHRASE_PREFIX` function lets you specify the following options in any
 - `zero_terms_query`
 - `boost`
 
-Refer to the `match_phrase_prefix` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match-phrase-prefix) for parameter descriptions and supported values.
-
-#### *Example* of using `match_phrase_prefix` in SQL and PPL queries:
+##### *Example* of using `match_phrase_prefix` in SQL and PPL queries:
 
 The REST API search request
+
 ```json
 GET accounts/_search
 {
@@ -10296,13 +10263,17 @@ GET accounts/_search
   }
 }
 ```
+
 could be called from *SQL*
+
 ```sql
 SELECT author, title
 FROM books
 WHERE match_phrase_prefix(author, 'Alexander Mil')
 ```
+
 or *PPL*
+
 ```sql
 source=books | where match_phrase_prefix(author, 'Alexander Mil') | fields author, title
 ```
@@ -10312,12 +10283,11 @@ source=books | where match_phrase_prefix(author, 'Alexander Mil') | fields autho
 Alan Alexander Milne | The House at Pooh Corner
 Alan Alexander Milne | Winnie-the-Pooh
 
-
 #### Match boolean prefix
 
 Use the `match_bool_prefix` function to search documents that match text only for a given field prefix.
 
-#### Syntax
+##### Syntax
 
 ```sql
 match_bool_prefix(field_expression, query_expression[, option=<option_value>]*)
@@ -10335,11 +10305,10 @@ The `MATCH_BOOL_PREFIX` function lets you specify the following options in any o
 - `analyzer`
 - `operator`
 
-Refer to the `match_bool_prefix` query [documentation](https://opensearch.org/docs/latest/opensearch/query-dsl/full-text/index#match-boolean-prefix)  for parameter descriptions and supported values.
-
-#### Example of using `match_bool_prefix` in SQL and PPL queries:
+##### Example of using `match_bool_prefix` in SQL and PPL queries:
 
 The REST API search request
+
 ```json
 GET accounts/_search
 {
@@ -10352,13 +10321,17 @@ GET accounts/_search
   }
 }
 ```
+
 could be called from *SQL*
+
 ```sql
 SELECT firstname, address
 FROM accounts
 WHERE match_bool_prefix(address, 'Bristol Stre')
 ```
+
 or *PPL*
+
 ```sql
 source=accounts | where match_bool_prefix(address, 'Bristol Stre') | fields firstname, address
 ```
@@ -10367,7 +10340,6 @@ source=accounts | where match_bool_prefix(address, 'Bristol Stre') | fields firs
 :--- | :---
 Hattie | 671 Bristol Street
 Nanette | 789 Madison Street
-
 
 ## Automation
 
@@ -10415,8 +10387,8 @@ The following settings are available:
 If your automation execution fails, you can retry the execution. To retry a failed automation:
 
 1. Open the Executions list from the sidebar.
-2. For the automation execution you want to retry, click on the refresh icon under the Status column.
-3. Select either of the following options to retry the execution:
+1. For the automation execution you want to retry, click on the refresh icon under the Status column.
+1. Select either of the following options to retry the execution:
 
   - Retry with currently saved automation: Once you make changes to your automation, you can select this option to execute the automation with the previous execution data.
   - Retry with original automation: If you want to retry the execution without making changes to your automation, you can select this option to retry the execution with the previous execution data.
