@@ -7037,11 +7037,11 @@ The query returns cells with the `|` character surrounded by quotation marks:
 "671 Bristol Street| Dente| TN"|"Bond|"|"|Hattie"
 ```
 
-#### SQL
+### SQL
 
 SQL in Energy Logserver bridges the gap between traditional relational database concepts and the flexibility of Energy Logserver’s document-oriented data storage. This integration gives you the ability to use your SQL knowledge to query, analyze, and extract insights from your  data.
 
-##### SQL and Energy Logserver terminology
+#### SQL and Energy Logserver terminology
 
 Here’s how core SQL concepts map to Energy Logserver:
 
@@ -7051,7 +7051,7 @@ Table | Index
 Row | Document
 Column | Field
 
-##### REST API
+#### REST API
 
 To use the SQL plugin with your own applications, send requests to the `_plugins/_sql` endpoint:
 
@@ -7097,13 +7097,13 @@ POST _plugins/_sql?format=json
 
 See the rest of this guide for more information about request parameters, settings, supported operations, and tools.
 
-##### Basic queries
+#### Basic queries
 
 Use the `SELECT` clause, along with `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` to search and aggregate data.
 
 Among these clauses, `SELECT` and `FROM` are required, as they specify which fields to retrieve and which indexes to retrieve them from. All other clauses are optional. Use them according to your needs.
 
-###### Syntax
+##### Syntax
 
 The complete syntax for searching and aggregating data is as follows:
 
@@ -7117,7 +7117,7 @@ FROM index_name
 [LIMIT [offset, ] size]
 ```
 
-###### Fundamentals
+##### Fundamentals
 
 Apart from the predefined keywords of SQL, the most basic elements are literal and identifiers.
 A literal is a numeric, string, date or boolean constant. An identifier is an Energy Logserver index or field name.
@@ -7137,7 +7137,7 @@ Rule `predicate`:
 
 ![expression](/media/media/predicate.png)
 
-###### Execution Order
+##### Execution Order
 
 These SQL clauses execute in an order different from how they appear:
 
@@ -7151,11 +7151,11 @@ FROM index
       LIMIT size
 ```
 
-##### Select
+#### Select
 
 Specify the fields to be retrieved.
 
-###### Syntax
+##### Syntax
 
 Rule `selectElements`:
 
@@ -7221,12 +7221,12 @@ FROM accounts
 | 33
 | 36
 
-##### From
+#### From
 
 Specify the index that you want search.
 You can specify subqueries within the `FROM` clause.
 
-###### Syntax
+##### Syntax
 
 Rule `tableName`:
 
@@ -7268,7 +7268,7 @@ FROM account*
 | 13
 | 18
 
-##### Where
+#### Where
 
 Specify a condition to filter the results.
 
@@ -7319,7 +7319,7 @@ DELETE FROM accounts
 WHERE age > 30
 ```
 
-##### Group By
+#### Group By
 
 Group documents with the same field value into buckets.
 
@@ -7368,7 +7368,7 @@ GROUP BY ABS(age)
 2 | 33.0
 3 | 36.0
 
-##### Having
+#### Having
 
 Use the `HAVING` clause to aggregate inside each bucket based on aggregation functions (`COUNT`, `AVG`, `SUM`, `MIN`, and `MAX`).
 The `HAVING` clause filters results from the `GROUP BY` clause:
@@ -7386,7 +7386,7 @@ GROUP BY age HAVING MIN(balance) > 10000
 0 | 28 | 32838
 1 | 32 | 39225
 
-##### Order By
+#### Order By
 
 Use the `ORDER BY` clause to sort results into your desired order.
 
@@ -7420,7 +7420,7 @@ ORDER BY employer IS NOT NULL
 | Pyrami
 | Quility
 
-##### Limit
+#### Limit
 
 Specify the maximum number of documents that you want to retrieve. Used to prevent fetching large amounts of data into memory.
 
