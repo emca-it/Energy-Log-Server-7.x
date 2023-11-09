@@ -982,19 +982,81 @@ object, and the Save button to save the selection.
 
 ### Default user and passwords
 
-The table below contains built-in user accounts and default passwords:
-
-|Address                |User         |Password     |Role         |Description                                     |Usage          |
-|-----------------------|-------------|-------------|-------------|------------------------------------------------|---------------|
-|https://localhost:5601 |logserver    |logserver    |logserver    |A built-in *superuser* account                  |               |
-|                       |alert        |alert        |alert        |A built-in account for  the Alert module        |               |  
-|                       |intelligence |intelligece  |intelligence |A built-in account for the Intelligence module  | authorizing communication with elasticsearch server |
-|                       |scheduler    |scheduler    |scheduler    |A built-in account for the Scheduler module     |
-|                       |logstash     |logstash     |logstash     |A built-in account for authorized comuunication form Logstash |
-|                       |cerebro      |     |system acconut only     |A built-in account for authorized comuunication from Cerebro moudule |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tysj{text-align:left;vertical-align:top}
+.tg .tg-qahb{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-i91a{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-ie02{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-qahb">Address</th>
+    <th class="tg-qahb">User</th>
+    <th class="tg-qahb">Password</th>
+    <th class="tg-qahb">Role</th>
+    <th class="tg-qahb">Description</th>
+    <th class="tg-qahb">Usage</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-i91a"><a href="https://localhost:5601/" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none">https://localhost:5601</span></a></td>
+    <td class="tg-ie02">logserver</td>
+    <td class="tg-ie02">logserver</td>
+    <td class="tg-ie02">logserver</td>
+    <td class="tg-ie02">A built-in superuser account</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">alert</td>
+    <td class="tg-ie02">alert</td>
+    <td class="tg-ie02">alert</td>
+    <td class="tg-ie02">A built-in account for the Alert module</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">intelligence</td>
+    <td class="tg-ie02">intelligece</td>
+    <td class="tg-ie02">intelligence</td>
+    <td class="tg-ie02">A built-in account for the Intelligence module</td>
+    <td class="tg-ie02">authorizing communication with elasticsearch server</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">scheduler</td>
+    <td class="tg-ie02">scheduler</td>
+    <td class="tg-ie02">scheduler</td>
+    <td class="tg-ie02">A built-in account for the Scheduler module</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">A built-in account for authorized comuunication form Logstash</td>
+    <td class="tg-ie02"></td>
+  </tr>
+  <tr>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">cerebro</td>
+    <td class="tg-ie02"></td>
+    <td class="tg-ie02">system acconut only</td>
+    <td class="tg-ie02">A built-in account for authorized comuunication from Cerebro moudule</td>
+    <td class="tg-ie02"></td>
+  </tr>
+</tbody>
+</table>
 
 ### Changing the password for the system account
-
 
 1. Account **Logserver**
 
@@ -2280,11 +2342,37 @@ For registering new algorithm:
 
 Form fields:
 
-| Field   | Description                                                                                                      |
-|---------|------------------------------------------------------------------------------------------------------------------|
-| Code    | Short name for algorithm                                                                                         |
-| Name    | Algorithm name                                                                                                   |
-| Command | Command to execute. The command must be in the directory pointed to by the parameter elastscheduler.commandpath. |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-kwiq{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-21f3{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-21f3">Field</th>
+    <th class="tg-21f3">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-kwiq">Code</td>
+    <td class="tg-kwiq">Short name for algorithm</td>
+  </tr>
+  <tr>
+    <td class="tg-kwiq">Name</td>
+    <td class="tg-kwiq">Algorithm name</td>
+  </tr>
+  <tr>
+    <td class="tg-kwiq">Command</td>
+    <td class="tg-kwiq">Command to execute. The command must be in the directory pointed to by the parameter elastscheduler.commandpath.</td>
+  </tr>
+</tbody>
+</table>
 
 Energy Logserver execute command:
 
@@ -2303,64 +2391,304 @@ Config file:
 
 Json document:
 
-| Field                  | Value                                                                               | Screen field (description)                                           |
-|------------------------|-------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| algorithm_type         | GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           | Algorithm. For customs method field Code from Create algorithm form. |
-| model_name             | Not empty string.                                                                   | AI Rule Name.                                                        |
-| search                 | Search id.                                                                          | Choose search.                                                       |
-| label_field.field      |                                                                                     | Feature to analyse.                                                  |
-| max_probes             | Integer value                                                                       | Max probes                                                           |
-| time_frame             | 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day | Time frame                                                           |
-| value_type             | min, max, avg, count                                                                | Value type                                                           |
-| max_predictions        | Integer value                                                                       | Max predictions                                                      |
-| threshold              | Integer value                                                                       | Threshold                                                            |
-| automatic_cron         | Cron format string                                                                  | Automatic cycle                                                      |
-| automatic_enable       | true/false                                                                          | Enable                                                               |
-| automatic              | true/false                                                                          | Automatic                                                            |
-| start_date             | YYYY-MM-DD HH:mm or now                                                             | Start date                                                           |
-| multiply_by_values     | Array of string values                                                              | Multiply by values                                                   |
-| multiply_by_field      | None or full field name eg.: system.cpu                                             | Multiply by field                                                    |
-| selectedroles          | Array of roles name                                                                 | Role                                                                 |
-| last_execute_timestamp |                                                                                     | Last execute                                                         |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-fvzj{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-b9ha{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-fvzj">Field</th>
+    <th class="tg-fvzj">Value</th>
+    <th class="tg-fvzj">Screen field (description)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-b9ha">algorithm_type</td>
+    <td class="tg-b9ha">GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL</td>
+    <td class="tg-b9ha">Algorithm. For customs method field Code from Create algorithm form.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">model_name</td>
+    <td class="tg-b9ha">Not empty string.</td>
+    <td class="tg-b9ha">AI Rule Name.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">search</td>
+    <td class="tg-b9ha">Search id.</td>
+    <td class="tg-b9ha">Choose search.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">label_field.field</td>
+    <td class="tg-b9ha"></td>
+    <td class="tg-b9ha">Feature to analyse.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">max_probes</td>
+    <td class="tg-b9ha">Integer value</td>
+    <td class="tg-b9ha">Max probes</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">time_frame</td>
+    <td class="tg-b9ha">1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day</td>
+    <td class="tg-b9ha">Time frame</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">value_type</td>
+    <td class="tg-b9ha">min, max, avg, count</td>
+    <td class="tg-b9ha">Value type</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">max_predictions</td>
+    <td class="tg-b9ha">Integer value</td>
+    <td class="tg-b9ha">Max predictions</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">threshold</td>
+    <td class="tg-b9ha">Integer value</td>
+    <td class="tg-b9ha">Threshold</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">automatic_cron</td>
+    <td class="tg-b9ha">Cron format string</td>
+    <td class="tg-b9ha">Automatic cycle</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">automatic_enable</td>
+    <td class="tg-b9ha">true/false</td>
+    <td class="tg-b9ha">Enable</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">automatic</td>
+    <td class="tg-b9ha">true/false</td>
+    <td class="tg-b9ha">Automatic</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">start_date</td>
+    <td class="tg-b9ha">YYYY-MM-DD HH:mm or now</td>
+    <td class="tg-b9ha">Start date</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">multiply_by_values</td>
+    <td class="tg-b9ha">Array of string values</td>
+    <td class="tg-b9ha">Multiply by values</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">multiply_by_field</td>
+    <td class="tg-b9ha">None or full field name eg.: system.cpu</td>
+    <td class="tg-b9ha">Multiply by field</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">selectedroles</td>
+    <td class="tg-b9ha">Array of roles name</td>
+    <td class="tg-b9ha">Role</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">last_execute_timestamp</td>
+    <td class="tg-b9ha"></td>
+    <td class="tg-b9ha">Last execute</td>
+  </tr>
+</tbody>
+</table>
 
-| Not screen fields     |                                     |
-|-----------------------|-------------------------------------|
-| preparation_date      | Document preparation date.          |
-| machine_state_uid     | AI rule machine state uid.          |
-| path_to_logs          | Path to ai machine logs.            |
-| path_to_machine_state | Path to ai machine state files.     |
-| searchSourceJSON      | Query string.                       |
-| processing_time       | Process operation time.             |
-| last_execute_mili     | Last executed time in milliseconds. |
-| pid                   | Process pid if ai rule is running.  |
-| exit_code             | Last executed process exit code.    |
+</br>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-b9ha{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Not screen fields</th>
+    <th class="tg-ua3b"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-b9ha">preparation_date</td>
+    <td class="tg-b9ha">Document preparation date.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">machine_state_uid</td>
+    <td class="tg-b9ha">AI rule machine state uid.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">path_to_logs</td>
+    <td class="tg-b9ha">Path to ai machine logs.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">path_to_machine_state</td>
+    <td class="tg-b9ha">Path to ai machine state files.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">searchSourceJSON</td>
+    <td class="tg-b9ha">Query string.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">processing_time</td>
+    <td class="tg-b9ha">Process operation time.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">last_execute_mili</td>
+    <td class="tg-b9ha">Last executed time in milliseconds.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">pid</td>
+    <td class="tg-b9ha">Process pid if ai rule is running.</td>
+  </tr>
+  <tr>
+    <td class="tg-b9ha">exit_code</td>
+    <td class="tg-b9ha">Last executed process exit code.</td>
+  </tr>
+</tbody>
+</table>
+</br>
 
 The command must update the process status document in the system during operation. It is an elastic partial document update.
 
-| Process status         | Field (POST body)          | Description                                    |
-|------------------------|----------------------------|------------------------------------------------|
-| START                  | doc.pid                    | System process id                              |
-|                        | doc.last_execute_timestamp | Current timestamp. yyyy-MM-dd HH:mm            |
-|                        | doc.last_execute_mili      | Current timestamp in millisecunds.             |
-| END PROCESS WITH ERROR | doc.error_description      | Error description.                             |
-|                        | doc.error_message          | Error message.                                 |
-|                        | doc.exit_code              | System process exit code.                      |
-|                        | doc.pid                    | Value 0.                                     |
-|                        | doc.processing_time        | Time of execute process in seconds.            |
-| END PROCESS OK         | doc.pid                    | Value 0.                                     |
-|                        | doc.exit_code              | System process exit code. Value 0 for success. |
-|                        | doc.processing_time        | Time of execute process in seconds.            |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Process status</th>
+    <th class="tg-ua3b">Field (POST body)</th>
+    <th class="tg-ua3b">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">START</td>
+    <td class="tg-pnl2">doc.pid</td>
+    <td class="tg-pnl2">System process id</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.last_execute_timestamp</td>
+    <td class="tg-pnl2">Current timestamp. yyyy-MM-dd HH:mm</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.last_execute_mili</td>
+    <td class="tg-pnl2">Current timestamp in millisecunds.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">END PROCESS WITH ERROR</td>
+    <td class="tg-pnl2">doc.error_description</td>
+    <td class="tg-pnl2">Error description.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.error_message</td>
+    <td class="tg-pnl2">Error message.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.exit_code</td>
+    <td class="tg-pnl2">System process exit code.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.pid</td>
+    <td class="tg-pnl2">Value 0.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.processing_time</td>
+    <td class="tg-pnl2">Time of execute process in seconds.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">END PROCESS OK</td>
+    <td class="tg-pnl2">doc.pid</td>
+    <td class="tg-pnl2">Value 0.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.exit_code</td>
+    <td class="tg-pnl2">System process exit code. Value 0 for success.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"></td>
+    <td class="tg-pnl2">doc.processing_time</td>
+    <td class="tg-pnl2">Time of execute process in seconds.</td>
+  </tr>
+</tbody>
+</table>
+</br>
 
 The command must insert data for a prediction chart.
 
-| Field             | Value             | Description                                            |
-|-------------------|-------------------|--------------------------------------------------------|
-| model_name        | Not empty string. | AI Rule Name.                                          |
-| preparationUID    | Not empty string. | Unique prediction id                                   |
-| machine_state_uid | Not empty string. | AI rule machine state uid.                             |
-| model_uid         | Not empty string. | Model uid from config file                             |
-| method_name       | Not empty string. | User friendly algorithm name.                          |
-| <field>           | Json              | Field calculated. For example: system.cpu.idle.pct_pre |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;text-align:left;vertical-align:middle}
+.tg .tg-pjk6{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Value</th>
+    <th class="tg-ua3b">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">model_name</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">AI Rule Name.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">preparationUID</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">Unique prediction id</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">machine_state_uid</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">AI rule machine state uid.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">model_uid</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">Model uid from config file</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">method_name</td>
+    <td class="tg-pnl2">Not empty string.</td>
+    <td class="tg-pnl2">User friendly algorithm name.</td>
+  </tr>
+  <tr>
+    <td class="tg-pjk6"></td>
+    <td class="tg-pnl2">Json</td>
+    <td class="tg-pnl2">Field calculated. For example: system.cpu.idle.pct_pre</td>
+  </tr>
+</tbody>
+</table>
+</br>
 
 Document sample:
 
@@ -2425,19 +2753,20 @@ archive.archivefolderpath: '/var/lib/elastic_archive_test'
 ```
 
 Archives will be saved inside above directory in the subdirectories that describes year and month of its creation. For example:
-```
+
+```bash
 /var/lib/elastic_archive_test
 ├── 2022
 │   └── 08
-│       ├── enc3_2022-08-15.json.zstd
-│       └── skimmer-2022.08_2022-08-06.json.zstd
+│       ├── enc3_2022-08-15.json.zstd
+│       └── skimmer-2022.08_2022-08-06.json.zstd
 └── 2023
     ├── 05
-    │   ├── enc1_2023-05-25.json.zstd
-    │   ├── enc2_2023-05-25.json.zstd
-    │   └── skimmer-2023.05_2023-05-25.json.zstd
+    │   ├── enc1_2023-05-25.json.zstd
+    │   ├── enc2_2023-05-25.json.zstd
+    │   └── skimmer-2023.05_2023-05-25.json.zstd
     └── 07
-        └── skimmer-2023.07_2023-07-30.json.zstd
+        └── skimmer-2023.07_2023-07-30.json.zstd
 ```
 
 ### Archive Task
@@ -2449,10 +2778,11 @@ Archives will be saved inside above directory in the subdirectories that describ
 2. On the "Archive" tab select "Create Task" and define the following parameters:
 
    - `Index pattern` - for the indices that will be archived, for example, `syslog*`
-   - `Timestamp Field` - time field of the indices (default __@timestamp__)
+   - `Timestamp Field` - time field of the indices (default **@timestamp**)
    - `Older than (days)` - number of days after which documents will be archived
    - `Field names filter` - filter fields that should be archived
    - `Encrypt archives` - after enabling encryption, prompt with two password fields will be shown.
+
    - `Schedule task` (crontab format) - the work schedule of the ordered task.
 
    ![](/media/media/04_archive_create-archive-task.png)
@@ -2476,14 +2806,14 @@ The Archive Search module can search archive files for the specific content and 
 1. From the main navigation go to the `Archive` module.
 2. On the `Search` tab select `Create Task` and define the following parameters:
 
-   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__) 
+   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default **last 14 days**)
    - `Search text` - field for entering the text to be searched
    - `File name` - list of archive files that will be searched
    - `Enable searching in encrypted archives` - enable option to search in encrypted archives
 
 ![](/media/media/04_archive_create-search-task.png)
 
-The table footer shows the total number of found files for the specified date range.
+The table footer shows the total number of found files for the specified date range
 
 #### Task list
 
@@ -2493,7 +2823,7 @@ The searching process can take a long time. On the `Task List`, you can follow t
 
 ### Archive Restore
 
-The Archive Restore module moves data from the archive to the Elasticsearch index and makes it available online.
+The Archive Restore module moves data from the archive to the Elasticsearch index and make it online.
 
 #### Create Restore task
 
@@ -2501,10 +2831,10 @@ The Archive Restore module moves data from the archive to the Elasticsearch inde
 
 2. On the `Restore` tab select `Create Task` and define the following parameters:
 
-- `Select range of listed archives` - files that matches selected range will be displayed in the list (default __last 14 days__)
-- `Destination index` - If a destination index does not exist it will be created. If exists data will be appended
-- `File name` - list of archive files that will be recovered to Elasticsearch index
-- `Enable restoring from encrypted archives` - enable option to restore data from encrypted archives
+  - `Select range of listed archives` - files that matches selected range will be displayed in the list (default **last 14 days**)
+  - `Destination index` - If a destination index does not exist it will be created. If exists data will be appended
+  - `File name` - list of archive files that will be recovered to Elasticsearch index
+  - `Enable restoring from encrypted archives` - enable option to restore data from encrypted archives
 
 ![](/media/media/04_archive_create-restore-task.png)
 
@@ -2525,16 +2855,16 @@ When creating Search or Restore tasks, during selection of archives to use, some
 
 ![](/media/media/04_archive_archives-list.png)
 
-When particular archive's metadata could not be found following icon will be displayed: 
+When particular archive's metadata could not be found following icon will be displayed:
 ![](/media/media/04_archive_missing-metadata-icon.png)
 
 That archive can be used for task creation, but there are some issues to keep in mind:
-- encryption status of the archive without metadata cannot be established (can be either encrypted or not)
-- when task has enabled encryption handling (e.g. `Enable restoring from encrypted archives` or  `Enable searching in encrypted archives`), archives will be decrypted with provided password. If archive was not decrypted, an error is expected
-- when archive is potentially encrypted and password is not provided, an error is expected.
 
-On the other hand, when metadata is present, but archive itself could not be located, following icon will be displayed: 
-![](/media/media/04_archive_missing-archive-icon.png)
+  - encryption status of the archive without metadata cannot be established (can be either encrypted or not)
+  - when task has enabled encryption handling (e.g. `Enable restoring from encrypted archives` or  `Enable searching in encrypted archives`), archives will be decrypted with provided password. If archive was not decrypted, an error is expected
+  - when archive is potentially encrypted and password is not provided, an error is expected.
+
+On the other hand, when metadata is present, but archive itself could not be located, following icon will be displayed: ![](/media/media/04_archive_missing-archive-icon.png)
 
 That archive cannot be used for task creation and so cannot be selected.
 
@@ -2556,29 +2886,31 @@ Moreover, in the metadata files can be found current process id (`pid`), total d
 
 1. List archive folder and find filename generated by uncompleted task.
 
-  ```bash
-  ls -la /archivefolderpath/
-  -rw-r--r--. 1 kibana kibana          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
-  21_2022-12-21.json.zstd  
-  ```
+    ```bash
+    ls -la /archivefolderpath/
+    -rw-r--r--. 1 kibana kibana          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
+    21_2022-12-21.json.zstd  
+    ```
 
 1. Find document in `.archive` index using filename from previous step
 
-  `curl -s -k -X GET -ulogserver:... http://127.0.0.1:9200/.archive/_search?size=10000 |jq '.'| grep -B4 "prd-srv-win-ad-2022.12.21"`
+    `curl -s -k -X GET -ulogserver:... http://127.0.0.1:9200/.archive/_search?size=10000 |jq '.'| grep -B4 "prd-srv-win-ad-2022.12.21"`
 
 1. Write down it's ID
 
-  ```json
-  "_id": "Q8teA4cBj_ghAWXFcMJA",
-        "_score": 1.0,
-        "_source": {
-          "date": "2023-03-21T08:52:13.502Z",
-          "filename": "prd-srv-win-ad-2022.12.21_2022-12-21.json.zstd", 
-  ```
+    ```json
+    "_id": "Q8teA4cBj_ghAWXFcMJA",
+          "_score": 1.0,
+          "_source": {
+            "date": "2023-03-21T08:52:13.502Z",
+            "filename": "prd-srv-win-ad-2022.12.21_2022-12-21.json.zstd", 
+    ```
 
 1. Remove documen using saved ID
 
-  `curl -s -k -X DELETE -ulogserver:... http://127.0.0.1:9200/.archive/_doc/Q8teA4cBj_ghAWXFcMJA`
+    ```bash
+    curl -s -k -X DELETE -ulogserver:... http://127.0.0.1:9200/.archive/_doc/Q8teA4cBj_ghAWXFcMJA
+    ```
 
 ### Command Line tools
 
@@ -4248,8 +4580,8 @@ This plugin supports the following configuration options plus the Common Options
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-9odp{border-color:#000000;color:#000000;font-weight:bold;text-align:left;vertical-align:bottom}
-.tg .tg-pjk6{border-color:#000000;color:#000000;text-align:left;vertical-align:top}
+.tg .tg-9odp{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-pjk6{border-color:inherit;color:inherit;text-align:left;vertical-align:top}
 </style>
 <table class="tg" style="undefined;table-layout: fixed; width: 690px">
 <colgroup>
@@ -4682,7 +5014,7 @@ sudo ldconfig
 
 #### Configuration files
 
-##### lea.conf file
+#### lea.conf file
 
 Starting with version 1.11, FW1-LogGrabber uses the default connection configuration procedure for OPSEC applications. This includes server, port and authentication settings. From now on, all this parameters can only be configured using the configuration file `lea.conf` (see `--leaconfigfile` option to use a different LEA configuration file) and not using the command-line as before.
 
@@ -4700,7 +5032,7 @@ Starting with version 1.11, FW1-LogGrabber uses the default connection configura
 
 - `lea_server opsec_entity_sic_name <LEA server SIC name>` is the SIC name of your FW1 management station when using authenticated connections.
 
-##### fw1-loggrabber.conf file
+#### fw1-loggrabber.conf file
 
 This paragraph deals with the options that can be set within the configuration file. The default configuration file is `fw1-loggrabber.conf` (see `--configfile` option to use a different configuration file). The precedence of given options is as follows: command line, configuration file, default value. E.g. if you set the resolve-mode to be used in the configuration file, this can be overwritten by command line option `--noresolve`; only if an option isn't set neither on command line nor in the configuration file, the default value will be used.
 
@@ -4812,7 +5144,7 @@ If you specify `!=` instead of `=` between the name and value of the filter argu
 
 For arguments that expect IP addresses, you can specify either a single IP address, multiple IP addresses separated by `,` (comma), or a network address with netmask (e.g. `10.0.0.0/255.0.0.0`). Currently, it is not possible to specify a network address and a single IP address within the same filter argument.
 
-##### Supported filter arguments
+#### Supported filter arguments
 
 Normal mode:
 
@@ -4840,7 +5172,7 @@ product=<SmartDashboard|Policy Editor|SmartView Tracker|SmartView Status|SmartVi
 starttime=<YYYYMMDDhhmmss>
 ```
 
-##### Example filters
+#### Example filters
 
 Display all dropped connections:
 
@@ -4946,7 +5278,7 @@ opsec_pull_cert -h 10.1.1.1 -n myleaclient -p def456
 
 #### Authenticated SSL OPSEC connections
 
-##### Checkpoint device configuration
+#### Checkpoint device configuration
 
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for authenticated LEA connections (e.g. 18184):
 
@@ -4988,7 +5320,7 @@ been established successfully.
 
 Finally, install the policy.
 
-##### FW1-LogGrabber configuration
+#### FW1-LogGrabber configuration
 
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) as well as port (e.g. `18184`), authentication type and SIC names for authenticated LEA connections. The SIC names you can get from the object properties of your LEA client object respectively the Management Station object (see above for details about Client DN and Server DN).
 
@@ -5017,7 +5349,7 @@ opsec_pull_cert -h 10.1.1.1 -n myleaclient -p def456
 
 #### Authenticated OPSEC connections
 
-##### Checkpoint device configuration
+#### Checkpoint device configuration
 
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for authenticated LEA connections (e.g. 18184):
 
@@ -5044,7 +5376,7 @@ server.
 
 Finally, install the policy.
 
-##### FW1-LogGrabber configuration
+#### FW1-LogGrabber configuration
 
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) as well as the port (e.g. 18184) and authentication type for authenticated LEA connections:
 
@@ -5062,7 +5394,7 @@ opsec_putkey -p abc123 10.1.1.1
 
 #### Unauthenticated connections
 
-##### Checkpoint device configuration
+#### Checkpoint device configuration
 
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for unauthenticated LEA connections (e.g. 50001):
 
@@ -5083,7 +5415,7 @@ server.
 
 Finally, install the policy.
 
-##### FW1-LogGrabber configuration
+#### FW1-LogGrabber configuration
 
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) and port (e.g. `50001`) for unauthenticated LEA connections:
 
@@ -5494,7 +5826,7 @@ If an error occurs during the process tha **tags** array of the event is updated
 If error logging is enabled a field called **error** will also be added to the event.
 It will contain more details about the problem.
 
-##### Input event
+#### Input event
 
 ```ruby
 {
@@ -5504,7 +5836,7 @@ It will contain more details about the problem.
 }
 ```
 
-##### Logstash filter
+#### Logstash filter
 
 ```ruby
 filter {
@@ -5519,7 +5851,7 @@ filter {
 }
 ```
 
-##### Output event
+#### Output event
 
 ```ruby
 {
@@ -5921,647 +6253,7794 @@ The original goal of this codec was to allow joining of multiline messages from 
     }
 ```
 
-## Join
+## SQL
 
-**Note**
-***Before use *Join* upgrade *Log Server* to at least v7.1.1***
+Energy Logserver SQL lets you write queries in SQL rather than the Query domain-specific language (DSL)
 
-This plugin extends Elasticsearch with new search actions which enables possibility to perform a "Join" between two set of documents (in the same index or in different indexes).
+### SQL/PPL API
 
-Join is basically a inner join between two set of documents based on a common attribute, where the result only contains the attributes of one of the joined set of documents.
+Use the SQL and PPL API to send queries to the SQL plugin. Use the `_sql` endpoint to send queries in SQL, and the `_ppl` endpoint to send queries in PPL. For both of these, you can also use the `_explain` endpoint to translate your query into  Domain-specific language (DSL) or to troubleshoot errors.
 
-Current implementation of Join, includes:
+#### Query API
 
- - Inner join
- - API extended with the _join method
- - Full support for query dsl
- - Possibility of use on the graphic interface (Dev Tools plugin)
+Sends an SQL/PPL query to the SQL plugin. You can pass the format for the response as a query parameter.
 
-![](/media/media/image231.png)
+##### Query parameters
 
-### Query Syntax
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b"> Parameter </th>
+    <th class="tg-ua3b"> Data Type </th>
+    <th class="tg-ua3b"> Description </th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2"><a href="https://kb.energylogserver.com/en/latest/04-User_Manual/04-User_Manual.md#response-formats" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none"> format </span></a></td>
+    <td class="tg-pnl2"> String </td>
+    <td class="tg-pnl2"> The format for the response. The _sql endpoint supports jdbc, csv, raw, and json formats. The _ppl endpoint supports jdbc, csv, and raw formats. Default is jdbc. </td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"> sanitize </td>
+    <td class="tg-pnl2"> Boolean </td>
+    <td class="tg-pnl2"> Specifies whether to escape special characters in the results. See <a href="https://kb.energylogserver.com/en/latest/04-User_Manual/04-User_Manual.md#response-formats" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none">Response formats</span></a> for more information. Default is true. </td>
+  </tr>
+</tbody>
+</table>
 
-#### Simple query
+##### Request fields
 
-```bash
-POST index-1,index-2/_join
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b"> Field </th>
+    <th class="tg-ua3b"> Data Type </th>
+    <th class="tg-ua3b"> Description </th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2"> query </td>
+    <td class="tg-pnl2"> String </td>
+    <td class="tg-pnl2"> The query to be executed. Required. </td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"> <a href="https://kb.energylogserver.com/en/latest/04-User_Manual/04-User_Manual.md#filtering-results" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none">filter</span></a> </td>
+    <td class="tg-pnl2"> JSON object </td>
+    <td class="tg-pnl2"> The filter for the results. Optional. </td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"> <a href="https://kb.energylogserver.com/en/latest/04-User_Manual/04-User_Manual.md#paginating-results" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none">fetch_size</span></a> </td>
+    <td class="tg-pnl2">integer</td>
+    <td class="tg-pnl2">The number of results to return in one response. Used for paginating results. Default is 1,000. Optional. Only supported for the `jdbc` response format.</td>
+  </tr>
+</tbody>
+</table>
+
+###### Example request
+
+```json
+POST /_plugins/_sql 
 {
-  "left": {
-    "field":"field-1",
-    "query": {"match_all":{}}
-  },
-  "right": {
-    "field":"field-2",
-    "query": {"match_all":{}}
-  },
-  "out": {
-    "field":"joined",
-    "scroll_time": "1m",
-    "batch":1000
-  }
+  "query" : "SELECT * FROM accounts"
 }
 ```
 
-#### Complex query
+###### Example response
 
-```bash
-POST index-1,index-2/_join
+The response contains the schema and the results:
+
+```json
 {
-  "left": {
-    "field":"field-1",
-        "query": {
-            "bool": {
-              "should": [
-                {"wildcard":{"field-1":{"value":"10.*"}}}
-              ]
-            }
-          },
-    "size": 100,
-    "source": {
-      "includes": [ "field-A", "field-B" ]
-    }
-  },
-  "right": {
-    "field":"field-2",
-        "query": {
-            "bool": {
-              "must": [
-                {"wildcard":{"field-2":{"value":"10.*"}}},
-                {"term":{"field-3":{"value":"XXX"}}}
-              ]
-            }
-          },
-    "size": 1,
-    "source": {
-      "includes": [ "field-C", "field-D" ]
-    }
-  },
-  "out": {
-    "field":"joined",
-    "scroll_time": "1m",
-    "batch":1000
-  }
-}
-```
-
-### Filter interface
-
-You can use "source_left" and/or "source_right" or neither in join query.
-source fields can be:
-
-- true, false, {} -- empty object, "*", or omitted -- means return everything
-- "" -- empty string, return empty object for the hit
-- "fieldPattern" -- string with patter
-- ["fieldPattern1", "fieldPattern2"] -- list of field patterns
-- {
-        "includes": [ "tags", "re*" ],
-        "excludes": [ "referer" ]
-    } -- object with "includes" and/or "excludes" fields or neither
-
-Patterns examples:
-"tags", "*.lon", "*.lat", "Flight*", "*ht*", "g*o.l*"
-
-by default all sources are returned:The same effect will be if we specify `"source_left/right": "true"` as source value:
-
-```bash
-POST kibana_sample_data_flights,kibana_sample_data_logs/_join
-{
-  "left": {
-    "field": "DestCountry",
-    "query": {"term": {"DestCountry": {"value": "AE"}}},
-    "source": true
-  }
-
-  "right": {
-    "field": "geo.dest",
-    "query": {"term": {"geo.dest": {"value": "AE"}}},
-    "source": true
-  }
-
-  "out": {
-    "field": "joined_field",
-    "scroll_time": "1m",
-    "batch": 100
-  }
-}
-```
-
-`"source_left/right": "false"` will be ignored, if you really want to ignore source of the parent or children, use empty string "source_left/right":
-
-```bash
-POST kibana_sample_data_flights,kibana_sample_data_logs/_join
-{
-  "left": {
-    "field": "DestCountry",
-    "query": {"term": {"DestCountry": {"value": "AE"}}},
-    "source": ""
-  }
-
-  "right": {
-    "field": "geo.dest",
-    "query": {"term": {"geo.dest": {"value": "AE"}}},
-    "source": ""
-  }
-
-  "out": {
-    "field": "joined_field",
-    "scroll_time": "1m",
-    "batch": 100
-  }
-}
->>>
-{
-  "hits" : {
-    "total" : {
-      "value" : 92,
-      "relation" : "eq"
+  "schema": [
+    {
+      "name": "account_number",
+      "type": "long"
     },
-    "max_score" : 0.0,
-    "hits" : [
-      {
-        "_index" : "kibana_sample_data_flights",
-        "_type" : "_doc",
-        "_id" : "rvy5qXwBqY4c6J5A_fe7",
-        "_score" : 5.637857,
-        "_source" : {
-          "joined_field" : [
-            { },
-            { },
-            { },
-            { },
-            { },
-            { },
-            { },
-            { },
-            { },
-            { },
-            { },
-            { }
-          ]
-        }
-      },
+    {
+      "name": "firstname",
+      "type": "text"
+    },
+    {
+      "name": "address",
+      "type": "text"
+    },
+    {
+      "name": "balance",
+      "type": "long"
+    },
+    {
+      "name": "gender",
+      "type": "text"
+    },
+    {
+      "name": "city",
+      "type": "text"
+    },
+    {
+      "name": "employer",
+      "type": "text"
+    },
+    {
+      "name": "state",
+      "type": "text"
+    },
+    {
+      "name": "age",
+      "type": "long"
+    },
+    {
+      "name": "email",
+      "type": "text"
+    },
+    {
+      "name": "lastname",
+      "type": "text"
+    }
+  ],
+  "datarows": [
+    [
+      1,
+      "Amber",
+      "880 Holmes Lane",
+      39225,
+      "M",
+      "Brogan",
+      "Pyrami",
+      "IL",
+      32,
+      "amberduke@pyrami.com",
+      "Duke"
+    ],
+    [
+      6,
+      "Hattie",
+      "671 Bristol Street",
+      5686,
+      "M",
+      "Dante",
+      "Netagy",
+      "TN",
+      36,
+      "hattiebond@netagy.com",
+      "Bond"
+    ],
+    [
+      13,
+      "Nanette",
+      "789 Madison Street",
+      32838,
+      "F",
+      "Nogal",
+      "Quility",
+      "VA",
+      28,
+      "nanettebates@quility.com",
+      "Bates"
+    ],
+    [
+      18,
+      "Dale",
+      "467 Hutchinson Court",
+      4180,
+      "M",
+      "Orick",
+      null,
+      "MD",
+      33,
+      "daleadams@boink.com",
+      "Adams"
+    ]
+  ],
+  "total": 4,
+  "size": 4,
+  "status": 200
+}
 ```
 
-You can use simple string patterns:
+##### Response fields
 
-```bash
-POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-022u{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Data Type</th>
+    <th class="tg-ua3b">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-022u">schema</td>
+    <td class="tg-022u">Array</td>
+    <td class="tg-022u">Specifies the field names and types for all fields.</td>
+  </tr>
+  <tr>
+    <td class="tg-022u">data_rows</td>
+    <td class="tg-022u">2D array</td>
+    <td class="tg-022u">An array of results. Each result represents one matching row (document).</td>
+  </tr>
+  <tr>
+    <td class="tg-022u">total</td>
+    <td class="tg-022u">Integer</td>
+    <td class="tg-022u">The total number of rows (documents) in the index.</td>
+  </tr>
+  <tr>
+    <td class="tg-022u">size</td>
+    <td class="tg-022u">Integer</td>
+    <td class="tg-022u">The number of results to return in one response.</td>
+  </tr>
+  <tr>
+    <td class="tg-022u">status</td>
+    <td class="tg-022u">String</td>
+    <td class="tg-022u">The HTTP response status Energy Logserver returns after running the query.</td>
+  </tr>
+</tbody>
+</table>
+
+#### Explain API
+
+The SQL plugin has an `explain` feature that shows how a query is executed against Energy Logserver, which is useful for debugging and development. A POST request to the `_plugins/_sql/_explain` or `_plugins/_ppl/_explain` endpoint returns Domain-specific language (DSL) in JSON format, explaining the query.
+You can execute the explain API operation either in command line using `curl` or in the Dashboards console, like in the example below.
+
+##### Sample explain request for an SQL query
+
+```json
+POST _plugins/_sql/_explain
 {
-  "left": {
-    "field": "DestCountry",
-    "query": {"term": {"DestCountry": {"value": "AE"}}},
-    "source": "Flight*"
-  }
+  "query": "SELECT firstname, lastname FROM accounts WHERE age > 20"
+}
+```
 
-  "right": {
-    "field": "geo.dest",
-    "query": {"term": {"geo.dest": {"value": "AE"}}},
-    "source": "client*"
-  }
+##### Sample SQL query explain response
 
-  "out": {
-    "field": "joined_field",
-    "scroll_time": "1m",
-    "batch": 100
+```json
+{
+  "root": {
+    "name": "ProjectOperator",
+    "description": {
+      "fields": "[firstname, lastname]"
+    },
+    "children": [
+      {
+        "name": "OpenSearchIndexScan",
+        "description": {
+          "request": """OpenSearchQueryRequest(indexName=accounts, sourceBuilder={"from":0,"size":200,"timeout":"1m","query":{"range":{"age":{"from":20,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}},"_source":{"includes":["firstname","lastname"],"excludes":[]},"sort":[{"_doc":{"order":"asc"}}]}, searchDone=false)"""
+        },
+        "children": []
+      }
+    ]
   }
 }
->>>
-{
-  "hits" : {
-    "total" : {
-      "value" : 92,
-      "relation" : "eq"
-    },
-    "max_score" : 0.0,
-    "hits" : [
-      {
-        "_index" : "kibana_sample_data_flights",
-        "_type" : "_doc",
-        "_id" : "rvy5qXwBqY4c6J5A_fe7",
-        "_score" : 5.637857,
-        "_source" : {
-          "FlightNum" : "BPD98PD",
-          "FlightDelay" : false,
-          "FlightTimeHour" : 4.603366103053058,
-          "FlightTimeMin" : 276.20196618318346,
-          "FlightDelayMin" : 0,
-          "joined_field" : [
-            {
-              "clientip" : "17.86.191.67"
-            },
-            {
-              "clientip" : "154.128.131.34"
-            },
-            {
-              "clientip" : "239.67.210.53"
-            },
 ```
 
-You can combine different ways of specifying filters:
+##### Sample explain request for a PPL query
 
-```bash
-POST kibana_sample_data_flights,kibana_sample_data_logs/_join
+```json
+POST _plugins/_ppl/_explain
 {
-  "left": {
-    "field": "DestCountry",
-    "query": {"term": {"DestCountry": {"value": "AE"}}},
-    "source": {
-      "includes": "Orig*",
-      "excludes": [ "*.lat" ]
-    }
-  }
+  "query" : "source=accounts | fields firstname, lastname"
+}
+```
 
-  "right": {
-    "field": "geo.dest",
-    "query": {"term": {"geo.dest": {"value": "AE"}}},
-    "source": {
-      "includes": [ "tags", "re*" ],
-      "excludes": "*onse"
-    }
-  }
+##### Sample PPL query explain response
 
-  "out": {
-    "field": "joined_field",
-    "scroll_time": "1m",
-    "batch": 100
+```json
+{
+  "root": {
+    "name": "ProjectOperator",
+    "description": {
+      "fields": "[firstname, lastname]"
+    },
+    "children": [
+      {
+        "name": "OpenSearchIndexScan",
+        "description": {
+          "request": """OpenSearchQueryRequest(indexName=accounts, sourceBuilder={"from":0,"size":200,"timeout":"1m","_source":{"includes":["firstname","lastname"],"excludes":[]}}, searchDone=false)"""
+        },
+        "children": []
+      }
+    ]
   }
 }
->>>
-{
-  "hits" : {
-    "total" : {
-      "value" : 92,
-      "relation" : "eq"
-    },
-    "max_score" : 0.0,
-    "hits" : [
-      {
-        "_index" : "kibana_sample_data_flights",
-        "_type" : "_doc",
-        "_id" : "rvy5qXwBqY4c6J5A_fe7",
-        "_score" : 5.637857,
-        "_source" : {
-          "Origin" : "Cologne Bonn Airport",
-          "OriginLocation" : {
-            "lon" : "7.142739773"
-          },
-          "OriginWeather" : "Thunder & Lightning",
-          "OriginCityName" : "Cologne",
-          "OriginCountry" : "DE",
-          "joined_field" : [
-            {
-              "referer" : "http://www.elastic-elastic-elastic.com/success/thomas-d-jones",
-              "request" : "/beats/metricbeat/metricbeat-6.3.2-amd64.deb",
-              "tags" : [
-                "success",
-                "info"
-              ]
-            },
-            {
-              "referer" : "http://twitter.com/success/steven-r-nagel",
-              "request" : "/elasticsearch",
-              "tags" : [
-                "success",
-                "security"
-              ]
-            },
 ```
 
-### Scroll interface
+For queries that require post-processing, the `explain` response includes a query plan in addition to the Energy Logserver DSL. For those queries that don't require post processing, you can see a complete DSL.
 
-List all active join scrolls:
+#### Paginating results
 
-```bash
-GET _join/_all
->>>
+To get back a paginated response, use the `fetch_size` parameter. The value of `fetch_size` should be greater than 0. The default value is 1,000. A value of 0 will fall back to a non-paginated response.
+
+The `fetch_size` parameter is only supported for the `jdbc` response format.
+{: .note }
+
+##### Example
+
+The following request contains an SQL query and specifies to return five results at a time:
+
+```json
+POST _plugins/_sql/
 {
-  "keys" : [
-    "ruzwsksdbhyxcgikljiaogrdozttswwpfqbmrrrlgbtgbqdxpg",
-    "gtqviwpmhowdlkmustlqenegfpucojiewlvuxtdmhemdkixmrz",
-    "fhrsfecirojrmjtwzwlsyfbnhgqeizjbawwmqryguvtdmtefgy",
-    "sgimqhproexwcnlskdggvowqwbyhborrczqajculpzjtjbznbo",
-    "ekdtmyomzwjmmhdrcnznuebqgtpcrrfvfdjnphnzdmmtmdbaic",
-    "dycswnigareojnngyudjbddzcnawyoqyvlmhwcwfwwszwgckxh"
+  "fetch_size" : 5,
+  "query" : "SELECT firstname, lastname FROM accounts WHERE age > 20 ORDER BY state ASC"
+}
+```
+
+The response contains all the fields that a query without `fetch_size` would contain, and a `cursor` field that is used to retrieve subsequent pages of results:
+
+```json
+{
+  "schema": [
+    {
+      "name": "firstname",
+      "type": "text"
+    },
+    {
+      "name": "lastname",
+      "type": "text"
+    }
+  ],
+  "cursor": "d:eyJhIjp7fSwicyI6IkRYRjFaWEo1UVc1a1JtVjBZMmdCQUFBQUFBQUFBQU1XZWpkdFRFRkZUMlpTZEZkeFdsWnJkRlZoYnpaeVVRPT0iLCJjIjpbeyJuYW1lIjoiZmlyc3RuYW1lIiwidHlwZSI6InRleHQifSx7Im5hbWUiOiJsYXN0bmFtZSIsInR5cGUiOiJ0ZXh0In1dLCJmIjo1LCJpIjoiYWNjb3VudHMiLCJsIjo5NTF9",
+  "total": 956,
+  "datarows": [
+    [
+      "Cherry",
+      "Carey"
+    ],
+    [
+      "Lindsey",
+      "Hawkins"
+    ],
+    [
+      "Sargent",
+      "Powers"
+    ],
+    [
+      "Campos",
+      "Olsen"
+    ],
+    [
+      "Savannah",
+      "Kirby"
+    ]
+  ],
+  "size": 5,
+  "status": 200
+}
+```
+
+To fetch subsequent pages, use the `cursor` from the previous response:
+
+```json
+POST /_plugins/_sql 
+{
+   "cursor": "d:eyJhIjp7fSwicyI6IkRYRjFaWEo1UVc1a1JtVjBZMmdCQUFBQUFBQUFBQU1XZWpkdFRFRkZUMlpTZEZkeFdsWnJkRlZoYnpaeVVRPT0iLCJjIjpbeyJuYW1lIjoiZmlyc3RuYW1lIiwidHlwZSI6InRleHQifSx7Im5hbWUiOiJsYXN0bmFtZSIsInR5cGUiOiJ0ZXh0In1dLCJmIjo1LCJpIjoiYWNjb3VudHMiLCJsIjo5NTF9"
+}
+```
+
+The next response contains only the `datarows` of the results and a new `cursor`.
+
+```json
+{
+  "cursor": "d:eyJhIjp7fSwicyI6IkRYRjFaWEo1UVc1a1JtVjBZMmdCQUFBQUFBQUFBQU1XZWpkdFRFRkZUMlpTZEZkeFdsWnJkRlZoYnpaeVVRPT0iLCJjIjpbeyJuYW1lIjoiZmlyc3RuYW1lIiwidHlwZSI6InRleHQifSx7Im5hbWUiOiJsYXN0bmFtZSIsInR5cGUiOiJ0ZXh0In1dLCJmIjo1LCJpIjoiYWNjb3VudHMabcde12345",
+  "datarows": [
+    [
+      "Abbey",
+      "Karen"
+    ],
+    [
+      "Chen",
+      "Ken"
+    ],
+    [
+      "Ani",
+      "Jade"
+    ],
+    [
+      "Peng",
+      "Hu"
+    ],
+    [
+      "John",
+      "Doe"
+    ]
   ]
 }
 ```
 
-Request with batch size smaller than number of hits
+The `datarows` can have more than the `fetch_size` number of records in case nested fields are flattened.
 
-```bash
-POST /kibana_sample_data_ecommerce,kibana_sample_data_flights/_join
+The last page of results has only `datarows` and no `cursor`. The `cursor` context is automatically cleared on the last page.
+
+To explicitly clear the cursor context, use the `_plugins/_sql/close` endpoint operation:
+
+```json
+POST /_plugins/_sql/close 
 {
-  "left": {
-    "field": "geoip.city_name",
-    "query": {
-      "term": {
-        "geoip.city_name": {
-          "value": "Istanbul"
-        }
+   "cursor": "d:eyJhIjp7fSwicyI6IkRYRjFaWEo1UVc1a1JtVjBZMmdCQUFBQUFBQUFBQU1XZWpkdFRFRkZUMlpTZEZkeFdsWnJkRlZoYnpaeVVRPT0iLCJjIjpbeyJuYW1lIjoiZmlyc3RuYW1lIiwidHlwZSI6InRleHQifSx7Im5hbWUiOiJsYXN0bmFtZSIsInR5cGUiOiJ0ZXh0In1dLCJmIjo1LCJpIjoiYWNjb3VudHMiLCJsIjo5NTF9"
+}'
+```
+
+The response is an acknowledgement from Energy Logserver:
+
+```json
+{"succeeded":true}
+```
+
+#### Filtering results
+
+You can use the `filter` parameter to add more conditions to the Energy Logserver DSL directly.
+
+The following SQL query returns the names and account balances of all customers. The results are then filtered to contain only those customers with less than $10,000 balance.
+
+```json
+POST /_plugins/_sql/ 
+{
+  "query" : "SELECT firstname, lastname, balance FROM accounts",
+  "filter" : {
+    "range" : {
+      "balance" : {
+        "lt" : 10000
       }
     }
-  },
-
-  "right": {
-    "field": "DestCityName",
-    "query": {
-      "term": {
-        "DestWeather": {
-          "value": "Sunny"
-        }
-      }
-    }
-  },
-
-  "out": {
-    "field": "flights",
-    "scroll_time": "30m",
-    "batch":100
   }
 }
->>>
-{
-  "_scroll_id" : "qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp",
-  "hits" : {
-    "total" : {
-      "value" : 100,
-      "relation" : "eq"
-    },
-    "max_score" : 0.0,
-    "hits" : [
-      {
-        "_index" : "kibana_sample_data_ecommerce",
-        "_type" : "_doc",
-        "_id" : "B_0WbXwBixBDsVfntYZX",
-        "_score" : 2.881619,
-        "_source" : {
-          "geoip" : {
-            "continent_name" : "Asia",
 ```
 
-Pagination using scroll_id:
+The response contains the matching results:
 
-```bash
-POST /_join
+```json
 {
-  "scroll_id":"qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp"
-}
->>>
-{
-  "scroll_id" : "qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp",
-  "hits" : {
-    "total" : {
-      "value" : 100,
-      "relation" : "eq"
+  "schema": [
+    {
+      "name": "firstname",
+      "type": "text"
     },
-    "max_score" : 0.0,
-    "hits" : [
-      {
-        "_index" : "kibana_sample_data_ecommerce",
-        "_type" : "_doc",
-        "_id" : "W_0WbXwBixBDsVfnt4yV",
-        "_score" : 2.881619,
-        "_source" : {
-          "geoip" : {
-            "continent_name" : "Asia",
+    {
+      "name": "lastname",
+      "type": "text"
+    },
+    {
+      "name": "balance",
+      "type": "long"
+    }
+  ],
+  "total": 2,
+  "datarows": [
+    [
+      "Hattie",
+      "Bond",
+      5686
+    ],
+    [
+      "Dale",
+      "Adams",
+      4180
+    ]
+  ],
+  "size": 2,
+  "status": 200
+}
 ```
 
-Last page will have no scroll_id:
+You can use the Explain API to see how this query is executed against Energe Logserver:
 
-```bash
-POST /_join
+```json
+POST /_plugins/_sql/_explain 
 {
-  "scroll_id":"qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp"
-}
->>>
-{
-  "hits" : {
-    "total" : {
-      "value" : 29,
-      "relation" : "eq"
-    },
-    "max_score" : 0.0,
-    "hits" : [
-      {
-        "_index" : "kibana_sample_data_ecommerce",
-        "_type" : "_doc",
-        "_id" : "o_0WbXwBixBDsVfnu5Uc",
-        "_score" : 2.881619,
-        "_source" : {
-          "geoip" : {
-            "continent_name" : "Asia",
+  "query" : "SELECT firstname, lastname, balance FROM accounts",
+  "filter" : {
+    "range" : {
+      "balance" : {
+        "lt" : 10000
+      }
+    }
+  }
+}'
 ```
 
-If you try to scroll more it will raise an error:
+The response contains the Boolean query in Energy Logserver DSL that corresponds to the query above:
 
-```bash
-POST /_join
+```json
 {
-  "scroll_id":"qwhnoxnjihhqokcphoiffxzmjcniambrmbxgmxxykusyymobrp"
+  "from": 0,
+  "size": 200,
+  "query": {
+    "bool": {
+      "filter": [{
+        "bool": {
+          "filter": [{
+            "range": {
+              "balance": {
+                "from": null,
+                "to": 10000,
+                "include_lower": true,
+                "include_upper": false,
+                "boost": 1.0
+              }
+            }
+          }],
+          "adjust_pure_negative": true,
+          "boost": 1.0
+        }
+      }],
+      "adjust_pure_negative": true,
+      "boost": 1.0
+    }
+  },
+  "_source": {
+    "includes": [
+      "firstname",
+      "lastname",
+      "balance"
+    ],
+    "excludes": []
+  }
 }
->>>
+```
+
+#### Using parameters
+
+You can use the `parameters` field to pass parameter values to a prepared SQL query.
+
+The following explain operation uses an SQL query with an `age` parameter:
+
+```json
+POST /_plugins/_sql/_explain 
+{
+  "query": "SELECT * FROM accounts WHERE age = ?",
+  "parameters": [{
+    "type": "integer",
+    "value": 30
+  }]
+}
+```
+
+The response contains the Boolean query in Energy Logserver DSL that corresponds to the SQL query above:
+
+```json
+{
+  "from": 0,
+  "size": 200,
+  "query": {
+    "bool": {
+      "filter": [{
+        "bool": {
+          "must": [{
+            "term": {
+              "age": {
+                "value": 30,
+                "boost": 1.0
+              }
+            }
+          }],
+          "adjust_pure_negative": true,
+          "boost": 1.0
+        }
+      }],
+      "adjust_pure_negative": true,
+      "boost": 1.0
+    }
+  }
+}
+
+```
+
+### Response formats
+
+The SQL plugin provides the `jdbc`, `csv`, `raw`, and `json` response formats that are useful for different purposes. The `jdbc` format is widely used because it provides the schema information and adds more functionality, such as pagination. Besides the JDBC driver, various clients can benefit from a detailed and well-formatted response.
+
+#### JDBC format
+
+By default, the SQL plugin returns the response in the standard JDBC format. This format is provided for the JDBC driver and clients that need both the schema and the result set to be well formatted.
+
+##### Example request
+
+The following query does not specify the response format, so the format is set to `jdbc`:
+
+```json
+POST _plugins/_sql
+{
+  "query" : "SELECT firstname, lastname, age FROM accounts ORDER BY age LIMIT 2"
+}
+```
+
+##### Example response
+
+In the response, the `schema` contains the field names and types, and the `datarows` field contains the result set:
+
+```json
+{
+  "schema": [{
+      "name": "firstname",
+      "type": "text"
+    },
+    {
+      "name": "lastname",
+      "type": "text"
+    },
+    {
+      "name": "age",
+      "type": "long"
+    }
+  ],
+  "total": 4,
+  "datarows": [
+    [
+      "Nanette",
+      "Bates",
+      28
+    ],
+    [
+      "Amber",
+      "Duke",
+      32
+    ]
+  ],
+  "size": 2,
+  "status": 200
+}
+```
+
+If an error of any type occurs, Energy Logserver returns the error message.
+
+The following query searches for a non-existent field `unknown`:
+
+```json
+POST /_plugins/_sql
+{
+  "query" : "SELECT unknown FROM accounts"
+}
+```
+
+The response contains the error message and the cause of the error:
+
+```json
 {
   "error": {
-    "root_cause": [
-      {
-        "type": "illegal_argument_exception",
-        "reason": "scroll_id is not known or expired"
-      }
-    ],
-    "type": "illegal_argument_exception",
-    "reason": "scroll_id is not known or expired"
+    "reason": "Invalid SQL query",
+    "details": "Field [unknown] cannot be found or used here.",
+    "type": "SemanticAnalysisException"
   },
   "status": 400
 }
 ```
 
-### Examples
+#### Energy Logserver DSL JSON format
 
-This chapter contains examples of how to use the plugin join. For proper work, Logserver should be fed with sample indexes with data
+If you set the format to `json`, the original Energy Logserver response is returned in JSON format. Because this is the native response from Energy Logserver, extra effort is needed to parse and interpret it.
 
-Action required:
+##### Example request
 
-```bash
-curl -s -k -X POST -ulogserver:logserver "https://127.0.0.1:5601/api/sample_data/ecommerce" -H 'kbn-xsrf: true' -H 'Content-Type: application/json'
-curl -s -k -X POST -ulogserver:logserver "https://127.0.0.1:5601/api/sample_data/flights" -H 'kbn-xsrf: true' -H 'Content-Type: application/json'
-curl -s -k -X POST -ulogserver:logserver "https://127.0.0.1:5601/api/sample_data/logs" -H 'kbn-xsrf: true' -H 'Content-Type: application/json'
+The following query sets the response format to `json`:
+
+```json
+POST _plugins/_sql?format=json
+{
+  "query" : "SELECT firstname, lastname, age FROM accounts ORDER BY age LIMIT 2"
+}
 ```
 
-#### Example 1
+##### Example response
 
-Left query:
+The response is the original response from Energy Logserver:
+
+```json
+{
+  "_shards": {
+    "total": 5,
+    "failed": 0,
+    "successful": 5,
+    "skipped": 0
+  },
+  "hits": {
+    "hits": [{
+        "_index": "accounts",
+        "_type": "account",
+        "_source": {
+          "firstname": "Nanette",
+          "age": 28,
+          "lastname": "Bates"
+        },
+        "_id": "13",
+        "sort": [
+          28
+        ],
+        "_score": null
+      },
+      {
+        "_index": "accounts",
+        "_type": "account",
+        "_source": {
+          "firstname": "Amber",
+          "age": 32,
+          "lastname": "Duke"
+        },
+        "_id": "1",
+        "sort": [
+          32
+        ],
+        "_score": null
+      }
+    ],
+    "total": {
+      "value": 4,
+      "relation": "eq"
+    },
+    "max_score": null
+  },
+  "took": 100,
+  "timed_out": false
+}
+```
+
+#### CSV format
+
+You can also specify to return results in CSV format.
+
+##### Example request
+
+```json
+POST /_plugins/_sql?format=csv
+{
+  "query" : "SELECT firstname, lastname, age FROM accounts ORDER BY age"
+}
+```
+
+##### Example response
+
+```text
+firstname,lastname,age
+Nanette,Bates,28
+Amber,Duke,32
+Dale,Adams,33
+Hattie,Bond,36
+```
+
+##### Sanitizing results in CSV format
+
+By default, Energy Logserver sanitizes header cells (field names) and data cells (field contents) according to the following rules:
+
+- If a cell starts with `+`, `-`, `=` , or `@`, the sanitizer inserts a single quote (`'`) at the start of the cell.
+- If a cell contains one or more commas (`,`), the sanitizer surrounds the cell with double quotes (`"`).
+
+##### Example
+
+The following query indexes a document with cells that either start with special characters or contain commas:
+
+```json
+PUT /userdata/_doc/1?refresh=true
+{
+  "+firstname": "-Hattie",
+  "=lastname": "@Bond",
+  "address": "671 Bristol Street, Dente, TN"
+}
+```
+
+You can use the query below to request results in CSV format:
+
+```json
+POST /_plugins/_sql?format=csv
+{
+  "query" : "SELECT * FROM userdata"
+}
+```
+
+In the response, cells that start with special characters are prefixed with `'`. The cell that has commas is surrounded with quotation marks:
+
+```text
+'+firstname,'=lastname,address
+'Hattie,'@Bond,"671 Bristol Street, Dente, TN"
+```
+
+To skip sanitizing, set the `sanitize` query parameter to false:
+
+```json
+POST /_plugins/_sql?format=csvandsanitize=false
+{
+  "query" : "SELECT * FROM userdata"
+}
+```
+
+The response contains the results in the original CSV format:
+
+```text
+=lastname,address,+firstname
+@Bond,"671 Bristol Street, Dente, TN",-Hattie
+```
+
+#### Raw format
+
+You can use the raw format to pipe the results to other command line tools for post-processing.
+
+##### Example request
+
+```json
+POST /_plugins/_sql?format=raw
+{
+  "query" : "SELECT firstname, lastname, age FROM accounts ORDER BY age"
+}
+```
+
+##### Example response
+
+```text
+Nanette|Bates|28
+Amber|Duke|32
+Dale|Adams|33
+Hattie|Bond|36
+```
+
+By default, Energy Logserver sanitizes results in `raw` format according to the following rule:
+
+- If a data cell contains one or more pipe characters (`|`), the sanitizer surrounds the cell with double quotes.
+
+##### Example
+
+The following query indexes a document with pipe characters (`|`) in its fields:
+
+```json
+PUT /userdata/_doc/1?refresh=true
+{
+  "+firstname": "|Hattie",
+  "=lastname": "Bond|",
+  "|address": "671 Bristol Street| Dente| TN"
+}
+```
+
+You can use the query below to request results in `raw` format:
+
+```json
+POST /_plugins/_sql?format=raw
+{
+  "query" : "SELECT * FROM userdata"
+}
+```
+
+The query returns cells with the `|` character surrounded by quotation marks:
+
+```text
+"|address"|=lastname|+firstname
+"671 Bristol Street| Dente| TN"|"Bond|"|"|Hattie"
+```
+
+### SQL
+
+SQL in Energy Logserver bridges the gap between traditional relational database concepts and the flexibility of Energy Logserver’s document-oriented data storage. This integration gives you the ability to use your SQL knowledge to query, analyze, and extract insights from your  data.
+
+**SQL and Energy Logserver terminology**
+
+Here’s how core SQL concepts map to Energy Logserver:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">SQL</th>
+    <th class="tg-ua3b">Energy Logserver</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Table</td>
+    <td class="tg-pnl2">Index</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Row</td>
+    <td class="tg-pnl2">Document</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Column</td>
+    <td class="tg-pnl2">Field</td>
+  </tr>
+</tbody>
+</table>
+
+**REST API**
+
+To use the SQL plugin with your own applications, send requests to the `_plugins/_sql` endpoint:
+
+```json
+POST _plugins/_sql
+{
+  "query": "SELECT * FROM my-index LIMIT 50"
+}
+```
+
+You can query multiple indexes by using a comma-separated list:
+
+```json
+POST _plugins/_sql
+{
+  "query": "SELECT * FROM my-index1,myindex2,myindex3 LIMIT 50"
+}
+```
+
+You can also specify an index pattern with a wildcard expression:
+
+```json
+POST _plugins/_sql
+{
+  "query": "SELECT * FROM my-index* LIMIT 50"
+}
+```
+
+To run the above query in the command line, use the curl command:
 
 ```bash
-POST kibana_sample_data_flights/_search
+curl -XPOST https://localhost:9200/_plugins/_sql -u 'admin:admin' -k -H 'Content-Type: application/json' -d '{"query": "SELECT * FROM my-index* LIMIT 50"}'
+```
+
+You can specify the [response format](#response-formats) as JDBC, standard Energy Logserver JSON, CSV, or raw. By default, queries return data in JDBC format. The following query sets the format to JSON:
+
+```json
+POST _plugins/_sql?format=json
+{
+  "query": "SELECT * FROM my-index LIMIT 50"
+}
+```
+
+See the rest of this guide for more information about request parameters, settings, supported operations, and tools.
+
+#### Basic queries
+
+Use the `SELECT` clause, along with `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` to search and aggregate data.
+
+Among these clauses, `SELECT` and `FROM` are required, as they specify which fields to retrieve and which indexes to retrieve them from. All other clauses are optional. Use them according to your needs.
+
+##### Syntax
+
+The complete syntax for searching and aggregating data is as follows:
+
+```sql
+SELECT [DISTINCT] (* | expression) [[AS] alias] [, ...]
+FROM index_name
+[WHERE predicates]
+[GROUP BY expression [, ...]
+ [HAVING predicates]]
+[ORDER BY expression [IS [NOT] NULL] [ASC | DESC] [, ...]]
+[LIMIT [offset, ] size]
+```
+
+##### Fundamentals
+
+Apart from the predefined keywords of SQL, the most basic elements are literal and identifiers.
+A literal is a numeric, string, date or boolean constant. An identifier is an Energy Logserver index or field name.
+With arithmetic operators and SQL functions, use literals and identifiers to build complex expressions.
+
+Rule `expressionAtom`:
+
+![expressionAtom](/media/media/expressionAtom.png)
+
+The expression in turn can be combined into a predicate with logical operator. Use a predicate in the `WHERE` and `HAVING` clause to filter out data by specific conditions.
+
+Rule `expression`:
+
+![expression](/media/media/expression.png)
+
+Rule `predicate`:
+
+![expression](/media/media/predicate.png)
+
+##### Execution Order
+
+These SQL clauses execute in an order different from how they appear:
+
+```sql
+FROM index
+ WHERE predicates
+  GROUP BY expressions
+   HAVING predicates
+    SELECT expressions
+     ORDER BY expressions
+      LIMIT size
+```
+
+##### Select
+
+Specify the fields to be retrieved.
+
+###### Syntax
+
+Rule `selectElements`:
+
+![selectElements](/media/media/selectElements.png)
+
+Rule `selectElement`:
+
+![selectElements](/media/media/selectElement.png)
+
+*Example 1*: Use `*` to retrieve all fields in an index:
+
+```sql
+SELECT *
+FROM accounts
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-9iv7{color:inherit;text-align:left;vertical-align:top}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-37zg{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-9iv7{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-37zg">gender</th>
+    <th class="tg-37zg">city</th>
+    <th class="tg-37zg">balance</th>
+    <th class="tg-37zg">employer</th>
+    <th class="tg-37zg">state</th>
+    <th class="tg-37zg">email</th>
+    <th class="tg-37zg">address</th>
+    <th class="tg-37zg">lastname</th>
+    <th class="tg-37zg">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-9iv7">1</td>
+    <td class="tg-9iv7">Amber</td>
+    <td class="tg-9iv7">M</td>
+    <td class="tg-9iv7">Brogan</td>
+    <td class="tg-9iv7">39225</td>
+    <td class="tg-9iv7">Pyrami</td>
+    <td class="tg-9iv7">IL</td>
+    <td class="tg-9iv7">amberduke@pyrami.com</td>
+    <td class="tg-9iv7">880 Holmes Lane</td>
+    <td class="tg-9iv7">Duke</td>
+    <td class="tg-9iv7">32</td>
+  </tr>
+  <tr>
+    <td class="tg-9iv7">16</td>
+    <td class="tg-9iv7">Hattie</td>
+    <td class="tg-9iv7">M</td>
+    <td class="tg-9iv7">Dante</td>
+    <td class="tg-9iv7">5686</td>
+    <td class="tg-9iv7">Netagy</td>
+    <td class="tg-9iv7">TN</td>
+    <td class="tg-9iv7">hattiebond@netagy.com</td>
+    <td class="tg-9iv7">671 Bristol Street</td>
+    <td class="tg-9iv7">Bond</td>
+    <td class="tg-9iv7">36</td>
+  </tr>
+  <tr>
+    <td class="tg-9iv7">13</td>
+    <td class="tg-9iv7">Nanette</td>
+    <td class="tg-9iv7">F</td>
+    <td class="tg-9iv7">Nogal</td>
+    <td class="tg-9iv7">32838</td>
+    <td class="tg-9iv7">Quility</td>
+    <td class="tg-9iv7">VA</td>
+    <td class="tg-9iv7">nanettebates@quility.com</td>
+    <td class="tg-9iv7">789 Madison Street</td>
+    <td class="tg-9iv7">Bates</td>
+    <td class="tg-9iv7">28</td>
+  </tr>
+  <tr>
+    <td class="tg-9iv7">18</td>
+    <td class="tg-9iv7">Dale</td>
+    <td class="tg-9iv7">M</td>
+    <td class="tg-9iv7">Orick</td>
+    <td class="tg-9iv7">4180</td>
+    <td class="tg-9iv7"></td>
+    <td class="tg-9iv7">MD</td>
+    <td class="tg-9iv7">daleadams@boink.com</td>
+    <td class="tg-9iv7">467 Hutchinson Court</td>
+    <td class="tg-9iv7">Adams</td>
+    <td class="tg-9iv7">33</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: Use field name(s) to retrieve only specific fields:
+
+```sql
+SELECT firstname, lastname
+FROM accounts
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 3*: Use field aliases instead of field names. Field aliases are used to make field names more readable:
+
+```sql
+SELECT account_number AS num
+FROM accounts
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">num</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 4*: Use the `DISTINCT` clause to get back only unique field values. You can specify one or more field names:
+
+```sql
+SELECT DISTINCT age
+FROM accounts
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+##### From
+
+Specify the index that you want search.
+You can specify subqueries within the `FROM` clause.
+
+###### Syntax
+
+Rule `tableName`:
+
+![tableName](/media/media/tableName.png)
+
+*Example 1*: Use index aliases to query across indexes.
+In this sample query, `acc` is an alias for the `accounts` index:
+
+```sql
+SELECT account_number, accounts.age
+FROM accounts
+```
+
+or
+
+```sql
+SELECT account_number, acc.age
+FROM accounts acc
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: Use index patterns to query indexes that match a specific pattern:
+
+```sql
+SELECT account_number
+FROM account*
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+  </tr>
+</tbody>
+</table>
+
+##### Where
+
+Specify a condition to filter the results.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Operators</th>
+    <th class="tg-ua3b">Behavior</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">=</td>
+    <td class="tg-pnl2">Equal to.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"><></td>
+    <td class="tg-pnl2">Not equal to.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">></td>
+    <td class="tg-pnl2">Greater than.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"><</td>
+    <td class="tg-pnl2">Less than.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">>=</td>
+    <td class="tg-pnl2">Greater than or equal to.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2"><=</td>
+    <td class="tg-pnl2">Less than or equal to.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">IN</td>
+    <td class="tg-pnl2">Specify multiple `OR` operators.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">BETWEEN</td>
+    <td class="tg-pnl2">Similar to a range query.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">LIKE</td>
+    <td class="tg-pnl2">Use for full-text search. For more information about full-text queries.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">IS NULL</td>
+    <td class="tg-pnl2">Check if the field value is `NULL`.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">IS NOT NULL</td>
+    <td class="tg-pnl2">Check if the field value is `NOT NULL`.</td>
+  </tr>
+</tbody>
+</table>
+
+Combine comparison operators (`=`, `<>`, `>`, `>=`, `<`, `<=`) with boolean operators `NOT`, `AND`, or `OR` to build more complex expressions.
+
+*Example 1*: Use comparison operators for numbers, strings, or dates:
+
+```sql
+SELECT account_number
+FROM accounts
+WHERE account_number = 1
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: Energy Logserver allows for flexible schema，so documents in an index may have different fields. Use `IS NULL` or `IS NOT NULL` to retrieve only missing fields or existing fields. Energy Logserver does not differentiate between missing fields and fields explicitly set to `NULL`:
+
+```sql
+SELECT account_number, employer
+FROM accounts
+WHERE employer IS NULL
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">employer</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2"> </td>
+  </tr>
+</tbody>
+</table>
+
+*Example 3*: Deletes a document that satisfies the predicates in the `WHERE` clause:
+
+```sql
+DELETE FROM accounts
+WHERE age > 30
+```
+
+##### Group By
+
+Group documents with the same field value into buckets.
+
+*Example 1*: Group by fields:
+
+```sql
+SELECT age
+FROM accounts
+GROUP BY age
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">id</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">0</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: Group by field alias:
+
+```sql
+SELECT account_number AS num
+FROM accounts
+GROUP BY num
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">id</th>
+    <th class="tg-ua3b">num</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">0</td>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">6</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">18</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 4*: Use scalar functions in the `GROUP BY` clause:
+
+```sql
+SELECT ABS(age) AS a
+FROM accounts
+GROUP BY ABS(age)
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">id</th>
+    <th class="tg-ua3b">a</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">0</td>
+    <td class="tg-pnl2">28.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">33.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">36.0</td>
+  </tr>
+</tbody>
+</table>
+
+##### Having
+
+Use the `HAVING` clause to aggregate inside each bucket based on aggregation functions (`COUNT`, `AVG`, `SUM`, `MIN`, and `MAX`).
+The `HAVING` clause filters results from the `GROUP BY` clause:
+
+*Example 1*:
+
+```sql
+SELECT age, MAX(balance)
+FROM accounts
+GROUP BY age HAVING MIN(balance) > 10000
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">id</th>
+    <th class="tg-ua3b">age</th>
+    <th class="tg-ua3b">MAX (balance)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">0</td>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">32838</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+    <td class="tg-pnl2">39225</td>
+  </tr>
+</tbody>
+</table>
+
+##### Order By
+
+Use the `ORDER BY` clause to sort results into your desired order.
+
+*Example 1*: Use `ORDER BY` to sort by ascending or descending order. Besides regular field names, using `ordinal`, `alias`, or `scalar` functions are supported:
+
+```sql
+SELECT account_number
+FROM accounts
+ORDER BY account_number DESC
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">18</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: Specify if documents with missing fields are to be put at the beginning or at the end of the results. The default behavior of Energy Logserver is to return nulls or missing fields at the end. To push them before non-nulls, use the `IS NOT NULL` operator:
+
+```sql
+SELECT employer
+FROM accounts
+ORDER BY employer IS NOT NULL
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">employer</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2"> </td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Netagy</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Pyrami</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Quility</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limit
+
+Specify the maximum number of documents that you want to retrieve. Used to prevent fetching large amounts of data into memory.
+
+*Example 1*: If you pass in a single argument, it's mapped to the `size` parameter in Energy Logserver and the `from` parameter is set to 0.
+
+```sql
+SELECT account_number
+FROM accounts
+ORDER BY account_number LIMIT 1
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: If you pass in two arguments, the first is mapped to the `from` parameter and the second to the `size` parameter in Energy Logserver. You can use this for simple pagination for small indexes, as it's inefficient for large indexes.
+Use `ORDER BY` to ensure the same order between pages:
+
+```sql
+SELECT account_number
+FROM accounts
+ORDER BY account_number LIMIT 1, 1
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">6</td>
+  </tr>
+</tbody>
+</table>
+
+#### Complex queries
+
+Besides simple SFW (`SELECT-FROM-WHERE`) queries, the SQL plugin supports complex queries such as subquery, join, union, and minus. These queries operate on more than one Energy Logserver index. To examine how these queries execute behind the scenes, use the `explain` operation.
+
+##### Joins
+
+Energy Logserver SQL supports inner joins, cross joins, and left outer joins.
+
+###### Constraints
+
+Joins have a number of constraints:
+
+1. You can only join two indexes.
+1. You must use aliases for indexes (for example, `people p`).
+1. Within an ON clause, you can only use AND conditions.
+1. In a WHERE statement, don't combine trees that contain multiple indexes. For example, the following statement works:
+
+   ```sql
+   WHERE (a.type1 > 3 OR a.type1 < 0) AND (b.type2 > 4 OR b.type2 < -1)
+   ```
+
+   The following statement does not:
+
+   ```sql
+   WHERE (a.type1 > 3 OR b.type2 < 0) AND (a.type1 > 4 OR b.type2 < -1)
+   ```
+
+1. You can't use GROUP BY or ORDER BY for results.
+1. LIMIT with OFFSET (e.g. `LIMIT 25 OFFSET 25`) is not supported.
+
+###### Description
+
+The `JOIN` clause combines columns from one or more indexes using values common to each.
+
+###### Syntax
+
+Rule `tableSource`:
+
+![tableSource](/media/media/tableSource.png)
+
+Rule `joinPart`:
+
+![joinPart](/media/media/joinPart.png)
+
+###### Example 1: Inner join
+
+Inner join creates a new result set by combining columns of two indexes based on your join predicates. It iterates the two indexes and compares each document to find the ones that satisfy the join predicates. You can optionally precede the `JOIN` clause with an `INNER` keyword.
+
+The join predicate(s) is specified by the ON clause.
+
+SQL query:
+
+```sql
+SELECT
+  a.account_number, a.firstname, a.lastname,
+  e.id, e.name
+FROM accounts a
+JOIN employees_nested e
+ ON a.account_number = e.id
+```
+
+Explain:
+
+The `explain` output is complicated, because a `JOIN` clause is associated with two Energy Logserver DSL queries that execute in separate query planner frameworks. You can interpret it by examining the `Physical Plan` and `Logical Plan` objects.
+
+```json
+{
+  "Physical Plan" : {
+    "Project [ columns=[a.account_number, a.firstname, a.lastname, e.name, e.id] ]" : {
+      "Top [ count=200 ]" : {
+        "BlockHashJoin[ conditions=( a.account_number = e.id ), type=JOIN, blockSize=[FixedBlockSize with size=10000] ]" : {
+          "Scroll [ employees_nested as e, pageSize=10000 ]" : {
+            "request" : {
+              "size" : 200,
+              "from" : 0,
+              "_source" : {
+                "excludes" : [ ],
+                "includes" : [
+                  "id",
+                  "name"
+                ]
+              }
+            }
+          },
+          "Scroll [ accounts as a, pageSize=10000 ]" : {
+            "request" : {
+              "size" : 200,
+              "from" : 0,
+              "_source" : {
+                "excludes" : [ ],
+                "includes" : [
+                  "account_number",
+                  "firstname",
+                  "lastname"
+                ]
+              }
+            }
+          },
+          "useTermsFilterOptimization" : false
+        }
+      }
+    }
+  },
+  "description" : "Hash Join algorithm builds hash table based on result of first query, and then probes hash table to find matched rows for each row returned by second query",
+  "Logical Plan" : {
+    "Project [ columns=[a.account_number, a.firstname, a.lastname, e.name, e.id] ]" : {
+      "Top [ count=200 ]" : {
+        "Join [ conditions=( a.account_number = e.id ) type=JOIN ]" : {
+          "Group" : [
+            {
+              "Project [ columns=[a.account_number, a.firstname, a.lastname] ]" : {
+                "TableScan" : {
+                  "tableAlias" : "a",
+                  "tableName" : "accounts"
+                }
+              }
+            },
+            {
+              "Project [ columns=[e.name, e.id] ]" : {
+                "TableScan" : {
+                  "tableAlias" : "e",
+                  "tableName" : "employees_nested"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+Result set:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">a.account_number</th>
+    <th class="tg-ua3b">a.firstname</th>
+    <th class="tg-ua3b">a.lastname</th>
+    <th class="tg-ua3b">e.id</th>
+    <th class="tg-ua3b">e.name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Jane Smith</td>
+  </tr>
+</tbody>
+</table>
+
+###### Example 2: Cross join
+
+Cross join, also known as cartesian join, combines each document from the first index with each document from the second.
+The result set is the the cartesian product of documents of both indexes.
+This operation is similar to the inner join without the `ON` clause that specifies the join condition.
+
+It's risky to perform cross join on two indexes of large or even medium size. It might trigger a circuit breaker that terminates the query to avoid running out of memory.
+{: .warning }
+
+SQL query:
+
+```sql
+SELECT
+  a.account_number, a.firstname, a.lastname,
+  e.id, e.name
+FROM accounts a
+JOIN employees_nested e
+```
+
+Result set:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">a.account_number</th>
+    <th class="tg-ua3b">a.firstname</th>
+    <th class="tg-ua3b">a.lastname</th>
+    <th class="tg-ua3b">e.id</th>
+    <th class="tg-ua3b">e.name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">Bob Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+    <td class="tg-pnl2">4</td>
+    <td class="tg-pnl2">Susan Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Jane Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">Bob Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+    <td class="tg-pnl2">4</td>
+    <td class="tg-pnl2">Susan Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Jane Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">Bob Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+    <td class="tg-pnl2">4</td>
+    <td class="tg-pnl2">Susan Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Jane Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+    <td class="tg-pnl2">3</td>
+    <td class="tg-pnl2">Bob Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+    <td class="tg-pnl2">4</td>
+    <td class="tg-pnl2">Susan Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Jane Smith</td>
+  </tr>
+</tbody>
+</table>
+
+###### Example 3: Left outer join
+
+Use left outer join to retain rows from the first index if it does not satisfy the join predicate. The keyword `OUTER` is optional.
+
+SQL query:
+
+```sql
+SELECT
+  a.account_number, a.firstname, a.lastname,
+  e.id, e.name
+FROM accounts a
+LEFT JOIN employees_nested e
+ ON a.account_number = e.id
+```
+
+Result set:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">a.account_number</th>
+    <th class="tg-ua3b">a.firstname</th>
+    <th class="tg-ua3b">a.lastname</th>
+    <th class="tg-ua3b">e.id</th>
+    <th class="tg-ua3b">e.name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">null</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Jane Smith</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">null</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">null</td>
+  </tr>
+</tbody>
+</table>
+
+##### Subquery
+
+A subquery is a complete `SELECT` statement used within another statement and enclosed in parenthesis.
+From the explain output, you can see that some subqueries are actually transformed to an equivalent join query to execute.
+
+###### Example 1: Table subquery
+
+SQL query:
+
+```sql
+SELECT a1.firstname, a1.lastname, a1.balance
+FROM accounts a1
+WHERE a1.account_number IN (
+  SELECT a2.account_number
+  FROM accounts a2
+  WHERE a2.balance > 10000
+)
+```
+
+Explain:
+
+```json
+{
+  "Physical Plan" : {
+    "Project [ columns=[a1.balance, a1.firstname, a1.lastname] ]" : {
+      "Top [ count=200 ]" : {
+        "BlockHashJoin[ conditions=( a1.account_number = a2.account_number ), type=JOIN, blockSize=[FixedBlockSize with size=10000] ]" : {
+          "Scroll [ accounts as a2, pageSize=10000 ]" : {
+            "request" : {
+              "size" : 200,
+              "query" : {
+                "bool" : {
+                  "filter" : [
+                    {
+                      "bool" : {
+                        "adjust_pure_negative" : true,
+                        "must" : [
+                          {
+                            "bool" : {
+                              "adjust_pure_negative" : true,
+                              "must" : [
+                                {
+                                  "bool" : {
+                                    "adjust_pure_negative" : true,
+                                    "must_not" : [
+                                      {
+                                        "bool" : {
+                                          "adjust_pure_negative" : true,
+                                          "must_not" : [
+                                            {
+                                              "exists" : {
+                                                "field" : "account_number",
+                                                "boost" : 1
+                                              }
+                                            }
+                                          ],
+                                          "boost" : 1
+                                        }
+                                      }
+                                    ],
+                                    "boost" : 1
+                                  }
+                                },
+                                {
+                                  "range" : {
+                                    "balance" : {
+                                      "include_lower" : false,
+                                      "include_upper" : true,
+                                      "from" : 10000,
+                                      "boost" : 1,
+                                      "to" : null
+                                    }
+                                  }
+                                }
+                              ],
+                              "boost" : 1
+                            }
+                          }
+                        ],
+                        "boost" : 1
+                      }
+                    }
+                  ],
+                  "adjust_pure_negative" : true,
+                  "boost" : 1
+                }
+              },
+              "from" : 0
+            }
+          },
+          "Scroll [ accounts as a1, pageSize=10000 ]" : {
+            "request" : {
+              "size" : 200,
+              "from" : 0,
+              "_source" : {
+                "excludes" : [ ],
+                "includes" : [
+                  "firstname",
+                  "lastname",
+                  "balance",
+                  "account_number"
+                ]
+              }
+            }
+          },
+          "useTermsFilterOptimization" : false
+        }
+      }
+    }
+  },
+  "description" : "Hash Join algorithm builds hash table based on result of first query, and then probes hash table to find matched rows for each row returned by second query",
+  "Logical Plan" : {
+    "Project [ columns=[a1.balance, a1.firstname, a1.lastname] ]" : {
+      "Top [ count=200 ]" : {
+        "Join [ conditions=( a1.account_number = a2.account_number ) type=JOIN ]" : {
+          "Group" : [
+            {
+              "Project [ columns=[a1.balance, a1.firstname, a1.lastname, a1.account_number] ]" : {
+                "TableScan" : {
+                  "tableAlias" : "a1",
+                  "tableName" : "accounts"
+                }
+              }
+            },
+            {
+              "Project [ columns=[a2.account_number] ]" : {
+                "Filter [ conditions=[AND ( AND account_number ISN null, AND balance GT 10000 ) ] ]" : {
+                  "TableScan" : {
+                    "tableAlias" : "a2",
+                    "tableName" : "accounts"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+Result set:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">a1.firstname</th>
+    <th class="tg-ua3b">a1.lastname</th>
+    <th class="tg-ua3b">a1.balance</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+    <td class="tg-pnl2">39225</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+    <td class="tg-pnl2">32838</td>
+  </tr>
+</tbody>
+</table>
+
+###### Example 2: From subquery
+
+SQL query:
+
+```sql
+SELECT a.f, a.l, a.a
+FROM (
+  SELECT firstname AS f, lastname AS l, age AS a
+  FROM accounts
+  WHERE age > 30
+) AS a
+```
+
+Explain:
+
+```json
+{
+  "from" : 0,
+  "size" : 200,
+  "query" : {
+    "bool" : {
+      "filter" : [
+        {
+          "bool" : {
+            "must" : [
+              {
+                "range" : {
+                  "age" : {
+                    "from" : 30,
+                    "to" : null,
+                    "include_lower" : false,
+                    "include_upper" : true,
+                    "boost" : 1.0
+                  }
+                }
+              }
+            ],
+            "adjust_pure_negative" : true,
+            "boost" : 1.0
+          }
+        }
+      ],
+      "adjust_pure_negative" : true,
+      "boost" : 1.0
+    }
+  },
+  "_source" : {
+    "includes" : [
+      "firstname",
+      "lastname",
+      "age"
+    ],
+    "excludes" : [ ]
+  }
+}
+```
+
+Result set:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">f</th>
+    <th class="tg-ua3b">l</th>
+    <th class="tg-ua3b">a</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+#### Functions
+
+The SQL language supports all SQL plugin [common functions](https://opensearch.org/docs/latest/search-plugins/sql/functions/), including [relevance search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/), but also introduces a few function synonyms, which are available in SQL only.
+These synonyms are provided by the `V1` engine. For more information, see [Limitations](https://opensearch.org/docs/latest/search-plugins/sql/limitation).
+
+##### Match query
+
+The `MATCHQUERY` and `MATCH_QUERY` functions are synonyms for the [`MATCH`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#match) relevance function. They don't accept additional arguments but provide an alternate syntax.
+
+###### Syntax
+
+To use `matchquery` or `match_query`, pass in your search query and the field name that you want to search against:
+
+```sql
+match_query(field_expression, query_expression[, option=<option_value>]*)
+matchquery(field_expression, query_expression[, option=<option_value>]*)
+field_expression = match_query(query_expression[, option=<option_value>]*)
+field_expression = matchquery(query_expression[, option=<option_value>]*)
+```
+
+You can specify the following options in any order:
+
+- `analyzer`
+- `boost`
+
+###### Example
+
+You can use `MATCHQUERY` to replace `MATCH`:
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE MATCHQUERY(address, 'Holmes')
+```
+
+Alternatively, you can use `MATCH_QUERY` to replace `MATCH`:
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE address = MATCH_QUERY('Holmes')
+```
+
+The results contain documents in which the address contains "Holmes":
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+  </tr>
+</tbody>
+</table>
+
+##### Multi-match
+
+There are three synonyms for `MULTI_MATCH`, each with a slightly different syntax. They accept a query string and a fields list with weights. They can also accept additional optional parameters.
+
+###### Syntax
+
+```sql
+multimatch('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
+multi_match('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
+multimatchquery('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
+```
+
+The `fields` parameter is optional and can contain a single field or a comma-separated list (whitespace characters are not allowed). The weight for each field is optional and is specified after the field name. It should be delimited by the `caret` character -- `^` -- without whitespace.
+
+###### Example
+
+The following queries show the `fields` parameter of a multi-match query with a single field and a field list:
+
+```sql
+multi_match('fields' = "Tags^2,Title^3.4,Body,Comments^0.3", ...)
+multi_match('fields' = "Title", ...)
+```
+
+You can specify the following options in any order:
+
+- `analyzer`
+- `boost`
+- `slop`
+- `type`
+- `tie_breaker`
+- `operator`
+
+##### Query string
+
+The `QUERY` function is a synonym for 'QUERY_STRING`.
+
+###### Syntax
+
+```sql
+query('query'=query_expression[, 'fields'=field_expression][, option=<option_value>]*)
+```
+
+The `fields` parameter is optional and can contain a single field or a comma-separated list (whitespace characters are not allowed). The weight for each field is optional and is specified after the field name. It should be delimited by the `caret` character -- `^` -- without whitespace.
+
+###### Example
+
+The following queries show the `fields` parameter of a multi-match query with a single field and a field list:
+
+```sql
+query('fields' = "Tags^2,Title^3.4,Body,Comments^0.3", ...)
+query('fields' = "Tags", ...)
+```
+
+You can specify the following options in any order:
+
+- `analyzer`
+- `boost`
+- `slop`
+- `default_field`
+
+###### Example of using `query_string` in SQL and PPL queries:
+
+The following is a sample REST API search request in Energy Logserver DSL.
+
+```json
+GET accounts/_search
 {
   "query": {
-    "term": {"DestCountry": {"value": "AE"}}
+    "query_string": {
+      "query": "Lane Street",
+      "fields": [ "address" ],
+    }
   }
 }
 ```
 
-Right query:
+The request above is equivalent to the following `query` function:
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE query('address:Lane OR address:Street')
+```
+
+The results contain addresses that contain "Lane" or "Street":
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">671 Bristol Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+  </tr>
+</tbody>
+</table>
+
+##### Match phrase
+
+The `MATCHPHRASEQUERY` function is a synonym for `MATCH_PHRASE`.
+
+###### Syntax
+
+```sql
+matchphrasequery(query_expression, field_expression[, option=<option_value>]*)
+```
+
+You can specify the following options in any order:
+
+- `analyzer`
+- `boost`
+- `slop`
+
+##### Score query
+
+To return a relevance score along with every matching document, use the `SCORE`, `SCOREQUERY`, or `SCORE_QUERY` functions.
+
+###### Syntax
+
+The `SCORE` function expects two arguments. The first argument is the [`MATCH_QUERY`](#match-query) expression. The second argument is an optional floating-point number to boost the score (the default value is 1.0):
+
+```sql
+SCORE(match_query_expression, score)
+SCOREQUERY(match_query_expression, score)
+SCORE_QUERY(match_query_expression, score)
+```
+
+###### Example
+
+The following example uses the `SCORE` function to boost the documents' scores:
+
+```sql
+SELECT account_number, address, _score
+FROM accounts
+WHERE SCORE(MATCH_QUERY(address, 'Lane'), 0.5) OR
+  SCORE(MATCH_QUERY(address, 'Street'), 100)
+ORDER BY _score
+```
+
+The results contain matches with corresponding scores:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">address</th>
+    <th class="tg-ua3b">score</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+    <td class="tg-pnl2">0.5</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">671 Bristol Street</td>
+    <td class="tg-pnl2">100</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+    <td class="tg-pnl2">100</td>
+  </tr>
+</tbody>
+</table>
+
+##### Wildcard query
+
+To search documents by a given wildcard, use the `WILDCARDQUERY` or `WILDCARD_QUERY` functions.
+
+###### Syntax
+
+```sql
+wildcardquery(field_expression, query_expression[, boost=<value>])
+wildcard_query(field_expression, query_expression[, boost=<value>])
+```
+
+###### Example
+
+The following example uses a wildcard query:
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE wildcard_query(address, '*Holmes*');
+```
+
+The results contain documents that match the wildcard expression:
+
+| account_number | address
+:--- | :---
+1 | 880 Holmes Lane
+
+#### JSON Support
+
+SQL plugin supports JSON by following [PartiQL](https://partiql.org/) specification, a SQL-compatible query language that lets you query semi-structured and nested data for any data format. The SQL plugin only supports a subset of the PartiQL specification.
+
+##### Querying nested collection
+
+PartiQL extends SQL to allow you to query and unnest nested collections. In Energy Logserver, this is very useful to query a JSON index with nested objects or fields.
+
+To follow along, use the `bulk` operation to index some sample data:
+
+```json
+POST employees_nested/_bulk?refresh
+{"index":{"_id":"1"}}
+{"id":3,"name":"Bob Smith","title":null,"projects":[{"name":"SQL Spectrum querying","started_year":1990},{"name":"SQL security","started_year":1999},{"name":"Energy Logserver security","started_year":2015}]}
+{"index":{"_id":"2"}}
+{"id":4,"name":"Susan Smith","title":"Dev Mgr","projects":[]}
+{"index":{"_id":"3"}}
+{"id":6,"name":"Jane Smith","title":"Software Eng 2","projects":[{"name":"SQL security","started_year":1998},{"name":"Hello security","started_year":2015,"address":[{"city":"Dallas","state":"TX"}]}]}
+```
+
+###### Example 1: Unnesting a nested collection
+
+This example finds the nested document (`projects`) with a field value (`name`) that satisfies the predicate (contains `security`). Because each parent document can have more than one nested documents, the nested document that matches is flattened. In other words, the final result is the cartesian product between the parent and nested documents.
+
+```sql
+SELECT e.name AS employeeName,
+       p.name AS projectName
+FROM employees_nested AS e,
+       e.projects AS p
+WHERE p.name LIKE '%security%'
+```
+
+Explain:
+
+```json
+{
+  "from" : 0,
+  "size" : 200,
+  "query" : {
+    "bool" : {
+      "filter" : [
+        {
+          "bool" : {
+            "must" : [
+              {
+                "nested" : {
+                  "query" : {
+                    "wildcard" : {
+                      "projects.name" : {
+                        "wildcard" : "*security*",
+                        "boost" : 1.0
+                      }
+                    }
+                  },
+                  "path" : "projects",
+                  "ignore_unmapped" : false,
+                  "score_mode" : "none",
+                  "boost" : 1.0,
+                  "inner_hits" : {
+                    "ignore_unmapped" : false,
+                    "from" : 0,
+                    "size" : 3,
+                    "version" : false,
+                    "seq_no_primary_term" : false,
+                    "explain" : false,
+                    "track_scores" : false,
+                    "_source" : {
+                      "includes" : [
+                        "projects.name"
+                      ],
+                      "excludes" : [ ]
+                    }
+                  }
+                }
+              }
+            ],
+            "adjust_pure_negative" : true,
+            "boost" : 1.0
+          }
+        }
+      ],
+      "adjust_pure_negative" : true,
+      "boost" : 1.0
+    }
+  },
+  "_source" : {
+    "includes" : [
+      "name"
+    ],
+    "excludes" : [ ]
+  }
+}
+```
+
+Result set:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">employeeName</th>
+    <th class="tg-ua3b">projectName</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Bob Smith</td>
+    <td class="tg-pnl2">Energy Logserver Security</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Bob Smith</td>
+    <td class="tg-pnl2">SQL security</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Jane Smith</td>
+    <td class="tg-pnl2">Hello security</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Jane Smith</td>
+    <td class="tg-pnl2">SQL security</td>
+  </tr>
+</tbody>
+</table>
+
+###### Example 2: Unnesting in existential subquery
+
+To unnest a nested collection in a subquery to check if it satisfies a condition:
+
+```sql
+SELECT e.name AS employeeName
+FROM employees_nested AS e
+WHERE EXISTS (
+    SELECT *
+    FROM e.projects AS p
+    WHERE p.name LIKE '%security%'
+)
+```
+
+Explain:
+
+```json
+{
+  "from" : 0,
+  "size" : 200,
+  "query" : {
+    "bool" : {
+      "filter" : [
+        {
+          "bool" : {
+            "must" : [
+              {
+                "nested" : {
+                  "query" : {
+                    "bool" : {
+                      "must" : [
+                        {
+                          "bool" : {
+                            "must" : [
+                              {
+                                "bool" : {
+                                  "must_not" : [
+                                    {
+                                      "bool" : {
+                                        "must_not" : [
+                                          {
+                                            "exists" : {
+                                              "field" : "projects",
+                                              "boost" : 1.0
+                                            }
+                                          }
+                                        ],
+                                        "adjust_pure_negative" : true,
+                                        "boost" : 1.0
+                                      }
+                                    }
+                                  ],
+                                  "adjust_pure_negative" : true,
+                                  "boost" : 1.0
+                                }
+                              },
+                              {
+                                "wildcard" : {
+                                  "projects.name" : {
+                                    "wildcard" : "*security*",
+                                    "boost" : 1.0
+                                  }
+                                }
+                              }
+                            ],
+                            "adjust_pure_negative" : true,
+                            "boost" : 1.0
+                          }
+                        }
+                      ],
+                      "adjust_pure_negative" : true,
+                      "boost" : 1.0
+                    }
+                  },
+                  "path" : "projects",
+                  "ignore_unmapped" : false,
+                  "score_mode" : "none",
+                  "boost" : 1.0
+                }
+              }
+            ],
+            "adjust_pure_negative" : true,
+            "boost" : 1.0
+          }
+        }
+      ],
+      "adjust_pure_negative" : true,
+      "boost" : 1.0
+    }
+  },
+  "_source" : {
+    "includes" : [
+      "name"
+    ],
+    "excludes" : [ ]
+  }
+}
+```
+
+Result set:
+
+| employeeName |
+:--- | :---
+Bob Smith |
+Jane Smith |
+
+#### Metadata queries
+
+To see basic metadata about your indexes, use the `SHOW` and `DESCRIBE` commands.
+
+##### Syntax
+
+Rule `showStatement`:
+
+![showStatement](/media/media/showStatement.png)
+
+Rule `showFilter`:
+
+![showFilter](/media/media/showFilter.png)
+
+##### Example 1: See metadata for indexes
+
+To see metadata for indexes that match a specific pattern, use the `SHOW` command.
+Use the wildcard `%` to match all indexes:
+
+```sql
+SHOW TABLES LIKE %
+```
+
+| TABLE_CAT | TABLE_SCHEM | TABLE_NAME | TABLE_TYPE | REMARKS | TYPE_CAT | TYPE_SCHEM | TYPE_NAME | SELF_REFERENCING_COL_NAME | REF_GENERATION
+:--- | :---
+docker-cluster | null | accounts | BASE TABLE | null | null | null | null | null | null
+docker-cluster  | null | employees_nested | BASE TABLE | null | null | null | null | null | null
+
+##### Example 2: See metadata for a specific index
+
+To see metadata for an index name with a prefix of `acc`:
+
+```sql
+SHOW TABLES LIKE acc%
+```
+
+| TABLE_CAT | TABLE_SCHEM | TABLE_NAME | TABLE_TYPE | REMARKS | TYPE_CAT | TYPE_SCHEM | TYPE_NAME | SELF_REFERENCING_COL_NAME | REF_GENERATION
+:--- | :---
+docker-cluster | null | accounts | BASE TABLE | null | null | null | null | null | null
+
+##### Example 3: See metadata for fields
+
+To see metadata for field names that match a specific pattern, use the `DESCRIBE` command:
+
+```sql
+DESCRIBE TABLES LIKE accounts
+```
+
+| TABLE_CAT | TABLE_SCHEM | TABLE_NAME | COLUMN_NAME | DATA_TYPE | TYPE_NAME | COLUMN_SIZE | BUFFER_LENGTH | DECIMAL_DIGITS | NUM_PREC_RADIX | NULLABLE | REMARKS | COLUMN_DEF | SQL_DATA_TYPE | SQL_DATETIME_SUB | CHAR_OCTET_LENGTH | ORDINAL_POSITION | IS_NULLABLE | SCOPE_CATALOG | SCOPE_SCHEMA | SCOPE_TABLE | SOURCE_DATA_TYPE | IS_AUTOINCREMENT | IS_GENERATEDCOLUMN
+:--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :---
+docker-cluster | null | accounts | account_number | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 1 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | firstname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 2 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | address | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 3 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | balance | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 4 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | gender | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 5 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | city | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 6 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | employer | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 7 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | state | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 8 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | age | null | long | null | null | null | 10 | 2 | null | null | null | null | null | 9 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | email | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 10 |  | null | null | null | null | NO |
+docker-cluster | null | accounts | lastname | null | text | null | null | null | 10 | 2 | null | null | null | null | null | 11 |  | null | null | null | null | NO |
+
+#### Aggregate functions
+
+Aggregate functions operate on subsets defined by the `GROUP BY` clause. In the absence of a `GROUP BY` clause, aggregate functions operate on all elements of the result set. You can use aggregate functions in the `GROUP BY`, `SELECT`, and `HAVING` clauses.
+
+Energy Logserver supports the following aggregate functions.
+
+Function | Description
+:--- | :---
+`AVG` | Returns the average of the results.
+`COUNT` | Returns the number of results.
+`SUM` | Returns the sum of the results.
+`MIN` | Returns the minimum of the results.
+`MAX` | Returns the maximum of the results.
+`VAR_POP` or `VARIANCE` | Returns the population variance of the results after discarding nulls. Returns 0 when there is only one row of results.
+`VAR_SAMP` | Returns the sample variance of the results after discarding nulls. Returns null when there is only one row of results.
+`STD` or `STDDEV` | Returns the sample standard deviation of the results. Returns 0 when there is only one row of results.
+`STDDEV_POP` | Returns the population standard deviation of the results. Returns 0 when there is only one row of results.
+`STDDEV_SAMP` | Returns the sample standard deviation of the results. Returns null when there is only one row of results.
+
+The examples below reference an `employees` table. You can try out the examples by indexing the following documents into Energy Logserver using the bulk index operation:
+
+```json
+PUT employees/_bulk?refresh
+{"index":{"_id":"1"}}
+{"employee_id": 1, "department":1, "firstname":"Amber", "lastname":"Duke", "sales":1356, "sale_date":"2020-01-23"}
+{"index":{"_id":"2"}}
+{"employee_id": 1, "department":1, "firstname":"Amber", "lastname":"Duke", "sales":39224, "sale_date":"2021-01-06"}
+{"index":{"_id":"6"}}
+{"employee_id":6, "department":1, "firstname":"Hattie", "lastname":"Bond", "sales":5686, "sale_date":"2021-06-07"}
+{"index":{"_id":"7"}}
+{"employee_id":6, "department":1, "firstname":"Hattie", "lastname":"Bond", "sales":12432, "sale_date":"2022-05-18"}
+{"index":{"_id":"13"}}
+{"employee_id":13,"department":2, "firstname":"Nanette", "lastname":"Bates", "sales":32838, "sale_date":"2022-04-11"}
+{"index":{"_id":"18"}}
+{"employee_id":18,"department":2, "firstname":"Dale", "lastname":"Adams", "sales":4180, "sale_date":"2022-11-05"}
+```
+
+##### GROUP BY
+
+The `GROUP BY` clause defines subsets of a result set. Aggregate functions operate on these subsets and return one result row for each subset.
+
+You can use an identifier, ordinal, or expression in the `GROUP BY` clause.
+
+###### Using an identifier in GROUP BY
+
+You can specify the field name (column name) to aggregate on in the `GROUP BY` clause. For example, the following query returns the department numbers and the total sales for each department:
+
+```sql
+SELECT department, sum(sales)
+FROM employees
+GROUP BY department;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">sum(sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">58700<</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">37018</td>
+  </tr>
+</tbody>
+</table>
+
+###### Using an ordinal in GROUP BY
+
+You can specify the column number to aggregate on in the `GROUP BY` clause. The column number is determined by the column position in the `SELECT` clause. For example, the following query is equivalent to the query above. It returns the department numbers and the total sales for each department. It groups the results by the first column of the result set, which is `department`:
+
+```sql
+SELECT department, sum(sales) 
+FROM employees 
+GROUP BY 1;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">sum(sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">58700</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">37018</td>
+  </tr>
+</tbody>
+</table>
+
+###### Using an expression in GROUP BY
+
+You can use an expression in the `GROUP BY` clause. For example, the following query returns the average sales for each year:
+
+```sql
+SELECT year(sale_date), avg(sales) 
+FROM employees 
+GROUP BY year(sale_date);
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">year(start_date)</th>
+    <th class="tg-ua3b">avg(sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">2020 </td>
+    <td class="tg-pnl2">1356.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2021</td>
+    <td class="tg-pnl2">22455.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2022</td>
+    <td class="tg-pnl2">16484.0</td>
+  </tr>
+</tbody>
+</table>
+
+##### SELECT
+
+You can use aggregate expressions in the `SELECT` clause either directly or as part of a larger expression. In addition, you can use expressions as arguments of aggregate functions.
+
+###### Using aggregate expressions directly in SELECT
+
+The following query returns the average sales for each department:
+
+```sql
+SELECT department, avg(sales) 
+FROM employees 
+GROUP BY department;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">avg(sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">14675.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">18509.0</td>
+  </tr>
+</tbody>
+</table>
+
+###### Using aggregate expressions as part of larger expressions in SELECT
+
+The following query calculates the average commission for the employees of each department as 5% of the average sales:
+
+```sql
+SELECT department, avg(sales) * 0.05 as avg_commission 
+FROM employees 
+GROUP BY department;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">avg_commission</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">733.75</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">925.45</td>
+  </tr>
+</tbody>
+</table>
+
+###### Using expressions as arguments to aggregate functions
+
+The following query calculates the average commission amount for each department. First it calculates the commission amount for each `sales` value as 5% of the `sales`. Then it determines the average of all commission values:
+
+```sql
+SELECT department, avg(sales * 0.05) as avg_commission 
+FROM employees 
+GROUP BY department;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">avg_commission</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">733.75</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2</td>
+    <td class="tg-pnl2">925.45</td>
+  </tr>
+</tbody>
+</table>
+
+##### COUNT
+
+The `COUNT` function accepts arguments, such as `*`, or literals, such as `1`.
+The following table describes how various forms of the `COUNT` function operate.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function type</th>
+    <th class="tg-ua3b">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">COUNT(field)</td>
+    <td class="tg-pnl2">Counts the number of rows where the value of the given field (or expression) is not null.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">COUNT(*)</td>
+    <td class="tg-pnl2">Counts the total number of rows in a table.</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">COUNT(1) [same as COUNT(*)]</td>
+    <td class="tg-pnl2">Counts any non-null literal.</td>
+  </tr>
+</tbody>
+</table>
+
+For example, the following query returns the count of sales for each year:
+
+```sql
+SELECT year(sale_date), count(sales) 
+FROM employees 
+GROUP BY year(sale_date);
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">year(sale_date)</th>
+    <th class="tg-ua3b">count(sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">2020</td>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2021</td>
+    <td class="tg-pnl2">2</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">2022</td>
+    <td class="tg-pnl2">3</td>
+  </tr>
+</tbody>
+</table>
+
+##### HAVING
+
+Both `WHERE` and `HAVING` are used to filter results. The `WHERE` filter is applied before the `GROUP BY` phase, so you cannot use aggregate functions in a `WHERE` clause. However, you can use the `WHERE` clause to limit the rows to which the aggregate is then applied.
+
+The `HAVING` filter is applied after the `GROUP BY` phase, so you can use the `HAVING` clause to limit the groups that are included in the results.
+
+###### HAVING with GROUP BY
+
+You can use aggregate expressions or their aliases defined in a `SELECT` clause in a `HAVING` condition.
+
+The following query uses an aggregate expression in the `HAVING` clause. It returns the number of sales for each employee who made more than one sale:
+
+```sql
+SELECT employee_id, count(sales)
+FROM employees
+GROUP BY employee_id
+HAVING count(sales) > 1;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">employee_id</th>
+    <th class="tg-ua3b">count(sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">2</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">2</td>
+  </tr>
+</tbody>
+</table>
+
+The aggregations in a `HAVING` clause do not have to be the same as the aggregations in a `SELECT` list. The following query uses the `count` function in the `HAVING` clause but the `sum` function in the `SELECT` clause. It returns the total sales amount for each employee who made more than one sale:
+
+```sql
+SELECT employee_id, sum(sales)
+FROM employees
+GROUP BY employee_id
+HAVING count(sales) > 1;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">employee_id</th>
+    <th class="tg-ua3b">sum (sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">40580</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">18120</td>
+  </tr>
+</tbody>
+</table>
+
+As an extension of the SQL standard, you are not restricted to using only identifiers in the `GROUP BY` clause. The following query uses an alias in the `GROUP BY` clause and is equivalent to the previous query:
+
+```sql
+SELECT employee_id as id, sum(sales)
+FROM employees
+GROUP BY id
+HAVING count(sales) > 1;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">id</th>
+    <th class="tg-ua3b">sum (sales)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">40580</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">18120</td>
+  </tr>
+</tbody>
+</table>
+
+You can also use an alias for an aggregate expression in the `HAVING` clause. The following query returns the total sales for each department where sales exceed $40,000:
+
+```sql
+SELECT department, sum(sales) as total
+FROM employees
+GROUP BY department
+HAVING total > 40000;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">total</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">58700</td>
+  </tr>
+</tbody>
+</table>
+
+If an identifier is ambiguous (for example, present both as a `SELECT` alias and as an index field), the preference is given to the alias. In the following query the identifier is replaced with the expression aliased in the `SELECT` clause:
+
+```sql
+SELECT department, sum(sales) as sales
+FROM employees
+GROUP BY department
+HAVING sales > 40000;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">department</th>
+    <th class="tg-ua3b">sales</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">58700</td>
+  </tr>
+</tbody>
+</table>
+
+###### HAVING without GROUP BY
+
+You can use a `HAVING` clause without a `GROUP BY` clause. In this case, the whole set of data is to be considered one group. The following query will return `True` if there is more than one value in the `department` column:
+
+```sql
+SELECT 'True' as more_than_one_department FROM employees HAVING min(department) < max(department);
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">more_than_one_department</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">True</td>
+  </tr>
+</tbody>
+</table>
+
+If all employees in the employee table belonged to the same department, the result would contain zero rows:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">more_than_one_department</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2"></td>
+  </tr>
+</tbody>
+</table>
+
+#### Delete
+
+The `DELETE` statement deletes documents that satisfy the predicates in the `WHERE` clause.
+If you don't specify the `WHERE` clause, all documents are deleted.
+
+##### Setting
+
+The `DELETE` statement is disabled by default. To enable the `DELETE` functionality in SQL, you need to update the configuration by sending the following request:
+
+```json
+PUT _plugins/_query/settings
+{
+  "transient": {
+    "plugins.sql.delete.enabled": "true"
+  }
+}
+```
+
+##### Syntax
+
+Rule `singleDeleteStatement`:
+
+![singleDeleteStatement](/media/media/singleDeleteStatement.png)
+
+##### Example
+
+SQL query:
+
+```sql
+DELETE FROM accounts
+WHERE age > 30
+```
+
+Explain:
+
+```json
+{
+  "size" : 1000,
+  "query" : {
+    "bool" : {
+      "must" : [
+        {
+          "range" : {
+            "age" : {
+              "from" : 30,
+              "to" : null,
+              "include_lower" : false,
+              "include_upper" : true,
+              "boost" : 1.0
+            }
+          }
+        }
+      ],
+      "adjust_pure_negative" : true,
+      "boost" : 1.0
+    }
+  },
+  "_source" : false
+}
+```
+
+Result set:
+
+```json
+{
+  "schema" : [
+    {
+      "name" : "deleted_rows",
+      "type" : "long"
+    }
+  ],
+  "total" : 1,
+  "datarows" : [
+    [
+      3
+    ]
+  ],
+  "size" : 1,
+  "status" : 200
+}
+```
+
+The `datarows` field shows the number of documents deleted.
+
+### PPL - Piped Processing Language
+
+Piped Processing Language (PPL) is a query language that lets you use pipe (`|`) syntax to explore, discover, and query data stored in Energy Logserver.
+
+To quickly get up and running with PPL, use **SQL** in Energy Logserver Dashboards.
+
+The PPL syntax consists of commands delimited by the pipe character (`|`) where data flows from left to right through each pipeline.
+
+```sql
+search command | command 1 | command 2 ...
+```
+
+You can only use read-only commands like `search`, `where`, `fields`, `rename`, `dedup`, `stats`, `sort`, `eval`, `head`, `top`, and `rare`.
+
+#### Quick start
+
+To get started with PPL, choose **Dev Tools** in Energy Logserver Dashboards and use the `bulk` operation to index some sample data:
+
+```json
+PUT accounts/_bulk?refresh
+{"index":{"_id":"1"}}
+{"account_number":1,"balance":39225,"firstname":"Amber","lastname":"Duke","age":32,"gender":"M","address":"880 Holmes Lane","employer":"Pyrami","email":"amberduke@pyrami.com","city":"Brogan","state":"IL"}
+{"index":{"_id":"6"}}
+{"account_number":6,"balance":5686,"firstname":"Hattie","lastname":"Bond","age":36,"gender":"M","address":"671 Bristol Street","employer":"Netagy","email":"hattiebond@netagy.com","city":"Dante","state":"TN"}
+{"index":{"_id":"13"}}
+{"account_number":13,"balance":32838,"firstname":"Nanette","lastname":"Bates","age":28,"gender":"F","address":"789 Madison Street","employer":"Quility","city":"Nogal","state":"VA"}
+{"index":{"_id":"18"}}
+{"account_number":18,"balance":4180,"firstname":"Dale","lastname":"Adams","age":33,"gender":"M","address":"467 Hutchinson Court","email":"daleadams@boink.com","city":"Orick","state":"MD"}
+```
+
+Go to **SQL** and select **PPL**.
+
+The following example returns `firstname` and `lastname` fields for documents in an `accounts` index with `age` greater than 18:
+
+```sql
+search source=accounts
+| where age > 18
+| fields firstname, lastname
+```
+
+#### Example response
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+![PPL query workbench](/media/media/ppl.png)
+
+#### PPL syntax
+
+Every PPL query starts with the `search` command. It specifies the index to search and retrieve documents from. Subsequent commands can follow in any order.
+
+Currently, `PPL` supports only one `search` command, which can be omitted to simplify the query.
+{ : .note}
+
+##### Syntax
+
+```sql
+search source=<index> [boolean-expression]
+source=<index> [boolean-expression]
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">search</td>
+    <td class="tg-pnl2">Specifies search keywords.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">index</td>
+    <td class="tg-pnl2">Specifies which index to query from.</td>
+    <td class="tg-pnl2">No</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">bool-expression</td>
+    <td class="tg-pnl2">Specifies an expression that evaluates to a Boolean value.</td>
+    <td class="tg-pnl2">No</td>
+  </tr>
+</tbody>
+</table>
+
+##### Examples
+
+**Example 1: Search through accounts index**
+
+In the following example, the `search` command refers to an `accounts` index as the source and uses `fields` and `where` commands for the conditions:
+
+```sql
+search source=accounts
+| where age > 18
+| fields firstname, lastname
+```
+
+In the following examples, angle brackets `< >` enclose required arguments and square brackets `[ ]` enclose optional arguments.
+
+**Example 2: Get all documents**
+
+To get all documents from the `accounts` index, specify it as the `source`:
+
+```sql
+search source=accounts;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">address</th>
+    <th class="tg-ua3b">balance</th>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">city</th>
+    <th class="tg-ua3b">employer</th>
+    <th class="tg-ua3b">state</th>
+    <th class="tg-ua3b">age</th>
+    <th class="tg-ua3b">email</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber </td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+    <td class="tg-pnl2">39225</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">Brogan</td>
+    <td class="tg-pnl2">Pyrami</td>
+    <td class="tg-pnl2">IL</td>
+    <td class="tg-pnl2">32</td>
+    <td class="tg-pnl2">amberduke@pyrami.com </td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">671 Bristol Street</td>
+    <td class="tg-pnl2">5686</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">Dante</td>
+    <td class="tg-pnl2">Netagy</td>
+    <td class="tg-pnl2">TN</td>
+    <td class="tg-pnl2">36 </td>
+    <td class="tg-pnl2">hattiebond@netagy.com</td>
+    <td class="tg-pnl2">Bond</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+    <td class="tg-pnl2">32838</td>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">Nogal</td>
+    <td class="tg-pnl2">Quility</td>
+    <td class="tg-pnl2">VA</td>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale </td>
+    <td class="tg-pnl2">467 Hutchinson Court</td>
+    <td class="tg-pnl2">4180</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">Orick</td>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">MD</td>
+    <td class="tg-pnl2">33</td>
+    <td class="tg-pnl2">daleadams@boink.com</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Get documents that match a condition**
+
+To get all documents from the `accounts` index that either have `account_number` equal to 1 or have `gender` as `F`, use the following query:
+
+```sql
+search source=accounts account_number=1 or gender=\"F\";
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">address</th>
+    <th class="tg-ua3b">balance</th>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">city</th>
+    <th class="tg-ua3b">employer</th>
+    <th class="tg-ua3b">state</th>
+    <th class="tg-ua3b">age</th>
+    <th class="tg-ua3b">email</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+    <td class="tg-pnl2">39225</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">Brogan</td>
+    <td class="tg-pnl2">Pyrami</td>
+    <td class="tg-pnl2">IL</td>
+    <td class="tg-pnl2">32</td>
+    <td class="tg-pnl2">amberduke@pyrami.com</td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+    <td class="tg-pnl2">32838</td>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">Nogal</td>
+    <td class="tg-pnl2">Quility</td>
+    <td class="tg-pnl2">VA</td>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+</tbody>
+</table>
+
+#### Commands
+
+`PPL` supports all [`SQL` common](#functions) functions, including [relevance search](#full-text-search), but also introduces few more functions (called `commands`) which are available in `PPL` only.
+
+##### dedup
+
+The `dedup` (data deduplication) command removes duplicate documents defined by a field from the search result.
+
+###### Syntax
+
+```sql
+dedup [int] <field-list> [keepempty=<bool>] [consecutive=<bool>]
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Type</th>
+    <th class="tg-ua3b">Required</th>
+    <th class="tg-ua3b">Default</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">int</td>
+    <td class="tg-pnl2"> Retain the specified number of duplicate events for each combination. The number must be greater than 0. If you do not specify a number, only the first occurring event is kept and all other duplicates are removed from the results.</td>
+    <td class="tg-pnl2">string</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">keepempty</td>
+    <td class="tg-pnl2">If true, keep the document if any field in the field list has a null value or a field missing.</td>
+    <td class="tg-pnl2">nested list of objects</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">False</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">consecutive</td>
+    <td class="tg-pnl2">If true, remove only consecutive events with duplicate combinations of values.</td>
+    <td class="tg-pnl2">Boolean</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">False</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">field-list</td>
+    <td class="tg-pnl2">Specify a comma-delimited field list. At least one field is required.</td>
+    <td class="tg-pnl2">String or comma-separated list of strings</td>
+    <td class="tg-pnl2">Yes</td>
+    <td class="tg-pnl2">-</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Dedup by one field**
+
+To remove duplicate documents with the same gender:
+
+```sql
+search source=accounts | dedup gender | fields account_number, gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">M</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">F</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Keep two duplicate documents**
+
+To keep two duplicate documents with the same gender:
+
+```sql
+search source=accounts | dedup 2 gender | fields account_number, gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">M</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">M</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">F</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Keep or ignore an empty field by default**
+
+To keep two duplicate documents with a `null` field value:
+
+```sql
+search source=accounts | dedup email keepempty=true | fields account_number, email;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">email</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">amberduke@pyrami.com</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">hattiebond@netagy.com</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">null</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">daleadams@boink.com</td>
+  </tr>
+</tbody>
+</table>
+
+To remove duplicate documents with the `null` field value:
+
+```sql
+search source=accounts | dedup email | fields account_number, email;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">email</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">amberduke@pyrami.com</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">hattiebond@netagy.com</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">daleadams@boink.com</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 4: Dedup of consecutive documents**
+
+To remove duplicates of consecutive documents:
+
+```sql
+search source=accounts | dedup gender consecutive=true | fields account_number, gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">M</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">F</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">M</td>
+  </tr>
+</tbody>
+</table>
+
+###### Limitations
+
+The `dedup` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
+
+##### eval
+
+The `eval` command evaluates an expression and appends its result to the search result.
+
+###### Syntax
+
+```sql
+eval <field>=<expression> ["," <field>=<expression> ]...
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">field</td>
+    <td class="tg-pnl2">If a field name does not exist, a new field is added. If the field name already exists, it's overwritten.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">expression</td>
+    <td class="tg-pnl2">Specify any supported expression.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Create a new field**
+
+To create a new `doubleAge` field for each document. `doubleAge` is the result of `age` multiplied by 2:
+
+```sql
+search source=accounts | eval doubleAge = age * 2 | fields age, doubleAge;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">age | doubleAge</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">32</td>
+    <td class="tg-pnl2">64</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">36</td>
+    <td class="tg-pnl2">72</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">56</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">33</td>
+    <td class="tg-pnl2">66</td>
+  </tr>
+</tbody>
+</table>
+
+*Example 2*: Overwrite the existing field
+
+To overwrite the `age` field with `age` plus 1:
+
+```sql
+search source=accounts | eval age = age + 1 | fields age;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">37</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">29</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">34</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Create a new field with a field defined with the `eval` command**
+
+To create a new field `ddAge`. `ddAge` is the result of `doubleAge` multiplied by 2, where `doubleAge` is defined in the `eval` command:
+
+```sql
+search source=accounts | eval doubleAge = age * 2, ddAge = doubleAge * 2 | fields age, doubleAge, ddAge;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">age</th>
+    <th class="tg-ua3b">doubleAge</th>
+    <th class="tg-ua3b">ddAge</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">32</td>
+    <td class="tg-pnl2">64</td>
+    <td class="tg-pnl2">128</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">36</td>
+    <td class="tg-pnl2">72</td>
+    <td class="tg-pnl2">144</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">56</td>
+    <td class="tg-pnl2">112</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">33</td>
+    <td class="tg-pnl2">66</td>
+    <td class="tg-pnl2">132</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limitation
+
+The ``eval`` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
+
+#### fields
+
+Use the `fields` command to keep or remove fields from a search result.
+
+##### Syntax
+
+```sql
+fields [+|-] <field-list>
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+    <th class="tg-ua3b">Default</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">index</td>
+    <td class="tg-pnl2">Plus (+) keeps only fields specified in the field list. Minus (-) removes all fields specified in the field list.</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">+</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">field list</td>
+    <td class="tg-pnl2">Specify a comma-delimited list of fields.</td>
+    <td class="tg-pnl2">Yes</td>
+    <td class="tg-pnl2">No default</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Select specified fields from result**
+
+To get `account_number`, `firstname`, and `lastname` fields from a search result:
+
+```sql
+search source=accounts | fields account_number, firstname, lastname;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">firstname </th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Remove specified fields from a search result**
+
+To remove the `account_number` field from the search results:
+
+```sql
+search source=accounts | fields account_number, firstname, lastname | fields - account_number;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+#### parse
+
+Use the `parse` command to parse a text field using regular expression and append the result to the search result.
+
+##### Syntax
+
+```sql
+parse <field> <regular-expression>
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">field</td>
+    <td class="tg-pnl2">A text field.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">regular-expression</td>
+    <td class="tg-pnl2">The regular expression used to extract new fields from the given test field. If a new field name exists, it will replace the original field.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+</tbody>
+</table>
+
+The regular expression is used to match the whole text field of each document with Java regex engine. Each named capture group in the expression will become a new ``STRING`` field.
+
+**Example 1: Create new field**
+
+The example shows how to create new field `host` for each document. `host` will be the hostname after `@` in `email` field. Parsing a null field will return an empty string.
+
+```sql
+os> source=accounts | parse email '.+@(?<host>.+)' | fields email, host ;
+fetched rows / total rows = 4/4
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">email</th>
+    <th class="tg-ua3b">host</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">amberduke@pyrami.com</td>
+    <td class="tg-pnl2">pyrami.com</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">hattiebond@netagy.com</td>
+    <td class="tg-pnl2">netagy.com</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">null</td>
+    <td class="tg-pnl2">null</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">daleadams@boink.com  </td>
+    <td class="tg-pnl2">boink.com</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Override the existing field**
+
+The example shows how to override the existing address field with street number removed.
+
+```sql
+os> source=accounts | parse address '\d+ (?<address>.+)' | fields address ;
+fetched rows / total rows = 4/4
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Holmes Lane</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Bristol Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Madison Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hutchinson Court</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Filter and sort be casted parsed field**
+
+The example shows how to sort street numbers that are higher than 500 in address field.
+
+```sql
+os> source=accounts | parse address '(?<streetNumber>\d+) (?<street>.+)' | where cast(streetNumber as int) > 500 | sort num(streetNumber) | fields streetNumber, street ;
+fetched rows / total rows = 3/3
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">streetNumber</th>
+    <th class="tg-ua3b">street</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">671</td>
+    <td class="tg-pnl2">Bristol Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">789</td>
+    <td class="tg-pnl2">Madison Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">880</td>
+    <td class="tg-pnl2">Holmes Lane</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limitations
+
+A few limitations exist when using the parse command:
+
+- Fields defined by parse cannot be parsed again. For example, `source=accounts | parse address '\d+ (?<street>.+)' | parse street '\w+ (?<road>\w+)' ;` will fail to return any expressions.
+- Fields defined by parse cannot be overridden with other commands. For example, when entering `source=accounts | parse address '\d+ (?<street>.+)' | eval street='1' | where street='1' ;` `where` will not match any documents since `street` cannot be overridden.
+- The text field used by parse cannot be overridden. For example, when entering `source=accounts | parse address '\d+ (?<street>.+)' | eval address='1' ;` `street` will not be parse since address is overridden.
+- Fields defined by parse cannot be filtered/sorted after using them in the `stats` command. For example, `source=accounts | parse email '.+@(?<host>.+)' | stats avg(age) by host | where host=pyrami.com ;` `where` will not parse the domain listed.
+
+#### rename
+
+Use the `rename` command to rename one or more fields in the search result.
+
+##### Syntax
+
+```sql
+rename <source-field> AS <target-field>["," <source-field> AS <target-field>]...
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">source-field</td>
+    <td class="tg-pnl2">The name of the field that you want to rename.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">target-field</td>
+    <td class="tg-pnl2">The name you want to rename to.</td>
+    <td class="tg-pnl2">Yes</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Rename one field**
+
+Rename the `account_number` field as `an`:
+
+```sql
+search source=accounts | rename account_number as an | fields an;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">an</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Rename multiple fields**
+
+Rename the `account_number` field as `an` and `employer` as `emp`:
+
+```sql
+search source=accounts | rename account_number as an, employer as emp | fields an, emp;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">an  </th>
+    <th class="tg-ua3b">emp</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Pyrami</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Netagy</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Quility</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">null</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limitations
+
+The `rename` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
+
+#### sort
+
+Use the `sort` command to sort search results by a specified field.
+
+##### Syntax
+
+```sql
+sort [count] <[+|-] sort-field>...
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+    <th class="tg-ua3b">Default</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">count</td>
+    <td class="tg-pnl2">The maximum number results to return from the sorted result. If count=0, all results are returned.</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">1000</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">[+|-]</td>
+    <td class="tg-pnl2">Use plus [+] to sort by ascending order and minus [-] to sort by descending order.</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">Ascending order</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">sort-field</td>
+    <td class="tg-pnl2">Specify the field that you want to sort by.</td>
+    <td class="tg-pnl2">Yes</td>
+    <td class="tg-pnl2">-</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Sort by one field**
+
+To sort all documents by the `age` field in ascending order:
+
+```sql
+search source=accounts | sort age | fields account_number, age;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Sort by one field and return all results**
+
+To sort all documents by the `age` field in ascending order and specify count as 0 to get back all results:
+
+```sql
+search source=accounts | sort 0 age | fields account_number, age;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Sort by one field in descending order**
+
+To sort all documents by the `age` field in descending order:
+
+```sql
+search source=accounts | sort - age | fields account_number, age;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 4: Specify the number of sorted documents to return**
+
+To sort all documents by the `age` field in ascending order and specify count as 2 to get back two results:
+
+```sql
+search source=accounts | sort 2 age | fields account_number, age;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 5: Sort by multiple fields**
+
+To sort all documents by the `gender` field in ascending order and `age` field in descending order:
+
+```sql
+search source=accounts | sort + gender, - age | fields account_number, gender, age;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+</tbody>
+</table>
+
+#### stats
+
+Use the `stats` command to aggregate from search results.
+
+The following table lists the aggregation functions and also indicates how each one handles null or missing values:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function</th>
+    <th class="tg-ua3b">NULL</th>
+    <th class="tg-ua3b">MISSING</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">COUNT</td>
+    <td class="tg-pnl2">Not counted</td>
+    <td class="tg-pnl2">Not counted</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">SUM</td>
+    <td class="tg-pnl2">Ignore</td>
+    <td class="tg-pnl2">Ignore</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">AVG</td>
+    <td class="tg-pnl2">Ignore</td>
+    <td class="tg-pnl2">Ignore</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">MAX</td>
+    <td class="tg-pnl2">Ignore</td>
+    <td class="tg-pnl2">Ignore</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">MIN</td>
+    <td class="tg-pnl2">Ignore</td>
+    <td class="tg-pnl2">Ignore</td>
+  </tr>
+</tbody>
+</table>
+
+##### Syntax
 
 ```bash
-POST kibana_sample_data_logs/_search
+stats <aggregation>... [by-clause]...
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+    <th class="tg-ua3b">Default</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">aggregation</td>
+    <td class="tg-pnl2">Specify a statistical aggregation function. The argument of this function must be a field.</td>
+    <td class="tg-pnl2">Yes</td>
+    <td class="tg-pnl2">1000</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">by-clause</td>
+    <td class="tg-pnl2">Specify one or more fields to group the results by. If not specified, the <i>stats</i> command returns only one row, which is the aggregation over the entire result set.</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">-</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Calculate the average value of a field**
+
+To calculate the average `age` of all documents:
+
+```sql
+search source=accounts | stats avg(age);
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">avg(age)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">32.25</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Calculate the average value of a field by group**
+
+To calculate the average age grouped by gender:
+
+```sql
+search source=accounts | stats avg(age) by gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">avg(age)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">28.0</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">33.666666666666664</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Calculate the average and sum of a field by group**
+
+To calculate the average and sum of age grouped by gender:
+
+```sql
+search source=accounts | stats avg(age), sum(age) by gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">avg(age)</th>
+    <th class="tg-ua3b">sum(age)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">33.666666666666664</td>
+    <td class="tg-pnl2">101</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 4: Calculate the maximum value of a field**
+
+To calculate the maximum age:
+
+```sql
+search source=accounts | stats max(age);
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">max(age)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 5: Calculate the maximum and minimum value of a field by group**
+
+To calculate the maximum and minimum age values grouped by gender:
+
+```sql
+search source=accounts | stats max(age), min(age) by gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">min(age)</th>
+    <th class="tg-ua3b">max(age)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">28</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">32</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+#### where
+
+Use the `where` command with a bool expression to filter the search result. The `where` command only returns the result when the bool expression evaluates to true.
+
+##### Syntax
+
+```sql
+where <boolean-expression>
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">bool-expression</td>
+    <td class="tg-pnl2">An expression that evaluates to a boolean value.</td>
+    <td class="tg-pnl2">No</td>
+  </tr>
+</tbody>
+</table>
+
+**Example: Filter result set with a condition**
+
+To get all documents from the `accounts` index where `account_number` is 1 or gender is `F`:
+
+```sql
+search source=accounts | where account_number=1 or gender=\"F\" | fields account_number, gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">M</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">F</td>
+  </tr>
+</tbody>
+</table>
+
+#### head
+
+Use the `head` command to return the first N number of results in a specified search order.
+
+##### Syntax
+
+```sql
+head [N]
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+    <th class="tg-ua3b">Default</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">N</td>
+    <td class="tg-pnl2">Specify the number of results to return.</td>
+    <td class="tg-pnl2">No</td>
+    <td class="tg-pnl2">10</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Get the first 10 results**
+
+To get the first 10 results:
+
+```sql
+search source=accounts | fields firstname, age | head;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Get the first N results**
+
+To get the first two results:
+
+```sql
+search source=accounts | fields firstname, age | head 2;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">36</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limitations
+
+The `head` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
+
+#### rare
+
+Use the `rare` command to find the least common values of all fields in a field list.
+A maximum of 10 results are returned for each distinct set of values of the group-by fields.
+
+##### Syntax
+
+```sql
+rare <field-list> [by-clause]
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Required</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">field-list</td>
+    <td class="tg-pnl2">Specify a comma-delimited list of field names.</td>
+    <td class="tg-pnl2">No
+`by-clause`</td>
+    <td class="tg-pnl2">Specify one or more fields to group the results by.</td>
+    <td class="tg-pnl2">No</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Find the least common values in a field**
+
+To find the least common values of gender:
+
+```sql
+search source=accounts | rare gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">F</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Find the least common values grouped by gender**
+
+To find the least common age grouped by gender:
+
+```sql
+search source=accounts | rare age by gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">33</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limitations
+
+The `rare` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
+
+#### top
+
+Use the `top` command to find the most common values of all fields in the field list.
+
+##### Syntax
+
+```sql
+top [N] <field-list> [by-clause]
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Field</th>
+    <th class="tg-ua3b">Description</th>
+    <th class="tg-ua3b">Default</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">N</td>
+    <td class="tg-pnl2">Specify the number of results to return.</td>
+    <td class="tg-pnl2">10</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">field-list</td>
+    <td class="tg-pnl2">Specify a comma-delimited list of field names.</td>
+    <td class="tg-pnl2">-</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">by-clause</td>
+    <td class="tg-pnl2">Specify one or more fields to group the results by.</td>
+    <td class="tg-pnl2">-</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 1: Find the most common values in a field**
+
+To find the most common genders:
+
+```sql
+search source=accounts | top gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">M</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">F</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 2: Find the most common value in a field**
+
+To find the most common gender:
+
+```sql
+search source=accounts | top 1 gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">M</td>
+  </tr>
+</tbody>
+</table>
+
+**Example 3: Find the most common values grouped by gender**
+
+To find the most common age grouped by gender:
+
+```sql
+search source=accounts | top 1 age by gender;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">gender</th>
+    <th class="tg-ua3b">age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">F</td>
+    <td class="tg-pnl2">28</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">M</td>
+    <td class="tg-pnl2">32</td>
+  </tr>
+</tbody>
+</table>
+
+##### Limitations
+
+The `top` command is not rewritten to Energy Logserver DSL, it is only executed on the coordination node.
+
+### Identifiers
+
+An identifier is an ID to name your database objects, such as index names, field names, aliases, and so on.
+Energy Logserver supports two types of identifiers: regular identifiers and delimited identifiers.
+
+#### Regular identifiers
+
+A regular identifier is a string of characters that starts with an ASCII letter (lower or upper case).
+The next character can either be a letter, digit, or underscore (_). It can't be a reserved keyword.
+Whitespace and other special characters are also not allowed.
+
+Energy Logserver supports the following regular identifiers:
+
+1. Identifiers prefixed by a dot `.` sign. Use to hide an index. For example `.opensearch-dashboards`.
+1. Identifiers prefixed by an `@` sign. Use for meta fields generated by Logstash ingestion.
+1. Identifiers with hyphen `-` in the middle. Use for index names with date information.
+1. Identifiers with star `*` present. Use for wildcard match of index patterns.
+
+For regular identifiers, you can use the name without any back tick or escape characters.
+In this example, `source`, `fields`, `account_number`, `firstname`, and `lastname` are all identifiers. Out of these, the `source` field is a reserved identifier.
+
+```sql
+SELECT account_number, firstname, lastname FROM accounts;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">Amber</td>
+    <td class="tg-pnl2">Duke</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">Bond</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">Bates</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+#### Delimited identifiers
+
+A delimited identifier can contain special characters not allowed by a regular identifier.
+You must enclose delimited identifiers with back ticks (\`\`). Back ticks differentiate the identifier from special characters.
+
+If the index name includes a dot (`.`), for example, `log-2021.01.11`, use delimited identifiers with back ticks to escape it \``log-2021.01.11`\`.
+
+Typical examples of using delimited identifiers:
+
+1. Identifiers with reserved keywords.
+1. Identifiers with a `.` present. Similarly, `-` to include date information.
+1. Identifiers with other special characters. For example, Unicode characters.
+
+To quote an index name with back ticks:
+
+```sql
+source=`accounts` | fields `account_number`;
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">18</td>
+  </tr>
+</tbody>
+</table>
+
+#### Case sensitivity
+
+Identifiers are case sensitive. They must be exactly the same as what's stored in Energy Logserver.
+
+For example, if you run `source=Accounts`, you'll get an index not found exception because the actual index name is in lower case.
+
+### Data types
+
+The following table shows the data types supported by the SQL plugin and how each one maps to SQL and Energy Logserver data types:
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Energy Logserver SQL Type</th>
+    <th class="tg-ua3b">Energy Logserver Type</th>
+    <th class="tg-ua3b">SQL Type</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">boolean</td>
+    <td class="tg-pnl2">boolean</td>
+    <td class="tg-pnl2">BOOLEAN</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">byte</td>
+    <td class="tg-pnl2">byte</td>
+    <td class="tg-pnl2">TINYINT</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">short</td>
+    <td class="tg-pnl2">byte</td>
+    <td class="tg-pnl2">SMALLINT</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">integer</td>
+    <td class="tg-pnl2">integer</td>
+    <td class="tg-pnl2">INTEGER</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">long</td>
+    <td class="tg-pnl2">long</td>
+    <td class="tg-pnl2">BIGINT</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">float</td>
+    <td class="tg-pnl2">float</td>
+    <td class="tg-pnl2">REAL</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">half_float</td>
+    <td class="tg-pnl2">float</td>
+    <td class="tg-pnl2">FLOAT</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">scaled_float</td>
+    <td class="tg-pnl2">float</td>
+    <td class="tg-pnl2">DOUBLE</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">double</td>
+    <td class="tg-pnl2">double</td>
+    <td class="tg-pnl2">DOUBLE</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">keyword</td>
+    <td class="tg-pnl2">string</td>
+    <td class="tg-pnl2">VARCHAR</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">text</td>
+    <td class="tg-pnl2">text</td>
+    <td class="tg-pnl2">VARCHAR</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date</td>
+    <td class="tg-pnl2">timestamp</td>
+    <td class="tg-pnl2">TIMESTAMP</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date_nanos</td>
+    <td class="tg-pnl2">timestamp</td>
+    <td class="tg-pnl2">TIMESTAMP</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">ip</td>
+    <td class="tg-pnl2">ip</td>
+    <td class="tg-pnl2">VARCHAR</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date</td>
+    <td class="tg-pnl2">timestamp</td>
+    <td class="tg-pnl2">TIMESTAMP</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">binary</td>
+    <td class="tg-pnl2">binary</td>
+    <td class="tg-pnl2">VARBINARY</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">object</td>
+    <td class="tg-pnl2">struct</td>
+    <td class="tg-pnl2">STRUCT</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">nested</td>
+    <td class="tg-pnl2">array</td>
+    <td class="tg-pnl2">STRUCT</td>
+  </tr>
+</tbody>
+</table>
+
+In addition to this list, the SQL plugin also supports the `datetime` type, though it doesn't have a corresponding mapping with Energy Logserver or SQL.
+To use a function without a corresponding mapping, you must explicitly convert the data type to one that does.
+
+#### Date and time types
+
+The date and time types represent a time period: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`, and `INTERVAL`. By default, the Energy Logserver DSL uses the `date` type as the only date-time related type that contains all information of an absolute time point.
+
+To integrate with SQL, each type other than the `timestamp` type holds part of the time period information. Some functions might have restrictions for the input argument type.
+
+#### Date
+
+The `date` type represents the calendar date regardless of the time zone. A given date value is a 24-hour period, but this period varies in different timezones and might have flexible hours during daylight saving programs. The `date` type doesn't contain time information and it only supports a range of `1000-01-01` to `9999-12-31`.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Type</th>
+    <th class="tg-ua3b">Syntax</th>
+    <th class="tg-ua3b">Range</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">date</td>
+    <td class="tg-pnl2">yyyy-MM-dd</td>
+    <td class="tg-pnl2">0001-01-01 to 9999-12-31</td>
+  </tr>
+</tbody>
+</table>
+
+#### Time
+
+The `time` type represents the time of a clock regardless of its timezone. The `time` type doesn't contain date information.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Type</th>
+    <th class="tg-ua3b">Syntax</th>
+    <th class="tg-ua3b">Range</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">time</td>
+    <td class="tg-pnl2">hh:mm:ss[.fraction]</td>
+    <td class="tg-pnl2">00:00:00.0000000000 to 23:59:59.9999999999</td>
+  </tr>
+</tbody>
+</table>
+
+#### Datetime
+
+The `datetime` type is a combination of date and time. It doesn't contain timezone information. For an absolute time point that contains date, time, and timezone information, see [Timestamp](#timestamp).
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Type</th>
+    <th class="tg-ua3b">Syntax</th>
+    <th class="tg-ua3b">Range</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">datetime</td>
+    <td class="tg-pnl2">yyyy-MM-dd hh:mm:ss[.fraction]</td>
+    <td class="tg-pnl2">0001-01-01 00:00:00.0000000000 to 9999-12-31 23:59:59.9999999999</td>
+  </tr>
+</tbody>
+</table>
+
+#### Timestamp
+
+The `timestamp` type is an absolute instance independent of timezone or convention. For example, for a given point of time, if you change the timestamp to a different timezone, its value changes accordingly.
+
+The `timestamp` type is stored differently from the other types. It's converted from its current timezone to UTC for storage and converted back to its set timezone from UTC when it's retrieved.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Type</th>
+    <th class="tg-ua3b">Syntax</th>
+    <th class="tg-ua3b">Range</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">timestamp</td>
+    <td class="tg-pnl2">yyyy-MM-dd hh:mm:ss[.fraction]</td>
+    <td class="tg-pnl2">0001-01-01 00:00:01.9999999999 UTC to 9999-12-31 23:59:59.9999999999</td>
+  </tr>
+</tbody>
+</table>
+
+#### Interval
+
+The `interval` type represents a temporal duration or a period.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Type</th>
+    <th class="tg-ua3b">Syntax</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">interval</td>
+    <td class="tg-pnl2">INTERVAL expr unit</td>
+  </tr>
+</tbody>
+</table>
+
+The `expr` unit is any expression that eventually iterates to a quantity value. It represents a unit for interpreting the quantity, including `MICROSECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR`. The `INTERVAL` keyword and the unit specifier are not case sensitive.
+
+The `interval` type has two classes of intervals: year-week intervals and day-time intervals.
+
+- Year-week intervals store years, quarters, months, and weeks.
+- Day-time intervals store days, hours, minutes, seconds, and microseconds.
+
+#### Convert between date and time types
+
+Apart from the `interval` type, all date and time types can be converted to each other. The conversion might alter the value or cause some information loss. For example, when extracting the `time` value from a `datetime` value, or converting a `date` value to a `datetime` value, and so on.
+
+The SQL plugin supports the following conversion rules for each of the types:
+
+**Convert from date**
+
+- Because the `date` value doesn't have any time information, conversion to the `time` type isn't useful and always returns a zero time value of `00:00:00`.
+- Converting from `date` to `datetime` has a data fill-up due to the lack of time information. It attaches the time `00:00:00` to the original date by default and forms a `datetime` instance. For example, conversion of `2020-08-17` to a `datetime` type is `2020-08-17 00:00:00`.
+- Converting to `timestamp` type alternates both the `time` value and the `timezone` information. It attaches the zero time value `00:00:00` and the session timezone (UTC by default) to the date. For example, conversion of `2020-08-17` to a `datetime` type with a session timezone UTC is `2020-08-17 00:00:00 UTC`.
+
+**Convert from time**
+
+- You cannot convert the `time` type to any other date and time types because it doesn't contain any date information.
+
+**Convert from datetime**
+
+- Converting `datetime` to `date` extracts the date value from the `datetime` value. For example, conversion of `2020-08-17 14:09:00` to a `date` type is `2020-08-08`.
+- Converting `datetime` to `time` extracts the time value from the `datetime` value. For example, conversion of `2020-08-17 14:09:00` to a `time` type is `14:09:00`.
+- Because the `datetime` type doesn't contain timezone information, converting to `timestamp` type fills up the timezone value with the session timezone. For example, conversion of `2020-08-17 14:09:00` (UTC) to a `timestamp` type is `2020-08-17 14:09:00 UTC`.
+
+**Convert from timestamp**
+
+- Converting from a `timestamp` type to a `date` type extracts the date value and converting to a `time` type extracts the time value. Converting from a `timestamp` type to `datetime` type extracts only the `datetime` value and leaves out the timezone value. For example, conversion of `2020-08-17 14:09:00` UTC to a `date` type is `2020-08-17`, to a `time` type is `14:09:00`, and to a `datetime` type is `2020-08-17 14:09:00`.
+
+### Functions
+
+You must enable fielddata in the document mapping for most string functions to work properly.
+
+The specification shows the return type of the function with a generic type `T` as the argument.
+For example, `abs(number T) -> T` means that the function `abs` accepts a numerical argument of type `T`, which could be any subtype of the `number` type, and it returns the actual type of `T` as the return type.
+
+The SQL plugin supports the following common functions shared across the SQL and PPL languages.
+
+#### Mathematical
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function  </th>
+    <th class="tg-ua3b">Specification   </th>
+    <th class="tg-ua3b">Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">abs</td>
+    <td class="tg-pnl2">abs(number T) -> T</td>
+    <td class="tg-pnl2">SELECT abs(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">add</td>
+    <td class="tg-pnl2">add(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT add(1, 5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">cbrt</td>
+    <td class="tg-pnl2">cbrt(number T) -> double</td>
+    <td class="tg-pnl2">SELECT cbrt(8)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">ceil</td>
+    <td class="tg-pnl2">ceil(number T) -> T</td>
+    <td class="tg-pnl2">SELECT ceil(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">conv</td>
+    <td class="tg-pnl2">conv(string T, integer, integer) -> string</td>
+    <td class="tg-pnl2">SELECT conv('2C', 16, 10), conv(1111, 2, 10)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">crc32</td>
+    <td class="tg-pnl2">crc32(string) -> string</td>
+    <td class="tg-pnl2">SELECT crc32('MySQL')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">divide</td>
+    <td class="tg-pnl2">divide(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT divide(1, 0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">e</td>
+    <td class="tg-pnl2">e() -> double</td>
+    <td class="tg-pnl2">SELECT e()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">exp</td>
+    <td class="tg-pnl2">exp(number T) -> double</td>
+    <td class="tg-pnl2">SELECT exp(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">expm1</td>
+    <td class="tg-pnl2">expm1(number T) -> double</td>
+    <td class="tg-pnl2">SELECT expm1(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">floor</td>
+    <td class="tg-pnl2">floor(number T) -> long</td>
+    <td class="tg-pnl2">SELECT floor(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">ln</td>
+    <td class="tg-pnl2">ln(number T) -> double</td>
+    <td class="tg-pnl2">SELECT ln(10)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">log</td>
+    <td class="tg-pnl2">log(number T) -> double OR log(number T, number T) -> double</td>
+    <td class="tg-pnl2">SELECT log(10), SELECT log(2, 16)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">log2</td>
+    <td class="tg-pnl2">log2(number T) -> double</td>
+    <td class="tg-pnl2">SELECT log2(10)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">log10</td>
+    <td class="tg-pnl2">log10(number T) -> double</td>
+    <td class="tg-pnl2">SELECT log10(10)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">mod</td>
+    <td class="tg-pnl2">mod(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT mod(2, 3)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">modulus</td>
+    <td class="tg-pnl2">modulus(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT modulus(2, 3)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">multiply</td>
+    <td class="tg-pnl2">multiply(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT multiply(2, 3)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">pi</td>
+    <td class="tg-pnl2">pi() -> double</td>
+    <td class="tg-pnl2">SELECT pi()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">pow</td>
+    <td class="tg-pnl2">pow(number T, number T) -> double</td>
+    <td class="tg-pnl2">SELECT pow(2, 3)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">power</td>
+    <td class="tg-pnl2">power(number T, number T) -> double</td>
+    <td class="tg-pnl2">SELECT power(2, 3)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">rand</td>
+    <td class="tg-pnl2">rand() -> float OR rand(number T) -> float</td>
+    <td class="tg-pnl2">SELECT rand(), SELECT rand(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">rint</td>
+    <td class="tg-pnl2">rint(number T) -> double</td>
+    <td class="tg-pnl2">SELECT rint(1.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">round</td>
+    <td class="tg-pnl2">round(number T) -> T OR round(number T, integer) -> T</td>
+    <td class="tg-pnl2">SELECT round(1.5), SELECT round(1.175, 2)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">sign</td>
+    <td class="tg-pnl2">sign(number T) -> integer</td>
+    <td class="tg-pnl2">SELECT sign(1.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">signum</td>
+    <td class="tg-pnl2">signum(number T) -> integer</td>
+    <td class="tg-pnl2">SELECT signum(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">sqrt</td>
+    <td class="tg-pnl2">sqrt(number T) -> double</td>
+    <td class="tg-pnl2">SELECT sqrt(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">strcmp</td>
+    <td class="tg-pnl2">strcmp(string T, string T) -> integer</td>
+    <td class="tg-pnl2">SELECT strcmp('hello', 'hello world')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">subtract</td>
+    <td class="tg-pnl2">subtract(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT subtract(3, 2)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">truncate</td>
+    <td class="tg-pnl2">truncate(number T, number T) -> T</td>
+    <td class="tg-pnl2">SELECT truncate(56.78, 1)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">+</td>
+    <td class="tg-pnl2">number T + number T -> T</td>
+    <td class="tg-pnl2">SELECT 1 + 5</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">-</td>
+    <td class="tg-pnl2">number T - number T -> T</td>
+    <td class="tg-pnl2">SELECT 3 - 2</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">*</td>
+    <td class="tg-pnl2">number T * number T -> T</td>
+    <td class="tg-pnl2">SELECT 2 * 3</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">/</td>
+    <td class="tg-pnl2">number T / number T -> T</td>
+    <td class="tg-pnl2">SELECT 1 / 0.5</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">%</td>
+    <td class="tg-pnl2">number T % number T -> T</td>
+    <td class="tg-pnl2">SELECT 2 % 3</td>
+  </tr>
+</tbody>
+</table>
+
+#### Trigonometric
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function </th>
+    <th class="tg-ua3b">Specification</th>
+    <th class="tg-ua3b">Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">acos</td>
+    <td class="tg-pnl2">acos(number T) -> double</td>
+    <td class="tg-pnl2">SELECT acos(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">asin</td>
+    <td class="tg-pnl2">asin(number T) -> double</td>
+    <td class="tg-pnl2">SELECT asin(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">atan</td>
+    <td class="tg-pnl2">atan(number T) -> double</td>
+    <td class="tg-pnl2">SELECT atan(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">atan2</td>
+    <td class="tg-pnl2">atan2(number T, number T) -> double</td>
+    <td class="tg-pnl2">SELECT atan2(1, 0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">cos</td>
+    <td class="tg-pnl2">cos(number T) -> double</td>
+    <td class="tg-pnl2">SELECT cos(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">cosh</td>
+    <td class="tg-pnl2">cosh(number T) -> double</td>
+    <td class="tg-pnl2">SELECT cosh(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">cot</td>
+    <td class="tg-pnl2">cot(number T) -> double</td>
+    <td class="tg-pnl2">SELECT cot(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">degrees</td>
+    <td class="tg-pnl2">degrees(number T) -> double</td>
+    <td class="tg-pnl2">SELECT degrees(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">radians</td>
+    <td class="tg-pnl2">radians(number T) -> double</td>
+    <td class="tg-pnl2">SELECT radians(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">sin</td>
+    <td class="tg-pnl2">sin(number T) -> double</td>
+    <td class="tg-pnl2">SELECT sin(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">sinh</td>
+    <td class="tg-pnl2">sinh(number T) -> double</td>
+    <td class="tg-pnl2">SELECT sinh(0.5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">tan</td>
+    <td class="tg-pnl2">tan(number T) -> double</td>
+    <td class="tg-pnl2">SELECT tan(0.5)</td>
+  </tr>
+</tbody>
+</table>
+
+#### Date and time
+
+Functions marked with * are only available in SQL.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function</th>
+    <th class="tg-ua3b">Specification </th>
+    <th class="tg-ua3b">Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">adddate</td>
+    <td class="tg-pnl2">adddate(date, INTERVAL expr unit) -> date</td>
+    <td class="tg-pnl2">SELECT adddate(date('2020-08-26'), INTERVAL 1 hour)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">addtime</td>
+    <td class="tg-pnl2">addtime(date, date) -> date</td>
+    <td class="tg-pnl2">SELECT addtime(date('2008-12-12'), date('2008-12-12'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">convert_tz</td>
+    <td class="tg-pnl2">convert_tz(date, string, string) -> date</td>
+    <td class="tg-pnl2">SELECT convert_tz('2008-12-25 05:30:00', '+00:00', 'America/Los_Angeles')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">curtime</td>
+    <td class="tg-pnl2">curtime() -> time</td>
+    <td class="tg-pnl2">SELECT curtime()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">curdate</td>
+    <td class="tg-pnl2">curdate() -> date</td>
+    <td class="tg-pnl2">SELECT curdate()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">current_date</td>
+    <td class="tg-pnl2">current_date() -> date</td>
+    <td class="tg-pnl2">SELECT current_date()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">current_time</td>
+    <td class="tg-pnl2">current_time() -> time</td>
+    <td class="tg-pnl2">SELECT current_time()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">current_timestamp</td>
+    <td class="tg-pnl2">current_timestamp() -> date</td>
+    <td class="tg-pnl2">SELECT current_timestamp()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date</td>
+    <td class="tg-pnl2">date(date) -> date</td>
+    <td class="tg-pnl2">SELECT date('2000-01-02')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">datediff</td>
+    <td class="tg-pnl2">datediff(date, date) -> integer</td>
+    <td class="tg-pnl2">SELECT datediff(date('2000-01-02'), date('2000-01-01'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">datetime</td>
+    <td class="tg-pnl2">datetime(string) -> datetime</td>
+    <td class="tg-pnl2">SELECT datetime('2008-12-25 00:00:00')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date_add</td>
+    <td class="tg-pnl2">date_add(date, INTERVAL integer UNIT)</td>
+    <td class="tg-pnl2">SELECT date_add('2020-08-26', INTERVAL 1 HOUR)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date_format</td>
+    <td class="tg-pnl2">date_format(date, string) -> string OR date_format(date, string, string) -> string</td>
+    <td class="tg-pnl2">SELECT date_format(date('2020-08-26'), 'Y')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">date_sub</td>
+    <td class="tg-pnl2">date_sub(date, INTERVAL expr unit) -> date</td>
+    <td class="tg-pnl2">SELECT date_sub(date('2008-01-02'), INTERVAL 31 day)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">dayofmonth</td>
+    <td class="tg-pnl2">dayofmonth(date) -> integer</td>
+    <td class="tg-pnl2">SELECT dayofmonth(date('2001-05-07'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">day</td>
+    <td class="tg-pnl2">day(date) -> integer</td>
+    <td class="tg-pnl2">SELECT day(date('2020-08-25'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">dayname</td>
+    <td class="tg-pnl2">dayname(date) -> string</td>
+    <td class="tg-pnl2">SELECT dayname(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">dayofmonth</td>
+    <td class="tg-pnl2">dayofmonth(date) -> integer</td>
+    <td class="tg-pnl2">SELECT dayofmonth(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">dayofweek</td>
+    <td class="tg-pnl2">dayofweek(date) -> integer</td>
+    <td class="tg-pnl2">SELECT dayofweek(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">dayofyear</td>
+    <td class="tg-pnl2">dayofyear(date) -> integer</td>
+    <td class="tg-pnl2">SELECT dayofyear(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">dayofweek</td>
+    <td class="tg-pnl2">dayofweek(date) -> integer</td>
+    <td class="tg-pnl2">SELECT dayofweek(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">day_of_month\*</td>
+    <td class="tg-pnl2">day_of_month(date) -> integer</td>
+    <td class="tg-pnl2">SELECT day_of_month(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">day_of_week\*</td>
+    <td class="tg-pnl2">day_of_week(date) -> integer</td>
+    <td class="tg-pnl2">SELECT day_of_week(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">day_of_year\*</td>
+    <td class="tg-pnl2">day_of_year(date) -> integer</td>
+    <td class="tg-pnl2">SELECT day_of_year(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">extract\*</td>
+    <td class="tg-pnl2">extract(part FROM date) -> integer</td>
+    <td class="tg-pnl2">SELECT extract(MONTH FROM datetime('2020-08-26 10:11:12'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">from_days</td>
+    <td class="tg-pnl2">from_days(N) -> integer</td>
+    <td class="tg-pnl2">SELECT from_days(733687)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">from_unixtime</td>
+    <td class="tg-pnl2">from_unixtime(N) -> date</td>
+    <td class="tg-pnl2">SELECT from_unixtime(1220249547)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">get_format</td>
+    <td class="tg-pnl2">get_format(PART, string) -> string</td>
+    <td class="tg-pnl2">SELECT get_format(DATE, 'USA')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">hour</td>
+    <td class="tg-pnl2">hour(time) -> integer</td>
+    <td class="tg-pnl2">SELECT hour(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">hour_of_day\*</td>
+    <td class="tg-pnl2">hour_of_day(time) -> integer</td>
+    <td class="tg-pnl2">SELECT hour_of_day(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">last_day\*</td>
+    <td class="tg-pnl2">last_day(date) -> integer</td>
+    <td class="tg-pnl2">SELECT last_day(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">localtime</td>
+    <td class="tg-pnl2">localtime() -> date</td>
+    <td class="tg-pnl2">SELECT localtime()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">localtimestamp</td>
+    <td class="tg-pnl2">localtimestamp() -> date</td>
+    <td class="tg-pnl2">SELECT localtimestamp()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">makedate</td>
+    <td class="tg-pnl2">makedate(double, double) -> date</td>
+    <td class="tg-pnl2">SELECT makedate(1945, 5.9)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">maketime</td>
+    <td class="tg-pnl2">maketime(integer, integer, integer) -> date</td>
+    <td class="tg-pnl2">SELECT maketime(1, 2, 3)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">microsecond</td>
+    <td class="tg-pnl2">microsecond(expr) -> integer</td>
+    <td class="tg-pnl2">SELECT microsecond(time '01:02:03.123456')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">minute</td>
+    <td class="tg-pnl2">minute(expr) -> integer</td>
+    <td class="tg-pnl2">SELECT minute(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">minute_of_day\*</td>
+    <td class="tg-pnl2">minute_of_day(expr) -> integer</td>
+    <td class="tg-pnl2">SELECT minute_of_day(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">minute_of_hour\*</td>
+    <td class="tg-pnl2">minute_of_hour(expr) -> integer</td>
+    <td class="tg-pnl2">SELECT minute_of_hour(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">month</td>
+    <td class="tg-pnl2">month(date) -> integer</td>
+    <td class="tg-pnl2">SELECT month(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">month_of_year\*</td>
+    <td class="tg-pnl2">month_of_year(date) -> integer</td>
+    <td class="tg-pnl2">SELECT month_of_year(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">monthname</td>
+    <td class="tg-pnl2">monthname(date) -> string</td>
+    <td class="tg-pnl2">SELECT monthname(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">now</td>
+    <td class="tg-pnl2">now() -> date</td>
+    <td class="tg-pnl2">SELECT now()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">period_add</td>
+    <td class="tg-pnl2">period_add(integer, integer)</td>
+    <td class="tg-pnl2">SELECT period_add(200801, 2)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">period_diff</td>
+    <td class="tg-pnl2">period_diff(integer, integer)</td>
+    <td class="tg-pnl2">SELECT period_diff(200802, 200703)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">quarter</td>
+    <td class="tg-pnl2">quarter(date) -> integer</td>
+    <td class="tg-pnl2">SELECT quarter(date('2020-08-26'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">second</td>
+    <td class="tg-pnl2">second(time) -> integer</td>
+    <td class="tg-pnl2">SELECT second(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">second_of_minute\*</td>
+    <td class="tg-pnl2">second_of_minute(time) -> integer</td>
+    <td class="tg-pnl2">SELECT second_of_minute(time '01:02:03')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">sec_to_time\*</td>
+    <td class="tg-pnl2">sec_to_time(integer) -> date</td>
+    <td class="tg-pnl2">SELECT sec_to_time(10000)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">subdate</td>
+    <td class="tg-pnl2">subdate(date, INTERVAL expr unit) -> date, datetime</td>
+    <td class="tg-pnl2">SELECT subdate(date('2008-01-02'), INTERVAL 31 day)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">subtime</td>
+    <td class="tg-pnl2">subtime(date, date) -> date</td>
+    <td class="tg-pnl2">SELECT subtime(date('2008-12-12'), date('2008-11-15'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">str_to_date\*</td>
+    <td class="tg-pnl2">str_to_date(string, format) -> date</td>
+    <td class="tg-pnl2">SELECT str_to_date("01,5,2013", "%d,%m,%Y")</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">time</td>
+    <td class="tg-pnl2">time(expr) -> time</td>
+    <td class="tg-pnl2">SELECT time('13:49:00')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">timediff</td>
+    <td class="tg-pnl2">timediff(time, time) -> time</td>
+    <td class="tg-pnl2">SELECT timediff(time('23:59:59'), time('13:00:00'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">timestamp</td>
+    <td class="tg-pnl2">timestamp(date) -> date</td>
+    <td class="tg-pnl2">SELECT timestamp('2001-05-07 00:00:00')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">timestampadd</td>
+    <td class="tg-pnl2">timestampadd(interval, integer, (date)) -> date</td>
+    <td class="tg-pnl2">SELECT timestampadd(DAY, 17, datetime('2000-01-01 00:00:00'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">timestampdiff</td>
+    <td class="tg-pnl2">timestampdiff(interval, date, date) -> integer</td>
+    <td class="tg-pnl2">SELECT timestampdiff(YEAR, '1997-01-01 00:00:00', '2001-03-06 00:00:00')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">time_format</td>
+    <td class="tg-pnl2">time_format(date, string) -> string</td>
+    <td class="tg-pnl2">SELECT time_format('1998-01-31 13:14:15.012345', '%f %H %h %I %i %p %r %S %s %T')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">time_to_sec</td>
+    <td class="tg-pnl2">time_to_sec(time) -> long</td>
+    <td class="tg-pnl2">SELECT time_to_sec(time '22:23:00')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">to_days</td>
+    <td class="tg-pnl2">to_days(date) -> long</td>
+    <td class="tg-pnl2">SELECT to_days(date '2008-10-07')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">to_seconds</td>
+    <td class="tg-pnl2">to_seconds(date) -> integer</td>
+    <td class="tg-pnl2">SELECT to_seconds(date('2008-10-07'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">unix_timestamp</td>
+    <td class="tg-pnl2">unix_timestamp(date) -> double</td>
+    <td class="tg-pnl2">SELECT unix_timestamp(timestamp('1996-11-15 17:05:42'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">utc_date</td>
+    <td class="tg-pnl2">utc_date() -> date</td>
+    <td class="tg-pnl2">SELECT utc_date()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">utc_time</td>
+    <td class="tg-pnl2">utc_time() -> date</td>
+    <td class="tg-pnl2">SELECT utc_time()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">utc_timestamp</td>
+    <td class="tg-pnl2">utc_timestamp() -> date</td>
+    <td class="tg-pnl2">SELECT utc_timestamp()</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">week</td>
+    <td class="tg-pnl2">week(date[mode]) -> integer</td>
+    <td class="tg-pnl2">SELECT week(date('2008-02-20'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">weekofyear</td>
+    <td class="tg-pnl2">weekofyear(date[mode]) -> integer</td>
+    <td class="tg-pnl2">SELECT weekofyear(date('2008-02-20'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">week_of_year\*</td>
+    <td class="tg-pnl2">week_of_year(date[mode]) -> integer</td>
+    <td class="tg-pnl2">SELECT week_of_year(date('2008-02-20'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">year</td>
+    <td class="tg-pnl2">year(date) -> integer</td>
+    <td class="tg-pnl2">SELECT year(date('2001-07-05'))</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">yearweek\*</td>
+    <td class="tg-pnl2">yearweek(date[mode]) -> integer</td>
+    <td class="tg-pnl2">SELECT yearweek(date('2008-02-20'))</td>
+  </tr>
+</tbody>
+</table>
+
+#### String
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function   </th>
+    <th class="tg-ua3b">Specification</th>
+    <th class="tg-ua3b">Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">ascii</td>
+    <td class="tg-pnl2">ascii(string) -> integer</td>
+    <td class="tg-pnl2">SELECT ascii('h')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">concat</td>
+    <td class="tg-pnl2">concat(string, string) -> string</td>
+    <td class="tg-pnl2">SELECT concat('hello', 'world')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">concat_ws</td>
+    <td class="tg-pnl2">concat_ws(separator, string, string…) -> string</td>
+    <td class="tg-pnl2">SELECT concat_ws(" ", "Hello", "World!")</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">left</td>
+    <td class="tg-pnl2">left(string, integer) -> string</td>
+    <td class="tg-pnl2">SELECT left('hello', 2)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">length</td>
+    <td class="tg-pnl2">length(string) -> integer</td>
+    <td class="tg-pnl2">SELECT length('hello')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">locate</td>
+    <td class="tg-pnl2">locate(string, string, integer) -> integer OR locate(string, string) -> integer</td>
+    <td class="tg-pnl2">SELECT locate('o', 'hello'), locate('l', 'hello world', 5)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">replace</td>
+    <td class="tg-pnl2">replace(string, string, string) -> string</td>
+    <td class="tg-pnl2">SELECT replace('hello', 'l', 'x')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">right</td>
+    <td class="tg-pnl2">right(string, integer) -> string</td>
+    <td class="tg-pnl2">SELECT right('hello', 2)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">rtrim</td>
+    <td class="tg-pnl2">rtrim(string) -> string</td>
+    <td class="tg-pnl2">SELECT rtrim('hello')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">substring</td>
+    <td class="tg-pnl2">substring(string, integer, integer) -> string</td>
+    <td class="tg-pnl2">SELECT substring('hello', 2, 4)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">trim</td>
+    <td class="tg-pnl2">trim(string) -> string</td>
+    <td class="tg-pnl2">SELECT trim('hello')</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">upper</td>
+    <td class="tg-pnl2">upper(string) -> string</td>
+    <td class="tg-pnl2">SELECT upper('hello world')</td>
+  </tr>
+</tbody>
+</table>
+
+#### Aggregate
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function</th>
+    <th class="tg-ua3b">Specification </th>
+    <th class="tg-ua3b">Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">avg</td>
+    <td class="tg-pnl2">avg(number T) -> T</td>
+    <td class="tg-pnl2">SELECT avg(column) FROM my-index</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">count</td>
+    <td class="tg-pnl2">count(number T) -> T</td>
+    <td class="tg-pnl2">SELECT count(date) FROM my-index</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">min</td>
+    <td class="tg-pnl2">min(number T) -> T</td>
+    <td class="tg-pnl2">SELECT min(column) FROM my-index</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">show</td>
+    <td class="tg-pnl2">show(string) -> string</td>
+    <td class="tg-pnl2">SHOW TABLES LIKE my-index</td>
+  </tr>
+</tbody>
+</table>
+
+#### Advanced
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">Function</th>
+    <th class="tg-ua3b">Specification </th>
+    <th class="tg-ua3b">Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">if</td>
+    <td class="tg-pnl2">if(boolean, os_type, os_type) -> os_type</td>
+    <td class="tg-pnl2">`SELECT if(false, 0, 1),if(true, 0, 1)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">ifnull</td>
+    <td class="tg-pnl2">ifnull(os_type, os_type) -> os_type</td>
+    <td class="tg-pnl2">SELECT ifnull(0, 1), ifnull(null, 1)</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">isnull</td>
+    <td class="tg-pnl2">isnull(os_type) -> integer</td>
+    <td class="tg-pnl2">SELECT isnull(null), isnull(1)</td>
+  </tr>
+</tbody>
+</table>
+
+#### Relevance-based search (full-text search)
+
+These functions are only available in the `WHERE` clause. For their descriptions and usage examples in SQL and PPL, see [Full-text search](#full-text-search).
+
+### Full-text search
+
+Use SQL commands for full-text search. The SQL plugin supports a subset of full-text queries available in Energy Logserver.
+
+#### Match
+
+Use the `MATCH` function to search documents that match a `string`, `number`, `date`, or `boolean` value for a given field.
+
+#### Syntax
+
+```sql
+match(field_expression, query_expression[, option=<option_value>]*)
+```
+
+You can specify the following options in any order:
+
+- `analyzer`
+- `auto_generate_synonyms_phrase`
+- `fuzziness`
+- `max_expansions`
+- `prefix_length`
+- `fuzzy_transpositions`
+- `fuzzy_rewrite`
+- `lenient`
+- `operator`
+- `minimum_should_match`
+- `zero_terms_query`
+- `boost`
+
+Refer to the `match` query for parameter descriptions and supported values.
+
+##### Example 1: Search the `message` field for the text "this is a test":
+
+```json
+GET my_index/_search
 {
   "query": {
-    "term": {"geo.dest": {"value": "AE"}}
-  }
-}
-```
-
-Join query:
-
-```bash
-POST kibana_sample_data_flights,kibana_sample_data_logs/_join
-{
-  "left": {
-    "field": "DestCountry",
-    "query": {"term": {"DestCountry": {"value": "AE"}}}
-  },
-
-  "right: {
-    "field": "geo.dest",
-    "query": {"term": {"geo.dest": {"value": "AE"}}}
-  },
-
-  "out": {
-    "field": "joined_field",
-    "scroll_time": "1m",
-    "batch": 100
-  }
-}
-```
-
-#### Example 2
-
-```bash
-POST kibana_sample_data_ecommerce,kibana_sample_data_flights/_join
-{
-  "left": {
-    "field":"geoip.city_name",
-    "query": {"term": {"geoip.city_name": {"value":"Istanbul"}}}
-  },
-
-  "right": {
-    "field":"DestCityName",
-    "query": {"term": {"DestWeather": {"value":"Sunny"}}}
-  },
-
-  "out": {
-    "field":"flights",
-    "scroll_time": "1m",
-    "batch":1000
-  }
-}
-```
-
-#### Example 3
-
-```bash
-POST kibana_sample_data_ecommerce,kibana_sample_data_flights/_join
-{
-  "left": {
-    "field":"geoip.city_name",
-    "query": {"match_all":{}}
-  },
-
-  "right": {
-    "field":"DestCityName",
-    "query": {"match_all":{}}
-  },
-
-  "out": {
-    "field_out":"flights",
-    "scroll_time": "1m"
-  }
-}
-```
-
-#### Example 4 - correlation (httpd and winlogbeat)
-
-```bash
-POST httpd-*,winlogbeat2*/_join
-{
-  "left": {
-    "field":"client.ip",
-        "query": {
-            "bool": {
-              "should": [
-                {"wildcard":{"client.ip":{"value":"10.4.4.3"}}}
-              ]
-            }
-          },
-    "size": 100,
-    "source": {
-      "includes": [ "domain", "client.ip" ]
+    "match": {
+      "message": "this is a test"
     }
-  },
-  "right": {
-    "field":"host.ip",
-        "query": {
-            "bool": {
-              "must": [
-                {"wildcard":{"host.ip":{"value":"10.*"}}},
-                {"term":{"winlog.event_id":{"value":"5379"}}}
-              ]
-            }
-          },
-    "size": 1,
-    "source": {
-      "includes": [ "@timestamp", "host.name", "winlog.event_data.SubjectUserName" ]
-    }
-  },
-  "out": {
-    "field":"correlated",
-    "scroll_time": "1m",
-    "batch":1000
   }
 }
 ```
 
-#### Example 5 - correlation (dhcpd and winlogbeat)
+**SQL query:**
+
+```sql
+SELECT message FROM my_index WHERE match(message, "this is a test")
+```
+
+**PPL query:**
 
 ```bash
-POST syslog-*,winlogbeat2*/_join
+SOURCE=my_index | WHERE match(message, "this is a test") | FIELDS message
+```
+
+##### Example 2: Search the `message` field with the `operator` parameter:
+
+```json
+GET my_index/_search
 {
-  "left": {
-    "field":"client.mac",
-        "query": {
-            "bool": {
-              "must": [
-                {"wildcard":{"client.ip":{"value":"10.4.4.3"}}},
-                {"term":{"program":{"value":"dhcpd"}}}
-              ]
-            }
-          },
-    "size": 100,
-    "source": {
-      "includes": [ "client.ip", "client.mac" ]
+  "query": {
+    "match": {
+      "message": {
+        "query": "this is a test",
+        "operator": "and"
+      }
     }
-  },
-  "right": {
-    "field":"host.mac",
-        "query": {
-            "bool": {
-              "must": [
-                {"wildcard":{"host.ip":{"value":"10.4.4.*"}}}
-              ]
-            }
-          },
-    "size": 1,
-    "source": {
-      "includes": [ "@timestamp", "host.name", "host.mac", "winlog.event_data.SubjectUserName", "event_data.TargetUserName" ]
-    }
-  },
-  "out": {
-    "field":"correlated",
-    "scroll_time": "1m",
-    "batch":1000
   }
 }
 ```
+
+**SQL query:**
+
+```sql
+SELECT message FROM my_index WHERE match(message, "this is a test", operator='and')
+```
+
+**PPL query:**
+
+```bash
+SOURCE=my_index | WHERE match(message, "this is a test", operator='and') | FIELDS message
+```
+
+##### Example 3: Search the `message` field with the `operator` and `zero_terms_query` parameters:
+
+```json
+GET my_index/_search
+{
+  "query": {
+    "match": {
+      "message": {
+        "query": "to be or not to be",
+        "operator": "and",
+        "zero_terms_query": "all"
+      }
+    }
+  }
+}
+```
+
+**SQL query:**
+
+```sql
+SELECT message FROM my_index WHERE match(message, "this is a test", operator='and', zero_terms_query='all')
+```
+
+**PPL query:**
+
+```sql
+SOURCE=my_index | WHERE match(message, "this is a test", operator='and', zero_terms_query='all') | FIELDS message
+```
+
+#### Multi-match
+
+To search for text in multiple fields, use `MULTI_MATCH` function. This function maps to the `multi_match` query used in search engine, to returns the documents that match a provided text, number, date or boolean value with a given field or fields.
+
+##### Syntax
+
+The `MULTI_MATCH` function lets you *boost* certain fields using **^** character. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields. The syntax allows to specify the fields in double quotes, single quotes,  surrounded by backticks, or unquoted. Use star ``"*"`` to search all fields. Star symbol should be quoted.
+
+```sql
+multi_match([field_expression+], query_expression[, option=<option_value>]*)
+```
+
+The weight is optional and is specified after the field name. It could be delimited by the `caret` character -- `^` or by whitespace. Please, refer to examples below:
+
+```sql
+multi_match(["Tags" ^ 2, 'Title' 3.4, `Body`, Comments ^ 0.3], ...)
+multi_match(["*"], ...)
+```
+
+You can specify the following options for `MULTI_MATCH` in any order:
+
+- `analyzer`
+- `auto_generate_synonyms_phrase`
+- `cutoff_frequency`
+- `fuzziness`
+- `fuzzy_transpositions`
+- `lenient`
+- `max_expansions`
+- `minimum_should_match`
+- `operator`
+- `prefix_length`
+- `tie_breaker`
+- `type`
+- `slop`
+- `zero_terms_query`
+- `boost`
+
+Please, refer to `multi_match` query [documentation](#multi-match) for parameter description and supported values.
+
+##### For example, REST API search for `Dale` in either the `firstname` or `lastname` fields:
+
+```json
+GET accounts/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Lane Street",
+      "fields": [ "address" ],
+    }
+  }
+}
+```
+
+could be called from *SQL* using `multi_match` function
+
+```sql
+SELECT firstname, lastname
+FROM accounts
+WHERE multi_match(['*name'], 'Dale')
+```
+
+or `multi_match` *PPL* function
+
+```sql
+SOURCE=accounts | WHERE multi_match(['*name'], 'Dale') | fields firstname, lastname
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">lastname</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Dale</td>
+    <td class="tg-pnl2">Adams</td>
+  </tr>
+</tbody>
+</table>
+
+##### Query string
+
+To split text based on operators, use the `QUERY_STRING` function. The `QUERY_STRING` function supports logical connectives, wildcard, regex, and proximity search.
+This function maps to the to the `query_string` query used in search engine, to return the documents that match a provided text, number, date or boolean value with a given field or fields.
+
+##### Syntax
+
+The `QUERY_STRING` function has syntax similar to `MATCH_QUERY` and lets you *boost* certain fields using **^** character. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields. The syntax allows to specify the fields in double quotes, single quotes,  surrounded by backticks, or unquoted. Use star ``"*"`` to search all fields. Star symbol should be quoted.
+
+```sql
+query_string([field_expression+], query_expression[, option=<option_value>]*)
+```
+
+The weight is optional and is specified after the field name. It could be delimited by the `caret` character -- `^` or by whitespace. Please, refer to examples below:
+
+```sql
+query_string(["Tags" ^ 2, 'Title' 3.4, `Body`, Comments ^ 0.3], ...)
+query_string(["*"], ...)
+```
+
+You can specify the following options for `QUERY_STRING` in any order:
+
+- `analyzer`
+- `allow_leading_wildcard`
+- `analyze_wildcard`
+- `auto_generate_synonyms_phrase_query`
+- `boost`
+- `default_operator`
+- `enable_position_increments`
+- `fuzziness`
+- `fuzzy_rewrite`
+- `escape`
+- `fuzzy_max_expansions`
+- `fuzzy_prefix_length`
+- `fuzzy_transpositions`
+- `lenient`
+- `max_determinized_states`
+- `minimum_should_match`
+- `quote_analyzer`
+- `phrase_slop`
+- `quote_field_suffix`
+- `rewrite`
+- `type`
+- `tie_breaker`
+- `time_zone`
+
+##### Example of using `query_string` in SQL and PPL queries:
+
+The REST API search request
+
+```json
+GET accounts/_search
+{
+  "query": {
+    "query_string": {
+      "query": "Lane Street",
+      "fields": [ "address" ],
+    }
+  }
+}
+```
+
+could be called from *SQL*
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE query_string(['address'], 'Lane Street', default_operator='OR')
+```
+
+or from *PPL*
+
+```sql
+SOURCE=accounts | WHERE query_string(['address'], 'Lane Street', default_operator='OR') | fields account_number, address
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">671 Bristol Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+  </tr>
+</tbody>
+</table>
+
+#### Match phrase
+
+To search for exact phrases, use `MATCHPHRASE` or `MATCH_PHRASE` functions.
+
+##### Syntax
+
+```sql
+matchphrasequery(field_expression, query_expression)
+matchphrase(field_expression, query_expression[, option=<option_value>]*)
+match_phrase(field_expression, query_expression[, option=<option_value>]*)
+```
+
+The `MATCHPHRASE`/`MATCH_PHRASE` functions let you specify the following options in any order:
+
+- `analyzer`
+- `slop`
+- `zero_terms_query`
+- `boost`
+
+##### Example of using `match_phrase` in SQL and PPL queries:
+
+The REST API search request
+
+```json
+GET accounts/_search
+{
+  "query": {
+    "match_phrase": {
+      "address": {
+        "query": "880 Holmes Lane"
+      }
+    }
+  }
+}
+```
+
+could be called from *SQL*
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE match_phrase(address, '880 Holmes Lane')
+```
+
+or *PPL*
+
+```sql
+SOURCE=accounts | WHERE match_phrase(address, '880 Holmes Lane') | FIELDS account_number, address
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+  </tr>
+</tbody>
+</table>
+
+#### Simple query string
+
+The `simple_query_string` function maps to the `simple_query_string` query in Energy Logserver. It returns the documents that match a provided text, number, date or boolean value with a given field or fields.
+The **^** lets you *boost* certain fields. Boosts are multipliers that weigh matches in one field more heavily than matches in other fields.
+
+##### Syntax
+
+The syntax allows to specify the fields in double quotes, single quotes,  surrounded by backticks, or unquoted. Use star ``"*"`` to search all fields. Star symbol should be quoted.
+
+```sql
+simple_query_string([field_expression+], query_expression[, option=<option_value>]*)
+```
+
+The weight is optional and is specified after the field name. It could be delimited by the `caret` character -- `^` or by whitespace. Please, refer to examples below:
+
+```sql
+simple_query_string(["Tags" ^ 2, 'Title' 3.4, `Body`, Comments ^ 0.3], ...)
+simple_query_string(["*"], ...)
+```
+
+You can specify the following options for `SIMPLE_QUERY_STRING` in any order:
+
+- `analyze_wildcard`
+- `analyzer`
+- `auto_generate_synonyms_phrase_query`
+- `boost`
+- `default_operator`
+- `flags`
+- `fuzzy_max_expansions`
+- `fuzzy_prefix_length`
+- `fuzzy_transpositions`
+- `lenient`
+- `minimum_should_match`
+- `quote_field_suffix`
+
+##### *Example* of using `simple_query_string` in SQL and PPL queries:
+
+The REST API search request
+
+```json
+GET accounts/_search
+{
+  "query": {
+    "simple_query_string": {
+      "query": "Lane Street",
+      "fields": [ "address" ],
+    }
+  }
+}
+```
+
+could be called from *SQL*
+
+```sql
+SELECT account_number, address
+FROM accounts
+WHERE simple_query_string(['address'], 'Lane Street', default_operator='OR')
+```
+
+or from *PPL*
+
+```sql
+SOURCE=accounts | WHERE simple_query_string(['address'], 'Lane Street', default_operator='OR') | fields account_number, address
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">account_number</th>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">1</td>
+    <td class="tg-pnl2">880 Holmes Lane</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">6</td>
+    <td class="tg-pnl2">671 Bristol Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">13</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+  </tr>
+</tbody>
+</table>
+
+#### Match phrase prefix
+
+To search for phrases by given prefix, use `MATCH_PHRASE_PREFIX` function to make a prefix query out of the last term in the query string.
+
+##### Syntax
+
+```sql
+match_phrase_prefix(field_expression, query_expression[, option=<option_value>]*)
+```
+
+The `MATCH_PHRASE_PREFIX` function lets you specify the following options in any order:
+
+- `analyzer`
+- `slop`
+- `max_expansions`
+- `zero_terms_query`
+- `boost`
+
+##### *Example* of using `match_phrase_prefix` in SQL and PPL queries:
+
+The REST API search request
+
+```json
+GET accounts/_search
+{
+  "query": {
+    "match_phrase_prefix": {
+      "author": {
+        "query": "Alexander Mil"
+      }
+    }
+  }
+}
+```
+
+could be called from *SQL*
+
+```sql
+SELECT author, title
+FROM books
+WHERE match_phrase_prefix(author, 'Alexander Mil')
+```
+
+or *PPL*
+
+```sql
+source=books | where match_phrase_prefix(author, 'Alexander Mil') | fields author, title
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">author</th>
+    <th class="tg-ua3b">title</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Alan Alexander Milne</td>
+    <td class="tg-pnl2">The House at Pooh Corner</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Alan Alexander Milne</td>
+    <td class="tg-pnl2">Winnie-the-Pooh</td>
+  </tr>
+</tbody>
+</table>
+
+#### Match boolean prefix
+
+Use the `match_bool_prefix` function to search documents that match text only for a given field prefix.
+
+##### Syntax
+
+```sql
+match_bool_prefix(field_expression, query_expression[, option=<option_value>]*)
+```
+
+The `MATCH_BOOL_PREFIX` function lets you specify the following options in any order:
+
+- `minimum_should_match`
+- `fuzziness`
+- `prefix_length`
+- `max_expansions`
+- `fuzzy_transpositions`
+- `fuzzy_rewrite`
+- `boost`
+- `analyzer`
+- `operator`
+
+##### Example of using `match_bool_prefix` in SQL and PPL queries:
+
+The REST API search request
+
+```json
+GET accounts/_search
+{
+  "query": {
+    "match_bool_prefix": {
+      "address": {
+        "query": "Bristol Stre"
+      }
+    }
+  }
+}
+```
+
+could be called from *SQL*
+
+```sql
+SELECT firstname, address
+FROM accounts
+WHERE match_bool_prefix(address, 'Bristol Stre')
+```
+
+or *PPL*
+
+```sql
+source=accounts | where match_bool_prefix(address, 'Bristol Stre') | fields firstname, address
+```
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ua3b">firstname</th>
+    <th class="tg-ua3b">address</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-pnl2">Hattie</td>
+    <td class="tg-pnl2">671 Bristol Street</td>
+  </tr>
+  <tr>
+    <td class="tg-pnl2">Nanette</td>
+    <td class="tg-pnl2">789 Madison Street</td>
+  </tr>
+</tbody>
+</table>
 
 ## Automation
 
@@ -6609,8 +14088,8 @@ The following settings are available:
 If your automation execution fails, you can retry the execution. To retry a failed automation:
 
 1. Open the Executions list from the sidebar.
-2. For the automation execution you want to retry, click on the refresh icon under the Status column.
-3. Select either of the following options to retry the execution:
+1. For the automation execution you want to retry, click on the refresh icon under the Status column.
+1. Select either of the following options to retry the execution:
 
   - Retry with currently saved automation: Once you make changes to your automation, you can select this option to execute the automation with the previous execution data.
   - Retry with original automation: If you want to retry the execution without making changes to your automation, you can select this option to retry the execution with the previous execution data.
@@ -6685,7 +14164,7 @@ Regular nodes perform an action, like fetching data or creating an entry in a ca
 
 ![](/media/media/Regular_nodes.d3cec3e9.png)
 
-##### Example
+#### Example
 
 A Google Sheets node can be used to retrieve or write data to a Google Sheet.
 
@@ -6709,7 +14188,7 @@ Trigger nodes can be app or core nodes.
 
 Nodes come with global **operations** and **settings**, as well as app-specific **parameters** that can be configured.
 
-##### Operations
+#### Operations
 
 The node operations are illustrated with icons that appear on top of the node when you hover on it:
 
@@ -6722,11 +14201,11 @@ The node operations are illustrated with icons that appear on top of the node wh
 
 To access the node parameters and settings, double-click on the node.
 
-##### Parameters
+#### Parameters
 
 The node parameters allow you to define the operations the node should perform. Find the available parameters of each node in the node reference.
 
-##### Settings
+#### Settings
 
 The node settings allow you to configure the look and execution of the node. The following options are available:
 
@@ -6779,7 +14258,7 @@ You can add multiple conditions. On one node you can add 3 conditions if you nee
 
 The IF node is used to split a workflow conditionally based on comparison operations.
 
-##### Node Reference
+#### Node Reference
 
 You can add comparison conditions using the Add Condition dropdown. Conditions can be created based on the data type, the available comparison operations vary for each data type.
 
@@ -6813,7 +14292,7 @@ You can choose to split a workflow when any of the specified conditions are met,
 
 The Switch node is used to route a workflow conditionally based on comparison operations. It is similar to the IF node, but supports up to four conditional routes.
 
-##### Node Reference
+#### Node Reference
 
 Mode: This dropdown is used to select whether the conditions will be defined as rules in the node, or as an expression, programmatically.
 
@@ -6847,12 +14326,12 @@ You can route a workflow when none of the specified conditions are met using Fal
 
 The Spreadsheet File node is used to access data from spreadsheet files.
 
-##### Basic Operations
+#### Basic Operations
 
 - Read from file
 - Write to file
 
-##### Node Reference
+#### Node Reference
 
 When writing to a spreadsheet file, the File Format field can be used to specify the format of the file to save the data as.
 

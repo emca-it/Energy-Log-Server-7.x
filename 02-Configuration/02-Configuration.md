@@ -68,69 +68,276 @@ Add appropriate permission:
 
   chown -R newuser: /etc/logstash /var/log/logstash
 
-## Plugins management
+## Plugins Management
 
-Base installation of the Energy Logserver contains the *elasticsearch-auth* plugin.
+### GUI/Kibana
+
+Base installation of the Energy Logserver contains the Agents, Alerts, Archive, Automation, CMDB, Index Management, Intelligence, Network Probe, Reports, SQL  plugins - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
+You can extend the basic Kibana functionality by installing custom plugins.
+
+After installation, each node must be restarted before the plugin becomes visible.
+
+The Kibana provides three categories of plugins:
+
+- Licenced Plugins - Energy Logserver
+- Core Plugins - it is plugins that are part of the Kibana project.
+- Community-contributed - it is plugins that are external to the Kibana project
+
+#### Enabling/Disabling Plugins
+
+ **Managing the `Agents` Plugin**:
+
+   - **Disable**:
+     - Add `agents.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `agents.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Alerts` Plugin**:
+
+   - **Disable**:
+     - Change `alerts.enabled: true` to `alerts.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `alerts.enabled: false` to `alerts.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Archive` Plugin**:
+
+   - **Disable**:
+     - Add `archive.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `archive.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Automation` Plugin**:
+
+   - **Disable**:
+     - Change `automation.enabled: true` to `automation.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `automation.enabled: false` to `automation.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `CMDB` Plugin**:
+
+   - **Disable**:
+     - Add `cmdb.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `cmdb.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Console` Plugin**:
+
+   - **Disable**:
+     - Change `console.enabled: true` to `console.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `console.enabled: false` to `console.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Index Management` Plugin**:
+
+   - **Disable**:
+     - Add `index_management.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `index_management.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Intelligence` Plugin**:
+
+   - **Disable**:
+     - Add `intelligence.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `intelligence.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Network Probe` Plugin**:
+
+   - **Disable**:
+     - Add `network-probe.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `network-probe.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Reports` Plugin**:
+
+   - **Disable**:
+     - Add `reports.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `reports.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `vis_type_timeline` Plugin**:
+
+   - **Disable**:
+     - Change `vis_type_timeline.enabled: true` to `vis_type_timeline.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Wazuh` Plugin**:
+
+   - **Disable**:
+     - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `XLSX Import` Plugin**:
+
+   - **Disable**:
+     - Add `xlsx_import.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `xlsx_import.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `SQL` Plugin**:
+
+   - **Disable**:
+     - Add `sql.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `sql.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+
+#### Installing Plugins
+
+Additional GUI/Kibana plugins can be installed as follows:
+
+```bash
+ cd /usr/share/kibana/
+ bin/opensearch-dashboards-plugin install [plugin_name]
+```
+
+Examples: \
+Plugins from a custom link or filesystem can be installed as follows:
+
+```bash
+ bin/opensearch-dashboards-plugin install file:///path/to/plugin.zip
+ bin/opensearch-dashboards-plugin install file:///C:/path/to/plugin.zip
+ bin/opensearch-dashboards-plugin install http://some.domain/path/to/plugin.zip
+```
+
+#### Listing plugins
+
+Listing currently loaded plugins:
+
+```bash
+ bin/opensearch-dashboards-plugin list
+```
+
+#### Removing plugins
+
+```bash
+ bin/opensearch-dashboards-plugin remove [pluginname]
+```
+
+#### Updating plugins
+
+```bash
+ bin/opensearch-dashboards-plugin remove [pluginname]
+ bin/opensearch-dashboards-plugin install [pluginname]
+```
+
+
+### Database/Elasticsearch
+
+Base installation of the Energy Logserver contains the logserver_auth, join, logserver_quard plugin - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
 You can extend the basic Elasticsearch functionality by installing custom plugins.
 
 Plugins contain JAR files, but may also contain scripts and config files, and must be installed on every node in the cluster.
 
 After installation, each node must be restarted before the plugin becomes visible.
 
-The Elasticsearch provides two categories of plugins:
+The Elasticsearch provides three categories of plugins:
 
+- Licenced Plugins - Energy Logserver
 - Core Plugins - it is plugins that are part of the Elasticsearch project.
 - Community-contributed - it is plugins that are external to the Elasticsearch project
 
-### Installing Plugins
+#### Enabling/Disabling Plugins
 
-Core Elasticsearch plugins can be installed as follows:
+ **Managing the `logserver_auth` Plugin**:
 
+   - **Disable**:
+     - Add `plugins.logserver_auth.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+   - **Enable**:
+     - Remove or comment out the line `plugins.logserver_auth.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+
+ **Managing the `logserver_guard` Plugin**:
+
+   - **Disable**:
+     - Add `logserverguard.ssl.transport.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Add `logserverguard.ssl.http.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+   - **Enable**:
+     - Remove or comment out the line `logserverguard.ssl.transport.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Remove or comment out the line `logserverguard.ssl.http.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+
+ **Managing the `sql` Plugin**:
+
+   - **Disable**:
+     - Add `plugins.sql.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+   - **Enable**:
+     - Remove or comment out the line `plugins.sql.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+
+
+#### Installing Plugins
+
+Additional Database/Elasticsearch plugins can be installed as follows:
+
+```bash
  cd /usr/share/elasticsearch/
- bin/elasticsearch-plugin install [plugin_name]
+ bin/opensearch-plugin install [plugin_name]
+```
 
-Example: \
+Examples: \
 Plugins from a custom link or filesystem can be installed as follows:
 
 ```bash
- cd /usr/share/elasticsearch/
- sudo bin/elasticsearch-plugin install [url]
+ bin/opensearch-plugin install file:///path/to/plugin.zip
+ bin/opensearch-plugin install file:///C:/path/to/plugin.zip
+ bin/opensearch-plugin install <http://some.domain/path/to/plugin.zip>
 ```
 
-Example:
+#### Listing plugins
+
+Listing currently loaded plugins:
 
 ```bash
- sudo bin/elasticsearch-plugin install file:///path/to/plugin.zip
- bin\elasticsearch-plugin install file:///C:/path/to/plugin.zip
- sudo bin/elasticsearch-plugin install <http://some.domain/path/to/plugin.zip>
+ bin/opensearch-plugin list
 ```
 
-### Listing plugins
-
-Listing currently loaded plugins
+#### Removing plugins
 
 ```bash
- sudo bin/elasticsearch-plugin list
+ bin/opensearch-plugin remove [pluginname]
 ```
 
-listing currently available core plugins:
+#### Updating plugins
 
 ```bash
- sudo bin/elasticsearch-plugin list --help
+ bin/opensearch-plugin remove [pluginname]
+ bin/opensearch-plugin install [pluginname]
 ```
 
-### Removing plugins
-
-```bash
- sudo bin/elasticsearch-plugin remove [pluginname]
-```
-
-### Updating plugins
-
-```bash
- sudo bin/elasticsearch-plugin remove [pluginname]
- sudo bin/elasticsearch-plugin install [pluginname]
-```
 
 ## Transport layer encryption
 
@@ -435,7 +642,7 @@ To configure the Root CA for all certificates, add the following lines to your c
 ```yml
 ca:
    root:
-      dn: CN=root.ca.example.com,OU=CA,O=Example Com\, Inc.,DC=example,DC=com
+      dn: CN=root.ca.example.com,OU=CA,O=Example Com, Inc.,DC=example,DC=com
       keysize: 2048
       pkPassword: root-ca-password 
       validityDays: 3650
@@ -503,7 +710,7 @@ In addition to the root CA you optionally also specify an intermediate CA. If an
 ```yml
 ca:
    intermediate:
-      dn: CN=signing.ca.example.com,OU=CA,O=Example Com\, Inc.,DC=example,DC=com
+      dn: CN=signing.ca.example.com,OU=CA,O=Example Com, Inc.,DC=example,DC=com
       keysize: 2048
       validityDays: 3650  
       pkPassword: intermediate-ca-password
@@ -528,7 +735,7 @@ defaults:
   pkPassword: auto
   generatedPasswordLength: 12
   nodesDn:
-    - "CN=*.example.com,OU=Ops,O=Example Com\\, Inc.,DC=example,DC=com"
+    - "CN=*.example.com,OU=Ops,O=Example Com, Inc.,DC=example,DC=com"
   nodeOid: "1.2.3.4.5.5"
   httpsEnabled: true
   reuseTransportCertificatesForHttp: false
@@ -1233,7 +1440,7 @@ To enable SSO on your system follow the below steps. The configuration is made f
    Create a User in AD. Set "Account never expires" and enable support for Kerberos encryption as shown below.
 
    ![](/media/media/image107_js.png)
-  <br>
+   <br>
 
 1. Define the Service Principal Name (SPN) and Create a keytab file for it
 
@@ -1678,7 +1885,9 @@ To set the default application for the GUI home page, please do the following:
 
 The default e-mail client that installs with the Linux CentOS system,
 which is used by Energy Logserver to send reports (Section 5.3 of the
-[Reports](/05-00-00-Reports/05-03-00-PDF_Report.md) chapter), is ***postfix***.# Configuration file for **postfix** mail client #
+[Reports](/05-00-00-Reports/05-03-00-PDF_Report.md) chapter), is ***postfix***.
+
+#### Configuration file for **postfix** mail client
 
 The *postfix* configuration directory for CentOS is */etc/postfix*. It
 contains files:
@@ -1694,8 +1903,8 @@ contains files:
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-1wig{font-weight:bold;text-align:left;vertical-align:top}
-.tg .tg-t3tv{color:#333333;text-align:left;vertical-align:middle}
+.tg .tg-1wig{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-t3tv{text-align:left;vertical-align:middle}
 </style>
 <table class="tg" style="undefined;table-layout: fixed; width: 700px">
 <colgroup>
@@ -1902,11 +2111,15 @@ contains files:
  To forward emails to user1 to the
  [user1@yahoo.com] mailbox:
 
-   `user1 user1\@yahoo.com`
+   ```bash
+   user1 user1@yahoo.com
+   ```
 
  To forward all emails for example.org to another example.com domain:
 
-   `@example.org @example.com`
+   ```bash
+   @example.org @example.com
+   ```
 
  After making changes to the canonical file, you must convert its
  contents to the canonical.db database with the postmap command:
@@ -1916,8 +2129,8 @@ contains files:
 
   ll /etc/postfix/canonical*
 
-  -rw-r\--r\--. 1 root root 11681 2014-06-10 /etc/postfix/canonical
-  -rw-r\--r\--. 1 root root 12288 07-31 20:56 /etc/postfix/canonical.db
+  -rw-r--r--. 1 root root 11681 2014-06-10 /etc/postfix/canonical
+  -rw-r--r--. 1 root root 12288 07-31 20:56 /etc/postfix/canonical.db
 ```
 
 **generic** - mapping of outgoing e-mails to local users. The syntax
@@ -1929,8 +2142,8 @@ contains files:
 
   ll /etc/postfix/generic*
 
-  -rw-r\--r\--. 1 root root 9904 2014-06-10 /etc/postfix/generic
-  -rw-r\--r\--. 1 root root 12288 07-31 21:15 /etc/postfix/generic.db
+  -rw-r--r--. 1 root root 9904 2014-06-10 /etc/postfix/generic
+  -rw-r--r--. 1 root root 12288 07-31 21:15 /etc/postfix/generic.db
 ```
 
 **relocated** -- information about users who have been transferred.
@@ -1941,7 +2154,9 @@ contains files:
 
  Example of an entry in the file:
 
+  ```bash
   <user1@example.com> <user1@example.net>
+  ```
 
  After you make a change to this file, you must also run the postmap
  command.
@@ -1950,16 +2165,18 @@ contains files:
 postmap /etc/postfix/relocated
 ll /etc/postfix/relocated*
 
-  -rw-r\--r\--. 1 root root 6816 2014-06-10 /etc/postfix/relocated
-  -rw-r\--r\--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
+  -rw-r--r--. 1 root root 6816 2014-06-10 /etc/postfix/relocated
+  -rw-r--r--. 1 root root 12288 07-31 21:26 /etc/postfix/relocated.d
 ```
 
 **transport** -- mapping between e-mail addresses and the server through which these e-mails are to be sent (next hops) in the transport
  format: nexthop.
 
  Example of an entry in the file:
-
+  
+  ```bash
   <user1@example.com> smtp:host1.example.com
+  ```
 
  After you make changes to this file, you must also run the postmap
  command.
@@ -1968,8 +2185,8 @@ ll /etc/postfix/relocated*
 postmap /etc/postfix/transport
 ll /etc/postfix/transport*
 
-  -rw-r\--r\--. 1 root root 12549 2014-06-10 /etc/postfix/transport
-  -rw-r\--r\--. 1 root root 12288 07-31 21:32 /etc/postfix/transport.db
+  -rw-r--r--. 1 root root 12549 2014-06-10 /etc/postfix/transport
+  -rw-r--r--. 1 root root 12288 07-31 21:32 /etc/postfix/transport.db
 ```
 
 **virtual** - user to redirect e-mails intended for a certain user to
@@ -1981,30 +2198,32 @@ ll /etc/postfix/transport*
  Redirecting email for user1, to root users and user3:
 
 ```conf
-user1 root, user3
+user1 root,user3
 ```
 
  Redirecting email for user 1 in the example.com domain to the root
  user:
-
+  
+  ```bash
   <user1@example.com> root
+  ```
 
  After you make a change to this file, you must also run the postmap
  command:
 
-```bash
+   ```bash
    postmap /etc/postfix/virtual
 
    ll /etc/postfix/virtual
 
-  -rw-r\--r\--. 1 root root 12494 2014-06-10 /etc/postfix/virtual
-  -rw-r\--r\--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
-```
+  -rw-r--r--. 1 root root 12494 2014-06-10 /etc/postfix/virtual
+  -rw-r--r--. 1 root root 12288 07-31 21:58 /etc/postfix/virtual.db
+  ```
 
-### Basic *postfix* configuration
+#### Basic *postfix* configuration
 
 Base configuration of *postfix* application you can make in
-`/etc/postfix/main.cfg` configuration file, which must be completed with the following entry:
+`/etc/postfix/main.cf` configuration file, which must be completed with the following entry:
 
 - section *# RECEIVING MAIL*
 
@@ -2028,7 +2247,7 @@ At the end, you should restart the *postfix*:
  systemctl restart postfix
 ```
 
-### Example of postfix configuration with SSL encryption enabled
+#### Example of postfix configuration with SSL encryption enabled
 
 To configure email delivery with SSL encryption you need to make
 the following changes in the *postfix* configuration files:
@@ -2052,10 +2271,11 @@ entries in addition to standard (unchecked entries):
   smtpd_recipient_restrictions = permit_sasl_authenticated
   ```
 
-- **`/etc/postfix/sasl/passwd`** - file should define the data for authorized
+- **`/etc/postfix/sasl_passwd`** - file should define the data for authorized
 
    ```bash
-   [smtp.example.com\]:587 [USER@example.com:PASS]
+   [smtp.example.com]:587 [USER@example.com:PASS]
+   [smtp.example.com]:587 username:password
    ```
 
 You need to give appropriate permissions:
@@ -2068,18 +2288,20 @@ and map configuration to the database:
   
   ```bash
   postmap /etc/postfix/sasl_passwd
+  postmap /etc/postfix/canonical
+  postmap /etc/postfix/generic
   ```
 
 next, you need to generate a CA cert file:
 
   ```bash
-  cat /etc/ssl/certs/Example\_Server\_CA.pem | tee -a etc/postfix/cacert.pem
+  cat /etc/ssl/certs/Example_Server_CA.pem | tee -a etc/postfix/cacert.pem
   ```
 
 Finally, you need to restart the postfix
 
   ```bash
-  /etc/init.d/postfix restart
+  systemctl restart postfix
   ```
 
 ## Custom notification on the workstation
@@ -2111,9 +2333,9 @@ Before use ensure that you have all the required files
 
 - Linux Agent files: `./agents/masteragent/agents/linux/masteragent`:
 
-  - Executable: `MasterBeatAgent.jar` \
-  - Configuration File for MasterAgent (server): `MasterBeatAgent.conf` \
-  - Configuration File for Agent (client): `agent.conf` \
+  - Executable: `MasterBeatAgent.jar`
+  - Configuration File for MasterAgent (server): `MasterBeatAgent.conf`
+  - Configuration File for Agent (client): `agent.conf`
   - Service file: `masteragent.service`
 
 ### Preparations
@@ -2156,7 +2378,9 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
     - Copy files:
 
-        `cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/`
+      ```bash
+      cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/
+      ```
 
     - Copy pipeline configuration:
 
@@ -2174,33 +2398,43 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
     - Set permissions:
 
-        `# chown -R logstash:logstash /etc/logstash/conf.d/masteragent`
+      ```bash
+      chown -R logstash:logstash /etc/logstash/conf.d/masteragent
+      ```
 
     - Restart service:
 
-        `# systemctl restart logstash`
+      ```bash
+      systemctl restart logstash
+      ```
 
 ### Installation of MasterAgent - Server Side
 
 - Copy executable and config:
 
     ```bash
-    # mkdir -p /opt/agents
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/agents
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.conf /opt/agents/agent.conf
+    mkdir -p /opt/agents
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/agents
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.conf /opt/agents/agent.conf
     ```
 
 - Copy certificates:
 
-    `# /bin/cp -rf ./agents/masteragent/certificates/node_name.p12 ./agents/masteragent/certificates/root.jks /opt/agents/`
+    ```bash
+    /bin/cp -rf ./agents/masteragent/certificates/node_name.p12 ./agents/masteragent/certificates/root.jks /opt/agents/
+    ```
 
 - Set permissions:
 
-    `# chown -R kibana:kibana /opt/agents`
+    ```bash
+    chown -R kibana:kibana /opt/agents
+    ```
 
 - Update the configuration file with KeyStore/TrustStore paths and passwords. Use your preferred editor eg. vim:
 
-    `# vim /opt/agents/agent.conf`
+    ```bash
+    vim /opt/agents/agent.conf
+    ```
 
 ### Installation of Agent - Client Side
 
@@ -2212,35 +2446,43 @@ Linux Agent - software installed on clients running on Linux OS:
 
 1. Install net-tools package to use Agent on Linux RH / Centos:
 
-    `# yum install net-tools`
+    ```bash
+    yum install net-tools
+    ```
 
 1. Copy executable and config:
 
     ```bash
-    # mkdir -p /opt/masteragent
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/agent.conf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/masteragent
-    # /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/masteragent.service /usr/lib/systemd/system/masteragent.service
+    mkdir -p /opt/masteragent
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/agent.conf ./agents/masteragent/agents/linux/masteragent/MasterBeatAgent.jar /opt/masteragent
+    /bin/cp -rf ./agents/masteragent/agents/linux/masteragent/masteragent.service /usr/lib/systemd/system/masteragent.service
     ```
 
 1. Copy certificates:
 
-    `# /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/`
+    ```bash
+    /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/
+    ```
 
 1. Update the configuration file with KeyStore/TrustStore paths and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive. Use your preferred editor eg. vim:
 
-    `# vim /opt/masteragent/agent.conf`
+    ```bash
+    vim /opt/masteragent/agent.conf
+    ```
 
 1. Enable masteragent service:
 
     ```bash
-    # systemctl daemon-reload
-    # systemctl enable masteragent
-    # systemctl start masteragent
+    systemctl daemon-reload
+    systemctl enable masteragent
+    systemctl start masteragent
     ```
 
 1. Finally, verify in the Kibana 'Agents' plugin if a newly added agent is present. Check masteragent logs executing:
 
-    `# journalctl -fu masteragent`
+    ```bash
+    journalctl -fu masteragent
+    ```
 
 #### Windows
 
@@ -2263,7 +2505,7 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
 1. Copy node_name.p12 and root.jks files from the `./install/agents/masteragent/certificates` to desired directory.
 
-1. Update the "`C:\Program Files\MasterAgent\agent.conf`" file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive.
+1. Update the `C:\Program Files\MasterAgent\agent.conf` file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive.
 
 1. Start PowerShell as an administrator:
 
@@ -2271,15 +2513,17 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
     - Method 1 - use installer:
 
-      ```bash
-      # cd "C:\Program Files\MasterAgent"
-      # .\agents.exe install
-      # .\agents.exe start
+      ```ps
+      cd "C:\Program Files\MasterAgent"
+      .\agents.exe install
+      .\agents.exe start
       ```
 
     - Method 2 - manually creating service:
 
-      `# New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"`
+      ```ps
+      New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"
+      ```
 
 1. Finally, verify in the Kibana '`Agents`' plugin if a newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in the `C:\Program Files\MasterAgent` directory after the service starts. Also, check the service status:
 
@@ -2550,7 +2794,7 @@ Editing the file: `C:\Program Files\Winlogbeat\winlogbeat.yml`:
 
 Test configuration:
 
-```cmd
+```ps
 cd 'C:\Program Files\Winlogbeat'
 winlogbeat.exe test config
 winlogbeat.exe test output
@@ -3233,7 +3477,7 @@ Editing the file: `C:\Program Files\Packetbeat\packetbeat.yml`:
 1. Run the `PowerShell` console as Administrator and execute the following commands:
 
     ```powershell
-    cd 'C:\Program Files\\Packetbeat'
+    cd 'C:\Program Files\Packetbeat'
     .\install-service-packetbeat.ps1
     
     Security warning
