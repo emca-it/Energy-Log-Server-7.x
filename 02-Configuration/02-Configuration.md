@@ -77,7 +77,7 @@ You can extend the basic Kibana functionality by installing custom plugins.
 
 After installation, each node must be restarted before the plugin becomes visible.
 
-The Elasticsearch provides two categories of plugins:
+The Kibana provides three categories of plugins:
 
 - Licenced Plugins - Energy Logserver
 - Core Plugins - it is plugins that are part of the Kibana project.
@@ -261,7 +261,7 @@ Plugins contain JAR files, but may also contain scripts and config files, and mu
 
 After installation, each node must be restarted before the plugin becomes visible.
 
-The Elasticsearch provides two categories of plugins:
+The Elasticsearch provides three categories of plugins:
 
 - Licenced Plugins - Energy Logserver
 - Core Plugins - it is plugins that are part of the Elasticsearch project.
