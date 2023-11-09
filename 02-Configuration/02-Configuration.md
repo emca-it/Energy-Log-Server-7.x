@@ -70,7 +70,10 @@ Add appropriate permission:
 
 ## Plugins management
 
-Base installation of the Energy Logserver contains the *elasticsearch-auth* plugin.
+
+### Database
+
+Base installation of the Energy Logserver contains the logserver_auth, join, logserver_quard plugin - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
 You can extend the basic Elasticsearch functionality by installing custom plugins.
 
 Plugins contain JAR files, but may also contain scripts and config files, and must be installed on every node in the cluster.
@@ -79,58 +82,81 @@ After installation, each node must be restarted before the plugin becomes visibl
 
 The Elasticsearch provides two categories of plugins:
 
+- Licenced Plugins - Energy Logserver
 - Core Plugins - it is plugins that are part of the Elasticsearch project.
 - Community-contributed - it is plugins that are external to the Elasticsearch project
 
-### Installing Plugins
+#### Enabling/Disabling Plugins
 
-Core Elasticsearch plugins can be installed as follows:
+ **Managing the `logserver_auth` Plugin**:
 
+   - **Disable**:
+     - Add `plugins.logserver_auth.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+   - **Enable**:
+     - Remove or comment out the line `plugins.logserver_auth.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+
+ **Managing the `logserver_guard` Plugin**:
+
+   - **Disable**:
+     - Add `logserverguard.ssl.transport.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Add `logserverguard.ssl.http.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+   - **Enable**:
+     - Remove or comment out the line `logserverguard.ssl.transport.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Remove or comment out the line `logserverguard.ssl.http.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+
+ **Managing the `sql` Plugin**:
+
+   - **Disable**:
+     - Add `plugins.sql.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+   - **Enable**:
+     - Remove or comment out the line `plugins.sql.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
+     - Run the command `systemctl restart elasticsearch`.
+
+
+#### Installing Plugins
+
+Additional Database/Elasticsearch plugins can be installed as follows:
+
+```bash
  cd /usr/share/elasticsearch/
- bin/elasticsearch-plugin install [plugin_name]
+ bin/opensearch-plugin install [plugin_name]
+```
 
-Example: \
+Examples: \
 Plugins from a custom link or filesystem can be installed as follows:
 
 ```bash
- cd /usr/share/elasticsearch/
- sudo bin/elasticsearch-plugin install [url]
+ bin/opensearch-plugin install file:///path/to/plugin.zip
+ bin/opensearch-plugin install file:///C:/path/to/plugin.zip
+ bin/opensearch-plugin install <http://some.domain/path/to/plugin.zip>
 ```
 
-Example:
+#### Listing plugins
+
+Listing currently loaded plugins:
 
 ```bash
- sudo bin/elasticsearch-plugin install file:///path/to/plugin.zip
- bin\elasticsearch-plugin install file:///C:/path/to/plugin.zip
- sudo bin/elasticsearch-plugin install <http://some.domain/path/to/plugin.zip>
+ bin/opensearch-plugin list
 ```
 
-### Listing plugins
-
-Listing currently loaded plugins
+#### Removing plugins
 
 ```bash
- sudo bin/elasticsearch-plugin list
+ bin/opensearch-plugin remove [pluginname]
 ```
 
-listing currently available core plugins:
+#### Updating plugins
 
 ```bash
- sudo bin/elasticsearch-plugin list --help
+ bin/opensearch-plugin remove [pluginname]
+ bin/opensearch-plugin install [pluginname]
 ```
 
-### Removing plugins
-
-```bash
- sudo bin/elasticsearch-plugin remove [pluginname]
-```
-
-### Updating plugins
-
-```bash
- sudo bin/elasticsearch-plugin remove [pluginname]
- sudo bin/elasticsearch-plugin install [pluginname]
-```
 
 ## Transport layer encryption
 
