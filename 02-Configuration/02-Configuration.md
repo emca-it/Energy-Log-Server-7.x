@@ -168,48 +168,48 @@ The Kibana provides three categories of plugins:
 
  **Managing the `Reports` Plugin**:
 
-    - **Disable**:
-      - Add `reports.enabled: false` to the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
-    - **Enable**:
-      - Remove or comment out the line `reports.enabled: false` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
+   - **Disable**:
+     - Add `reports.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `reports.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
 
  **Managing the `vis_type_timeline` Plugin**:
 
-    - **Disable**:
-      - Change `vis_type_timeline.enabled: true` to `vis_type_timeline.enabled: false` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
-    - **Enable**:
-      - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
+   - **Disable**:
+     - Change `vis_type_timeline.enabled: true` to `vis_type_timeline.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
 
  **Managing the `Wazuh` Plugin**:
 
-    - **Disable**:
-      - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
-    - **Enable**:
-      - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
+   - **Disable**:
+     - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
 
  **Managing the `XLSX Import` Plugin**:
 
-    - **Disable**:
-      - Add `xlsx_import.enabled: false` to the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
-    - **Enable**:
-      - Remove or comment out the line `xlsx_import.enabled: false` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
+   - **Disable**:
+     - Add `xlsx_import.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `xlsx_import.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
 
  **Managing the `SQL` Plugin**:
 
-    - **Disable**:
-      - Add `sql.enabled: false` to the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
-    - **Enable**:
-      - Remove or comment out the line `sql.enabled: false` in the file `/etc/kibana/kibana.yml`.
-      - Run the command `systemctl restart kibana`.
+   - **Disable**:
+     - Add `sql.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `sql.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
 
 
 #### Installing Plugins
