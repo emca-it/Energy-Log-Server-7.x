@@ -20,16 +20,16 @@ The result of the command will return the value of the token and you can use it 
 curl: -H 'token: 192783916598v51j928419b898v1m79821c2'
 ```
 
-## Dashboards API
+## Kibana API
 
-The Dashboards import/export APIs allow people to import dashboards along with all of their corresponding saved objects such as visualizations, saved searches, and index patterns.
+The Kibana dashboard import/export APIs allow people to import dashboards along with all of their corresponding saved objects such as visualizations, saved searches, and index patterns.
 
-### Dashboards Import API
+### Kibana Import API
 
 Request:
 
 ```bash
-POST /api/opensearch-dashboards/dashboards/import
+POST /api/kibana/dashboards/import
 ```
 
 Query Parameters:
@@ -47,15 +47,15 @@ Query Parameters:
   Example:
 
 ```bash
-curl -XPOST -ulogserver:<password> -H "osd-xsrf: true" -H "Content-Type: application/json" "https://127.0.0.1:5601/api/opensearch-dashboards/dashboards/import?force=true" -d@"${DASHBOARD-FILE}"
+curl -X POST "https://user:password@localhost:5601 POST api/kibana/dashboards/import?exclude=index-pattern"
 ```
 
-### Dashboards Export API
+### Kibana Export API
 
 Request:
 
 ```bash
-GET /api/opensearch-dashboards/dashboards/export
+GET /api/kibana/dashboards/export
 ```
 
 Query Parameters
@@ -67,7 +67,7 @@ Query Parameters
 Example:
 
 ```bash
-curl -XGET -ulogserver:<password> -H "osd-xsrf: true" -H "Content-Type: application/json" "https://127.0.0.1:5601/api/opensearch-dashboards/dashboards/export?dashboard=${DASHBOARD-ID}" > ${DASHBOARD-FILE} 
+curl -k -XPOST "https://user:password@localhost:443/api/kibana/dashboards/import?force=true&exclude=index-pattern" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@dashboard.json
 ```
 
 ## Elasticsearch API

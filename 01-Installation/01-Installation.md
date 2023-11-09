@@ -7,10 +7,11 @@
    - Red Hat Linux 7.X
    - Red Hat Linux 8.X
    - Centos 7.X
+   - Centos 8.X
    - Oracle Linux 8.X - Unbreakable Enterprise Kernel (UEK)
-   - Centos Stream 7.X, 8.X
-   - AlmaLinux 8.X
-   - RockyLinux 8.X
+   - Centos Stream
+   - AlmaLinux 8
+   - RockyLinux 8
 
 2. Supported Web Browsers
 

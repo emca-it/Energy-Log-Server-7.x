@@ -9685,7 +9685,7 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
   # connection settings
   conn = qualysapi.connect(
       username="emcas5ab1",
-      password="PASSW0RD$",
+      password="Lewa#stopa1",
       hostname="qualysguard.qg2.apps.qualys.eu"
   )
   ```
