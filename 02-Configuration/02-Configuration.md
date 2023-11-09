@@ -68,10 +68,191 @@ Add appropriate permission:
 
   chown -R newuser: /etc/logstash /var/log/logstash
 
-## Plugins management
+## Plugins Management
+
+### GUI/Kibana
+
+Base installation of the Energy Logserver contains the Agents, Alerts, Archive, Automation, CMDB, Index Management, Intelligence, Network Probe, Reports, SQL  plugins - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
+You can extend the basic Kibana functionality by installing custom plugins.
+
+After installation, each node must be restarted before the plugin becomes visible.
+
+The Elasticsearch provides two categories of plugins:
+
+- Licenced Plugins - Energy Logserver
+- Core Plugins - it is plugins that are part of the Kibana project.
+- Community-contributed - it is plugins that are external to the Kibana project
+
+#### Enabling/Disabling Plugins
+
+ **Managing the `Agents` Plugin**:
+
+   - **Disable**:
+     - Add `agents.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `agents.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Alerts` Plugin**:
+
+   - **Disable**:
+     - Change `alerts.enabled: true` to `alerts.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `alerts.enabled: false` to `alerts.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Archive` Plugin**:
+
+   - **Disable**:
+     - Add `archive.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `archive.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Automation` Plugin**:
+
+   - **Disable**:
+     - Change `automation.enabled: true` to `automation.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `automation.enabled: false` to `automation.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `CMDB` Plugin**:
+
+   - **Disable**:
+     - Add `cmdb.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `cmdb.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Console` Plugin**:
+
+   - **Disable**:
+     - Change `console.enabled: true` to `console.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Change `console.enabled: false` to `console.enabled: true` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Index Management` Plugin**:
+
+   - **Disable**:
+     - Add `index_management.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `index_management.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Intelligence` Plugin**:
+
+   - **Disable**:
+     - Add `intelligence.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `intelligence.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Network Probe` Plugin**:
+
+   - **Disable**:
+     - Add `network-probe.enabled: false` to the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+   - **Enable**:
+     - Remove or comment out the line `network-probe.enabled: false` in the file `/etc/kibana/kibana.yml`.
+     - Run the command `systemctl restart kibana`.
+
+ **Managing the `Reports` Plugin**:
+
+    - **Disable**:
+      - Add `reports.enabled: false` to the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+    - **Enable**:
+      - Remove or comment out the line `reports.enabled: false` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+
+ **Managing the `vis_type_timeline` Plugin**:
+
+    - **Disable**:
+      - Change `vis_type_timeline.enabled: true` to `vis_type_timeline.enabled: false` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+    - **Enable**:
+      - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+
+ **Managing the `Wazuh` Plugin**:
+
+    - **Disable**:
+      - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+    - **Enable**:
+      - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+
+ **Managing the `XLSX Import` Plugin**:
+
+    - **Disable**:
+      - Add `xlsx_import.enabled: false` to the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+    - **Enable**:
+      - Remove or comment out the line `xlsx_import.enabled: false` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+
+ **Managing the `SQL` Plugin**:
+
+    - **Disable**:
+      - Add `sql.enabled: false` to the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
+    - **Enable**:
+      - Remove or comment out the line `sql.enabled: false` in the file `/etc/kibana/kibana.yml`.
+      - Run the command `systemctl restart kibana`.
 
 
-### Database
+#### Installing Plugins
+
+Additional GUI/Kibana plugins can be installed as follows:
+
+```bash
+ cd /usr/share/kibana/
+ bin/opensearch-dashboards-plugin install [plugin_name]
+```
+
+Examples: \
+Plugins from a custom link or filesystem can be installed as follows:
+
+```bash
+ bin/opensearch-dashboards-plugin install file:///path/to/plugin.zip
+ bin/opensearch-dashboards-plugin install file:///C:/path/to/plugin.zip
+ bin/opensearch-dashboards-plugin install http://some.domain/path/to/plugin.zip
+```
+
+#### Listing plugins
+
+Listing currently loaded plugins:
+
+```bash
+ bin/opensearch-dashboards-plugin list
+```
+
+#### Removing plugins
+
+```bash
+ bin/opensearch-dashboards-plugin remove [pluginname]
+```
+
+#### Updating plugins
+
+```bash
+ bin/opensearch-dashboards-plugin remove [pluginname]
+ bin/opensearch-dashboards-plugin install [pluginname]
+```
+
+
+### Database/Elasticsearch
 
 Base installation of the Energy Logserver contains the logserver_auth, join, logserver_quard plugin - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
 You can extend the basic Elasticsearch functionality by installing custom plugins.
