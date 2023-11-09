@@ -147,7 +147,7 @@ In the "**Discovery**" tab, select the `skimmer- *` index from the list of index
 To use dashboards and visualization of skimmer results, load dashboards delivered with the product:
 
 ```bash
-curl -k -X POST -u$user:$passowrd "https://127.0.0.1:5601/api/kibana/dashboards/import?force=true" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@kibana/kibana_objects/skimmer_objects.json
+curl -XPOST -ulogserver:<password> -H "osd-xsrf: true" -H "Content-Type: application/json" "https://127.0.0.1:5601/api/opensearch-dashboards/dashboards/import?force=true" -d@/usr/share/kibana/kibana_objects/skimmer_objects.json
 ```
 
 The Skimmer dashboard includes the following monitoring parameters:
