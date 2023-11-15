@@ -1904,833 +1904,114 @@ actions:
       allow_ilm_indices: true
 ```
 
-## Intelligence Module
+## Empowered AI
 
-A dedicated artificial intelligence module has been built in the
-Energy Logserver system that allows the prediction of parameter values
-relevant to the maintenance of infrastructure and IT systems. Such
-parameters include:
+`Empowered AI` is a module of Energy Logserver containing mathematical algorithms for data science.
 
-- use of disk resources,
-- use of network resources,
-- using the power of processors
-- detection of known incorrect behavior of IT systems
-
-To access the Intelligence module, click the tile icon
-from the main menu bar and then go to the „Intelligence" icon (To go
-back, click on the „Search" icon).
-
-![](/media/media/image38_js4.png)
-
-There are 4 screens available in the
-module:![](/media/media/image64.png)
+It is licenced extention for SIEM deplyment. Main purpose of the `Empowered AI` is to help SOC teams see that data which are difficult to detect with regular approach. Advance mathematical sorting, grouping, forecastig enriched with statistics create a new outlook of security posture.
 
-- **Create AI Rule** - the screen allows you to create artificial
-     intelligence rules and run them in scheduler mode or immediately
-- **AI Rules List** - the screen presents a list of created artificial
-     intelligence rules with the option of editing, previewing, and
-     deleting them
-- **AI Learn** - the screen allows to define the conditions for teaching
-     the MLP neural network
-- **AI Learn Tasks** - a screen on which the initiated and completed
-     learning processes of neural networks with the ability to preview
-     learning results are presented.# Create AI Rule #
-
-To create the AI Rule, click on the tile icon from the main menu bar,
-go to the „Intelligence" icon, and select the "Create AI Rule" tab.
-The screen allows to defining of the rules of artificial intelligence
-based on one of the available algorithms (a detailed description of
-the available algorithms is available in a separate document).
-
-![](/media/media/image65_js.png)
-
-Description of the controls available on the fixed part of the screen:
-
-- **Algorithm** - the name of the algorithm that forms the basis of the
-artificial intelligence rule
-- **Choose search** - search defined in the Energy Logserver system,
-which is used to select a set of data on which the artificial
-intelligence rule will operate
-- **Run** - a button that allows running the defined AI rule or saving it
-to the scheduler and run as planned
-
-The rest of the screen will depend on the chosen artificial
-intelligence algorithm.
-
-### The fixed part of the screen
-
-![](/media/media/image65.png)
-
-Description of the controls available on the fixed part of the screen:
-
-- Algorithm - the name of the algorithm that forms the basis of the artificial intelligence rule
-
-- Choose search - search defined in the Energy Logserver system, which is used to select a set of data on which the artificial intelligence rule will operate
-
-- Run - a button that allows running the defined AI rule or saving it to the scheduler and run as planned
-
-The rest of the screen will depend on the chosen artificial intelligence algorithm.
-
-### Screen content for regressive algorithms
-
-![](/media/media/image66_js.png)
-
-Description of controls:
-
-- **feature to analyze from search** - analyzed feature (dictated)
-- **multiply by field** - enable multiplication of algorithms after
-    unique values of the feature indicated here. Multiplication allows
-    you to run the AI rule one for e.g. all servers. The value "none" in
-    this field means no multiplication.
-- **multiply by values** - if a trait is indicated in the „multiply by
-    field", then unique values of this trait will appear in this field.
-    Multiplications will be made for the selected values. If at least one of the values is not selected, the „Run" buttons will be inactive.\`
-
-In other words, multiplication means performing an analysis for many values from the indicated field, for example: `sourece_node_host`- which we indicate in `Multiply by field (from search)`.
-
-However, in `Multiply by values (from search)` we already indicate values of this field for which the analysis will be performed for example: host1, host2, host3, ...
-
-- **time frame** - feature aggregation method (1 minute, 5 minutes, 15
-    minutes, 30 minutes, hourly, weekly, monthly, 6 months, 12 months)
-- **max probes** - sets, how many samples back will be taken into account for
-    analysis. A single sample is an aggregated data according to the
-    aggregation method.
-- **value type** - which values to take into account when aggregating for
-    a given time frame (e.g. maximum from the time frame, minimum, average)
-- **max predictions** - how many estimates we make ahead (we take
-    time frame)
-- **data limit** - limits the amount of data downloaded from the source.
-    It speeds up processing but reduces its quality
-- **start date** - you can set a date earlier than the current date to verify how the selected algorithm would work on historical data
-- **Scheduler** - a tag if the rule should be run according to the plan
-    for the scheduler. If selected, additional fields will appear;
-
-![](/media/media/image67.png)
-
-- **Prediction cycle** - plan definition for the scheduler, i.e. the
-    cycle in which the prediction rule is run (e.g. once a day, every
-    hour, once a week). In the field, enter the command that complies
-    with the cron standard. Enable -- whether to immediately launch
-    the scheduler plan or save only the definition
-- **Role** - only users with the roles selected here and the
-    administrator will be able to run the defend AI rules The selected
-    „time frame" also affects the prediction period. If we choose
-    "time frame = monthly", we will be able to predict one month
-    ahead from the moment of prediction (according to the "prediction
-    cycle" value)
-
-### Screen content for the Trend algorithm
-
-![](/media/media/image68_js.png)
-
-Description of controls:
-
-- **feature to analyze from search** - analyzed feature (dictated)
-- **multiply by field** - enable multiplication of algorithms after
-    unique values of the feature indicated here. Multiplication allows
-    you to run the AI rule one for e.g. all servers. The value "none" in
-    this field means no multiplication.
-- **multiply by values** - if a trait is indicated in the „multiply by
-    field", then unique values of this trait will appear in this field.
-    Multiplications will be made for the selected values. If at least
-    one of the values is not selected, the „Run" buttons will be inactive.\`
-
-In other words, multiplication means performing an analysis for many values from the indicated field, for example: `sourece_node_host`- which we indicate in `Multiply by field (from search)`.
-
-However, in `Multiply by values (from search)` we already indicate values of this field for which the analysis will be performed, for example: host1, host2, host3, ...
-
-- **time frame** - feature aggregation method (1 minute, 5 minutes, 15
-    minutes, 30 minutes, hourly, weekly, monthly, 6 months, 12 months)
-- **max probes** - sets, how many samples back will be taken into account for
-    analysis. A single sample is an aggregated data according to the
-    aggregation method.
-- **value type** - which values to take into account when aggregating for
-    a given time frame (e.g. maximum from the time frame, minimum, average)
-- **max predictions** - how many estimates we make ahead (we take
-    time frame)
-- **data limit** - limits the amount of data downloaded from the source.
-    It speeds up processing but reduces its quality
-- **start date** - you can set a date earlier than the current date to verify how the selected algorithm would work on historical     data
-- **Scheduler** - a tag if the rule should be run according to the plan
-    for the scheduler. If selected, additional fields will appear;
-
-![](/media/media/image67.png)
-
-- **Prediction cycle** - plan definition for the scheduler, i.e. the
-    cycle in which the prediction rule is run (e.g. once a day, every
-    hour, once a week). In the field, enter the command that complies
-    with the cron standard. Enable -- whether to immediately launch
-    the scheduler plan or save only the definition
-- **Role** - only users with the roles selected here and the
-    administrator will be able to run the defend AI rules The selected
-    „time frame" also affects the prediction period. If we choose
-    "time frame = monthly", we will be able to predict one month
-    ahead from the moment of prediction (according to the "prediction
-    cycle" value)
-- **Threshold** - default values -1 (do not search). Specifies the
-    algorithm what level of exceeding the value of the feature „feature
-    to analyze from cheese" is to look for. The parameter is currently used
-    only by the "Trend" algorithm.
-
-### Screen content for the neural network (MLP) algorithm ##
-
-![](/media/media/image69_js.png)
-
-Descriptions of controls:
-
-- **Name** - name of the learned neural network
-- **Choose search** - search defined in Energy Logserver, which is used
-    to select a set of data on which the rule of artificial intelligence
-    will work
-- **Below**, on the left, a list of attributes and their weights based on
-    teaching ANN will be defined during the teaching. The user for each
-    attribute will be able to indicate the field from the above-mentioned search, which contains the values of the attribute and
-    which will be analyzed in the algorithm. The presented list (for
-    input and output attributes) will have a static and dynamic part.
-    Static creation by presenting key with the highest weights. The key
-    will be presented in the original form, i.e. perf\_data./ The second
-    part is a DropDown type list that will serve as a key update
-    according to the user's nameing. On the right side, the attribute
-    will be examined in a given rule/pattern. Here also the user must
-    indicate a specific field from the search. In both cases, the input
-    and output are narrowed based on the search fields indicated in
-    Choose search.
-- **Data limit** - limits the amount of data downloaded from the source.
-    It speeds up the processing but reduces its quality.
-- **Scheduler** - a tag if the rule should be run according to the plan
-    or the scheduler. If selected, additional fields will appear:
-
-![](/media/media/image67.png)
-
-- **Prediction cycle** - plan definition for the scheduler, i.e. the
-     cycle in which the prediction rule is run (e.g. once a day, every
-     hour, once a week). In the field, enter the command that complies
-     with the *cron* standard
-- **Enable** - whether to immediately launch the scheduler plan or save
-     only the definition
-- **Role** - only users with the roles selected here and the
-     administrator will be able to run the defined AI rules
-
-### AI Rules List ##
-
-![](/media/media/image70.png)
-
-Column description:
-
-- **Status**:
-    - ![](/media/media/image71.png)- the process is being processed (the PID of the process is in brackets)
-    - ![](/media/media/image72.png) - a process completed correctly
-    - ![](/media/media/image73.png) - the process ended with an error
-- **Name** - the name of the rule
-- **Search** - the search on which the rule was run
-- **Method** - an algorithm used in the AI rule
-- **Actions** - allowed actions:
-    - **Show** - preview of the rule definition
-    - **Enable/Disable** - rule activation /deactivation
-    - **Delete** - deleting the rule
-    - **Update** - update of the rule definition
-    - **Preview** - a preview of the prediction results (the action is
-        available after the processing has been completed correctly).
-
-### AI Learn ##
-
-![](/media/media/image74.png)
-
-Description of controls:
-
-- **Search** - a source of data for teaching the network
-- **prefix name** - a prefix added to the id of the learned model that
-  allows the user to recognize the model
-- **Input cols** - list of fields that are analyzed / input features.
-  Here, the column that will be selected in the output column should
-  not be indicated. Only those columns that are related to processing
-  should be selected. **
-- **Output col** - result field, the recognition of which is learned by
-  the network. **This field should exist in the learning and testing
-  data, but in the production data is unnecessary and should not
-  occur. This field cannot be on the list of selected fields in "input
-  col".**
-- **Output class category** - here you can enter a condition in SQL
-  format to limit the number of output categories e.g. `if((outputCol)
-  \< 10,(floor((outputCol))+1), Double(10))`. This condition limits the
-  number of output categories to 10. **Such conditions are necessary
-  for fields selected in "output col" that have continuous values.
-  They must necessarily be divided into categories. In the Condition,
-  use your outputCol name instead of the field name from the index
-  that points to the value of the "output col" attribute.**
-- **Time frame** - a method of aggregation of features to improve their
-  quality (e.g. 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1
-  daily).
-- **Time frames output shift** - indicates how many time frame units are to
-  move the output category. This allows teaching the network with
-  current attributes but for categories for the future.
-- **Value type** - which values to take into account when aggregating for
-  a given time frame (e.g. maximum from the time frame, minimum, average)
-- **Output class count**- the expected number of result classes. **If
-  during learning the network identifies more classes than the user
-  entered, the process will be interrupted with an error, therefore it
-  is better to set up more classes than less, but you have to keep in
-  mind that this number affects the learning time.**
-- **Neurons in the first hidden layer (from, to)** - the number of neurons in
-  the first hidden layer. Must have a value \> 0. Jump every 1.
-- **Neurons in the second hidden layer (from, to)** - the number of neurons in the second hidden layer. If = 0, then this layer is missing. Jump
-  every 1.
-- **Neurons in the third hidden layer (from, to)** - the number of neurons in the
-  third hidden layer. If = 0 then this layer is missing. Jump every 1.
-- **Max iter** (from, to) - maximum number of network teaching
-  repetitions (the same data is used for learning many times in
-  internal processes of the neural network). The slower it is. Jump
-  every 100. The maximum value is 10, the default is 1.
-- **Split data to train&test** - for example, the entered value of 0.8
-  means that the input data for the network will be divided in the
-  ratio 0.8 to learning, 0.2 for the tests of the network learned.
-- **Data limit** - limits the amount of data downloaded from the source.
-  It speeds up the processing but reduces its quality.
-- **Max probes** - limits the number of samples taken to learn the
-  network. Samples are already aggregated according to the selected
-  "Time frame" parameter. It speeds up teaching but reduces its
-  quality.
-- **Build** - a button to start teaching the network. The button contains
-  the number of required teaching curses. You should be careful and
-  avoid one-time learning for more than 1000 courses. It is better to
-  divide them into several smaller ones. One pass after a full data
-  load takes about 1-3 minutes on a 4-core 2.4.GHz server.
-  **The module has implemented the best practices related to the number
-  of neurons in individual hidden layers. The values suggested by the
-  system are optimal from the point of view of these practices, but the
-  user can decide on these values himself.**
-
-Under the parameters for learning the network, there is an area in
-which teaching results will appear.
-
-After pressing the "Refresh" button, the list of the resulting models
-will be refreshed.
-
-Autorefresh - selecting the field automatically refreshes the list of
-learning results every 10s.
-
-The following information will be available in the table on the left:
-
-- **Internal name** - the model name given by the system, including the
-    user-specified prefix
-
-- **Overall efficiency** - the network adjustment indicator - allows to
-    see at a glance whether it is worth dealing with the model. The
-    greater the value, the better.
-
-After clicking on the table row, detailed data collected during the
-learning of the given model will be displayed. This data will be
-visible in the box on the right.
-
-The selected model can be saved under its name using the "Save
-algorithm" button. This saved algorithm will be available in the
-"Choose AI Rule" list when creating the rule (see Create AI Rule).
-
-### AI Learn Tasks ##
-
-The "AI Learn Task" tab shows the list of processes initiated teaching the ANN network
-with the possibility of managing processes.
-
-Each user can see only the process they run. The user in the role of
-Intelligence sees all running processes.
-
-![](/media/media/image75.png)
-
-Description of controls:
-
-- **Algorithm prefix** - this is the value set by the user on the AI
-    Learn screen in the Prefix name field
-- **Progress** - here is the number of algorithms generated / the number of all to be generated
-- **Processing time** - duration of algorithm generation in seconds (or
-     maybe minutes or hours)
-- **Actions**:
-    - **Cancel** - deletes the algorithm generation task (user requires
-        confirmation of operation)
-    - **Pause / Release** - pause/resume algorithm generation process.
-
-AI Learn tab contains the Show in the preview mode of the ANN hyperparameters
-After completing the learning activity or after the user has interrupted it,
-the "Delete" button appears in the "Action" field. This button allows you to permanently
-delete the learning results of a specific network.
-
-![](/media/media/image76.png)
-
-### Scenarios of using algorithms implemented in the Intelligence module
-
-#### Teaching MLP networks and choosing the algorithm to use:
-
-1. Go to the AI Learn tab,
-1. We introduce the network teaching parameters,
-1. Enter your prefix for the names of the algorithms you have learned,
-1. Press Build.
-1. We observe the learned networks on the list (we can also stop the observation at any moment and go to other functions of the system. We will return to the learning results by going to the AI Learn Tasks tab and clicking the show action),
-1. We choose the best model from our point of view and save it under our name,
-1. From this moment the algorithm is visible in the Create AI Rule tab.
-
-#### Starting the MLP network algorithm:
-
-1. Go to the Create AI Rule tab and create rules,
-1. Select the previously saved model of the learned network,
-1. Specify parameters visible on the screen (specific to MLP),
-1. Press the Run button.
-
-#### Starting regression algorithm:
-
-1. Go to the Create AI Rule tab and create rules,
-1. We choose AI Rule, e.g. Simple Moving Average, Linear Regression, or Random Forest Regression, etc.,
-1. Enter your rule name (specific to regression),
-1. Set the parameters of the rule ( specific to regression),
-1. Press the Run button.
-
-#### Management of available rules:
-
-1. Go to the AI Rules List tab,
-1. A list of AI rules available for our role is displayed,
-1. We can perform the actions available on the right for each rule.# Results of algorithms #
-
-The results of the "AI algorithms" are saved to the index „intelligence" specially created
-for this purpose. The index with the prediction result. The following fields are available in the index (where xxx is the name of
-the attribute being analyzed):
-
-- **xxx\_pre** - estimate value
-- **xxx\_cur** - current value at the moment of estimation
-- **method\_name** - the name of the algorithm used
-- **rmse** - average square error for the analysis in which \_cur values
-     were available. **The smaller the value, the better.**
-- **rmse\_normalized** - mean square error for the analysis in which
-     \_cur values were available, normalized with \_pre values. **The
-     smaller the value, the better.**
-- **overall\_efficiency** - efficiency of the model. **The greater the
-     value, the better. A value less than 0 may indicate too little
-     data to correctly calculate the indicator**
-- **linear\_function\_a** - directional coefficient of the linear
-     function y = ax + b. **Only for the Trend and Linear Regression
-     Trend algorithm**
-- **linear\_function\_b** - the intersection of the line with the Y axis
-     for the linear function y = ax + b. **Only for the Trend and
-     Linear Regression Trend algorithm.**
-
-Visualization and signals related to the results of data analysis
-should be created from this index. The index should be available to
-users of the Intelligence module.
-
-### Permission
-
-Permission has been implemented in the following way:
-
-- Only the user in the admin role can create/update rules.
-- When creating rules, the roles that will be able to enable/disengage/view the rules will be indicated.
-
-We assume that the Learn process works as an administrator.
-
-We assume that the visibility of Search in AI Learn is preceded by
-receiving the search permission in the module object permission.
-
-The role of "Intelligence" launches the appropriate tabs.
-
-An ordinary user only sees his models. The administrator sees all
-models.
-
-### Register new algorithm
-
-For registering new algorithm:
-
-- **Login** to the Energy Logserver
-- Select **Intelligence**
-- Select **Algorithm**
-- Fill **Create algorithm** form and press the **Submit** button
-
-Form fields:
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-kwiq{border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-21f3{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-21f3">Field</th>
-    <th class="tg-21f3">Description</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-kwiq">Code</td>
-    <td class="tg-kwiq">Short name for algorithm</td>
-  </tr>
-  <tr>
-    <td class="tg-kwiq">Name</td>
-    <td class="tg-kwiq">Algorithm name</td>
-  </tr>
-  <tr>
-    <td class="tg-kwiq">Command</td>
-    <td class="tg-kwiq">Command to execute. The command must be in the directory pointed to by the parameter elastscheduler.commandpath.</td>
-  </tr>
-</tbody>
-</table>
-
-Energy Logserver execute command:
-
-```bash
-<command> <config> <error file> <out file>
-```
-
-Where:
-
-- command - Command from command field of Create algorithm form.
-- config - Full path of json config file. The name of a file is an id of process status document in index .intelligence_rules
-- error file - Unique name for the error file. Not used by predefined algorithms.
-- out file - Unique name for the output file. Not used by predefined algorithms.
-
-Config file:
-
-Json document:
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-fvzj{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-b9ha{border-color:inherit;text-align:left;vertical-align:middle}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-fvzj">Field</th>
-    <th class="tg-fvzj">Value</th>
-    <th class="tg-fvzj">Screen field (description)</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-b9ha">algorithm_type</td>
-    <td class="tg-b9ha">GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL</td>
-    <td class="tg-b9ha">Algorithm. For customs method field Code from Create algorithm form.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">model_name</td>
-    <td class="tg-b9ha">Not empty string.</td>
-    <td class="tg-b9ha">AI Rule Name.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">search</td>
-    <td class="tg-b9ha">Search id.</td>
-    <td class="tg-b9ha">Choose search.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">label_field.field</td>
-    <td class="tg-b9ha"></td>
-    <td class="tg-b9ha">Feature to analyse.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">max_probes</td>
-    <td class="tg-b9ha">Integer value</td>
-    <td class="tg-b9ha">Max probes</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">time_frame</td>
-    <td class="tg-b9ha">1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day</td>
-    <td class="tg-b9ha">Time frame</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">value_type</td>
-    <td class="tg-b9ha">min, max, avg, count</td>
-    <td class="tg-b9ha">Value type</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">max_predictions</td>
-    <td class="tg-b9ha">Integer value</td>
-    <td class="tg-b9ha">Max predictions</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">threshold</td>
-    <td class="tg-b9ha">Integer value</td>
-    <td class="tg-b9ha">Threshold</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">automatic_cron</td>
-    <td class="tg-b9ha">Cron format string</td>
-    <td class="tg-b9ha">Automatic cycle</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">automatic_enable</td>
-    <td class="tg-b9ha">true/false</td>
-    <td class="tg-b9ha">Enable</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">automatic</td>
-    <td class="tg-b9ha">true/false</td>
-    <td class="tg-b9ha">Automatic</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">start_date</td>
-    <td class="tg-b9ha">YYYY-MM-DD HH:mm or now</td>
-    <td class="tg-b9ha">Start date</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">multiply_by_values</td>
-    <td class="tg-b9ha">Array of string values</td>
-    <td class="tg-b9ha">Multiply by values</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">multiply_by_field</td>
-    <td class="tg-b9ha">None or full field name eg.: system.cpu</td>
-    <td class="tg-b9ha">Multiply by field</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">selectedroles</td>
-    <td class="tg-b9ha">Array of roles name</td>
-    <td class="tg-b9ha">Role</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">last_execute_timestamp</td>
-    <td class="tg-b9ha"></td>
-    <td class="tg-b9ha">Last execute</td>
-  </tr>
-</tbody>
-</table>
-
-</br>
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-b9ha{border-color:inherit;text-align:left;vertical-align:middle}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-ua3b">Not screen fields</th>
-    <th class="tg-ua3b"></th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-b9ha">preparation_date</td>
-    <td class="tg-b9ha">Document preparation date.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">machine_state_uid</td>
-    <td class="tg-b9ha">AI rule machine state uid.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">path_to_logs</td>
-    <td class="tg-b9ha">Path to ai machine logs.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">path_to_machine_state</td>
-    <td class="tg-b9ha">Path to ai machine state files.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">searchSourceJSON</td>
-    <td class="tg-b9ha">Query string.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">processing_time</td>
-    <td class="tg-b9ha">Process operation time.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">last_execute_mili</td>
-    <td class="tg-b9ha">Last executed time in milliseconds.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">pid</td>
-    <td class="tg-b9ha">Process pid if ai rule is running.</td>
-  </tr>
-  <tr>
-    <td class="tg-b9ha">exit_code</td>
-    <td class="tg-b9ha">Last executed process exit code.</td>
-  </tr>
-</tbody>
-</table>
-</br>
-
-The command must update the process status document in the system during operation. It is an elastic partial document update.
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-pnl2{border-color:inherit;text-align:left;vertical-align:middle}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-ua3b">Process status</th>
-    <th class="tg-ua3b">Field (POST body)</th>
-    <th class="tg-ua3b">Description</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-pnl2">START</td>
-    <td class="tg-pnl2">doc.pid</td>
-    <td class="tg-pnl2">System process id</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.last_execute_timestamp</td>
-    <td class="tg-pnl2">Current timestamp. yyyy-MM-dd HH:mm</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.last_execute_mili</td>
-    <td class="tg-pnl2">Current timestamp in millisecunds.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2">END PROCESS WITH ERROR</td>
-    <td class="tg-pnl2">doc.error_description</td>
-    <td class="tg-pnl2">Error description.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.error_message</td>
-    <td class="tg-pnl2">Error message.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.exit_code</td>
-    <td class="tg-pnl2">System process exit code.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.pid</td>
-    <td class="tg-pnl2">Value 0.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.processing_time</td>
-    <td class="tg-pnl2">Time of execute process in seconds.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2">END PROCESS OK</td>
-    <td class="tg-pnl2">doc.pid</td>
-    <td class="tg-pnl2">Value 0.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.exit_code</td>
-    <td class="tg-pnl2">System process exit code. Value 0 for success.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2"></td>
-    <td class="tg-pnl2">doc.processing_time</td>
-    <td class="tg-pnl2">Time of execute process in seconds.</td>
-  </tr>
-</tbody>
-</table>
-</br>
-
-The command must insert data for a prediction chart.
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-ua3b{border-color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-pnl2{border-color:inherit;text-align:left;vertical-align:middle}
-.tg .tg-pjk6{border-color:inherit;text-align:left;vertical-align:top}
-</style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-ua3b">Field</th>
-    <th class="tg-ua3b">Value</th>
-    <th class="tg-ua3b">Description</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-pnl2">model_name</td>
-    <td class="tg-pnl2">Not empty string.</td>
-    <td class="tg-pnl2">AI Rule Name.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2">preparationUID</td>
-    <td class="tg-pnl2">Not empty string.</td>
-    <td class="tg-pnl2">Unique prediction id</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2">machine_state_uid</td>
-    <td class="tg-pnl2">Not empty string.</td>
-    <td class="tg-pnl2">AI rule machine state uid.</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2">model_uid</td>
-    <td class="tg-pnl2">Not empty string.</td>
-    <td class="tg-pnl2">Model uid from config file</td>
-  </tr>
-  <tr>
-    <td class="tg-pnl2">method_name</td>
-    <td class="tg-pnl2">Not empty string.</td>
-    <td class="tg-pnl2">User friendly algorithm name.</td>
-  </tr>
-  <tr>
-    <td class="tg-pjk6"></td>
-    <td class="tg-pnl2">Json</td>
-    <td class="tg-pnl2">Field calculated. For example: system.cpu.idle.pct_pre</td>
-  </tr>
-</tbody>
-</table>
-</br>
-
-Document sample:
-
-```json
-{
-  "_index": "intelligence",
-  "_type": "doc",
-  "_id": "emca_TL_20190304_080802_20190531193000",
-  "_version": 2,
-  "_score": null,
-  "_source": {
-    "machine_state_uid": "emca_TL_20190304_080802",
-    "overall_efficiency": 0,
-    "processing_time": 0,
-    "rmse_normalized": 0,
-    "predictionUID": "emca_TL_20190304_080802_20190531193000",
-    "linear_function_b": 0,
-    "@timestamp": "2019-05-31T19:30:00.000+0200",
-    "linear_function_a": 0.006787878787878788,
-    "system": {
-      "cpu": {
-        "idle": {
-          "pct_pre": 0.8213333333333334
-        }
-      }
-    },
-    "model_name": "emca",
-    "method_name": "Trend",
-    "model_uid": "emca_TL_20190304_080802",
-    "rmse": 0,
-    "start_date": "2019-03-04T19:30:01.279+0100"
-  },
-  "fields": {
-    "@timestamp": [
-      "2019-05-31T17:30:00.000Z"
-    ]
-  },
-  "sort": [
-    1559323800000
-  ]
-}
-```
+`Empowered AI` is an ongoing project. Our team of mathematicians, data scientists and security analysts continue their work addressing more and more new usecases.
+
+### AI Rules
+
+In the `Empowered AI`  section you will find a summary of the existing rules. At the top, you'll find the total number of rules and the number of scheduled and unscheduled rules. Here is the search field and buttons `Refresh rules list`  and `Create New Rule`  Below is the table. It contains `AI Rule Name`, `Search/Index Name`  -  data source, `Last Executed`  - date, `Last Modified` - date, selected `Use Case`,  `Schedule`  - scheduling frequency, `Status`  and `Action`  icons.
+
+![](/media/media/okno.png)
+
+#### Status
+
+The rule has one of the following statuses:
+
+- Waiting to start - `Run once` rule starts by clicking symbol play.
+- Scheduled - the scheduled rule starts automatically.
+- Scoring
+- Building
+- Finished - click on the `AI Rule Name`  to get the forecast results preview `AI Rules>Performance`.
+- Error -  check error details in the results preview  `Performance>AI Rule Configuration>Exceptions`.
+
+#### Actions
+
+Icons of actions:
+
+ - Play – run or rerun the rule,
+ - Stop – unschedule periodic rule, after this action rule type changes to Run Once,
+ - Pencil - edit the rule's configuration,
+ - Bin – delete the rule.
+
+#### Prepare your data set
+
+Save your `Discover`  search so you can use it the same way as in visualizations and dashboards.
+
+#### Create New Rule
+
+To create a rule choose ``Empowered AI`>AI Rules>Create New Rule`. In pop-up form `Select Use Case`. The `Empowered AI` module contains AI models for various use cases: `Forecasting`, `Anomaly Detection - Number`, `Anomaly Detection - Text`, `Clustering` and `Relationship Mining`.
+
+![](/media/media/wybor.png)
+
+#### Performance
+
+To see the result of the finished rule click on the link in the column `AI Rule Name`. Here we have `AI Rule Configuration` and `Model Performance`.
+
+ ![](/media/media/result.png)
+
+In `AI Rule Configuration` you will find detailed configuration parameters and information about the training data set. Exception details will also appear here in case of misconfiguration. `Model Performance` is the presentation of data and analysis results. Depending on the use case, these are charts, relationship visualizations, and tables.
+
+### Forecasting
+
+Predicting future conditions is a crucial aspect of decision-making in any organization. To anticipate upcoming events, historical data analysis is indispensable. Energy Logserver `Empowered AI` Module suggests utilizing the XGBoost algorithm, also known as eXtreme Gradient Boosting, for forecasting your environmental variables in the near future.
+
+XGBoost is an advanced machine learning algorithm that excels at handling datasets with multiple variables. This algorithm can accurately model complex relationships within data, enabling precise predictions of future events. XGBoost is a popular choice in the field of Data Science, particularly for solving regression and classification problems, thanks to its efficiency and effectiveness.
+
+#### Create a rule
+
+To create a rule choose `Empowered AI`>`AI Rules`>`Create New Rule`. In pop-up form `Select Use Case>Forecasting` and insert the rule's name.
+
+ ![](/media/media/nazwa_i_dane.png)
+
+#### Choose data
+
+`Choose Data Source`  is a drop-down list with your saved data, choose one of them. After loading the source, we can select `Field to Analyse`  - the id-field to be predicted. The system default loads headers of the appropriate data type for the specified use case. You can also choose the checkbox displaying all the fields. The proper mapping is necessary for appropriate header recognition. As numerical data, you can also use the number of documents instead of field values. To do that, choose the checkbox. `Multiply by Field`  allows you to obtain separate forecasts e.g., for several (or all) hosts, users and domains, in one rule.
+
+ ![](/media/media/multiply.png)
+
+#### Scheduler options
+
+In this field, you can choose the frequency at which the rule runs `Run Once` or `Scheduled`.
+
+##### Run Once
+
+Range of dates you choose from the interactive calendars, click on icons.
+`Build Time Frame` is a piece of data used to create and train the model. More training data allows the algorithm to obtain more accurate signal patterns and trend information. If there is too little and incomplete data, the forecast may not be accurate.
+`Start Date` is the starting point of predictions.
+
+ ![](/media/media/agregacja.png)
+
+##### Scheduled
+
+Scheduled rules require dates to be a relative distance from now. You choose number and time unit: minutes, hours, days, weeks, months. `Build Time Frame Offset`  is historical data used to build the model.  `Period: time selection`   is time distance before end point `TO: now - time selection` of the data set. `Start Date Offset  is the starting point of forecast. It must be set inside the build time frame offset.
+
+![](/media/media/scheduled.png)
+
+#### Data Aggregation and Forecast Time Frame
+
+The data set is divided into small intervals specified in the `Data Aggregation> 30 min | 1 h | 2 h | 4 h | 8 h | 12 h | 1 d`  parameter. The algorithm uses this unit as the training and reporting frequency. `Forecast Time Frame> 4 h | 8 h | 12 h | 1 d | 2 d | 3 d | 1 w` is the period of the requested forecast. A shorter time gives a better estimation. Value of forecast time frame must be a multiplicity of time data aggregation.
+
+#### Launch
+
+You can find the newly created rule in the table with the `Waiting to start` status. Click `Play` and wait for a moment. Refresh the rules list. If it has the status `Finished`, click on the rule's name to see the results.
+
+ ![](/media/media/finished.png)
+
+#### Results
+
+![](/media/media/result.png)
+
+#### Difference Multi Pattern - alert rule
+
+Users of SIEM Plan can leverage Empowered AI in alert rules. For forecasting, a special rule called Multi Pattern Difference has been created. In the form  `Create Alert Rule`, we compare two patterns, index_name-* and index_name-forecast-*, along with the fields used in the forecast, `field_name` and `ai.field_name`. It's crucial to note that the `agg_min` value should not be lower than the aggregation window used in the forecast; it must be a multiple thereof.
+Fill in the remaining fields following the convention used for other alert rules.
+
+![](/media/media/multi_difference_alert1.png)
 
 ## Archive
 
@@ -6750,7 +6031,7 @@ The response contains the matching results:
 }
 ```
 
-You can use the Explain API to see how this query is executed against Energe Logserver:
+You can use the Explain API to see how this query is executed against Energy Logserver:
 
 ```json
 POST /_plugins/_sql/_explain 
