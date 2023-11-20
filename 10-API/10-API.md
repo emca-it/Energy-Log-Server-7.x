@@ -2,7 +2,7 @@
 
 ## Connecting to API
 
-To connect to API's you can use basic authorization or an authorization token. 
+To connect to API's you can use basic authorization or an authorization token.
 
 To generate the authorization token, run the following command:
 
@@ -42,9 +42,7 @@ Query Parameters:
 
   (array) Saved object types that should not be imported
 
-  
-
-  Example:
+Example:
 
 ```bash
 curl -XPOST -ulogserver:<password> -H "osd-xsrf: true" -H "Content-Type: application/json" "https://127.0.0.1:5601/api/opensearch-dashboards/dashboards/import?force=true" -d@"${DASHBOARD-FILE}"
@@ -100,7 +98,7 @@ Avilable APIs by roles:
 
 ## Elasticsearch Index API ##
 
-The indices APIs are used to manage individual indices, 
+The indices APIs are used to manage individual indices,
 index settings, aliases, mappings, and index templates.
 
 ### Adding Index ###
@@ -114,6 +112,7 @@ curl -XPUT -u login:password '127.0.0.1:9200/twitter/tweet/1?pretty=true' -d'{
     "message" : "tests auto index generation"
     }'
 ```
+
 You should see the output:
 
 ```bash
@@ -141,8 +140,8 @@ The parameter `action.auto_create_index` must be set on `true`.
 curl -XPUT -u login:password '127.0.0.1:9200/twitter2?pretty=true' -d'{
 	"settings" : {
 	"number_of_shards" : 1,
-	"number_of_replicas" : 1
-	}
+    "number_of_replicas" : 1
+    }
  }'
 ```
 
@@ -159,10 +158,10 @@ You should see the output:
 
 ```bash
 curl -XPUT -u login:password '127.0.0.1:9200/twitter2/tweet/1?pretty=true' -d'{
-				"user" : "elk01",
-				"post_date" : "2017-09-05T10:00:00",
-				"message" : "tests manual index generation"
-			}'
+                "user" : "elk01",
+                "post_date" : "2017-09-05T10:00:00",
+                "message" : "tests manual index generation"
+            }'
 ```
 
 You should see the output:
@@ -279,9 +278,9 @@ curl -XGET -u login:password '127.0.0.1:9200/_cat/shards?v'
 
 ```bash
 curl -XPUT -u login:password '127.0.0.1:9200/twitter/tweet/1?pretty=true' -d'{
-	"user" : "lab1",
-	"post_date" : "2017-08-25T10:00:00",
-	"message" : "testuje Elasticsearch"
+    "user" : "lab1",
+    "post_date" : "2017-08-25T10:00:00",
+    "message" : "testuje Elasticsearch"
 }'
 ```
 
@@ -306,10 +305,10 @@ You should see the output:
 
 ```bash
 curl -XPOST -u login:password '127.0.0.1:9200/twitter/tweet?pretty=true' -d'{
-	"user" : "lab1",
-	"post_date" : "2017-08-25T10:10:00",
-	"message" : "testuje automatyczne generowanie ID"
-	}'
+    "user" : "lab1",
+    "post_date" : "2017-08-25T10:10:00",
+    "message" : "testuje automatyczne generowanie ID"
+    }'
 ```
 
    
@@ -364,16 +363,16 @@ curl -XGET -u login:password '127.0.0.1:9200/twitter/tweet/1?pretty=true'
 
 ```bash
 {
-	"_index" : "twitter",
-	"_type" : "tweet",
-	"_id" : "1",
-	"_version" : 1,
-	"found" : true,
-	"_source" : {
-		"user" : "lab1",
-		"post_date" : "2017-08-25T10:00:00",
-		"message" : "testuje Elasticsearch"
-	}
+    "_index" : "twitter",
+    "_type" : "tweet",
+    "_id" : "1",
+    "_version" : 1,
+    "found" : true,
+    "_source" : {
+        "user" : "lab1",
+        "post_date" : "2017-08-25T10:00:00",
+        "message" : "testuje Elasticsearch"
+    }
 }
 ```
 
@@ -389,9 +388,9 @@ curl -XGET -u login:password '127.0.0.1:9200/twitter/tweet/1/_source?pretty=true
 
 ```bash
 {
-	"user" : "lab1",
-	"post_date" : "2017-08-25T10:00:00",
-	"message" : "test of Elasticsearch"
+    "user" : "lab1",
+    "post_date" : "2017-08-25T10:00:00",
+    "message" : "test of Elasticsearch"
 }
 ```
 
@@ -407,27 +406,27 @@ curl -XGET -u login:password '127.0.0.1:9200/twitter*/_search?q=*&pretty=true'
 
 ```bash
 {
-	"took" : 7,
-	"timed_out" : false,
-	"_shards" : {
-		"total" : 10,
-		"successful" : 10,
-		"failed" : 0
+    "took" : 7,
+    "timed_out" : false,
+    "_shards" : {
+        "total" : 10,
+        "successful" : 10,
+        "failed" : 0
 },
 "hits" : {
-	"total" : 3,
-	"max_score" : 1.0,
-	"hits" : [ {
-		"_index" : "twitter",
-		"_type" : "tweet",
-		"_id" : "AV49sTlM8NzerkV9qJfh",
-		"_score" : 1.0,
-		"_source" : {
-		"user" : "lab1",
-		"post_date" : "2017-08-25T10:10:00",
-			"message" : "auto generated ID"
-			}
-		}, {
+    "total" : 3,
+    "max_score" : 1.0,
+    "hits" : [ {
+        "_index" : "twitter",
+        "_type" : "tweet",
+        "_id" : "AV49sTlM8NzerkV9qJfh",
+        "_score" : 1.0,
+        "_source" : {
+        "user" : "lab1",
+        "post_date" : "2017-08-25T10:10:00",
+            "message" : "auto generated ID"
+            }
+        }, {
          "_index" : "twitter",
          "_type" : "tweet",
          "_id" : "1",
@@ -457,14 +456,14 @@ curl -XGET -u login:password '127.0.0.1:9200/twitter*/_search?q=*&pretty=true'
 - the sum of all documents in a specified index:
 
    ```bash
-   	curl -XGET -u login:password '127.0.0.1:9200/_cat/count/twitter?v'
+       curl -XGET -u login:password '127.0.0.1:9200/_cat/count/twitter?v'
    ```
 
 You should see the output:
 
    ```bash
-   epoch      		timestamp count
-   1504281400 	17:56:40     2
+   epoch              timestamp count
+   1504281400     17:56:40     2
    ```
 
 - the sum of all document in Elasticsearch database:
@@ -476,8 +475,8 @@ You should see the output:
 You should see the output:
 
 ```bash
-epoch      		timestamp count
-	1504281518 	17:58:38    493658
+epoch              timestamp count
+    1504281518     17:58:38    493658
 ```
 
 ## Elasticsearch Cluster API ##
@@ -529,6 +528,7 @@ curl -XGET -u login:password '127.0.0.1:9200/_cluster/stats?human&pretty'
 ```
 
 - detailed information about the nodes:
+
 ```bash
 curl -XGET -u login:password '127.0.0.1:9200/_nodes/stats?human&pretty'
 ```
@@ -542,16 +542,16 @@ curl -XGET -u login:password '127.0.0.1:9200/_nodes/stats?human&pretty'
 
 ```bash
 curl -XPOST -u login:password '127.0.0.1:9200/twitter*/tweet/_search?pretty=true' -d '{
-    			"query": {
-        				"bool" : {
-            					"must" : {
-                					"query_string" : {
-                    						"query" : "test"
-                					}
-            					}
-				}		
-   			 }
-		}'
+        "query": {
+            "bool" : {
+                "must" : {
+                    "query_string" : {
+                        "query" : "test"
+                    }
+                }
+            }        
+        }
+    }'
 ```
 
 - searching for document by the string and filtering:
@@ -559,19 +559,19 @@ curl -XPOST -u login:password '127.0.0.1:9200/twitter*/tweet/_search?pretty=true
 ```bash
 curl -XPOST -u login:password '127.0.0.1:9200/twitter*/tweet/_search?pretty=true' -d'{
    
-    			"query": {
-        				"bool" : {
-            					"must" : {
-                					"query_string" : {
-                    						"query" : "testuje"
-                						}
-            						},
-            					"filter" : {
-                					"term" : { "user" : "lab1" }
-            					}
-	     				}
-	 			}
-		}'
+                "query": {
+                        "bool" : {
+                                "must" : {
+                                    "query_string" : {
+                                            "query" : "testuje"
+                                        }
+                                    },
+                                "filter" : {
+                                    "term" : { "user" : "lab1" }
+                                }
+                         }
+                 }
+        }'
 ```
 
 - simple search in a specific field (in this case user) uri query:
@@ -583,10 +583,10 @@ curl -XGET -u login:password '127.0.0.1:9200/twitter*/_search?q=user:lab1&pretty
 - simple search in a specific field:
 
 ```bash
-curl -XPOST -u login:password '127.0.0.1:9200/twitter*/_search?				pretty=true' -d '{
-		"query" : {
-		"term" : { "user" : "lab1" }
-	}
+curl -XPOST -u login:password '127.0.0.1:9200/twitter*/_search?                pretty=true' -d '{
+        "query" : {
+        "term" : { "user" : "lab1" }
+    }
 }'
 ```
 
@@ -629,15 +629,15 @@ curl  -XGET -u login:password '127.0.0.1:9200/_template/*?pretty=true'
 
 ```bash
 curl -XPUT -u login:password '127.0.0.1:9200/twitter-float?pretty=true' -d '{
-	   "mappings": {
-	     "tweet": {
-	       "properties": {
-	         "message": {
-	           "type": "float"
-	         }
-	       }
-	     }
-	   }
+       "mappings": {
+         "tweet": {
+           "properties": {
+             "message": {
+               "type": "float"
+             }
+           }
+         }
+       }
 }'
 
 curl -XGET -u login:password '127.0.0.1:9200/twitter-float/_mapping/field/message?pretty=true'
@@ -649,19 +649,19 @@ curl -XGET -u login:password '127.0.0.1:9200/twitter-float/_mapping/field/messag
 
 ```bash
 curl -XPUT -u login:password '127.0.0.1:9200/_template/template_1' -d'{
-	    "template" : "twitter4",
-	    "order" : 0,
-	    "settings" : {
-	        "number_of_shards" : 2
-	    }
-	}'
+        "template" : "twitter4",
+        "order" : 0,
+        "settings" : {
+            "number_of_shards" : 2
+        }
+    }'
 ```
 
 ```bash
 curl -XPOST -u login:password '127.0.0.1:9200/twitter4/tweet?pretty=true' -d'{
-	"user" : "lab1",
-	"post_date" : "2017-08-25T10:10:00",
-	"message" : "test of ID generation"
+    "user" : "lab1",
+    "post_date" : "2017-08-25T10:10:00",
+    "message" : "test of ID generation"
 }'
 ```
 
@@ -675,14 +675,14 @@ field called message, should be of the "string" type:
 curl -XPUT -u login:password '127.0.0.1:9200/_template/template_2' -d'{
 "template" : "*",
   "mappings": {
-	    "tweet": {
-	      "properties": {
-	        "message": {
-	          "type": "string"
-	        }
-	      }
-	    }
-	  }
+        "tweet": {
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        }
+      }
 }'
 ```
 
@@ -713,8 +713,7 @@ The intelligence module has implemented services that allow you to create, modif
 The list service returns a list of AI rules definitions stored in the system.
 
 Method: GET
-URL: 		
-		
+URL:
 
 ```bash
 https://<host>:<port>/api/ai/list?pretty
@@ -723,13 +722,13 @@ https://<host>:<port>/api/ai/list?pretty
 where:
 
 ```bash
-host	-	kibana host address
-port	-	kibana port
-?pretty	-	optional json format parameter
+host    -    kibana host address
+port    -    kibana port
+?pretty -    optional json format parameter
 ```
 
 Curl:
-		
+
 ```bash
 curl -XGET 'https://localhost:5601/api/ai/list?pretty' -u <user>:<password> -k 
 ```
@@ -737,44 +736,43 @@ curl -XGET 'https://localhost:5601/api/ai/list?pretty' -u <user>:<password> -k
 Result:
 Array of JSON documents:
 
-
-
 ```bash
-| Field                          	| Value                                                                               	| Screen field (description) 	|
-|--------------------------------	|-------------------------------------------------------------------------------------	|----------------------------	|
-| _source.algorithm_type         	| GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           	| Algorithm.                 	|
-| _source.model_name             	| Not empty string.                                                                   	| AI Rule Name.              	|
-| _source.search                 	| Search id.                                                                          	| Choose search.             	|
-| _source.label_field.field      	|                                                                                     	| Feature to analyse.        	|
-| _source.max_probes             	| Integer value                                                                       	| Max probes                 	|
-| _source.time_frame             	| 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day 	| Time frame                 	|
-| _source.value_type             	| min, max, avg, count                                                                	| Value type                 	|
-| _source.max_predictions        	| Integer value                                                                       	| Max predictions            	|
-| _source.threshold              	| Integer value                                                                       	| Threshold                  	|
-| _source.automatic_cron         	| Cron format string                                                                  	| Automatic cycle            	|
-| _source.automatic_enable       	| true/false                                                                          	| Enable                     	|
-| _source.automatic              	| true/false                                                                          	| Automatic                  	|
-| _source.start_date             	| YYYY-MM-DD HH:mm or now                                                             	| Start date                 	|
-| _source.multiply_by_values     	| Array of string values                                                              	| Multiply by values         	|
-| _source.multiply_by_field      	| None or full field name eg.: system.cpu                                             	| Multiply by field          	|
-| _source.selectedroles          	| Array of roles name                                                                 	| Role                       	|
-| _source.last_execute_timestamp 	|                                                                                     	| Last execute               	|
+| Field                          | Value                                                                               | Screen field (description) |
+|--------------------------------|-------------------------------------------------------------------------------------|----------------------------|
+| _source.algorithm_type         | GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           | Algorithm.                 |
+| _source.model_name             | Not empty string.                                                                   | AI Rule Name.              |
+| _source.search                 | Search id.                                                                          | Choose search.             |
+| _source.label_field.field      |                                                                                     | Feature to analyse.        |
+| _source.max_probes             | Integer value                                                                       | Max probes                 |
+| _source.time_frame             | 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day | Time frame                 |
+| _source.value_type             | min, max, avg, count                                                                | Value type                 |
+| _source.max_predictions        | Integer value                                                                       | Max predictions            |
+| _source.threshold              | Integer value                                                                       | Threshold                  |
+| _source.automatic_cron         | Cron format string                                                                  | Automatic cycle            |
+| _source.automatic_enable       | true/false                                                                          | Enable                     |
+| _source.automatic              | true/false                                                                          | Automatic                  |
+| _source.start_date             | YYYY-MM-DD HH:mm or now                                                             | Start date                 |
+| _source.multiply_by_values     | Array of string values                                                              | Multiply by values         |
+| _source.multiply_by_field      | None or full field name eg.: system.cpu                                             | Multiply by field          |
+| _source.selectedroles          | Array of roles name                                                                 | Role                       |
+| _source.last_execute_timestamp |                                                                                     | Last execute               |
 ```
+
 Not screen fields:
 
-	| _index                        	|   	| Elasticsearch index name.           	|
-	|-------------------------------	|---	|-------------------------------------	|
-	| _type                         	|   	| Elasticsearch document type.        	|
-	| _id                           	|   	| Elasticsearch document id.          	|
-	| _source.preparation_date      	|   	| Document preparation date.          	|
-	| _source.machine_state_uid     	|   	| AI rule machine state uid.          	|
-	| _source.path_to_logs          	|   	| Path to ai machine logs.            	|
-	| _source.path_to_machine_state 	|   	| Path to ai machine state files.     	|
-	| _source.searchSourceJSON      	|   	| Query string.                       	|
-	| _source.processing_time       	|   	| Process operation time.             	|
-	| _source.last_execute_mili     	|   	| Last executed time in milliseconds. 	|
-	| _source.pid                   	|   	| Process pid if ai rule is running.  	|
-	| _source.exit_code             	|   	| Last executed process exit code.    	|
+| _index                        |   | Elasticsearch index name.           |
+|-------------------------------|---|-------------------------------------|
+| _type                         |   | Elasticsearch document type.        |
+| _id                           |   | Elasticsearch document id.          |
+| _source.preparation_date      |   | Document preparation date.          |
+| _source.machine_state_uid     |   | AI rule machine state uid.          |
+| _source.path_to_logs          |   | Path to ai machine logs.            |
+| _source.path_to_machine_state |   | Path to ai machine state files.     |
+| _source.searchSourceJSON      |   | Query string.                       |
+| _source.processing_time       |   | Process operation time.             |
+| _source.last_execute_mili     |   | Last executed time in milliseconds. |
+| _source.pid                   |   | Process pid if ai rule is running.  |
+| _source.exit_code             |   | Last executed process exit code.    |
 
 ### Show rules ###
 
@@ -799,40 +797,41 @@ curl -XGET 'https://localhost:5601/api/ai/show/ea9384857de1f493fd84dabb6dfb99ce?
 
 Result JSON document:
 
-	| Field                          	| Value                                                                               	| Screen field (description) 	|
-	|--------------------------------	|-------------------------------------------------------------------------------------	|----------------------------	|
-	| _source.algorithm_type         	| GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           	| Algorithm.                 	|
-	| _source.model_name             	| Not empty string.                                                                   	| AI Rule Name.              	|
-	| _source.search                 	| Search id.                                                                          	| Choose search.             	|
-	| _source.label_field.field      	|                                                                                     	| Feature to analyse.        	|
-	| _source.max_probes             	| Integer value                                                                       	| Max probes                 	|
-	| _source.time_frame             	| 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day 	| Time frame                 	|
-	| _source.value_type             	| min, max, avg, count                                                                	| Value type                 	|
-	| _source.max_predictions        	| Integer value                                                                       	| Max predictions            	|
-	| _source.threshold              	| Integer value                                                                       	| Threshold                  	|
-	| _source.automatic_cron         	| Cron format string                                                                  	| Automatic cycle            	|
-	| _source.automatic_enable       	| true/false                                                                          	| Enable                     	|
-	| _source.automatic              	| true/false                                                                          	| Automatic                  	|
-	| _source.start_date             	| YYYY-MM-DD HH:mm or now                                                             	| Start date                 	|
-	| _source.multiply_by_values     	| Array of string values                                                              	| Multiply by values         	|
-	| _source.multiply_by_field      	| None or full field name eg.: system.cpu                                             	| Multiply by field          	|
-	| _source.selectedroles          	| Array of roles name                                                                 	| Role                       	|
-	| _source.last_execute_timestamp 	|                                                                                     	| Last execute               	|
+| Field                          | Value                                                                               | Screen field (description) |
+|--------------------------------|-------------------------------------------------------------------------------------|----------------------------|
+| _source.algorithm_type         | GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           | Algorithm.                 |
+| _source.model_name             | Not empty string.                                                                   | AI Rule Name.              |
+| _source.search                 | Search id.                                                                          | Choose search.             |
+| _source.label_field.field      |                                                                                     | Feature to analyse.        |
+| _source.max_probes             | Integer value                                                                       | Max probes                 |
+| _source.time_frame             | 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day | Time frame                 |
+| _source.value_type             | min, max, avg, count                                                                | Value type                 |
+| _source.max_predictions        | Integer value                                                                       | Max predictions            |
+| _source.threshold              | Integer value                                                                       | Threshold                  |
+| _source.automatic_cron         | Cron format string                                                                  | Automatic cycle            |
+| _source.automatic_enable       | true/false                                                                          | Enable                     |
+| _source.automatic              | true/false                                                                          | Automatic                  |
+| _source.start_date             | YYYY-MM-DD HH:mm or now                                                             | Start date                 |
+| _source.multiply_by_values     | Array of string values                                                              | Multiply by values         |
+| _source.multiply_by_field      | None or full field name eg.: system.cpu                                             | Multiply by field          |
+| _source.selectedroles          | Array of roles name                                                                 | Role                       |
+| _source.last_execute_timestamp |                                                                                     | Last execute               |
+
 Not screen fields
 
-	| _index                        	|   	| Elasticsearch index name.           	|
-	|-------------------------------	|---	|-------------------------------------	|
-	| _type                         	|   	| Elasticsearch document type.        	|
-	| _id                           	|   	| Elasticsearch document id.          	|
-	| _source.preparation_date      	|   	| Document preparation date.          	|
-	| _source.machine_state_uid     	|   	| AI rule machine state uid.          	|
-	| _source.path_to_logs          	|   	| Path to ai machine logs.            	|
-	| _source.path_to_machine_state 	|   	| Path to ai machine state files.     	|
-	| _source.searchSourceJSON      	|   	| Query string.                       	|
-	| _source.processing_time       	|   	| Process operation time.             	|
-	| _source.last_execute_mili     	|   	| Last executed time in milliseconds. 	|
-	| _source.pid                   	|   	| Process pid if ai rule is running.  	|
-	| _source.exit_code             	|   	| Last executed process exit code.    	|
+| _index                        |   | Elasticsearch index name.           |
+|-------------------------------|---|-------------------------------------|
+| _type                         |   | Elasticsearch document type.        |
+| _id                           |   | Elasticsearch document id.          |
+| _source.preparation_date      |   | Document preparation date.          |
+| _source.machine_state_uid     |   | AI rule machine state uid.          |
+| _source.path_to_logs          |   | Path to ai machine logs.            |
+| _source.path_to_machine_state |   | Path to ai machine state files.     |
+| _source.searchSourceJSON      |   | Query string.                       |
+| _source.processing_time       |   | Process operation time.             |
+| _source.last_execute_mili     |   | Last executed time in milliseconds. |
+| _source.pid                   |   | Process pid if ai rule is running.  |
+| _source.exit_code             |   | Last executed process exit code.    |
 
 ### Create rules ###
 
@@ -860,41 +859,41 @@ curl -XPUT 'https://localhost:5601/api/ai/create' -u <user>:<password> -k -H "kb
 
 Validation:
 
-	| Field          	| Values                                                                              	|
-	|----------------	|-------------------------------------------------------------------------------------	|
-	| algorithm_type 	| GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           	|
-	| value_type     	| min, max, avg, count                                                                	|
-	| time_frame     	| 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day 	|
+| Field          | Values                                                                              |
+|----------------|-------------------------------------------------------------------------------------|
+| algorithm_type | GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           |
+| value_type     | min, max, avg, count                                                                |
+| time_frame     | 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day |
 
 Body JSON description:
 
-	| Field              	| Mandatory        	| Value                                                                               	| Screen field        	|
-	|--------------------	|------------------	|-------------------------------------------------------------------------------------	|---------------------	|
-	| algorithm_type     	| Yes              	| GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           	| Algorithm.          	|
-	| model_name         	| Yes              	| Not empty string.                                                                   	| AI Rule Name.       	|
-	| search             	| Yes              	| Search id.                                                                          	| Choose search.      	|
-	| label_field.field  	| Yes              	|                                                                                     	| Feature to analyse. 	|
-	| max_probes         	| Yes              	| Integer value                                                                       	| Max probes          	|
-	| time_frame         	| Yes              	| 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day 	| Time frame          	|
-	| value_type         	| Yes              	| min, max, avg, count                                                                	| Value type          	|
-	| max_predictions    	| Yes              	| Integer value                                                                       	| Max predictions     	|
-	| threshold          	| No (default -1)  	| Integer value                                                                       	| Threshold           	|
-	| automatic_cron     	| Yes              	| Cron format string                                                                  	| Automatic cycle     	|
-	| Automatic_enable   	| Yes              	| true/false                                                                          	| Enable              	|
-	| automatic          	| Yes              	| true/false                                                                          	| Automatic           	|
-	| start_date         	| No (default now) 	| YYYY-MM-DD HH:mm or now                                                             	| Start date          	|
-	| multiply_by_values 	| Yes              	| Array of string values                                                              	| Multiply by values  	|
-	| multiply_by_field  	| Yes              	| None or full field name eg.: system.cpu                                             	| Multiply by field   	|
-	| selectedroles      	| No               	| Array of roles name                                                                 	| Role                	|
+| Field              | Mandatory        | Value                                                                               | Screen field        |
+|--------------------|------------------|-------------------------------------------------------------------------------------|---------------------|
+| algorithm_type     | Yes              | GMA, GMAL, LRS, LRST, RFRS, SMAL, SMA, TL                                           | Algorithm.          |
+| model_name         | Yes              | Not empty string.                                                                   | AI Rule Name.       |
+| search             | Yes              | Search id.                                                                          | Choose search.      |
+| label_field.field  | Yes              |                                                                                     | Feature to analyse. |
+| max_probes         | Yes              | Integer value                                                                       | Max probes          |
+| time_frame         | Yes              | 1 minute, 5 minutes, 15 minutes, 30 minutes, 1 hour, 1 day, 1 week, 30 day, 365 day | Time frame          |
+| value_type         | Yes              | min, max, avg, count                                                                | Value type          |
+| max_predictions    | Yes              | Integer value                                                                       | Max predictions     |
+| threshold          | No (default -1)  | Integer value                                                                       | Threshold           |
+| automatic_cron     | Yes              | Cron format string                                                                  | Automatic cycle     |
+| Automatic_enable   | Yes              | true/false                                                                          | Enable              |
+| automatic          | Yes              | true/false                                                                          | Automatic           |
+| start_date         | No (default now) | YYYY-MM-DD HH:mm or now                                                             | Start date          |
+| multiply_by_values | Yes              | Array of string values                                                              | Multiply by values  |
+| multiply_by_field  | Yes              | None or full field name eg.: system.cpu                                             | Multiply by field   |
+| selectedroles      | No               | Array of roles name                                                                 | Role                |
 
 
 Result:
 
 JSON document with fields:
 
-	status	-	true if ok
-	id	-	id of changed document
-	message	-	error message
+status - true if ok
+id     - id of changed document
+message- error message
 
 ### Update rules ###
 
@@ -1034,7 +1033,7 @@ Host:
 https://127.0.0.1:5601
 ```
 
-URL: 
+URL:
 
 ```bash
 /api/admin/alertrules
@@ -1158,7 +1157,7 @@ Answer:
 {"taskId":"1568890766279-56667dc8-6bd4-3f42-1773-08722b623ec1","status":"Processing"}
 ```
 
- - Done:	
+ - Done:
 
 ```bash
 {"taskId":"1568890625355-cbbe16e1-12ac-b53c-158e-e0919338953c","status":"Complete","download":"http://localhost:5601/api/taskmanagement/export/1568890625355-cbbe16e1-12ac-b53c-158e-e0919338953c/download"}
@@ -1191,7 +1190,7 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 Result:
 
 ```bash
-{"status":200,"nodes":"10","indices":"[*]","customerName":"example","issuedOn":"2019-05-27T12:16:16.174326700","validity":"100","documents":"","version":"7.0.5"}
+{"status":200,"nodes":"5","indices":"[*]","customerName":"CUSTOMER","issuedOn":"2023-02-17T16:49:50.136294","validity_in_months":"12","documents":"","version":"7.4.2","expiration_date":"2024-02-17T16:49","days_left":"89","siemPlan":"true","networkProbe":"true","noOfNetworkProbes":"5"}
 ```
 
 ### Reload License API
@@ -1211,7 +1210,7 @@ Result:
 ```bash
 {"status":200,"message":"License has been reloaded!","license valid":"YES","customerName":"example - production license","issuedOn":"2020-12-01T13:33:21.816","validity":"2","logserver version":"7.0.5"}
 ```
-	
+
 ## Role Mapping API
 
 After changing Role Mapping files `/etc/elasticsearch/properties.yml` and `/etc/elasticsearch/role-mapping.yml`, you must load new configuration using the following command.
@@ -1223,9 +1222,9 @@ Curl:
 ```bash
 curl -u $USER:$PASSWORD -X POST http://localhost:9200/_logserver/auth/reload
 ```
-	
+
 ## User Module API
-	
+
 To modify user accounts, you can use the User Module API.
 
 You can modify the following account parameters:

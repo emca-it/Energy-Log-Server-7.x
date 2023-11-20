@@ -1,5 +1,65 @@
 # **CHANGELOG**
 
+## v7.4.2
+
+### NewFeatures
+
+- Introducing Empowered-AI - Your data science module
+- Empowered-AI: Forecasting usecase !
+- Alerts: NEW rule type for Forecasting : Difference Multi Pattern - matches the difference between two index patterns calculated in a unit of time.
+- Archive: repository validation (automatic scan of archive files and indices)
+- SQL query support: query Your data with SQL query with dedicated GUI console
+- Integrations: NEW Labyrinth - Deception-based threat detection
+
+### Improvements
+
+- Archive: cataloging for better retention: $archivefolderpath/$year/$month
+- Archive: sorting, pagination and filtering on task lists
+- Archive: support for huge repositories
+- Disaster Recovery: improvements during cluster initialization and recovery
+- Disaster Recovery: logs for damaged indexes have been enriched with index_id
+- Disaster Recovery: possibility of disabling the authorization plugin
+- GUI: improvements in updating the client (browser) cache after Update
+- license-service: possibility to change log_level & default log_level changed to WARN
+- Reports: accept only the unix cron format in recurring reports
+- Reports: clear descriptions for settings which deletes obsolete files
+- Reports: dedicated MIME type for docx reports
+- Reports: filenames created by recurring reports now based on creation date
+- Sync: improved logging and error handling
+
+### BugFixes
+
+- Archive: delete the results file when deleting a search task
+- Archive: missing .zstd files and .dec files are not deleted after decryption
+- Archive: unable to prepare data for selected indices fix
+- Audit: user and role actions were filtered from audit queue due to missing username
+- configuration-backup & support-tool: now supports all logserver versions
+- E-doc: e-doc user requires gui-access to query the GUI authorization for a token
+- GUI: wait until refreshAliases finishes at user login
+- install.sh: problem with symlink when installing only the data-node
+- Login: deprecated route to the default home plugin
+- Reports: enable/disable for recurring report was not shown in GUI
+- Reports: impossible to delete a recurring report without assigned file
+- Reports: incorrect capture of "data table" and "tag cloud" visualization
+- Reports: incorrect formatting of email messages and the "mail" command
+- Reports: selected time field was not saved in the "data export" report
+- Reports: temporary jpeg file not deleted after creating pdf report
+- Reports: tsvb-based visualizations are incorrectly captured in docx reports
+- Scheduler: "Archive task updated, but error occured when updating scheduler object. Please retry" fix
+- Sync: tasks cannot be deleted
+- Sync: unable to create/update profile
+- xlsx-import: invalid file extension validation
+
+### SIEM Plan
+
+- Alerts: NEW rule type: Difference Multi Pattern - matches the difference between two index patterns calculated in a unit of time.
+- Alerts: bugfix: alert index rollover causes service errors
+- Alerts: bugfix: sorting alert risk on incident tab did not work properly
+- Alerts: bugfix: problem with updating alert rules
+- Alerts: bugfix: Energy SOAR + metric_aggregation does not create artifacts
+- Alerts: bugfix: Run Once old history after updating alert rule
+- SIEM Engine: bugfix: duplicate index-pattern siem*
+
 ## v7.4.1
 
 ### NewFeatures

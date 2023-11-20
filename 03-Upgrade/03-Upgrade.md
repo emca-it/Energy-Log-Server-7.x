@@ -6,6 +6,20 @@
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
 
+## Upgrade from version 7.4.1
+
+### Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+## Upgrade from version 7.4.0
+
+### Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
 ## Upgrade from version 7.3.0
 
 ### **Breaking and major changes**

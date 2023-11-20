@@ -159,38 +159,48 @@ To verify of Elasticsearch service you can use following command:
 
 - Control of the Elasticsearch system service via **systemd**:
 
-        sysetmctl status elasticsearch
+```bash
+sysetmctl status elasticsearch
+```
+  
   output:
 
-          ● elasticsearch.service - Elasticsearch
-           Loaded: loaded (/usr/lib/systemd/system/elasticsearch.service; disabled; vendor preset: disabled)
-           Active: active (running) since Mon 2018-09-10 13:11:40 CEST; 22h ago
-         Docs: http://www.elastic.co
-         Main PID: 1829 (java)
-           CGroup: /system.slice/elasticsearch.service
-           └─1829 /bin/java -Xms4g -Xmx4g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+AlwaysPreTouch -Xss1m ...
+```bash
+● elasticsearch.service - Logserver
+   Loaded: loaded (/etc/systemd/system/elasticsearch.service; enabled; vendor preset: disabled)
+   Active: active (running) since Tue 2023-11-14 15:17:16 CET; 5 days ago
+ Main PID: 58816 (java)
+   CGroup: /system.slice/elasticsearch.service
+           └─58816 /etc/alternatives/jre/bin/java -Xshare:auto -Dopensearch.networkaddress.cache.ttl=60 -Dopensearch.networkaddress.cache.n.
+```
 
 - Control of Elasticsearch instance via **tcp port**:
 
-          curl -XGET '127.0.0.1:9200/'
+```bash
+curl -XGET '127.0.0.1:9200/'
+```
 
   output:
 
-            {
-              "name" : "dY3RuYs",
-              "cluster_name" : "elasticsearch",
-              "cluster_uuid" : "EHZGAnJkStqlgRImqwzYQQ",
-              "version" : {
-                "number" : "6.2.3",
-                "build_hash" : "c59ff00",
-                "build_date" : "2018-03-13T10:06:29.741383Z",
-                "build_snapshot" : false,
-                "lucene_version" : "7.2.1",
-                "minimum_wire_compatibility_version" : "5.6.0",
-                "minimum_index_compatibility_version" : "5.0.0"
-              },
-              "tagline" : "You Know, for Search"
-            }
+```json
+{
+  "name" : "node-1",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "B5SDCaaKQU2JdJpsKy6quQ",
+  "version" : {
+    "distribution" : "opensearch",
+    "number" : "2.8.0",
+    "build_type" : "tar",
+    "build_hash" : "db90a415ff2fd428b4f7b3f800a51dc229287cb4",
+    "build_date" : "2023-07-28T09:54:26.952266Z",
+    "build_snapshot" : false,
+    "lucene_version" : "9.6.0",
+    "minimum_wire_compatibility_version" : "7.10.0",
+    "minimum_index_compatibility_version" : "7.0.0"
+  },
+  "tagline" : "The OpenSearch Project: https://opensearch.org/"
+}
+```
 
 - Control of Elasticsearch instance via **log file**:
 

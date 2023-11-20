@@ -211,7 +211,6 @@ The Kibana provides three categories of plugins:
      - Remove or comment out the line `sql.enabled: false` in the file `/etc/kibana/kibana.yml`.
      - Run the command `systemctl restart kibana`.
 
-
 #### Installing Plugins
 
 Additional GUI/Kibana plugins can be installed as follows:
@@ -250,7 +249,6 @@ Listing currently loaded plugins:
  bin/opensearch-dashboards-plugin remove [pluginname]
  bin/opensearch-dashboards-plugin install [pluginname]
 ```
-
 
 ### Database/Elasticsearch
 
@@ -298,7 +296,6 @@ The Elasticsearch provides three categories of plugins:
      - Remove or comment out the line `plugins.sql.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
      - Run the command `systemctl restart elasticsearch`.
 
-
 #### Installing Plugins
 
 Additional Database/Elasticsearch plugins can be installed as follows:
@@ -337,7 +334,6 @@ Listing currently loaded plugins:
  bin/opensearch-plugin remove [pluginname]
  bin/opensearch-plugin install [pluginname]
 ```
-
 
 ## Transport layer encryption
 
@@ -1362,7 +1358,7 @@ Every user by default at present gets the admin role
 
 ## Authentication with LDAP
 
-To use OpenLDAP authorization, install or update Energy Logserver 7.0.2.
+To use OpenLDAP authorization, install or update Energy Logserver too at least 7.0.2.
 
 ### Configuration
 
