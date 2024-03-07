@@ -5538,6 +5538,129 @@ The original goal of this codec was to allow joining of multiline messages from 
 
 Energy Logserver SQL lets you write queries in SQL rather than the Query domain-specific language (DSL)
 
+### SIEM Examples
+Use SQL query to get security related data:
+
+** Example 1: Check number of failed login attemps ** 
+
+Query:
+
+'''sql
+
+SELECT COUNT(sys.client.ip) AS failed_login_attempts FROM syslog-2024.02.23 sys
+WHERE postfix_message = "SASL LOGIN authentication failed: UGFzc3dvcmQ6"
+
+'''
+Result:
+
+'''
+	failed_login_attempts
+1	1329
+'''
+
+** Example 2: Gather host data from different sources in one place using *JOIN*  ** 
+
+Query:
+
+'''sql
+SELECT syslog.host.ip, syslog.host.name, zeek.server_addr, zeek.mac 
+FROM syslog-2024.02.23 syslog JOIN stream-zeek-2024.02.23 zeek ON zeek.server_addr = syslog.host.ip
+'''
+Result:
+
+'''
+	syslog.host.ip	syslog.host.name	zeek.server_addr	zeek.mac
+	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
+	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
+	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
+	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
+	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
+'''
+
+** Example 3: See MAC addresses and their assigned IP addresses: **
+
+Query:
+
+'''
+
+POST /_plugins/_sql 
+{
+  "query" : "SELECT mac, client_addr FROM stream-zeek-2024.02.20 WHERE netflow.zeek.type ='dhcp'"
+}
+'''
+
+Result:
+
+'''json
+{
+  "schema": [
+    {
+      "name": "mac",
+      "type": "keyword"
+    },
+    {
+      "name": "client_addr",
+      "type": "keyword"
+    }
+  ],
+  "total": 3369,
+  "datarows": [
+    [
+      "cc:96:e5:98:25:62",
+      "10.4.4.3"
+    ],
+    [
+      "be:85:38:6a:b6:5a",
+      "10.4.8.232"
+    ],
+    [
+      "bc:24:11:0d:f9:28",
+      "192.168.3.233"
+    ]
+    ]
+    }
+'''
+
+** Example 4: Check total number of warnings from *syslog*: **
+
+Query:
+
+'''sql
+
+SELECT COUNT(sys.syslog_severity_code) AS warnings_total FROM syslog-2024.02.23 sys
+WHERE syslog_severity = "warning"
+
+'''
+Result:
+
+'''
+warnings_total
+429822
+'''
+
+** Example 5: Check number of failed login attemps for every client: **
+
+Query:
+
+'''sql
+SELECT sys.client.ip, COUNT(*) AS failed_login_attempts FROM syslog-2024.02.23 sys 
+WHERE  postfix_message = "SASL LOGIN authentication failed: UGFzc3dvcmQ6" 
+GROUP BY sys.client.ip
+'''
+
+Result:
+
+'''
+client.ip	failed_login_attempts
+104.220.53.224	3
+107.174.142.70	2
+116.114.84.246	3
+122.169.105.19	5
+122.170.112.241	3
+175.210.74.19	  1
+'''
+
+
 ### SQL/PPL API
 
 Use the SQL and PPL API to send queries to the SQL plugin. Use the `_sql` endpoint to send queries in SQL, and the `_ppl` endpoint to send queries in PPL. For both of these, you can also use the `_explain` endpoint to translate your query into  Domain-specific language (DSL) or to troubleshoot errors.
