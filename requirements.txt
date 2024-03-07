@@ -4,3 +4,4 @@ recommonmark<0.6
 Jinja2<3.0
 MarkupSafe<2.1
 sphinx_rtd_theme<1.4
+alabaster<0.7.13
