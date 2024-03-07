@@ -2756,7 +2756,7 @@ elasticdump \
 elasticdump \
   --input=http://es.com:9200/index-name/alias-filter \
   --output=alias.json \
- 
+ ```
 #### Copy a single type:
 
 ```bash
@@ -5541,57 +5541,57 @@ Energy Logserver SQL lets you write queries in SQL rather than the Query domain-
 ### SIEM Examples
 Use SQL query to get security related data:
 
-** Example 1: Check number of failed login attemps ** 
+#### Example 1: Check number of failed login attemps 
 
 Query:
 
-'''sql
+```sql
 
 SELECT COUNT(sys.client.ip) AS failed_login_attempts FROM syslog-2024.02.23 sys
 WHERE postfix_message = "SASL LOGIN authentication failed: UGFzc3dvcmQ6"
+```
 
-'''
 Result:
 
-'''
+```
 	failed_login_attempts
 1	1329
-'''
+```
 
-** Example 2: Gather host data from different sources in one place using *JOIN*  ** 
+#### Example 2: Gather host data from different sources in one place using *JOIN*  
 
 Query:
 
-'''sql
+```sql
 SELECT syslog.host.ip, syslog.host.name, zeek.server_addr, zeek.mac 
 FROM syslog-2024.02.23 syslog JOIN stream-zeek-2024.02.23 zeek ON zeek.server_addr = syslog.host.ip
-'''
+```
 Result:
 
-'''
+```
 	syslog.host.ip	syslog.host.name	zeek.server_addr	zeek.mac
-	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
-	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
-	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
-	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
-	192.168.3.1	emprd-jesionowa-lan2wan.kce.lan	192.168.3.1	bc:24:11:0d:f9:28
-'''
+	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
+	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
+	192.168.10.2	   example-hostname-2	192.168.10.2	bs:12:18:0g:f2:66
+	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
+	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
+```
 
-** Example 3: See MAC addresses and their assigned IP addresses: **
+#### Example 3: See MAC addresses and their assigned IP addresses: 
 
 Query:
 
-'''
+```
 
 POST /_plugins/_sql 
 {
   "query" : "SELECT mac, client_addr FROM stream-zeek-2024.02.20 WHERE netflow.zeek.type ='dhcp'"
 }
-'''
+```
 
 Result:
 
-'''json
+```json
 {
   "schema": [
     {
@@ -5606,59 +5606,59 @@ Result:
   "total": 3369,
   "datarows": [
     [
-      "cc:96:e5:98:25:62",
-      "10.4.4.3"
+      "cs:96:d5:98:55:72",
+      "10.7.7.2"
     ],
     [
-      "be:85:38:6a:b6:5a",
-      "10.4.8.232"
+      "bw:85:58:6a:b7:5a",
+      "10.7.7.232"
     ],
     [
-      "bc:24:11:0d:f9:28",
-      "192.168.3.233"
+      "bc:34:11:0d:s9:88",
+      "192.168.10.200"
     ]
     ]
     }
-'''
+```
 
-** Example 4: Check total number of warnings from *syslog*: **
+#### Example 4: Check total number of warnings from *syslog*: 
 
 Query:
 
-'''sql
+```sql
 
 SELECT COUNT(sys.syslog_severity_code) AS warnings_total FROM syslog-2024.02.23 sys
 WHERE syslog_severity = "warning"
 
-'''
+```
 Result:
 
-'''
+```
 warnings_total
 429822
-'''
+```
 
-** Example 5: Check number of failed login attemps for every client: **
+#### Example 5: Check number of failed login attemps for every client: 
 
 Query:
 
-'''sql
+```sql
 SELECT sys.client.ip, COUNT(*) AS failed_login_attempts FROM syslog-2024.02.23 sys 
-WHERE  postfix_message = "SASL LOGIN authentication failed: UGFzc3dvcmQ6" 
+WHERE  postfix_message = "SASL LOGIN authentication failed: CGZFzc3evxmQ6" 
 GROUP BY sys.client.ip
-'''
+```
 
 Result:
 
-'''
+```
 client.ip	failed_login_attempts
-104.220.53.224	3
-107.174.142.70	2
-116.114.84.246	3
-122.169.105.19	5
-122.170.112.241	3
-175.210.74.19	  1
-'''
+144.220.71.224	3
+127.174.131.70	2
+146.114.84.226	3
+142.169.105.19	5
+142.180.112.241	3
+155.211.74.18	1
+```
 
 
 ### SQL/PPL API
