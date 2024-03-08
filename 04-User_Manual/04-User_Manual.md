@@ -220,7 +220,17 @@ You can set the following retention parameters for the above indexes:
 
 ### AUTHORIZATION PLUGIN
 
-<table dir="auto" data-sourcepos="3:1-8:38">
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+
+<table class="tg">
 <thead>
 <tr data-sourcepos="3:1-3:37">
 <th data-sourcepos="3:2-3:14">ACTION TYPE</th>
@@ -251,7 +261,9 @@ You can set the following retention parameters for the above indexes:
 </tr>
 </tbody>
 </table>
+
 <h5 dir="auto" data-sourcepos="10:1-10:33">Paths excluded from auditing</h5>
+
 <ul dir="auto" data-sourcepos="12:1-17:0">
 <li data-sourcepos="12:1-12:5"><code data-sourcepos="12:4-12:4">/</code></li>
 <li data-sourcepos="13:1-13:12"><code data-sourcepos="13:4-13:11">/_nodes*</code></li>
@@ -261,7 +273,8 @@ You can set the following retention parameters for the above indexes:
 </ul>
 
 ### CONFIG
-<table dir="auto" data-sourcepos="20:1-28:82">
+
+<table class="tg">
 <thead>
 <tr data-sourcepos="20:1-20:37">
 <th data-sourcepos="20:2-20:14">ACTION TYPE</th>
@@ -308,9 +321,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### REPORTS
 
-<table dir="auto" data-sourcepos="32:1-47:62">
+<table class="tg">
 <thead>
 <tr data-sourcepos="32:1-32:37">
 <th data-sourcepos="32:2-32:14">ACTION TYPE</th>
@@ -392,9 +406,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### INDEX MANAGEMENT
 
-<table dir="auto" data-sourcepos="51:1-59:107">
+<table class="tg">
 <thead>
 <tr data-sourcepos="51:1-51:37">
 <th data-sourcepos="51:2-51:14">ACTION TYPE</th>
@@ -441,9 +456,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### ARCHIVE
 
-<table dir="auto" data-sourcepos="63:1-70:88">
+<table class="tg">
 <thead>
 <tr data-sourcepos="63:1-63:37">
 <th data-sourcepos="63:2-63:14">ACTION TYPE</th>
@@ -485,9 +501,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### ALERTS
 
-<table dir="auto" data-sourcepos="74:1-87:90">
+<table class="tg">
 <thead>
 <tr data-sourcepos="74:1-74:37">
 <th data-sourcepos="74:2-74:14">ACTION TYPE</th>
@@ -560,9 +577,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### SYNC
 
-<table dir="auto" data-sourcepos="91:1-97:56">
+<table class="tg">
 <thead>
 <tr data-sourcepos="91:1-91:37">
 <th data-sourcepos="91:2-91:14">ACTION TYPE</th>
@@ -598,8 +616,11 @@ You can set the following retention parameters for the above indexes:
 </tr>
 </tbody>
 </table>
-<h4 dir="auto" data-sourcepos="99:1-99:10">AGENTS</h4>
-<table dir="auto" data-sourcepos="101:1-112:104">
+
+
+### AGENTS
+
+<table class="tg">
 <thead>
 <tr data-sourcepos="101:1-101:37">
 <th data-sourcepos="101:2-101:14">ACTION TYPE</th>
@@ -662,9 +683,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### INTELLIGENCE
 
-<table dir="auto" data-sourcepos="116:1-121:121">
+<table class="tg">
 <thead>
 <tr data-sourcepos="116:1-116:37">
 <th data-sourcepos="116:2-116:14">ACTION TYPE</th>
@@ -696,9 +718,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### NETWORK-PROBE
 
-<table dir="auto" data-sourcepos="125:1-133:87">
+<table class="tg">
 <thead>
 <tr data-sourcepos="125:1-125:37">
 <th data-sourcepos="125:2-125:14">ACTION TYPE</th>
@@ -745,9 +768,10 @@ You can set the following retention parameters for the above indexes:
 </tbody>
 </table>
 
+
 ### ELASTSCHEDULER
 
-<table dir="auto" data-sourcepos="137:1-140:94">
+<table class="tg">
 <thead>
 <tr data-sourcepos="137:1-137:37">
 <th data-sourcepos="137:2-137:14">ACTION TYPE</th>
@@ -768,6 +792,7 @@ You can set the following retention parameters for the above indexes:
 </tr>
 </tbody>
 </table></div>
+
 
 ## Discovery
 
