@@ -202,596 +202,9 @@ If you want to change the selected index, drop-down menu with the name of the cu
 
 ![](/media/media/image6.png)
 
-### Index rollover
-
-Using the rollover function, you can make changes to removing documents from the *audit*, *.agents*, and *alert\** indexes.
-
-You can configure the rollover by going to the *Config* module, then clicking the *Settings* tab, going to the *Index rollover settings* section, and clicking the *Configure* button:
-
-![](/media/media/image167.png)
-
-You can set the following retention parameters for the above indexes:
-
-- Maximum size (GB);
-- Maximum age (h);
-- Maximum number of documents.
-
-## Audit actions
-
-### AUTHORIZATION PLUGIN
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
-.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
-</style>
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="3:1-3:37">
-<th data-sourcepos="3:2-3:14">ACTION TYPE</th>
-<th data-sourcepos="3:16-3:21">PATH</th>
-<th data-sourcepos="3:23-3:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="5:1-5:78">
-<td data-sourcepos="5:2-5:32">USER_[CREATE|UPDATE|DELETE]</td>
-<td data-sourcepos="5:34-5:54">_logserver/accounts</td>
-<td data-sourcepos="5:56-5:77">whole body with diff</td>
-</tr>
-<tr data-sourcepos="6:1-6:81">
-<td data-sourcepos="6:2-6:32">ROLE_[CREATE|UPDATE|DELETE]</td>
-<td data-sourcepos="6:34-6:57">_logserver/constraints</td>
-<td data-sourcepos="6:59-6:80">whole body with diff</td>
-</tr>
-<tr data-sourcepos="7:1-7:40">
-<td data-sourcepos="7:2-7:7">BULK</td>
-<td data-sourcepos="7:9-7:15">_bulk</td>
-<td data-sourcepos="7:17-7:39">whole body if enabled</td>
-</tr>
-<tr data-sourcepos="8:1-8:38">
-<td data-sourcepos="8:2-8:8">QUERY</td>
-<td data-sourcepos="8:10-8:13">*</td>
-<td data-sourcepos="8:15-8:37">whole body if enabled</td>
-</tr>
-</tbody>
-</table>
-
-<h5 dir="auto" data-sourcepos="10:1-10:33">Paths excluded from auditing</h5>
-
-<ul dir="auto" data-sourcepos="12:1-17:0">
-<li data-sourcepos="12:1-12:5"><code data-sourcepos="12:4-12:4">/</code></li>
-<li data-sourcepos="13:1-13:12"><code data-sourcepos="13:4-13:11">/_nodes*</code></li>
-<li data-sourcepos="14:1-14:12"><code data-sourcepos="14:4-14:11">/_stats*</code></li>
-<li data-sourcepos="15:1-15:13"><code data-sourcepos="15:4-15:12">/.kibana*</code></li>
-<li data-sourcepos="16:1-17:0"><code data-sourcepos="16:4-16:16">/.authconfig*</code></li>
-</ul>
-
-### CONFIG
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="20:1-20:37">
-<th data-sourcepos="20:2-20:14">ACTION TYPE</th>
-<th data-sourcepos="20:16-20:21">PATH</th>
-<th data-sourcepos="20:23-20:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="22:1-22:66">
-<td data-sourcepos="22:2-22:17">TOKENS DELETED</td>
-<td data-sourcepos="22:19-22:57">post:/api/setting/job/deletealltokens</td>
-<td data-sourcepos="22:59-22:65">empty</td>
-</tr>
-<tr data-sourcepos="23:1-23:71">
-<td data-sourcepos="23:2-23:23">SETTINGS TOKENDELETE</td>
-<td data-sourcepos="23:25-23:54">put:/api/setting/tokendelete</td>
-<td data-sourcepos="23:56-23:70">payload.value</td>
-</tr>
-<tr data-sourcepos="24:1-24:59">
-<td data-sourcepos="24:2-24:19">SETTINGS TIMEOUT</td>
-<td data-sourcepos="24:21-24:42">put:/api/setting/ttl</td>
-<td data-sourcepos="24:44-24:58">payload.value</td>
-</tr>
-<tr data-sourcepos="25:1-25:79">
-<td data-sourcepos="25:2-25:27">SETTINGS AUDIT SELECTION</td>
-<td data-sourcepos="25:29-25:61">put:/api/setting/auditselection</td>
-<td data-sourcepos="25:63-25:78">payload.value1</td>
-</tr>
-<tr data-sourcepos="26:1-26:72">
-<td data-sourcepos="26:2-26:27">SETTINGS AUDIT EXCLUSION</td>
-<td data-sourcepos="26:29-26:61">put:/api/setting/auditexclusion</td>
-<td data-sourcepos="26:63-26:71">payload</td>
-</tr>
-<tr data-sourcepos="27:1-27:90">
-<td data-sourcepos="27:2-27:32">SETTINGS ALERT EXCLUDE FIELDS</td>
-<td data-sourcepos="27:34-27:72">put:/api/setting/alert_exclude_fields</td>
-<td data-sourcepos="27:74-27:89">payload.value1</td>
-</tr>
-<tr data-sourcepos="28:1-28:82">
-<td data-sourcepos="28:2-28:24">SETTINGS AUTH DOMAINS</td>
-<td data-sourcepos="28:26-28:56">put:/api/setting/auth_domains</td>
-<td data-sourcepos="28:58-28:81">payload.default_domain</td>
-</tr>
-</tbody>
-</table>
 
 
-### REPORTS
 
-<table class="tg">
-<thead>
-<tr data-sourcepos="32:1-32:37">
-<th data-sourcepos="32:2-32:14">ACTION TYPE</th>
-<th data-sourcepos="32:16-32:21">PATH</th>
-<th data-sourcepos="32:23-32:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="34:1-34:74">
-<td data-sourcepos="34:2-34:22">DATA EXPORT CREATED</td>
-<td data-sourcepos="34:24-34:54">post:/api/reports/data/export</td>
-<td data-sourcepos="34:56-34:73">payload.taskName</td>
-</tr>
-<tr data-sourcepos="35:1-35:84">
-<td data-sourcepos="35:2-35:29">MANUAL DATA EXPORT CREATED</td>
-<td data-sourcepos="35:31-35:68">post:/api/reports/data/export_manual</td>
-<td data-sourcepos="35:70-35:83">payload.user</td>
-</tr>
-<tr data-sourcepos="36:1-36:72">
-<td data-sourcepos="36:2-36:21">DATA EXPORT EDITED</td>
-<td data-sourcepos="36:23-36:52">put:/api/reports/data/export</td>
-<td data-sourcepos="36:54-36:71">payload.taskName</td>
-</tr>
-<tr data-sourcepos="37:1-37:91">
-<td data-sourcepos="37:2-37:34">DASHBOARD REPORT EXPORT CREATED</td>
-<td data-sourcepos="37:36-37:71">post:/api/reports/dashboard/export</td>
-<td data-sourcepos="37:73-37:90">payload.taskName</td>
-</tr>
-<tr data-sourcepos="38:1-38:89">
-<td data-sourcepos="38:2-38:33">DASHBOARD REPORT EXPORT EDITED</td>
-<td data-sourcepos="38:35-38:69">put:/api/reports/dashboard/export</td>
-<td data-sourcepos="38:71-38:88">payload.taskName</td>
-</tr>
-<tr data-sourcepos="39:1-39:88">
-<td data-sourcepos="39:2-39:35">DATA TABLE REPORT EXPORT CREATED</td>
-<td data-sourcepos="39:37-39:68">post:/api/reports/table/export</td>
-<td data-sourcepos="39:70-39:87">payload.taskName</td>
-</tr>
-<tr data-sourcepos="40:1-40:86">
-<td data-sourcepos="40:2-40:34">DATA TABLE REPORT EXPORT EDITED</td>
-<td data-sourcepos="40:36-40:66">put:/api/reports/table/export</td>
-<td data-sourcepos="40:68-40:85">payload.taskName</td>
-</tr>
-<tr data-sourcepos="41:1-41:75">
-<td data-sourcepos="41:2-41:25">SCHEDULED TASK ENABLED</td>
-<td data-sourcepos="41:27-41:61">put:/api/reports/scheduler/enable</td>
-<td data-sourcepos="41:63-41:74">payload.id</td>
-</tr>
-<tr data-sourcepos="42:1-42:77">
-<td data-sourcepos="42:2-42:26">SCHEDULED TASK DISABLED</td>
-<td data-sourcepos="42:28-42:63">put:/api/reports/scheduler/disable</td>
-<td data-sourcepos="42:65-42:76">payload.id</td>
-</tr>
-<tr data-sourcepos="43:1-43:54">
-<td data-sourcepos="43:2-43:16">TASKS DELETED</td>
-<td data-sourcepos="43:18-43:38">delete:/api/reports</td>
-<td data-sourcepos="43:40-43:53">payload.objs</td>
-</tr>
-<tr data-sourcepos="44:1-44:76">
-<td data-sourcepos="44:2-44:22">SETTINGS PDF_EXPIRY</td>
-<td data-sourcepos="44:24-44:55">post:/api/reports/settings/pdf</td>
-<td data-sourcepos="44:57-44:75">payload.pdfExpiry</td>
-</tr>
-<tr data-sourcepos="45:1-45:76">
-<td data-sourcepos="45:2-45:22">SETTINGS CSV_EXPIRY</td>
-<td data-sourcepos="45:24-45:55">post:/api/reports/settings/csv</td>
-<td data-sourcepos="45:57-45:75">payload.csvExpiry</td>
-</tr>
-<tr data-sourcepos="46:1-46:76">
-<td data-sourcepos="46:2-46:21">REPORT UPLOAD LOGO</td>
-<td data-sourcepos="46:23-46:56">post:/api/reports/settings/logos</td>
-<td data-sourcepos="46:58-46:75">payload.fileName</td>
-</tr>
-<tr data-sourcepos="47:1-47:62">
-<td data-sourcepos="47:2-47:20">ONGOING TASK STOP</td>
-<td data-sourcepos="47:22-47:45">post:/api/reports/stop</td>
-<td data-sourcepos="47:47-47:61">params.taskId</td>
-</tr>
-</tbody>
-</table>
-
-
-### INDEX MANAGEMENT
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="51:1-51:37">
-<th data-sourcepos="51:2-51:14">ACTION TYPE</th>
-<th data-sourcepos="51:16-51:21">PATH</th>
-<th data-sourcepos="51:23-51:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="53:1-53:69">
-<td data-sourcepos="53:2-53:17">ACTION CREATED</td>
-<td data-sourcepos="53:19-53:53">post:/api/index_management/action</td>
-<td data-sourcepos="53:55-53:68">payload.name</td>
-</tr>
-<tr data-sourcepos="54:1-54:67">
-<td data-sourcepos="54:2-54:16">ACTION EDITED</td>
-<td data-sourcepos="54:18-54:51">put:/api/index_management/action</td>
-<td data-sourcepos="54:53-54:66">payload.name</td>
-</tr>
-<tr data-sourcepos="55:1-55:80">
-<td data-sourcepos="55:2-55:19">ACTION START NOW</td>
-<td data-sourcepos="55:21-55:66">post:/api/index_management/action/run_action</td>
-<td data-sourcepos="55:68-55:79">payload.id</td>
-</tr>
-<tr data-sourcepos="56:1-56:70">
-<td data-sourcepos="56:2-56:17">ACTION DELETED</td>
-<td data-sourcepos="56:19-56:55">delete:/api/index_management/action</td>
-<td data-sourcepos="56:57-56:69">params.name</td>
-</tr>
-<tr data-sourcepos="57:1-57:109">
-<td data-sourcepos="57:2-57:34">SYSTEM INDEX ROLLOVER CONFIGURE</td>
-<td data-sourcepos="57:36-57:89">post:/api/index_management/settings/rollover/.agents</td>
-<td data-sourcepos="57:91-57:108">params.indexName</td>
-</tr>
-<tr data-sourcepos="58:1-58:108">
-<td data-sourcepos="58:2-58:34">SYSTEM INDEX ROLLOVER CONFIGURE</td>
-<td data-sourcepos="58:36-58:88">post:/api/index_management/settings/rollover/alerts</td>
-<td data-sourcepos="58:90-58:107">params.indexName</td>
-</tr>
-<tr data-sourcepos="59:1-59:107">
-<td data-sourcepos="59:2-59:34">SYSTEM INDEX ROLLOVER CONFIGURE</td>
-<td data-sourcepos="59:36-59:87">post:/api/index_management/settings/rollover/audit</td>
-<td data-sourcepos="59:89-59:106">params.indexName</td>
-</tr>
-</tbody>
-</table>
-
-
-### ARCHIVE
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="63:1-63:37">
-<th data-sourcepos="63:2-63:14">ACTION TYPE</th>
-<th data-sourcepos="63:16-63:21">PATH</th>
-<th data-sourcepos="63:23-63:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="65:1-65:71">
-<td data-sourcepos="65:2-65:24">ARCHIVAL TASK CREATED</td>
-<td data-sourcepos="65:26-65:57">post:/api/archive/archive_task</td>
-<td data-sourcepos="65:59-65:70">payload.id</td>
-</tr>
-<tr data-sourcepos="66:1-66:73">
-<td data-sourcepos="66:2-66:24">ARCHIVAL TASK UPDATED</td>
-<td data-sourcepos="66:26-66:56">put:/api/archive/archive_task</td>
-<td data-sourcepos="66:58-66:72">params.taskId</td>
-</tr>
-<tr data-sourcepos="67:1-67:80">
-<td data-sourcepos="67:2-67:26">ARCHIVAL TASK START NOW</td>
-<td data-sourcepos="67:28-67:63">post:/api/archive/archive_task/run</td>
-<td data-sourcepos="67:65-67:79">params.taskId</td>
-</tr>
-<tr data-sourcepos="68:1-68:60">
-<td data-sourcepos="68:2-68:16">TASKS DELETED</td>
-<td data-sourcepos="68:18-68:44">delete:/api/archive/tasks</td>
-<td data-sourcepos="68:46-68:59">payload.objs</td>
-</tr>
-<tr data-sourcepos="69:1-69:80">
-<td data-sourcepos="69:2-69:22">SEARCH TASK CREATED</td>
-<td data-sourcepos="69:24-69:58">post:/api/archive/search_task/run</td>
-<td data-sourcepos="69:60-69:79">payload.searchtext</td>
-</tr>
-<tr data-sourcepos="70:1-70:88">
-<td data-sourcepos="70:2-70:23">RESTORE TASK CREATED</td>
-<td data-sourcepos="70:25-70:60">post:/api/archive/restore_task/run</td>
-<td data-sourcepos="70:62-70:87">payload.destinationIndex</td>
-</tr>
-</tbody>
-</table>
-
-
-### ALERTS
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="74:1-74:37">
-<th data-sourcepos="74:2-74:14">ACTION TYPE</th>
-<th data-sourcepos="74:16-74:21">PATH</th>
-<th data-sourcepos="74:23-74:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="76:1-76:75">
-<td data-sourcepos="76:2-76:21">ALERT RULE CREATED</td>
-<td data-sourcepos="76:23-76:50">post:/api/alerts/alertrule</td>
-<td data-sourcepos="76:52-76:74">payload.alertrulename</td>
-</tr>
-<tr data-sourcepos="77:1-77:73">
-<td data-sourcepos="77:2-77:20">ALERT RULE EDITED</td>
-<td data-sourcepos="77:22-77:48">put:/api/alerts/alertrule</td>
-<td data-sourcepos="77:50-77:72">payload.alertrulename</td>
-</tr>
-<tr data-sourcepos="78:1-78:73">
-<td data-sourcepos="78:2-78:22">ALERT RULE RAN ONCE</td>
-<td data-sourcepos="78:24-78:59">post:/api/alerts/alertrule/runonce</td>
-<td data-sourcepos="78:61-78:72">payload.id</td>
-</tr>
-<tr data-sourcepos="79:1-79:65">
-<td data-sourcepos="79:2-79:21">ALERT RULE DELETED</td>
-<td data-sourcepos="79:23-79:52">delete:/api/alerts/alertrule</td>
-<td data-sourcepos="79:54-79:64">params.id</td>
-</tr>
-<tr data-sourcepos="80:1-80:57">
-<td data-sourcepos="80:2-80:22">ALERT GROUP CREATED</td>
-<td data-sourcepos="80:24-80:48">post:/api/alerts/groups</td>
-<td data-sourcepos="80:50-80:56">empty</td>
-</tr>
-<tr data-sourcepos="81:1-81:65">
-<td data-sourcepos="81:2-81:22">ALERT GROUP RENAMED</td>
-<td data-sourcepos="81:24-81:47">put:/api/alerts/groups</td>
-<td data-sourcepos="81:49-81:64">payload.rename</td>
-</tr>
-<tr data-sourcepos="82:1-82:71">
-<td data-sourcepos="82:2-82:22">ALERT GROUP DELETED</td>
-<td data-sourcepos="82:24-82:50">delete:/api/alerts/groups</td>
-<td data-sourcepos="82:52-82:70">payload.groupName</td>
-</tr>
-<tr data-sourcepos="83:1-83:63">
-<td data-sourcepos="83:2-83:23">ALERT ADDED TO GROUP</td>
-<td data-sourcepos="83:25-83:54">put:/api/alerts/updatealerts</td>
-<td data-sourcepos="83:56-83:62">empty</td>
-</tr>
-<tr data-sourcepos="84:1-84:85">
-<td data-sourcepos="84:2-84:22">ALERT CHANGED ROLES</td>
-<td data-sourcepos="84:24-84:63">put:/api/alerts/alertrules/changeroles</td>
-<td data-sourcepos="84:65-84:84">payload.alertsList</td>
-</tr>
-<tr data-sourcepos="85:1-85:101">
-<td data-sourcepos="85:2-85:32">ALERT MANUAL INCIDENT CREATED</td>
-<td data-sourcepos="85:34-85:75">post:/api/alerts/incidents/create_manual</td>
-<td data-sourcepos="85:77-85:100">payload.data.rule_name</td>
-</tr>
-<tr data-sourcepos="86:1-86:90">
-<td data-sourcepos="86:2-86:33">ALERT RULE [enabled|disabled]</td>
-<td data-sourcepos="86:35-86:68">put:/api/alerts/alertrule/switch</td>
-<td data-sourcepos="86:70-86:89">payload.alertsList</td>
-</tr>
-<tr data-sourcepos="87:1-87:90">
-<td data-sourcepos="87:2-87:29">ALERT RULE INCIDENT EDITED</td>
-<td data-sourcepos="87:31-87:57">put:/api/alerts/incidents</td>
-<td data-sourcepos="87:59-87:89">payload.id + <code data-sourcepos="87:74-87:87">dynamic values</code>
-</td>
-</tr>
-</tbody>
-</table>
-
-
-### SYNC
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="91:1-91:37">
-<th data-sourcepos="91:2-91:14">ACTION TYPE</th>
-<th data-sourcepos="91:16-91:21">PATH</th>
-<th data-sourcepos="91:23-91:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="93:1-93:71">
-<td data-sourcepos="93:2-93:23">SYNC PROFILE CREATED</td>
-<td data-sourcepos="93:25-93:55">post:/api/sync/clusterprofile</td>
-<td data-sourcepos="93:57-93:70">payload.host</td>
-</tr>
-<tr data-sourcepos="94:1-94:68">
-<td data-sourcepos="94:2-94:20">SYNC SYNCHRONISED</td>
-<td data-sourcepos="94:22-94:45">put:/api/sync/syncTask</td>
-<td data-sourcepos="94:47-94:67">payload.destination</td>
-</tr>
-<tr data-sourcepos="95:1-95:63">
-<td data-sourcepos="95:2-95:14">SYNC COPIED</td>
-<td data-sourcepos="95:16-95:40">post:/api/sync/copyTask</td>
-<td data-sourcepos="95:42-95:62">payload.destination</td>
-</tr>
-<tr data-sourcepos="96:1-96:70">
-<td data-sourcepos="96:2-96:23">SYNC PROFILE DELETED</td>
-<td data-sourcepos="96:25-96:56">post:/api/sync/syncTask/delete</td>
-<td data-sourcepos="96:58-96:69">payload.id</td>
-</tr>
-<tr data-sourcepos="97:1-97:56">
-<td data-sourcepos="97:2-97:17">SYNC JOB RUNED</td>
-<td data-sourcepos="97:19-97:42">post:/api/sync/runTask</td>
-<td data-sourcepos="97:44-97:55">payload.id</td>
-</tr>
-</tbody>
-</table>
-
-
-### AGENTS
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="101:1-101:37">
-<th data-sourcepos="101:2-101:14">ACTION TYPE</th>
-<th data-sourcepos="101:16-101:21">PATH</th>
-<th data-sourcepos="101:23-101:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="103:1-103:69">
-<td data-sourcepos="103:2-103:24">AGENTS AGENT RELOADED</td>
-<td data-sourcepos="103:26-103:56">post:/api/agents/reloadagents</td>
-<td data-sourcepos="103:58-103:68">params.id</td>
-</tr>
-<tr data-sourcepos="104:1-104:80">
-<td data-sourcepos="104:2-104:30">AGENTS MASTERAGENT RELOADED</td>
-<td data-sourcepos="104:32-104:67">post:/api/agents/reloadmasteragent</td>
-<td data-sourcepos="104:69-104:79">params.id</td>
-</tr>
-<tr data-sourcepos="105:1-105:52">
-<td data-sourcepos="105:2-105:17">AGENTS DELETED</td>
-<td data-sourcepos="105:19-105:38">delete:/api/agents</td>
-<td data-sourcepos="105:40-105:51">params.uid</td>
-</tr>
-<tr data-sourcepos="106:1-106:77">
-<td data-sourcepos="106:2-106:22">AGENTS FILE CREATED</td>
-<td data-sourcepos="106:24-106:56">post:/api/agents/templates/file</td>
-<td data-sourcepos="106:58-106:76">payload.file.name</td>
-</tr>
-<tr data-sourcepos="107:1-107:58">
-<td data-sourcepos="107:2-107:22">AGENTS FILE DELETED</td>
-<td data-sourcepos="107:24-107:49">delete:/api/agents/files</td>
-<td data-sourcepos="107:51-107:57">empty</td>
-</tr>
-<tr data-sourcepos="108:1-108:61">
-<td data-sourcepos="108:2-108:21">AGENTS FILE EDITED</td>
-<td data-sourcepos="108:23-108:45">put:/api/agents/files</td>
-<td data-sourcepos="108:47-108:60">payload.name</td>
-</tr>
-<tr data-sourcepos="109:1-109:80">
-<td data-sourcepos="109:2-109:26">AGENTS TEMPLATE CREATED</td>
-<td data-sourcepos="109:28-109:55">post:/api/agents/templates</td>
-<td data-sourcepos="109:57-109:79">payload.template.name</td>
-</tr>
-<tr data-sourcepos="110:1-110:78">
-<td data-sourcepos="110:2-110:25">AGENTS TEMPLATE EDITED</td>
-<td data-sourcepos="110:27-110:53">put:/api/agents/templates</td>
-<td data-sourcepos="110:55-110:77">payload.template.name</td>
-</tr>
-<tr data-sourcepos="111:1-111:78">
-<td data-sourcepos="111:2-111:26">AGENTS TEMPLATE DELETED</td>
-<td data-sourcepos="111:28-111:57">delete:/api/agents/templates</td>
-<td data-sourcepos="111:59-111:77">payload.params.id</td>
-</tr>
-<tr data-sourcepos="112:1-112:104">
-<td data-sourcepos="112:2-112:44">AGENTS BEATS [started|restarted|stoped]</td>
-<td data-sourcepos="112:46-112:74">post:/api/agents/manage/<code data-sourcepos="112:72-112:72">*</code>
-</td>
-<td data-sourcepos="112:76-112:103">[params.beatname|payload]</td>
-</tr>
-</tbody>
-</table>
-
-
-### INTELLIGENCE
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="116:1-116:37">
-<th data-sourcepos="116:2-116:14">ACTION TYPE</th>
-<th data-sourcepos="116:16-116:21">PATH</th>
-<th data-sourcepos="116:23-116:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="118:1-118:103">
-<td data-sourcepos="118:2-118:27">INTELLIGENCE RULE STOPED</td>
-<td data-sourcepos="118:29-118:85">get:/api/intelligence/intelligence_airules_set_stoprule</td>
-<td data-sourcepos="118:87-118:102">query.rule_uid</td>
-</tr>
-<tr data-sourcepos="119:1-119:105">
-<td data-sourcepos="119:2-119:28">INTELLIGENCE RULE STARTED</td>
-<td data-sourcepos="119:30-119:87">get:/api/intelligence/intelligence_airules_set_startrule</td>
-<td data-sourcepos="119:89-119:104">query.rule_uid</td>
-</tr>
-<tr data-sourcepos="120:1-120:106">
-<td data-sourcepos="120:2-120:28">INTELLIGENCE RULE DELETED</td>
-<td data-sourcepos="120:30-120:88">get:/api/intelligence/intelligence_airules_set_deleterule</td>
-<td data-sourcepos="120:90-120:105">query.rule_uid</td>
-</tr>
-<tr data-sourcepos="121:1-121:121">
-<td data-sourcepos="121:2-121:38">INTELLIGENCE RULE [created|edited]</td>
-<td data-sourcepos="121:40-121:102">get:/api/intelligence/intelligence_modelcreation_set_formdata</td>
-<td data-sourcepos="121:104-121:120">query.rule_name</td>
-</tr>
-</tbody>
-</table>
-
-
-### NETWORK-PROBE
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="125:1-125:37">
-<th data-sourcepos="125:2-125:14">ACTION TYPE</th>
-<th data-sourcepos="125:16-125:21">PATH</th>
-<th data-sourcepos="125:23-125:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="127:1-127:82">
-<td data-sourcepos="127:2-127:29">NETWORK-PROBE FILE CREATED</td>
-<td data-sourcepos="127:31-127:61">post:/api/network-probe/files</td>
-<td data-sourcepos="127:63-127:81">payload.file.path</td>
-</tr>
-<tr data-sourcepos="128:1-128:83">
-<td data-sourcepos="128:2-128:29">NETWORK-PROBE FILE DELETED</td>
-<td data-sourcepos="128:31-128:63">delete:/api/network-probe/files</td>
-<td data-sourcepos="128:65-128:82">payload.filePath</td>
-</tr>
-<tr data-sourcepos="129:1-129:94">
-<td data-sourcepos="129:2-129:34">NETWORK-PROBE FILE REREGISTERED</td>
-<td data-sourcepos="129:36-129:75">post:/api/network-probe/files/register</td>
-<td data-sourcepos="129:77-129:93">payload.host.ip</td>
-</tr>
-<tr data-sourcepos="130:1-130:115">
-<td data-sourcepos="130:2-130:54">NETWORK PROBE SERVICES [stoped|started|restarted]</td>
-<td data-sourcepos="130:56-130:89">post:/api/network-probe/services</td>
-<td data-sourcepos="130:91-130:114">payload.services.names</td>
-</tr>
-<tr data-sourcepos="131:1-131:126">
-<td data-sourcepos="131:2-131:34">NETWORK-PROBE PIPELINES ENABLED</td>
-<td data-sourcepos="131:36-131:87">post:/api/network-probe/{probeId}/pipelines/enable</td>
-<td data-sourcepos="131:89-131:125">params.hostId, payload.pipelinesIds</td>
-</tr>
-<tr data-sourcepos="132:1-132:128">
-<td data-sourcepos="132:2-132:35">NETWORK-PROBE PIPELINES DISABLED</td>
-<td data-sourcepos="132:37-132:89">post:/api/network-probe/{probeId}/pipelines/disable</td>
-<td data-sourcepos="132:91-132:127">params.hostId, payload.pipelinesIds</td>
-</tr>
-<tr data-sourcepos="133:1-133:87">
-<td data-sourcepos="133:2-133:35">NETWORK-PROBE PIPELINES RELOADED</td>
-<td data-sourcepos="133:37-133:78">post:/api/network-probe/pipelines/reload</td>
-<td data-sourcepos="133:80-133:86">empty</td>
-</tr>
-</tbody>
-</table>
-
-
-### ELASTSCHEDULER
-
-<table class="tg">
-<thead>
-<tr data-sourcepos="137:1-137:37">
-<th data-sourcepos="137:2-137:14">ACTION TYPE</th>
-<th data-sourcepos="137:16-137:21">PATH</th>
-<th data-sourcepos="137:23-137:36">FROM REQUEST</th>
-</tr>
-</thead>
-<tbody>
-<tr data-sourcepos="139:1-139:124">
-<td data-sourcepos="139:2-139:69">[<code data-sourcepos="139:5-139:11">ARCHIVE</code>|<code data-sourcepos="139:15-139:30">INDEX_MANAGEMENT</code>|<code data-sourcepos="139:34-139:37">SYNC</code>] ACTION [enabled|disabled]</td>
-<td data-sourcepos="139:71-139:108">put:/api/elastscheduler/schedulerjob</td>
-<td data-sourcepos="139:110-139:123">payload.name</td>
-</tr>
-<tr data-sourcepos="140:1-140:94">
-<td data-sourcepos="140:2-140:39">SCHEDULER ACTION [enabled|disabled]</td>
-<td data-sourcepos="140:41-140:78">put:/api/elastscheduler/schedulerjob</td>
-<td data-sourcepos="140:80-140:93">payload.name</td>
-</tr>
-</tbody>
-</table></div>
 
 
 ## Discovery
@@ -1944,6 +1357,582 @@ To restore the cluster settings, execute the following command:
 ```bash
 # curl -s -XPUT -H 'Content-Type: application/json' -u logserver '127.0.0.1:9200/_cluster/settings' -d@/root/restore/20210108-102848/cluster_settings.json
 ```
+## Audit actions
+
+### AUTHORIZATION PLUGIN
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ua3b{border-color:inherit;color:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-pnl2{border-color:inherit;color:inherit;text-align:left;vertical-align:middle}
+</style>
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="3:1-3:37">
+<th data-sourcepos="3:2-3:14">ACTION TYPE</th>
+<th data-sourcepos="3:16-3:21">PATH</th>
+<th data-sourcepos="3:23-3:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="5:1-5:78">
+<td data-sourcepos="5:2-5:32">USER_[CREATE|UPDATE|DELETE]</td>
+<td data-sourcepos="5:34-5:54">_logserver/accounts</td>
+<td data-sourcepos="5:56-5:77">whole body with diff</td>
+</tr>
+<tr data-sourcepos="6:1-6:81">
+<td data-sourcepos="6:2-6:32">ROLE_[CREATE|UPDATE|DELETE]</td>
+<td data-sourcepos="6:34-6:57">_logserver/constraints</td>
+<td data-sourcepos="6:59-6:80">whole body with diff</td>
+</tr>
+<tr data-sourcepos="7:1-7:40">
+<td data-sourcepos="7:2-7:7">BULK</td>
+<td data-sourcepos="7:9-7:15">_bulk</td>
+<td data-sourcepos="7:17-7:39">whole body if enabled</td>
+</tr>
+<tr data-sourcepos="8:1-8:38">
+<td data-sourcepos="8:2-8:8">QUERY</td>
+<td data-sourcepos="8:10-8:13">*</td>
+<td data-sourcepos="8:15-8:37">whole body if enabled</td>
+</tr>
+</tbody>
+</table>
+
+<h5 dir="auto" data-sourcepos="10:1-10:33">Paths excluded from auditing</h5>
+
+<ul dir="auto" data-sourcepos="12:1-17:0">
+<li data-sourcepos="12:1-12:5"><code data-sourcepos="12:4-12:4">/</code></li>
+<li data-sourcepos="13:1-13:12"><code data-sourcepos="13:4-13:11">/_nodes*</code></li>
+<li data-sourcepos="14:1-14:12"><code data-sourcepos="14:4-14:11">/_stats*</code></li>
+<li data-sourcepos="15:1-15:13"><code data-sourcepos="15:4-15:12">/.kibana*</code></li>
+<li data-sourcepos="16:1-17:0"><code data-sourcepos="16:4-16:16">/.authconfig*</code></li>
+</ul>
+
+### CONFIG
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="20:1-20:37">
+<th data-sourcepos="20:2-20:14">ACTION TYPE</th>
+<th data-sourcepos="20:16-20:21">PATH</th>
+<th data-sourcepos="20:23-20:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="22:1-22:66">
+<td data-sourcepos="22:2-22:17">TOKENS DELETED</td>
+<td data-sourcepos="22:19-22:57">post:/api/setting/job/deletealltokens</td>
+<td data-sourcepos="22:59-22:65">empty</td>
+</tr>
+<tr data-sourcepos="23:1-23:71">
+<td data-sourcepos="23:2-23:23">SETTINGS TOKENDELETE</td>
+<td data-sourcepos="23:25-23:54">put:/api/setting/tokendelete</td>
+<td data-sourcepos="23:56-23:70">payload.value</td>
+</tr>
+<tr data-sourcepos="24:1-24:59">
+<td data-sourcepos="24:2-24:19">SETTINGS TIMEOUT</td>
+<td data-sourcepos="24:21-24:42">put:/api/setting/ttl</td>
+<td data-sourcepos="24:44-24:58">payload.value</td>
+</tr>
+<tr data-sourcepos="25:1-25:79">
+<td data-sourcepos="25:2-25:27">SETTINGS AUDIT SELECTION</td>
+<td data-sourcepos="25:29-25:61">put:/api/setting/auditselection</td>
+<td data-sourcepos="25:63-25:78">payload.value1</td>
+</tr>
+<tr data-sourcepos="26:1-26:72">
+<td data-sourcepos="26:2-26:27">SETTINGS AUDIT EXCLUSION</td>
+<td data-sourcepos="26:29-26:61">put:/api/setting/auditexclusion</td>
+<td data-sourcepos="26:63-26:71">payload</td>
+</tr>
+<tr data-sourcepos="27:1-27:90">
+<td data-sourcepos="27:2-27:32">SETTINGS ALERT EXCLUDE FIELDS</td>
+<td data-sourcepos="27:34-27:72">put:/api/setting/alert_exclude_fields</td>
+<td data-sourcepos="27:74-27:89">payload.value1</td>
+</tr>
+<tr data-sourcepos="28:1-28:82">
+<td data-sourcepos="28:2-28:24">SETTINGS AUTH DOMAINS</td>
+<td data-sourcepos="28:26-28:56">put:/api/setting/auth_domains</td>
+<td data-sourcepos="28:58-28:81">payload.default_domain</td>
+</tr>
+</tbody>
+</table>
+
+
+### REPORTS
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="32:1-32:37">
+<th data-sourcepos="32:2-32:14">ACTION TYPE</th>
+<th data-sourcepos="32:16-32:21">PATH</th>
+<th data-sourcepos="32:23-32:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="34:1-34:74">
+<td data-sourcepos="34:2-34:22">DATA EXPORT CREATED</td>
+<td data-sourcepos="34:24-34:54">post:/api/reports/data/export</td>
+<td data-sourcepos="34:56-34:73">payload.taskName</td>
+</tr>
+<tr data-sourcepos="35:1-35:84">
+<td data-sourcepos="35:2-35:29">MANUAL DATA EXPORT CREATED</td>
+<td data-sourcepos="35:31-35:68">post:/api/reports/data/export_manual</td>
+<td data-sourcepos="35:70-35:83">payload.user</td>
+</tr>
+<tr data-sourcepos="36:1-36:72">
+<td data-sourcepos="36:2-36:21">DATA EXPORT EDITED</td>
+<td data-sourcepos="36:23-36:52">put:/api/reports/data/export</td>
+<td data-sourcepos="36:54-36:71">payload.taskName</td>
+</tr>
+<tr data-sourcepos="37:1-37:91">
+<td data-sourcepos="37:2-37:34">DASHBOARD REPORT EXPORT CREATED</td>
+<td data-sourcepos="37:36-37:71">post:/api/reports/dashboard/export</td>
+<td data-sourcepos="37:73-37:90">payload.taskName</td>
+</tr>
+<tr data-sourcepos="38:1-38:89">
+<td data-sourcepos="38:2-38:33">DASHBOARD REPORT EXPORT EDITED</td>
+<td data-sourcepos="38:35-38:69">put:/api/reports/dashboard/export</td>
+<td data-sourcepos="38:71-38:88">payload.taskName</td>
+</tr>
+<tr data-sourcepos="39:1-39:88">
+<td data-sourcepos="39:2-39:35">DATA TABLE REPORT EXPORT CREATED</td>
+<td data-sourcepos="39:37-39:68">post:/api/reports/table/export</td>
+<td data-sourcepos="39:70-39:87">payload.taskName</td>
+</tr>
+<tr data-sourcepos="40:1-40:86">
+<td data-sourcepos="40:2-40:34">DATA TABLE REPORT EXPORT EDITED</td>
+<td data-sourcepos="40:36-40:66">put:/api/reports/table/export</td>
+<td data-sourcepos="40:68-40:85">payload.taskName</td>
+</tr>
+<tr data-sourcepos="41:1-41:75">
+<td data-sourcepos="41:2-41:25">SCHEDULED TASK ENABLED</td>
+<td data-sourcepos="41:27-41:61">put:/api/reports/scheduler/enable</td>
+<td data-sourcepos="41:63-41:74">payload.id</td>
+</tr>
+<tr data-sourcepos="42:1-42:77">
+<td data-sourcepos="42:2-42:26">SCHEDULED TASK DISABLED</td>
+<td data-sourcepos="42:28-42:63">put:/api/reports/scheduler/disable</td>
+<td data-sourcepos="42:65-42:76">payload.id</td>
+</tr>
+<tr data-sourcepos="43:1-43:54">
+<td data-sourcepos="43:2-43:16">TASKS DELETED</td>
+<td data-sourcepos="43:18-43:38">delete:/api/reports</td>
+<td data-sourcepos="43:40-43:53">payload.objs</td>
+</tr>
+<tr data-sourcepos="44:1-44:76">
+<td data-sourcepos="44:2-44:22">SETTINGS PDF_EXPIRY</td>
+<td data-sourcepos="44:24-44:55">post:/api/reports/settings/pdf</td>
+<td data-sourcepos="44:57-44:75">payload.pdfExpiry</td>
+</tr>
+<tr data-sourcepos="45:1-45:76">
+<td data-sourcepos="45:2-45:22">SETTINGS CSV_EXPIRY</td>
+<td data-sourcepos="45:24-45:55">post:/api/reports/settings/csv</td>
+<td data-sourcepos="45:57-45:75">payload.csvExpiry</td>
+</tr>
+<tr data-sourcepos="46:1-46:76">
+<td data-sourcepos="46:2-46:21">REPORT UPLOAD LOGO</td>
+<td data-sourcepos="46:23-46:56">post:/api/reports/settings/logos</td>
+<td data-sourcepos="46:58-46:75">payload.fileName</td>
+</tr>
+<tr data-sourcepos="47:1-47:62">
+<td data-sourcepos="47:2-47:20">ONGOING TASK STOP</td>
+<td data-sourcepos="47:22-47:45">post:/api/reports/stop</td>
+<td data-sourcepos="47:47-47:61">params.taskId</td>
+</tr>
+</tbody>
+</table>
+
+
+### INDEX MANAGEMENT
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="51:1-51:37">
+<th data-sourcepos="51:2-51:14">ACTION TYPE</th>
+<th data-sourcepos="51:16-51:21">PATH</th>
+<th data-sourcepos="51:23-51:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="53:1-53:69">
+<td data-sourcepos="53:2-53:17">ACTION CREATED</td>
+<td data-sourcepos="53:19-53:53">post:/api/index_management/action</td>
+<td data-sourcepos="53:55-53:68">payload.name</td>
+</tr>
+<tr data-sourcepos="54:1-54:67">
+<td data-sourcepos="54:2-54:16">ACTION EDITED</td>
+<td data-sourcepos="54:18-54:51">put:/api/index_management/action</td>
+<td data-sourcepos="54:53-54:66">payload.name</td>
+</tr>
+<tr data-sourcepos="55:1-55:80">
+<td data-sourcepos="55:2-55:19">ACTION START NOW</td>
+<td data-sourcepos="55:21-55:66">post:/api/index_management/action/run_action</td>
+<td data-sourcepos="55:68-55:79">payload.id</td>
+</tr>
+<tr data-sourcepos="56:1-56:70">
+<td data-sourcepos="56:2-56:17">ACTION DELETED</td>
+<td data-sourcepos="56:19-56:55">delete:/api/index_management/action</td>
+<td data-sourcepos="56:57-56:69">params.name</td>
+</tr>
+<tr data-sourcepos="57:1-57:109">
+<td data-sourcepos="57:2-57:34">SYSTEM INDEX ROLLOVER CONFIGURE</td>
+<td data-sourcepos="57:36-57:89">post:/api/index_management/settings/rollover/.agents</td>
+<td data-sourcepos="57:91-57:108">params.indexName</td>
+</tr>
+<tr data-sourcepos="58:1-58:108">
+<td data-sourcepos="58:2-58:34">SYSTEM INDEX ROLLOVER CONFIGURE</td>
+<td data-sourcepos="58:36-58:88">post:/api/index_management/settings/rollover/alerts</td>
+<td data-sourcepos="58:90-58:107">params.indexName</td>
+</tr>
+<tr data-sourcepos="59:1-59:107">
+<td data-sourcepos="59:2-59:34">SYSTEM INDEX ROLLOVER CONFIGURE</td>
+<td data-sourcepos="59:36-59:87">post:/api/index_management/settings/rollover/audit</td>
+<td data-sourcepos="59:89-59:106">params.indexName</td>
+</tr>
+</tbody>
+</table>
+
+
+### ARCHIVE
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="63:1-63:37">
+<th data-sourcepos="63:2-63:14">ACTION TYPE</th>
+<th data-sourcepos="63:16-63:21">PATH</th>
+<th data-sourcepos="63:23-63:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="65:1-65:71">
+<td data-sourcepos="65:2-65:24">ARCHIVAL TASK CREATED</td>
+<td data-sourcepos="65:26-65:57">post:/api/archive/archive_task</td>
+<td data-sourcepos="65:59-65:70">payload.id</td>
+</tr>
+<tr data-sourcepos="66:1-66:73">
+<td data-sourcepos="66:2-66:24">ARCHIVAL TASK UPDATED</td>
+<td data-sourcepos="66:26-66:56">put:/api/archive/archive_task</td>
+<td data-sourcepos="66:58-66:72">params.taskId</td>
+</tr>
+<tr data-sourcepos="67:1-67:80">
+<td data-sourcepos="67:2-67:26">ARCHIVAL TASK START NOW</td>
+<td data-sourcepos="67:28-67:63">post:/api/archive/archive_task/run</td>
+<td data-sourcepos="67:65-67:79">params.taskId</td>
+</tr>
+<tr data-sourcepos="68:1-68:60">
+<td data-sourcepos="68:2-68:16">TASKS DELETED</td>
+<td data-sourcepos="68:18-68:44">delete:/api/archive/tasks</td>
+<td data-sourcepos="68:46-68:59">payload.objs</td>
+</tr>
+<tr data-sourcepos="69:1-69:80">
+<td data-sourcepos="69:2-69:22">SEARCH TASK CREATED</td>
+<td data-sourcepos="69:24-69:58">post:/api/archive/search_task/run</td>
+<td data-sourcepos="69:60-69:79">payload.searchtext</td>
+</tr>
+<tr data-sourcepos="70:1-70:88">
+<td data-sourcepos="70:2-70:23">RESTORE TASK CREATED</td>
+<td data-sourcepos="70:25-70:60">post:/api/archive/restore_task/run</td>
+<td data-sourcepos="70:62-70:87">payload.destinationIndex</td>
+</tr>
+</tbody>
+</table>
+
+
+### ALERTS
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="74:1-74:37">
+<th data-sourcepos="74:2-74:14">ACTION TYPE</th>
+<th data-sourcepos="74:16-74:21">PATH</th>
+<th data-sourcepos="74:23-74:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="76:1-76:75">
+<td data-sourcepos="76:2-76:21">ALERT RULE CREATED</td>
+<td data-sourcepos="76:23-76:50">post:/api/alerts/alertrule</td>
+<td data-sourcepos="76:52-76:74">payload.alertrulename</td>
+</tr>
+<tr data-sourcepos="77:1-77:73">
+<td data-sourcepos="77:2-77:20">ALERT RULE EDITED</td>
+<td data-sourcepos="77:22-77:48">put:/api/alerts/alertrule</td>
+<td data-sourcepos="77:50-77:72">payload.alertrulename</td>
+</tr>
+<tr data-sourcepos="78:1-78:73">
+<td data-sourcepos="78:2-78:22">ALERT RULE RAN ONCE</td>
+<td data-sourcepos="78:24-78:59">post:/api/alerts/alertrule/runonce</td>
+<td data-sourcepos="78:61-78:72">payload.id</td>
+</tr>
+<tr data-sourcepos="79:1-79:65">
+<td data-sourcepos="79:2-79:21">ALERT RULE DELETED</td>
+<td data-sourcepos="79:23-79:52">delete:/api/alerts/alertrule</td>
+<td data-sourcepos="79:54-79:64">params.id</td>
+</tr>
+<tr data-sourcepos="80:1-80:57">
+<td data-sourcepos="80:2-80:22">ALERT GROUP CREATED</td>
+<td data-sourcepos="80:24-80:48">post:/api/alerts/groups</td>
+<td data-sourcepos="80:50-80:56">empty</td>
+</tr>
+<tr data-sourcepos="81:1-81:65">
+<td data-sourcepos="81:2-81:22">ALERT GROUP RENAMED</td>
+<td data-sourcepos="81:24-81:47">put:/api/alerts/groups</td>
+<td data-sourcepos="81:49-81:64">payload.rename</td>
+</tr>
+<tr data-sourcepos="82:1-82:71">
+<td data-sourcepos="82:2-82:22">ALERT GROUP DELETED</td>
+<td data-sourcepos="82:24-82:50">delete:/api/alerts/groups</td>
+<td data-sourcepos="82:52-82:70">payload.groupName</td>
+</tr>
+<tr data-sourcepos="83:1-83:63">
+<td data-sourcepos="83:2-83:23">ALERT ADDED TO GROUP</td>
+<td data-sourcepos="83:25-83:54">put:/api/alerts/updatealerts</td>
+<td data-sourcepos="83:56-83:62">empty</td>
+</tr>
+<tr data-sourcepos="84:1-84:85">
+<td data-sourcepos="84:2-84:22">ALERT CHANGED ROLES</td>
+<td data-sourcepos="84:24-84:63">put:/api/alerts/alertrules/changeroles</td>
+<td data-sourcepos="84:65-84:84">payload.alertsList</td>
+</tr>
+<tr data-sourcepos="85:1-85:101">
+<td data-sourcepos="85:2-85:32">ALERT MANUAL INCIDENT CREATED</td>
+<td data-sourcepos="85:34-85:75">post:/api/alerts/incidents/create_manual</td>
+<td data-sourcepos="85:77-85:100">payload.data.rule_name</td>
+</tr>
+<tr data-sourcepos="86:1-86:90">
+<td data-sourcepos="86:2-86:33">ALERT RULE [enabled|disabled]</td>
+<td data-sourcepos="86:35-86:68">put:/api/alerts/alertrule/switch</td>
+<td data-sourcepos="86:70-86:89">payload.alertsList</td>
+</tr>
+<tr data-sourcepos="87:1-87:90">
+<td data-sourcepos="87:2-87:29">ALERT RULE INCIDENT EDITED</td>
+<td data-sourcepos="87:31-87:57">put:/api/alerts/incidents</td>
+<td data-sourcepos="87:59-87:89">payload.id + <code data-sourcepos="87:74-87:87">dynamic values</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+### SYNC
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="91:1-91:37">
+<th data-sourcepos="91:2-91:14">ACTION TYPE</th>
+<th data-sourcepos="91:16-91:21">PATH</th>
+<th data-sourcepos="91:23-91:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="93:1-93:71">
+<td data-sourcepos="93:2-93:23">SYNC PROFILE CREATED</td>
+<td data-sourcepos="93:25-93:55">post:/api/sync/clusterprofile</td>
+<td data-sourcepos="93:57-93:70">payload.host</td>
+</tr>
+<tr data-sourcepos="94:1-94:68">
+<td data-sourcepos="94:2-94:20">SYNC SYNCHRONISED</td>
+<td data-sourcepos="94:22-94:45">put:/api/sync/syncTask</td>
+<td data-sourcepos="94:47-94:67">payload.destination</td>
+</tr>
+<tr data-sourcepos="95:1-95:63">
+<td data-sourcepos="95:2-95:14">SYNC COPIED</td>
+<td data-sourcepos="95:16-95:40">post:/api/sync/copyTask</td>
+<td data-sourcepos="95:42-95:62">payload.destination</td>
+</tr>
+<tr data-sourcepos="96:1-96:70">
+<td data-sourcepos="96:2-96:23">SYNC PROFILE DELETED</td>
+<td data-sourcepos="96:25-96:56">post:/api/sync/syncTask/delete</td>
+<td data-sourcepos="96:58-96:69">payload.id</td>
+</tr>
+<tr data-sourcepos="97:1-97:56">
+<td data-sourcepos="97:2-97:17">SYNC JOB RUNED</td>
+<td data-sourcepos="97:19-97:42">post:/api/sync/runTask</td>
+<td data-sourcepos="97:44-97:55">payload.id</td>
+</tr>
+</tbody>
+</table>
+
+
+### AGENTS
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="101:1-101:37">
+<th data-sourcepos="101:2-101:14">ACTION TYPE</th>
+<th data-sourcepos="101:16-101:21">PATH</th>
+<th data-sourcepos="101:23-101:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="103:1-103:69">
+<td data-sourcepos="103:2-103:24">AGENTS AGENT RELOADED</td>
+<td data-sourcepos="103:26-103:56">post:/api/agents/reloadagents</td>
+<td data-sourcepos="103:58-103:68">params.id</td>
+</tr>
+<tr data-sourcepos="104:1-104:80">
+<td data-sourcepos="104:2-104:30">AGENTS MASTERAGENT RELOADED</td>
+<td data-sourcepos="104:32-104:67">post:/api/agents/reloadmasteragent</td>
+<td data-sourcepos="104:69-104:79">params.id</td>
+</tr>
+<tr data-sourcepos="105:1-105:52">
+<td data-sourcepos="105:2-105:17">AGENTS DELETED</td>
+<td data-sourcepos="105:19-105:38">delete:/api/agents</td>
+<td data-sourcepos="105:40-105:51">params.uid</td>
+</tr>
+<tr data-sourcepos="106:1-106:77">
+<td data-sourcepos="106:2-106:22">AGENTS FILE CREATED</td>
+<td data-sourcepos="106:24-106:56">post:/api/agents/templates/file</td>
+<td data-sourcepos="106:58-106:76">payload.file.name</td>
+</tr>
+<tr data-sourcepos="107:1-107:58">
+<td data-sourcepos="107:2-107:22">AGENTS FILE DELETED</td>
+<td data-sourcepos="107:24-107:49">delete:/api/agents/files</td>
+<td data-sourcepos="107:51-107:57">empty</td>
+</tr>
+<tr data-sourcepos="108:1-108:61">
+<td data-sourcepos="108:2-108:21">AGENTS FILE EDITED</td>
+<td data-sourcepos="108:23-108:45">put:/api/agents/files</td>
+<td data-sourcepos="108:47-108:60">payload.name</td>
+</tr>
+<tr data-sourcepos="109:1-109:80">
+<td data-sourcepos="109:2-109:26">AGENTS TEMPLATE CREATED</td>
+<td data-sourcepos="109:28-109:55">post:/api/agents/templates</td>
+<td data-sourcepos="109:57-109:79">payload.template.name</td>
+</tr>
+<tr data-sourcepos="110:1-110:78">
+<td data-sourcepos="110:2-110:25">AGENTS TEMPLATE EDITED</td>
+<td data-sourcepos="110:27-110:53">put:/api/agents/templates</td>
+<td data-sourcepos="110:55-110:77">payload.template.name</td>
+</tr>
+<tr data-sourcepos="111:1-111:78">
+<td data-sourcepos="111:2-111:26">AGENTS TEMPLATE DELETED</td>
+<td data-sourcepos="111:28-111:57">delete:/api/agents/templates</td>
+<td data-sourcepos="111:59-111:77">payload.params.id</td>
+</tr>
+<tr data-sourcepos="112:1-112:104">
+<td data-sourcepos="112:2-112:44">AGENTS BEATS [started|restarted|stoped]</td>
+<td data-sourcepos="112:46-112:74">post:/api/agents/manage/<code data-sourcepos="112:72-112:72">*</code>
+</td>
+<td data-sourcepos="112:76-112:103">[params.beatname|payload]</td>
+</tr>
+</tbody>
+</table>
+
+
+### INTELLIGENCE
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="116:1-116:37">
+<th data-sourcepos="116:2-116:14">ACTION TYPE</th>
+<th data-sourcepos="116:16-116:21">PATH</th>
+<th data-sourcepos="116:23-116:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="118:1-118:103">
+<td data-sourcepos="118:2-118:27">INTELLIGENCE RULE STOPED</td>
+<td data-sourcepos="118:29-118:85">get:/api/intelligence/intelligence_airules_set_stoprule</td>
+<td data-sourcepos="118:87-118:102">query.rule_uid</td>
+</tr>
+<tr data-sourcepos="119:1-119:105">
+<td data-sourcepos="119:2-119:28">INTELLIGENCE RULE STARTED</td>
+<td data-sourcepos="119:30-119:87">get:/api/intelligence/intelligence_airules_set_startrule</td>
+<td data-sourcepos="119:89-119:104">query.rule_uid</td>
+</tr>
+<tr data-sourcepos="120:1-120:106">
+<td data-sourcepos="120:2-120:28">INTELLIGENCE RULE DELETED</td>
+<td data-sourcepos="120:30-120:88">get:/api/intelligence/intelligence_airules_set_deleterule</td>
+<td data-sourcepos="120:90-120:105">query.rule_uid</td>
+</tr>
+<tr data-sourcepos="121:1-121:121">
+<td data-sourcepos="121:2-121:38">INTELLIGENCE RULE [created|edited]</td>
+<td data-sourcepos="121:40-121:102">get:/api/intelligence/intelligence_modelcreation_set_formdata</td>
+<td data-sourcepos="121:104-121:120">query.rule_name</td>
+</tr>
+</tbody>
+</table>
+
+
+### NETWORK-PROBE
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="125:1-125:37">
+<th data-sourcepos="125:2-125:14">ACTION TYPE</th>
+<th data-sourcepos="125:16-125:21">PATH</th>
+<th data-sourcepos="125:23-125:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="127:1-127:82">
+<td data-sourcepos="127:2-127:29">NETWORK-PROBE FILE CREATED</td>
+<td data-sourcepos="127:31-127:61">post:/api/network-probe/files</td>
+<td data-sourcepos="127:63-127:81">payload.file.path</td>
+</tr>
+<tr data-sourcepos="128:1-128:83">
+<td data-sourcepos="128:2-128:29">NETWORK-PROBE FILE DELETED</td>
+<td data-sourcepos="128:31-128:63">delete:/api/network-probe/files</td>
+<td data-sourcepos="128:65-128:82">payload.filePath</td>
+</tr>
+<tr data-sourcepos="129:1-129:94">
+<td data-sourcepos="129:2-129:34">NETWORK-PROBE FILE REREGISTERED</td>
+<td data-sourcepos="129:36-129:75">post:/api/network-probe/files/register</td>
+<td data-sourcepos="129:77-129:93">payload.host.ip</td>
+</tr>
+<tr data-sourcepos="130:1-130:115">
+<td data-sourcepos="130:2-130:54">NETWORK PROBE SERVICES [stoped|started|restarted]</td>
+<td data-sourcepos="130:56-130:89">post:/api/network-probe/services</td>
+<td data-sourcepos="130:91-130:114">payload.services.names</td>
+</tr>
+<tr data-sourcepos="131:1-131:126">
+<td data-sourcepos="131:2-131:34">NETWORK-PROBE PIPELINES ENABLED</td>
+<td data-sourcepos="131:36-131:87">post:/api/network-probe/{probeId}/pipelines/enable</td>
+<td data-sourcepos="131:89-131:125">params.hostId, payload.pipelinesIds</td>
+</tr>
+<tr data-sourcepos="132:1-132:128">
+<td data-sourcepos="132:2-132:35">NETWORK-PROBE PIPELINES DISABLED</td>
+<td data-sourcepos="132:37-132:89">post:/api/network-probe/{probeId}/pipelines/disable</td>
+<td data-sourcepos="132:91-132:127">params.hostId, payload.pipelinesIds</td>
+</tr>
+<tr data-sourcepos="133:1-133:87">
+<td data-sourcepos="133:2-133:35">NETWORK-PROBE PIPELINES RELOADED</td>
+<td data-sourcepos="133:37-133:78">post:/api/network-probe/pipelines/reload</td>
+<td data-sourcepos="133:80-133:86">empty</td>
+</tr>
+</tbody>
+</table>
+
+
+### ELASTSCHEDULER
+
+<table class="tg">
+<thead>
+<tr data-sourcepos="137:1-137:37">
+<th data-sourcepos="137:2-137:14">ACTION TYPE</th>
+<th data-sourcepos="137:16-137:21">PATH</th>
+<th data-sourcepos="137:23-137:36">FROM REQUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sourcepos="139:1-139:124">
+<td data-sourcepos="139:2-139:69">[<code data-sourcepos="139:5-139:11">ARCHIVE</code>|<code data-sourcepos="139:15-139:30">INDEX_MANAGEMENT</code>|<code data-sourcepos="139:34-139:37">SYNC</code>] ACTION [enabled|disabled]</td>
+<td data-sourcepos="139:71-139:108">put:/api/elastscheduler/schedulerjob</td>
+<td data-sourcepos="139:110-139:123">payload.name</td>
+</tr>
+<tr data-sourcepos="140:1-140:94">
+<td data-sourcepos="140:2-140:39">SCHEDULER ACTION [enabled|disabled]</td>
+<td data-sourcepos="140:41-140:78">put:/api/elastscheduler/schedulerjob</td>
+<td data-sourcepos="140:80-140:93">payload.name</td>
+</tr>
+</tbody>
+</table></div>
 
 ## Index management
 
@@ -2095,6 +2084,20 @@ Optional settings:
  - New index name (optional)
 
 ![](/media/media/image225.png)
+
+### Index rollover
+
+Using the rollover function, you can make changes to removing documents from the *audit*, *.agents*, and *alert\** indexes.
+
+You can configure the rollover by going to the *Config* module, then clicking the *Settings* tab, going to the *Index rollover settings* section, and clicking the *Configure* button:
+
+![](/media/media/image167.png)
+
+You can set the following retention parameters for the above indexes:
+
+- Maximum size (GB);
+- Maximum age (h);
+- Maximum number of documents.
 
 ### Custom action
 
