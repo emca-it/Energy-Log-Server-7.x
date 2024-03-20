@@ -2736,7 +2736,7 @@ On the other hand, when metadata is present, but archive itself could not be loc
 That archive cannot be used for task creation and so cannot be selected.
 
 
-### Archive Files Cataloguing
+### Archive Directory Structure
 
 New archives will be created in the configured archive.archivefolderpath (kibana.yml) in a systematic order. They can be found under a path based on the date the archive was created: /$archivefolderpath/$year/$month. This method of storing archives ensures better readability and significantly simplifies viewing large numbers of files.
 The final directory is determined by the last segment of the archive name, which contains the archive creation date. For example, assuming that the root archivefolderpath is set to /download, archive sample-archive_2023-11-01.json.zstd will be saved to the /download/2023/11/ automatically created directory.
@@ -2746,7 +2746,7 @@ Archives once saved to the root directory will be displayed normally in the GUI 
 
 Archives checksum verification feature has been integrated into the `Create Task` section, enhancing the functionality of both the `Search` and `Restore` tabs. This feature adds an extra layer of confidence in the accuracy and reliability of the stored files. 
 
-### Starting Verification
+#### Starting Verification
 
 To start the verification process navigate to one of the mentioned tabs. Select archives that will be checked and move them to the right-side table. Below picture presents the button that will be activated, as soon as any complete archives (without any warning) will be selected in the right table. Archives without metadata cannot be utilized due to the lack of necessary details.
 
@@ -2769,22 +2769,22 @@ The verification can be either stopped or cancelled, by clicking one of the two 
 
 ![](/media/media/04_archive_checksum-modal-stop.png)
 
-### Verification Result 
+#### Verification Result 
 
 After some time, when the verification is concluded, the final results will be displayed. The verification result is shown in the left bottom corner and is symbolized by one of the displayed colors: 
 - `green` - all of the archives have compliant checksums
 - `yellow` - indicates that some of the archives passed the verification, while others did not
 - `red` -  signifies that all of the selected archives failed the verification process
 
-#### When all files are okay:
+##### When all files are okay:
 
 ![](/media/media/04_archive_checksum-modal-success.png)
 
-#### When results are partially correct:
+##### When results are partially correct:
 
 ![](/media/media/04_archive_checksum-modal-partially.png)
 
-#### When all files are failed:
+##### When all files are failed:
 
 ![](/media/media/04_archive_checksum-modal-failed.png)
 
