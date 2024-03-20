@@ -1670,6 +1670,11 @@ To restore the cluster settings, execute the following command:
 <td data-sourcepos="78:61-78:72">payload.id</td>
 </tr>
 <tr data-sourcepos="79:1-79:65">
+<td data-sourcepos="79:2-79:21">ALERT RULES SAVED</td>
+<td data-sourcepos="79:23-79:52">post:/api/alerts/alertrule/saverules</td>
+<td data-sourcepos="79:54-79:64">empty</td>
+</tr>
+<tr data-sourcepos="79:1-79:65">
 <td data-sourcepos="79:2-79:21">ALERT RULE DELETED</td>
 <td data-sourcepos="79:23-79:52">delete:/api/alerts/alertrule</td>
 <td data-sourcepos="79:54-79:64">params.id</td>
