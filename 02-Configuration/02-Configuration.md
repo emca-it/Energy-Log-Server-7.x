@@ -1420,33 +1420,53 @@ The default configuration file is located at `/etc/elasticsearch/properties.yml`
 
 To configure SSO, the system should be accessible by domain name URL, not IP address or localhost.
 
-**Ok:** `https://loggui.com:5601/login`. \
-**Wrong:** `https://localhost:5601/login`, `https://10.0.10.120:5601/login`
+**Correct:** https://loggui.com:5601/login
+**Wrong:** https://localhost:5601/login, https://10.0.10.120:5601/login
 
-To enable SSO on your system follow the below steps. The configuration is made for AD: `example.com`, GUI URL: `loggui.com`
+
+The configuration description described below is based on:
+
+- AD Domain / Realm: `example.com`
+
+- AD IP Address: `192.168.3.111`
+
+- GUI Url: `loggui.com`
+
+
+To enable SSO on your system, follow the steps below.
 
 ### Configuration steps
 
-1. Create a **User** Account for Elasticsearch auth plugin
-
-   In this step, a Kerberos Principal representing the Elasticsearch auth plugin is created on the Active Directory. The principal name would be `name@EXAMPLE.COM`, while the `EXAMPLE.COM` is the administrative name of the realm.
-
-   In our case, the principal name will be `esauth@EXAMPLE.COM`.
+1. Create a **User** Account for Elasticsearch auth plugin <br>
+   In this step, a Kerberos Principal representing the Elasticsearch auth plugin is created on the Active Directory. The principal name would be `name@EXAMPLE.COM`, while the `EXAMPLE.COM` is the administrative name of the realm.<br><br>
 
    Create a User in AD. Set "Account never expires" and enable support for Kerberos encryption as shown below.
 
    ![](/media/media/image107_js.png)
    <br>
 
-1. Define the Service Principal Name (SPN) and Create a keytab file for it
+2. Define the Service Principal Name (SPN) and Create a keytab file for it
 
-   Use the following command to create the keytab file and SPN:
+  Use the following command to create the keytab file identyfying the SPN:
 
-   > ```C:> ktpass -out c:\Users\Administrator\```**esauth.keytab** `-princ` **HTTP/loggui.com@EXAMPLE.COM** `-mapUser` **esauth** ```-mapOp set -pass``` '**Sprint$123**' -crypto ALL -pType KRB5_NT_PRINCIPAL
+  ```bash
+    C:> ktpass -out c:\Users\Administrator\esauth.keytab -princ HTTP/loggui.com@EXAMPLE.COM -mapUser esauth -mapOp set -pass 'Sprint$123' -crypto ALL -pType KRB5_NT_PRINCIPAL
+  ```
 
-   Values highlighted in bold should be adjusted for your system.
+   Details of the used switches:
 
-   The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user:
+
+- `-out` - path to the keytab file
+
+- `-mapUser` - name of the previously created AD user. It might need to be preceded with pre-Windows 2000 logon if user cannot be found (e.g. `EXAMPLE\esauth` on the screenshot).
+
+- `-princ` - service principal name. Must start with uppercase HTTP/ and must end with uppercase domain after the @ sign. Will be used later to configure principal.
+
+- `-pass` - password that secures the keytab file itself (not connected user's password!). Will be used later to configure principal's password.
+
+For more details about the `ktpass tool`, please refer to the official documentation: [ktpass details](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ktpass).
+
+The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user:
 
    ```bash
    chmod 640 /etc/elasticsearch/esauth.keytab
@@ -1455,22 +1475,28 @@ To enable SSO on your system follow the below steps. The configuration is made f
 
    <br>
 
-1. Create a file named *krb5Login.conf*:
+3. Create a file named *krb5Login.conf*:
 
     ```bash
-    com.sun.security.jgss.initiate{
-        com.sun.security.auth.module.Krb5LoginModule required
-        principal="esauth@EXAMPLE.COM" useKeyTab=true
-        keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
-        };
+   com.sun.security.jgss.initiate {
+      com.sun.security.auth.module.Krb5LoginModule required
+      principal="HTTP/loggui.com@EXAMPLE.COM"
+      useKeyTab=true
+      keyTab=/etc/elasticsearch/esauth.keytab
+      storeKey=true
+      debug=true;
+    };
     com.sun.security.jgss.krb5.accept {
-        com.sun.security.auth.module.Krb5LoginModule required
-        principal="esauth@EXAMPLE.COM" useKeyTab=true
-        keyTab=/etc/elasticsearch/esauth.keytab storeKey=true debug=true;
-        };
+      com.sun.security.auth.module.Krb5LoginModule required
+      principal="HTTP/loggui.com@EXAMPLE.COM"
+      useKeyTab=true
+      keyTab=/etc/elasticsearch/esauth.keytab
+      storeKey=true
+      debug=true;
+    };
     ```
 
-    The principal user and keyTab location should be changed as per the values created in Step 2. Make sure the domain is in UPPERCASE as shown above. \
+    The principal user and keyTab location should be changed as per the values created in Step 2. Make sure the domain is in **UPPERCASE** as shown above. \
     The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance, `/etc/elasticsearch/` with read permissions for the elasticsearch user:
 
     ```bash
@@ -1480,60 +1506,65 @@ To enable SSO on your system follow the below steps. The configuration is made f
   
     <br>
 
-1. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
-
+4. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
+  ```
    -Dsun.security.krb5.debug=false \
    -Djava.security.krb5.realm=**EXAMPLE.COM** \
-   -Djava.security.krb5.kdc=**AD_HOST_IP_ADDRESS** \
+   -Djava.security.krb5.kdc=**192.168.3.111** \
    -Djava.security.auth.login.config=/etc/elasticsearch/krb5Login.conf \
    -Djavax.security.auth.useSubjectCredsOnly=false
-
-   Change the appropriate values realm and IP address. Those JVM arguments have to be set for the Elasticsearch server.
+  ```
+   Change the `.krb5.realm` and `.krb5.kdc` to the appropriate values. `Realm` is defined as used domain (must be in UPPERCASE) realm and `.kdc` is AD's IP address. Those JVM arguments have to be set for the Elasticsearch server.
+ 
    <br>
 
-1. Authentication options if ```authentication_only: true``` is set
+5. Authentication options if ```authentication_only: true``` is set
 
    If a user does not exist, Logserver will create the user without a role.
    Role in `role-mapping.yml` would be ignored and role `gui-access` from ```default_authentication_roles: ["gui-access"]``` will be assigned.
    <br>
 
-1. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for LDAP in properties.yml file:
+6. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for LDAP in properties.yml file:
 
    ```yaml
    sso.domain: "example.com"
    ldaps:
-   - name: "example.com"
-       host: "IP_address"
-       port: 389                                      # optional, default 389
-       ssl_enabled: false                             # optional, default    true
-       ssl_trust_all_certs: false                     # optional, default false
-       bind_dn: "esauth@example.com"                  # optional, skip for anonymous bind
-       bind_password: "password"                       # optional, skip for anonymous bind
-       search_user_base_DN: "cn=Users,DC=example,DC=com"
-       user_id_attribute: "uid"                       # optional, default "uid"
-       unique_member_attribute: "uniqueMember"        # optional, default "uniqueMember"
+    - name: "example.com"
+        host: "IP_address"
+        port: 389                                      # optional, default 389
+        ssl_enabled: false                             # optional, default    true
+        ssl_trust_all_certs: false                     # optional, default false
+        bind_dn: "esauth@example.com"                  # optional, skip for anonymous bind
+        bind_password: "password"                      # optional, skip for anonymous bind (AD admin's password)
+        search_user_base_DN: "cn=Users,DC=example,DC=com"
+        user_id_attribute: "uid"                       # optional, default "uid"
+        unique_member_attribute: "uniqueMember"        # optional, default "uniqueMember"
+        
+        service_principal_name: "HTTP/loggui.com@EXAMPLE.COM" # principal name used while generating the keytab file
+        service_principal_name_password: "Sprint$123" # -pass used during keytab creation
+
    ```
 
-   Note: At this moment, SSO works for only a single domain. So you have to mention for what domain SSO should work in the above property `sso.domain`
+   Note: At this moment, SSO works for only a single domain. So you have to mention for what domain SSO should work in the above property `sso.domain` - in this example it should be "example.com".
    <br>
 
-1. After completing the LDAP section entry in the properties.yml file, save the changes and send a request  for reload authentication  data with the command:
+7. After completing the LDAP section entry in the properties.yml file, save the changes and send a request  for reload authentication  data with the command:
 
    ```bash
-   curl -sS -u**user**:**password** localhost:9200/_logserver/auth/reload -XPOST
+   curl -sS -u username:password localhost:9200/_logserver/auth/reload -XPOST
    ```
 
    <br>
 
-1. Enable the SSO feature in the `kibana.yml` file:
+8. Enable the SSO feature in the `kibana.yml` file:
 
    ```bash
-   kibana.sso_enabled: true
+   login.sso_enabled: true
    ```
 
    <br>
 
-1. After that Kibana has to be restarted:
+9. After that Kibana has to be restarted:
 
    ```bash
    sudo systemctl restart kibana.service
