@@ -1420,7 +1420,7 @@ The default configuration file is located at `/etc/elasticsearch/properties.yml`
 
 To configure SSO, the system should be accessible by domain name URL, not IP address or localhost.
 
-**Correct:** https://loggui.com:5601/login
+**Correct:** https://loggui.com:5601/login <br>
 **Wrong:** https://localhost:5601/login, https://10.0.10.120:5601/login
 
 
@@ -1445,86 +1445,86 @@ To enable SSO on your system, follow the steps below.
    ![](/media/media/image107_js.png)
    <br>
 
-2. Define the Service Principal Name (SPN) and Create a keytab file for it
+1. Define the Service Principal Name (SPN) and Create a keytab file for it
 
-  Use the following command to create the keytab file identyfying the SPN:
-
-  ```bash
-    C:> ktpass -out c:\Users\Administrator\esauth.keytab -princ HTTP/loggui.com@EXAMPLE.COM -mapUser esauth -mapOp set -pass 'Sprint$123' -crypto ALL -pType KRB5_NT_PRINCIPAL
-  ```
-
-   Details of the used switches:
-
-
-- `-out` - path to the keytab file
-
-- `-mapUser` - name of the previously created AD user. It might need to be preceded with pre-Windows 2000 logon if user cannot be found (e.g. `EXAMPLE\esauth` on the screenshot).
-
-- `-princ` - service principal name. Must start with uppercase HTTP/ and must end with uppercase domain after the @ sign. Will be used later to configure principal.
-
-- `-pass` - password that secures the keytab file itself (not connected user's password!). Will be used later to configure principal's password.
-
-For more details about the `ktpass tool`, please refer to the official documentation: [ktpass details](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ktpass).
-
-The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user:
-
-   ```bash
-   chmod 640 /etc/elasticsearch/esauth.keytab
-   chown elasticsearch: /etc/elasticsearch/esauth.keytab
-   ```
-
-   <br>
-
-3. Create a file named *krb5Login.conf*:
+    Use the following command to create the keytab file identyfying the SPN:
 
     ```bash
-   com.sun.security.jgss.initiate {
-      com.sun.security.auth.module.Krb5LoginModule required
-      principal="HTTP/loggui.com@EXAMPLE.COM"
-      useKeyTab=true
-      keyTab=/etc/elasticsearch/esauth.keytab
-      storeKey=true
-      debug=true;
-    };
-    com.sun.security.jgss.krb5.accept {
-      com.sun.security.auth.module.Krb5LoginModule required
-      principal="HTTP/loggui.com@EXAMPLE.COM"
-      useKeyTab=true
-      keyTab=/etc/elasticsearch/esauth.keytab
-      storeKey=true
-      debug=true;
-    };
+      C:> ktpass -out c:\Users\Administrator\esauth.keytab -princ HTTP/loggui.com@EXAMPLE.COM -mapUser esauth -mapOp set -pass 'Sprint$123' -crypto ALL -pType KRB5_NT_PRINCIPAL
     ```
 
-    The principal user and keyTab location should be changed as per the values created in Step 2. Make sure the domain is in **UPPERCASE** as shown above. \
-    The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance, `/etc/elasticsearch/` with read permissions for the elasticsearch user:
+    Details of the used switches:
+
+
+    - `-out` - path to the keytab file
+
+    - `-mapUser` - name of the previously created AD user. It might need to be preceded with pre-Windows 2000 logon if user cannot be found (e.g. `EXAMPLE\esauth` on the screenshot).
+
+    - `-princ` - service principal name. Must start with uppercase HTTP/ and must end with uppercase domain after the @ sign. Will be used later to configure principal.
+
+    - `-pass` - password that secures the keytab file itself (not connected user's password!). Will be used later to configure principal's password.
+
+    For more details about the `ktpass tool`, please refer to the official documentation: [ktpass details](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ktpass).
+
+    The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user:
 
     ```bash
-    sudo chmod 640 /etc/elasticsearch/krb5Login.conf
-    sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
+    chmod 640 /etc/elasticsearch/esauth.keytab
+    chown elasticsearch: /etc/elasticsearch/esauth.keytab
     ```
+
+    <br>
+
+1. Create a file named *krb5Login.conf*:
+
+    ```bash
+      com.sun.security.jgss.initiate {
+          com.sun.security.auth.module.Krb5LoginModule required
+          principal="HTTP/loggui.com@EXAMPLE.COM"
+          useKeyTab=true
+          keyTab=/etc/elasticsearch/esauth.keytab
+          storeKey=true
+          debug=true;
+        };
+      com.sun.security.jgss.krb5.accept {
+        com.sun.security.auth.module.Krb5LoginModule required
+        principal="HTTP/loggui.com@EXAMPLE.COM"
+        useKeyTab=true
+        keyTab=/etc/elasticsearch/esauth.keytab
+        storeKey=true
+        debug=true;
+      };
+    ```
+
+      The principal user and keyTab location should be changed as per the values created in Step 2. Make sure the domain is in **UPPERCASE** as shown above. \
+      The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance, `/etc/elasticsearch/` with read permissions for the elasticsearch user:
+
+      ```bash
+      sudo chmod 640 /etc/elasticsearch/krb5Login.conf
+      sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
+      ```
+    
+      <br>
+
+1. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
+    ```
+    -Dsun.security.krb5.debug=false \
+    -Djava.security.krb5.realm=**EXAMPLE.COM** \
+    -Djava.security.krb5.kdc=**192.168.3.111** \
+    -Djava.security.auth.login.config=/etc/elasticsearch/krb5Login.conf \
+    -Djavax.security.auth.useSubjectCredsOnly=false
+    ```
+    Change the `.krb5.realm` and `.krb5.kdc` to the appropriate values. `Realm` is defined as used domain (must be in UPPERCASE) realm and `.kdc` is AD's IP address. Those JVM arguments have to be set for the Elasticsearch server.
   
     <br>
 
-4. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
-  ```
-   -Dsun.security.krb5.debug=false \
-   -Djava.security.krb5.realm=**EXAMPLE.COM** \
-   -Djava.security.krb5.kdc=**192.168.3.111** \
-   -Djava.security.auth.login.config=/etc/elasticsearch/krb5Login.conf \
-   -Djavax.security.auth.useSubjectCredsOnly=false
-  ```
-   Change the `.krb5.realm` and `.krb5.kdc` to the appropriate values. `Realm` is defined as used domain (must be in UPPERCASE) realm and `.kdc` is AD's IP address. Those JVM arguments have to be set for the Elasticsearch server.
- 
-   <br>
-
-5. Authentication options if ```authentication_only: true``` is set
+1. Authentication options if ```authentication_only: true``` is set
 
    If a user does not exist, Logserver will create the user without a role.
    Role in `role-mapping.yml` would be ignored and role `gui-access` from ```default_authentication_roles: ["gui-access"]``` will be assigned.
    <br>
 
-6. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for LDAP in properties.yml file:
+1. Add the following additional (sso.domain, service_principal_name, service_principal_name_password) settings for LDAP in properties.yml file:
 
    ```yaml
    sso.domain: "example.com"
@@ -1548,7 +1548,7 @@ The `esauth.keytab` file should be placed on your elasticsearch node - preferabl
    Note: At this moment, SSO works for only a single domain. So you have to mention for what domain SSO should work in the above property `sso.domain` - in this example it should be "example.com".
    <br>
 
-7. After completing the LDAP section entry in the properties.yml file, save the changes and send a request  for reload authentication  data with the command:
+1. After completing the LDAP section entry in the properties.yml file, save the changes and send a request  for reload authentication  data with the command:
 
    ```bash
    curl -sS -u username:password localhost:9200/_logserver/auth/reload -XPOST
@@ -1556,7 +1556,7 @@ The `esauth.keytab` file should be placed on your elasticsearch node - preferabl
 
    <br>
 
-8. Enable the SSO feature in the `kibana.yml` file:
+1. Enable the SSO feature in the `kibana.yml` file:
 
    ```bash
    login.sso_enabled: true
@@ -1564,7 +1564,7 @@ The `esauth.keytab` file should be placed on your elasticsearch node - preferabl
 
    <br>
 
-9. After that Kibana has to be restarted:
+1. After that Kibana has to be restarted:
 
    ```bash
    sudo systemctl restart kibana.service
