@@ -2490,6 +2490,37 @@ actions:
       allow_ilm_indices: true
 ```
 
+
+## Task Management
+
+Energy Logserver provides the ability to manage tasks. Table with running tasks is located in `Task Management` section.
+
+![](/media/media/task_management1.png)
+
+![](/media/media/task_management2.png)
+
+### Long Running Query
+
+If query is cancellable trash icon is available in Actions column. (Note: Not every query can be canceled)
+
+![](/media/media/task_management3.png)
+
+### Searchbar and filtering
+
+It is possible to search for running task using searchbar. There are provided four types of filtering:
+
+- `Cancellable` - It filters only cancellable tasks.  
+- `Parent` - This option filters only parent tasks.
+- `Action` - It filters by action ( Sample action: `indices:data/write/bulk`).
+- `Running time in seconds` - When checked, only shows tasks that take longer than a specified number of seconds.
+
+### Task Details
+
+Expanding the details column provides more information about a given task. (Note: Depending on the type of task, different information may be provided.)
+
+![](/media/media/task_management4.png)
+
+
 ## Empowered AI
 
 `Empowered AI` is a module of Energy Logserver containing mathematical algorithms for data science.
