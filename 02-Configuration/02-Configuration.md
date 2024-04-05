@@ -1149,6 +1149,78 @@ Restart the Elasticsearch instance of the new node:
 ```bash
 systemctl restart elasticsearch
 ```
+## Disk-based shard allocation
+
+Since version **7.4.3** of Logserver a feature was added to keep you informed about your disk usage. Disk-based shard allocation settings are used to determine the GUI behaviour.
+
+![your cluster is running low on disk space low stage](/media/media/01_low_water.png)
+
+![your cluster is running low on disk space high stage](/media/media/02_high_water.png)
+
+![your cluster is running low on disk space flood stage](/media/media/03_flood_water.png)
+
+These labels will appear when a certain watermark level is exceeded. Its function is to inform you to take action. Maybe tweak your retention settings or add disk space to your servers.
+
+The "low stage" can be dismissed, but starting with the "high stage", you will be forcibly redirected to the GUI status page, so it is better to act early.
+
+### What is a watermark
+
+1. Low stage
+
+    Controls the low watermark for disk usage. When exceeded Logserver will not allocate shards to that node. This setting does not affect the primary shards of newly-created indices but will prevent their replicas from being allocated.
+
+2. High stage
+
+    Controls the high watermark. When exceeded Logserver will attempt to relocate shards away from a node whose disk exceeds it. This setting affects the allocation of all shards, whether previously allocated or not.
+
+3. Flood stage
+
+    **This setting is a last resort to prevent nodes from running out of disk space - which should be at all costs avoided.**
+
+    Controls the flood stage watermark. Logserver enforces a read-only index block (index.blocks.read_only_allow_delete) on every index that has one or more shards allocated on the node, and that has at least one disk exceeding the flood stage. The index block is automatically released when the disk utilization falls below the high watermark.
+
+**Even if you are running Logserver in a single node environment, configuring the above is highly recommended.**
+
+While the GUI will always inform you about your disk usage, to take advantage of the above benefits you will need to configure the thresholds yourself **especially if you are updating from an earlier Logserver version**.
+
+### Configuring watermark stages
+
+1. On fresh **7.4.3** or newer installations of Logserver these are the default watermark values:
+
+    - low: 95%
+    - high: 97%
+    - flood: 99%
+
+2. To change them, you can use Logserver API like in the following example:
+
+    ```bash
+    curl localhost:9200/_cluster/settings -XPUT -H 'content-type: application/json' -d '{
+      "persistent": {
+        "cluster.routing.allocation.disk.threshold_enabled": "true",
+        "cluster.routing.allocation.disk.watermark.flood_stage": "10gb",
+        "cluster.routing.allocation.disk.watermark.high": "25gb",
+        "cluster.routing.allocation.disk.watermark.low": "50gb"
+      }
+    }'
+    ```
+
+    With that the "low stage" starts when the disk space for Logserver indices falls below the 50 GB mark; "high" below 25 GB and "flood" below 10 GB.
+
+3. You can also use percentages for that **but not both - you cannot mix byte values and percentages**.
+
+4. **Important!** Also modify Logserver configuration file `/etc/elasticsearch/elasticsearch.yml`:
+
+    ```yaml
+    cluster.routing.allocation.disk.threshold_enabled: true
+    cluster.routing.allocation.disk.watermark.low: "50gb"
+    cluster.routing.allocation.disk.watermark.high: "25gb"
+    cluster.routing.allocation.disk.watermark.flood_stage: "10gb"
+    ```
+
+    Take in mind you will have to change those values on all of your cluster nodes this way. Restart is not required as API was used earlier.
+
+    Thanks to that, settings will be protected against a state failure.
+
 
 ## Authentication with Active Directory
 
