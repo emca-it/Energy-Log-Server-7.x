@@ -141,7 +141,7 @@ systemctl status elasticsearch.service
 - kibana.service -
   we can run it with a command:
 
-```bash  
+```bash
 systemctl start kibana.service
 ```
 
@@ -267,7 +267,7 @@ The field value does not have to be a single, specific value. For
 digital fields we can specify a range in the following scheme:
 
 ```lucene
-fields_name:[<range_from TO <range_to] 
+fields_name:[<range_from TO <range_to]
 ```
 
 Example:
@@ -1056,10 +1056,10 @@ object, and the Save button to save the selection.
     ```bash
     elasticsearch_connection:
     hosts: ["10.4.3.185:9200"]
-    
+
     username: logserver
     password: "new_logserver_password"
-    
+
     https: true
     ```
 
@@ -1206,50 +1206,34 @@ Each field is assigned the "Submit" button thanks to which we can confirm the ch
 
 ### License (License Info)
 
-The License Information tab consists of several non-editable
-information fields.
+The License Information tab consists of several non-editable information fields.
+
+Also, if you are logged in as an administrator you will be able to upload new license from here.
 
 ![](/media/media/image61_js.png)
 
 These fields contain information:
 
 - Company - who owns the license, in this case, Foo Bar.
-- Data nodes in cluster - how many nodes we can put in one
-  cluster - in this case, 10
-- No of documents - empty field
-- Indices - number of indexes, symbol\[\*\] means that we can
-  create any number of indices
-- Issued on - the date of issue
-- Validity - validity, in this case for 120 months
-- Version - shows which version of Energy Logserver is currently installed
+- Issued on - license creation date
+- Expiration date - when the license will expire
+- Days left - how many days left before it will expire
+- Data nodes in cluster - how many nodes we can put in one cluster - in this case, 10
+- SIEM Plan enabled - is SIEM Plan covered by the license
+- Network Probes - count of NetworkProbes covered by the license
+- No of documents - license can be limited by docs count
+- Indices - license can be limited by index pattern names
+- Version - version of the product
 
 #### Renew license
 
-To change the Energy Logserver license files on a running system, do the following steps.
+To change the Energy Logserver license files on a running system, use the "Upload new license" option at the top of the "License" tab.
 
-1. Copy the current license files to the backup folder:
-
-   ```bash
-   mv /usr/share/elasticsearch/es_* ~/backup/
-   ```
-
-2. Copy the new license files to the Elasticsearch installation directory:
-
-   ```bash
-   cp es_* /usr/share/elasticsearch/
-   ```
-
-3. Add necessary permission to the new license files:
-
-   ```bash
-   chown elasticsearch:elasticsearch /usr/share/elasticsearch/es_*
-   ```
-
-4. Reload the license using the License API:
-
-   ```bash
-   curl -u $USER:$PASSWORD -X POST http://localhost:9200/_license/reload
-   ```
+1. Select the provided license files, e.g.: es_123.info, es_123.license.
+2. Click upload.
+3. Files will be uploaded and verified. New license information will appear.
+4. Verify new license information and click "Submit" when ready.
+5. It will install itself in the cluster - no need to manually put it on all nodes.
 
 ### Special accounts
 
@@ -1291,7 +1275,7 @@ It is recommended to configure ```crontab```.
 In the below example, the task was configured on hosts with the Elasticsearch module on the root.
 
 ```bash
-# crontab -l #Printing the Crontab file for the currently logged in user 
+# crontab -l #Printing the Crontab file for the currently logged in user
 0 1 * * * /bin/bash /usr/share/elasticsearch/utils/configuration-backup.sh
 ```
 
@@ -1400,6 +1384,12 @@ To restore the cluster settings, execute the following command:
 <td data-sourcepos="8:10-8:13">*</td>
 <td data-sourcepos="8:15-8:37">whole body if enabled</td>
 </tr>
+</tr>
+<tr data-sourcepos="7:1-7:40">
+<td data-sourcepos="7:2-7:7">OBJECTS</td>
+<td data-sourcepos="7:9-7:15">.kibana</td>
+<td data-sourcepos="7:17-7:39">whole body if enabled</td>
+</tr>
 </tbody>
 </table>
 
@@ -1409,7 +1399,7 @@ To restore the cluster settings, execute the following command:
 <li data-sourcepos="12:1-12:5"><code data-sourcepos="12:4-12:4">/</code></li>
 <li data-sourcepos="13:1-13:12"><code data-sourcepos="13:4-13:11">/_nodes*</code></li>
 <li data-sourcepos="14:1-14:12"><code data-sourcepos="14:4-14:11">/_stats*</code></li>
-<li data-sourcepos="15:1-15:13"><code data-sourcepos="15:4-15:12">/.kibana*</code></li>
+<li data-sourcepos="16:1-17:0"><code data-sourcepos="16:4-16:16">/.auth</code></li>
 <li data-sourcepos="16:1-17:0"><code data-sourcepos="16:4-16:16">/.authconfig*</code></li>
 </ul>
 
@@ -2271,7 +2261,7 @@ This action closes the selected indices older than 93 days (3 months)and optiona
 
 #### Disable-Refresh-Older-Than-Days
 
-This action disables the daily refresh of indices older than 2 days. the action is performed daily at 01:00.  
+This action disables the daily refresh of indices older than 2 days. the action is performed daily at 01:00.
 
 `Action type`: CUSTOM \
 `Action name`: Disable-Refresh-Older-Than-Days \
@@ -2775,7 +2765,7 @@ Archives once saved to the root directory will be displayed normally in the GUI 
 
 ### Archives Checksum Verification
 
-Archives checksum verification feature has been integrated into the `Create Task` section, enhancing the functionality of both the `Search` and `Restore` tabs. This feature adds an extra layer of confidence in the accuracy and reliability of the stored files. 
+Archives checksum verification feature has been integrated into the `Create Task` section, enhancing the functionality of both the `Search` and `Restore` tabs. This feature adds an extra layer of confidence in the accuracy and reliability of the stored files.
 
 #### Starting Verification
 
@@ -2793,16 +2783,16 @@ Above picture presents correctly selected archives and a situation when verifica
 
 Showcased modal displays previously selected files and some of its details, such as its size and result of verification. Hovering over the result dot provide users with additional information about the result, eg. current status of the verification or possible error.
 
-To start verification, simply click the `Verify` button in the bottom right corner. 
+To start verification, simply click the `Verify` button in the bottom right corner.
 After verification has been started, the loading progress bar will be displayed, indicating that the process is running. It is worth mentioning that neither this modal nor the page should be closed or reloaded as the verification process will stop immediately.
 
 The verification can be either stopped or cancelled, by clicking one of the two buttons.
 
 ![](/media/media/04_archive_checksum-modal-stop.png)
 
-#### Verification Result 
+#### Verification Result
 
-After some time, when the verification is concluded, the final results will be displayed. The verification result is shown in the left bottom corner and is symbolized by one of the displayed colors: 
+After some time, when the verification is concluded, the final results will be displayed. The verification result is shown in the left bottom corner and is symbolized by one of the displayed colors:
 - `green` - all of the archives have compliant checksums
 - `yellow` - indicates that some of the archives passed the verification, while others did not
 - `red` -  signifies that all of the selected archives failed the verification process
@@ -2844,7 +2834,7 @@ Moreover, in the metadata files can be found current process id (`pid`), total d
     ```bash
     ls -la /archivefolderpath/
     -rw-r--r--. 1 kibana kibana          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
-    21_2022-12-21.json.zstd  
+    21_2022-12-21.json.zstd
     ```
 
 1. Find document in `.archive` index using filename from previous step
@@ -2858,7 +2848,7 @@ Moreover, in the metadata files can be found current process id (`pid`), total d
           "_score": 1.0,
           "_source": {
             "date": "2023-03-21T08:52:13.502Z",
-            "filename": "prd-srv-win-ad-2022.12.21_2022-12-21.json.zstd", 
+            "filename": "prd-srv-win-ad-2022.12.21_2022-12-21.json.zstd",
     ```
 
 1. Remove documen using saved ID
@@ -3357,7 +3347,7 @@ To configure cerebro see to *Configuration* section.
 
 ## Elasticdump
 
-Elasticdump is a tool for moving and saving indices.  
+Elasticdump is a tool for moving and saving indices.
 
 ### Location
 
@@ -4311,7 +4301,7 @@ Example for the file `/var/log/messages`
        }
      ]
    }
-   
+
    ```
 
 3. Restate the Kibana service
@@ -4756,7 +4746,7 @@ input {
     fetch_min_bytes => "1000000"
 
     fetch_max_wait_ms => "800"
-    
+
     check_crcs => false
 
   }
@@ -4857,7 +4847,7 @@ Sample definition:
 input {
   jdbc {
     jdbc_driver_library => "./ojdbc8.jar"
-    jdbc_driver_class => "oracle.jdbc.driver.OracleDriver" 
+    jdbc_driver_class => "oracle.jdbc.driver.OracleDriver"
     jdbc_connection_string => "jdbc:oracle:thin:@hostname:PORT/SERVICE"
     jdbc_user => "oracle"
     jdbc_password => "oracle"
@@ -5178,8 +5168,8 @@ Display all log entries starting from `2004/03/02 14:00:00`:
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for authenticated LEA connections (e.g. 18184):
 
 ```bash
-lea_server port 0 
-lea_server auth_port 18184 
+lea_server port 0
+lea_server auth_port 18184
 lea_server auth_type sslca
 ```
 
@@ -5215,10 +5205,10 @@ connections. You can get the SIC names from the object properties of your LEA cl
 Management Station object (see above for details about Client DN and Server DN).
 
 ```bash
-lea_server ip 10.1.1.1 
-lea_server auth_port 18184 
-lea_server auth_type sslca 
-opsec_sslca_file opsec.p12 
+lea_server ip 10.1.1.1
+lea_server auth_port 18184
+lea_server auth_type sslca
+opsec_sslca_file opsec.p12
 opsec_sic_name "CN=myleaclient,O=cpmodule..gysidy"
 lea_server opsec_entity_sic_name "cn=cp_mgmt,o=cpmodule..gysidy"
 ```
@@ -5238,8 +5228,8 @@ opsec_pull_cert -h 10.1.1.1 -n myleaclient -p def456
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for authenticated LEA connections (e.g. 18184):
 
 ```bash
-lea_server port 0 
-lea_server auth_port 18184 
+lea_server port 0
+lea_server auth_port 18184
 lea_server auth_type ssl_opsec
 ```
 
@@ -5258,9 +5248,9 @@ fw putkey -ssl -p abc123 10.1.1.2
 Create a new OPSEC Application Object with the following details:
 
 ```bash
-Name: e.g. myleaclient 
-Vendor: User Defined 
-Server Entities: None 
+Name: e.g. myleaclient
+Vendor: User Defined
+Server Entities: None
 Client Entities: LEA
 ```
 
@@ -5280,10 +5270,10 @@ Finally, install the policy.
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) as well as port (e.g. `18184`), authentication type and SIC names for authenticated LEA connections. The SIC names you can get from the object properties of your LEA client object respectively the Management Station object (see above for details about Client DN and Server DN).
 
 ```bash
-lea_server ip 10.1.1.1 
-lea_server auth_port 18184 
-lea_server auth_type ssl_opsec 
-opsec_sslca_file opsec.p12 
+lea_server ip 10.1.1.1
+lea_server auth_port 18184
+lea_server auth_type ssl_opsec
+opsec_sslca_file opsec.p12
 opsec_sic_name "CN=myleaclient,O=cpmodule..gysidy"
 lea_server opsec_entity_sic_name "cn=cp_mgmt,o=cpmodule..gysidy"
 ```
@@ -5309,8 +5299,8 @@ opsec_pull_cert -h 10.1.1.1 -n myleaclient -p def456
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for authenticated LEA connections (e.g. 18184):
 
 ```bash
-lea_server port 0 
-lea_server auth_port 18184 
+lea_server port 0
+lea_server auth_port 18184
 lea_server auth_type auth_opsec
 ```
 
@@ -5336,8 +5326,8 @@ Finally, install the policy.
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) as well as the port (e.g. 18184) and authentication type for authenticated LEA connections:
 
 ```bash
-lea_server ip 10.1.1.1 
-lea_server auth_port 18184 
+lea_server ip 10.1.1.1
+lea_server auth_port 18184
 lea_server auth_type auth_opsec
 ```
 
@@ -5354,7 +5344,7 @@ opsec_putkey -p abc123 10.1.1.1
 Modify `$FWDIR/conf/fwopsec.conf` and define the port to be used for unauthenticated LEA connections (e.g. 50001):
 
 ```bash
-lea_server port 50001 
+lea_server port 50001
 lea_server auth_port 0
 ```
 
@@ -5375,7 +5365,7 @@ Finally, install the policy.
 Modify `$LOGGRABBER_CONFIG_PATH/lea.conf` and define the IP address of your FW1 management station (e.g. `10.1.1.1`) and port (e.g. `50001`) for unauthenticated LEA connections:
 
 ```bash
-lea_server ip 10.1.1.1 
+lea_server ip 10.1.1.1
 lea_server port 50001
 ```
 
@@ -5421,11 +5411,11 @@ You need to import host SSL certificate in Java trust store to be able to connec
 
   ```bash
   input {
-    sdee { 
-      interval => 60  
-      http => { 
-        truststore_password => "changeit" 
-        url => "https://10.0.2.1"  
+    sdee {
+      interval => 60
+      http => {
+        truststore_password => "changeit"
+        url => "https://10.0.2.1"
         auth => {
           user => "cisco"
           password => "p@ssw0rd"
@@ -5500,7 +5490,7 @@ This filter processing an event data with syslog type:
 filter {
   if [type] == "syslog" {
     grok {
-      match => { 
+      match => {
         "message" => [
           # auth: ssh|sudo|su
 
@@ -5516,11 +5506,11 @@ filter {
 
           # add/remove user or group
           "%{SYSLOGTIMESTAMP:[system][auth][timestamp]} %{SYSLOGHOST:[system][auth][hostname]} groupadd(?:\[%{POSINT:[system][auth][pid]}\])?: new group: name=%{DATA:system.auth.groupadd.name}, GID=%{NUMBER:system.auth.groupadd.gid}",
- 
+
           "%{SYSLOGTIMESTAMP:[system][auth][timestamp]} %{SYSLOGHOST:[system][auth][hostname]} userdel(?:\[%{POSINT:[system][auth][pid]}\])?: removed group '%{DATA:[system][auth][groupdel][name]}' owned by '%{DATA:[system][auth][group][owner]}'",
 
           "%{SYSLOGTIMESTAMP:[system][auth][timestamp]} %{SYSLOGHOST:[system][auth][hostname]} useradd(?:\[%{POSINT:[system][auth][pid]}\])?: new user: name=%{DATA:[system][auth][user][add][name]}, UID=%{NUMBER:[system][auth][user][add][uid]}, GID=%{NUMBER:[system][auth][user][add][gid]}, home=%{DATA:[system][auth][user][add][home]}, shell=%{DATA:[system][auth][user][add][shell]}$",
-  
+
           "%{SYSLOGTIMESTAMP:[system][auth][timestamp]} %{SYSLOGHOST:[system][auth][hostname]} userdel(?:\[%{POSINT:[system][auth][pid]}\])?: delete user '%{WORD:[system][auth][user][del][name]}'$",
 
           "%{SYSLOGTIMESTAMP:[system][auth][timestamp]} %{SYSLOGHOST:[system][auth][hostname]} usermod(?:\[%{POSINT:[system][auth][pid]}\])?: add '%{WORD:[system][auth][user][name]}' to group '%{WORD:[system][auth][user][memberof]}'",
@@ -5596,7 +5586,7 @@ filter {
       }
     }
 
-    #ACL 
+    #ACL
     if [event_message] =~ /(\d+.\d+.\d+.\d+)/ {
       grok {
         match => {
@@ -5619,7 +5609,7 @@ filter {
 
       if ![src][locality] {
         mutate {
-          add_field => { "[src][locality]" => "public" } 
+          add_field => { "[src][locality]" => "public" }
         }
       }
     }
@@ -5707,7 +5697,7 @@ To avoid duplicating the same documents, e.g. if the collector receives the enti
                            target => "generated_id"
                            method => "SHA1"
                    }
-   
+
    ```
 
    - source - The name(s) of the source field(s) whose contents will be used to create the fingerprint
@@ -6001,7 +5991,7 @@ input {
         type => "naemon"
     }
 }
-    
+
 filter {
     if [type] == "naemon" {
         grok {
@@ -6016,7 +6006,7 @@ filter {
         }
     }
 }
-    
+
 output {
   # Single index
 #    if [type] == "naemon" {
@@ -6025,7 +6015,7 @@ output {
 #            index => "naemon-%{+YYYY.MM.dd}"
 #        }
 #    }
-   
+
   # Separate indexes
   if [type] == "naemon" {
     if "_grokparsefailure" in [tags] {
@@ -6051,12 +6041,12 @@ This Logstash plugin has an example of a complete configuration for integration 
 ```bash
 input {
   tcp {
-    port => 6868  
+    port => 6868
     host => "0.0.0.0"
     type => "perflogs"
   }
 }
-    
+
 filter {
   if [type] == "perflogs" {
     grok {
@@ -6086,7 +6076,7 @@ filter {
     }
   }
 }
-    
+
 output {
   if [type] == "perflogs" {
     elasticsearch {
@@ -6154,7 +6144,7 @@ Configuration steps:
     ```bash
     mkdir –p /etc/systemd/system/logstash.service.d
     vi /etc/systemd/system/logstash.service.d/logstash.conf
-    
+
     [Service]
     Environment="ELASTICSEARCH_ES_USER=logserver"
     Environment="ELASTICSEARCH_ES_PASSWD=logserver"
@@ -6215,7 +6205,7 @@ Energy Logserver SQL lets you write queries in SQL rather than the Query domain-
 ### SIEM Examples
 Use SQL query to get security related data:
 
-#### Example 1: Check number of failed login attemps 
+#### Example 1: Check number of failed login attemps
 
 Query:
 
@@ -6232,12 +6222,12 @@ Result:
 1	1329
 ```
 
-#### Example 2: Gather host data from different sources in one place using *JOIN*  
+#### Example 2: Gather host data from different sources in one place using *JOIN*
 
 Query:
 
 ```sql
-SELECT syslog.host.ip, syslog.host.name, zeek.server_addr, zeek.mac 
+SELECT syslog.host.ip, syslog.host.name, zeek.server_addr, zeek.mac
 FROM syslog-2024.02.23 syslog JOIN stream-zeek-2024.02.23 zeek ON zeek.server_addr = syslog.host.ip
 ```
 Result:
@@ -6251,13 +6241,13 @@ Result:
 	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
 ```
 
-#### Example 3: See MAC addresses and their assigned IP addresses: 
+#### Example 3: See MAC addresses and their assigned IP addresses:
 
 Query:
 
 ```
 
-POST /_plugins/_sql 
+POST /_plugins/_sql
 {
   "query" : "SELECT mac, client_addr FROM stream-zeek-2024.02.20 WHERE netflow.zeek.type ='dhcp'"
 }
@@ -6295,7 +6285,7 @@ Result:
     }
 ```
 
-#### Example 4: Check total number of warnings from *syslog*: 
+#### Example 4: Check total number of warnings from *syslog*:
 
 Query:
 
@@ -6312,13 +6302,13 @@ warnings_total
 429822
 ```
 
-#### Example 5: Check number of failed login attemps for every client: 
+#### Example 5: Check number of failed login attemps for every client:
 
 Query:
 
 ```sql
-SELECT sys.client.ip, COUNT(*) AS failed_login_attempts FROM syslog-2024.02.23 sys 
-WHERE  postfix_message = "SASL LOGIN authentication failed: CGZFzc3evxmQ6" 
+SELECT sys.client.ip, COUNT(*) AS failed_login_attempts FROM syslog-2024.02.23 sys
+WHERE  postfix_message = "SASL LOGIN authentication failed: CGZFzc3evxmQ6"
 GROUP BY sys.client.ip
 ```
 
@@ -6417,7 +6407,7 @@ Sends an SQL/PPL query to the SQL plugin. You can pass the format for the respon
 ###### Example request
 
 ```json
-POST /_plugins/_sql 
+POST /_plugins/_sql
 {
   "query" : "SELECT * FROM accounts"
 }
@@ -6717,7 +6707,7 @@ The response contains all the fields that a query without `fetch_size` would con
 To fetch subsequent pages, use the `cursor` from the previous response:
 
 ```json
-POST /_plugins/_sql 
+POST /_plugins/_sql
 {
    "cursor": "d:eyJhIjp7fSwicyI6IkRYRjFaWEo1UVc1a1JtVjBZMmdCQUFBQUFBQUFBQU1XZWpkdFRFRkZUMlpTZEZkeFdsWnJkRlZoYnpaeVVRPT0iLCJjIjpbeyJuYW1lIjoiZmlyc3RuYW1lIiwidHlwZSI6InRleHQifSx7Im5hbWUiOiJsYXN0bmFtZSIsInR5cGUiOiJ0ZXh0In1dLCJmIjo1LCJpIjoiYWNjb3VudHMiLCJsIjo5NTF9"
 }
@@ -6760,7 +6750,7 @@ The last page of results has only `datarows` and no `cursor`. The `cursor` conte
 To explicitly clear the cursor context, use the `_plugins/_sql/close` endpoint operation:
 
 ```json
-POST /_plugins/_sql/close 
+POST /_plugins/_sql/close
 {
    "cursor": "d:eyJhIjp7fSwicyI6IkRYRjFaWEo1UVc1a1JtVjBZMmdCQUFBQUFBQUFBQU1XZWpkdFRFRkZUMlpTZEZkeFdsWnJkRlZoYnpaeVVRPT0iLCJjIjpbeyJuYW1lIjoiZmlyc3RuYW1lIiwidHlwZSI6InRleHQifSx7Im5hbWUiOiJsYXN0bmFtZSIsInR5cGUiOiJ0ZXh0In1dLCJmIjo1LCJpIjoiYWNjb3VudHMiLCJsIjo5NTF9"
 }'
@@ -6779,7 +6769,7 @@ You can use the `filter` parameter to add more conditions to the Energy Logserve
 The following SQL query returns the names and account balances of all customers. The results are then filtered to contain only those customers with less than $10,000 balance.
 
 ```json
-POST /_plugins/_sql/ 
+POST /_plugins/_sql/
 {
   "query" : "SELECT firstname, lastname, balance FROM accounts",
   "filter" : {
@@ -6831,7 +6821,7 @@ The response contains the matching results:
 You can use the Explain API to see how this query is executed against Energy Logserver:
 
 ```json
-POST /_plugins/_sql/_explain 
+POST /_plugins/_sql/_explain
 {
   "query" : "SELECT firstname, lastname, balance FROM accounts",
   "filter" : {
@@ -6891,7 +6881,7 @@ You can use the `parameters` field to pass parameter values to a prepared SQL qu
 The following explain operation uses an SQL query with an `age` parameter:
 
 ```json
-POST /_plugins/_sql/_explain 
+POST /_plugins/_sql/_explain
 {
   "query": "SELECT * FROM accounts WHERE age = ?",
   "parameters": [{
@@ -9449,8 +9439,8 @@ GROUP BY department;
 You can specify the column number to aggregate on in the `GROUP BY` clause. The column number is determined by the column position in the `SELECT` clause. For example, the following query is equivalent to the query above. It returns the department numbers and the total sales for each department. It groups the results by the first column of the result set, which is `department`:
 
 ```sql
-SELECT department, sum(sales) 
-FROM employees 
+SELECT department, sum(sales)
+FROM employees
 GROUP BY 1;
 ```
 
@@ -9487,8 +9477,8 @@ GROUP BY 1;
 You can use an expression in the `GROUP BY` clause. For example, the following query returns the average sales for each year:
 
 ```sql
-SELECT year(sale_date), avg(sales) 
-FROM employees 
+SELECT year(sale_date), avg(sales)
+FROM employees
 GROUP BY year(sale_date);
 ```
 
@@ -9533,8 +9523,8 @@ You can use aggregate expressions in the `SELECT` clause either directly or as p
 The following query returns the average sales for each department:
 
 ```sql
-SELECT department, avg(sales) 
-FROM employees 
+SELECT department, avg(sales)
+FROM employees
 GROUP BY department;
 ```
 
@@ -9571,8 +9561,8 @@ GROUP BY department;
 The following query calculates the average commission for the employees of each department as 5% of the average sales:
 
 ```sql
-SELECT department, avg(sales) * 0.05 as avg_commission 
-FROM employees 
+SELECT department, avg(sales) * 0.05 as avg_commission
+FROM employees
 GROUP BY department;
 ```
 
@@ -9609,8 +9599,8 @@ GROUP BY department;
 The following query calculates the average commission amount for each department. First it calculates the commission amount for each `sales` value as 5% of the `sales`. Then it determines the average of all commission values:
 
 ```sql
-SELECT department, avg(sales * 0.05) as avg_commission 
-FROM employees 
+SELECT department, avg(sales * 0.05) as avg_commission
+FROM employees
 GROUP BY department;
 ```
 
@@ -9682,8 +9672,8 @@ The following table describes how various forms of the `COUNT` function operate.
 For example, the following query returns the count of sales for each year:
 
 ```sql
-SELECT year(sale_date), count(sales) 
-FROM employees 
+SELECT year(sale_date), count(sales)
+FROM employees
 GROUP BY year(sale_date);
 ```
 
@@ -14776,3 +14766,48 @@ List of automation nodes:
 - Zoho CRM
 - Zoom
 - Zulip
+
+## Cooperation of logserver and antivirus program
+
+Energy Logserver utilizes a high disk I/O throughput for its typical indexing tasks. Specifically, disk write operations are highly intensive. These I/O writes can conflict with any product that installs a driver intermediary between our software and the operating system, such as antivirus software that scans when the application accesses mass storage.
+
+When running Energy Logserver or its component on a computer with antivirus software installed, it is necessary to exclude all Energy software processes, including directories such as the installation directory, from any kind of scanning when accessing application resources.
+	
+**Directories to exclude:**
+-        /usr/share/elasticsearch
+- 		 /usr/share/kibana
+- 		 /usr/share/logstash
+- 		 /var/lib/kibana
+- 		 Data directory (default /var/lib/elasticsearch )
+- 		 /etc/elasticsearch
+- 		 /etc/kibana
+- 		 /etc/logstash
+- 		 /var/log/elasticsearch
+- 		 /var/log/kibana
+- 		 /var/log/logstash
+- 		 Kibana archive directory (default /usr/share/kibana/plugins/archive/archives/ )
+- 		 /opt/ai
+- 		 /opt/alert
+- 		 /opt/cerebro
+- 		 /opt/e-doc
+- 		 /opt/intelligence
+- 		 /opt/license-service
+- 		 /opt/plugins
+- 		 /opt/skimmer
+- 		 /opt/wiki
+- 		 Elasticsearch temp directory
+- 		 /var/ossec
+		
+**Exclude processes related to :**
+	
+- 		 Elasticsearch
+- 		 java
+- 		 Logstash
+- 		 node
+- 		 kibana
+- 	     alert
+- 		 License-service
+- 		 Wazuh-manager
+- 		 Cerebro
+- 		 E-doc
+- 		 Intelligence

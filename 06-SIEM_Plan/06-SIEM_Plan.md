@@ -442,6 +442,23 @@ The Webhook connector send a POST or PUT request to a web service. You can use  
 - `Static Payload:` The static payload of the request.
 - `Payload:` The payload of the request.
 
+To enable `https`  add the following variables to the alerter configuration file `/opt/alert/config.yaml`:
+ - `webhook_verify_ssl` - enable certificate verification (default: false),
+ - `webhook_ca` - path to CA file that may contain multiple CAs (default: none). Will not be used as long as `webhook_verify_ssl: true`,
+ - `webhook_key` - path to the client key file (default: none),
+ - `webhook_cert` - path to the client certificate file (default: none).
+
+Both the certificate and the client key must be provided, otherwise, neither will be used.
+
+   Example usage:
+
+   ```yaml
+    webhook_verify_ssl: true
+    webhook_ca: /etc/elasticsearch/ssl/rootCA.crt
+    webhook_cert: /etc/elasticsearch/ssl/clientCert.crt
+    webhook_key: /etc/elasticsearch/ssl/clientKey.key
+   ```
+
 #### Slack
 
 Slack alerter will send a notification to a predefined Slack channel. The body of the notification is formatted the same as with other alerters.

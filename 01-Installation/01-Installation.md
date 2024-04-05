@@ -108,6 +108,11 @@
        <td class="first last">TCP</td>
        <td class="first last">Wiki GUI</td>
      </tr>
+    <td>GUI</td>
+    <td>License Service</td>
+    <td>9000</td>
+    <td>TCP</td>
+    <td>Manage files, services and pipelines.</td>
    </tbody>
    </table>
 
@@ -134,12 +139,12 @@ The installation process:
 - run installation script with interactive install command \
    `./install.sh -i`
 
-During interactive installation you will be ask about following tasks:  
+During interactive installation you will be ask about following tasks:
 
-- install & configure Logstash with custom  Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;  
-- install the  Energy Logserver Client Node, as well as the other client-node dependencies;  
-- install the  Energy Logserver Data Node, as well as the other data-node dependencies;  
-- load the  Energy Logserver custom dashboards, alerts and configs;  
+- install & configure Logstash with custom  Energy Logserver Configuration - like Beats, Syslog, Blacklist, Netflow, Wazuh, Winrm, Logtrail, OP5, etc;
+- install the  Energy Logserver Client Node, as well as the other client-node dependencies;
+- install the  Energy Logserver Data Node, as well as the other data-node dependencies;
+- load the  Energy Logserver custom dashboards, alerts and configs;
 
 ### Non-interactive installation mode using "install.sh"
 
@@ -205,7 +210,7 @@ If everything went correctly, we should see 100% allocated shards in  cluster he
 
 The `install.sh` script also contains functions for collecting basic information about the system environment - such information can be helpful in the support process or troubleshooting. Note that you can redirect output (`STDOUT`) to external file.
 
-Example:  
+Example:
 
 `./install.sh -s > system_report.txt`
 
@@ -214,18 +219,18 @@ Example:
 Run `install.sh --help` to see information about builtin commands and options.
 
 ```bash
-Usage: install.sh {COMMAND} {OPTIONS}  
+Usage: install.sh {COMMAND} {OPTIONS}
 
-COMMAND is one of:  
-    -i|install                  Run Energy Logserver installation wizard.  
-    -n|noninteractive           Run Energy Logserver installation in non interactive mode.  
-    -u|upgrade                  Update Energy Logserver packages.  
-    -s|systeminfo               Get basic system information report.  
+COMMAND is one of:
+    -i|install                  Run Energy Logserver installation wizard.
+    -n|noninteractive           Run Energy Logserver installation in non interactive mode.
+    -u|upgrade                  Update Energy Logserver packages.
+    -s|systeminfo               Get basic system information report.
 
-OPTIONS if one of:  
-    -v|--verbose                Run commands with verbose flag.  
-    -d|--data                   Select data node installation for   non interactive mode.  
-    -c|--client                 Select client node installation for non interactive mode.  
+OPTIONS if one of:
+    -v|--verbose                Run commands with verbose flag.
+    -d|--data                   Select data node installation for   non interactive mode.
+    -c|--client                 Select client node installation for non interactive mode.
 ```
 
 ### Post installation steps
@@ -360,7 +365,7 @@ To update bad reputation lists and to create `.blacklists` index, you have to ru
 
    ```bash
    curl -sS -u logserver:logserver -XGET '127.0.0.1:9200/_cat/indices/.blacklists?s=index&v'
-   
+
    health status index       uuid                   pri rep docs.count docs.deleted store.size pri.store.size
    green  open   .blacklists Mld2Qe2bSRuk2VyKm-KoGg   1   0      76549            0      4.7mb          4.7mb
    ```
@@ -713,7 +718,7 @@ If you need to install Energy Logserver in non-default location, use the followi
    - Setup cluster in ${INSTALL_PATH}/etc/elasticsearch/elasticsearch.yml
 
    ```yml
-   discovery.zen.ping.unicast.hosts: [ "172.10.0.1:9300", "172.10.0.2:9300" ] 
+   discovery.zen.ping.unicast.hosts: [ "172.10.0.1:9300", "172.10.0.2:9300" ]
    ```
 
    - Redirect GUI to 443/tcp
@@ -739,7 +744,7 @@ To configure Energy Logserver so its services can be managed without root access
    %kibana ALL=/bin/systemctl start kibana.service
    %kibana ALL=/bin/systemctl restart kibana
    %kibana ALL=/bin/systemctl restart kibana.service
-   
+
    %elasticsearch ALL=/bin/systemctl status elasticsearch
    %elasticsearch ALL=/bin/systemctl status elasticsearch.service
    %elasticsearch ALL=/bin/systemctl stop elasticsearch
@@ -748,7 +753,7 @@ To configure Energy Logserver so its services can be managed without root access
    %elasticsearch ALL=/bin/systemctl start elasticsearch.service
    %elasticsearch ALL=/bin/systemctl restart elasticsearch
    %elasticsearch ALL=/bin/systemctl restart elasticsearch.service
-   
+
    %alert ALL=/bin/systemctl status alert
    %alert ALL=/bin/systemctl status alert.service
    %alert ALL=/bin/systemctl stop alert
@@ -757,7 +762,7 @@ To configure Energy Logserver so its services can be managed without root access
    %alert ALL=/bin/systemctl start alert.service
    %alert ALL=/bin/systemctl restart alert
    %alert ALL=/bin/systemctl restart alert.service
-   
+
    %logstash ALL=/bin/systemctl status logstash
    %logstash ALL=/bin/systemctl status logstash.service
    %logstash ALL=/bin/systemctl stop logstash
