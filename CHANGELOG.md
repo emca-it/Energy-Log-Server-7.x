@@ -7,6 +7,7 @@
 - Query management: identify and stop long running query
 - Introducting Network-Probe as mandatory Input Layer
 - Archive: checksum verification on demand
+- Empowered-AI: default AI forecasting rules 
 - License: GUI license upload with automatic distribution in cluster environment
 - Introducing "Status page": showing health check in case of system problem without ability to log in
 - Free space warning on status and login page
