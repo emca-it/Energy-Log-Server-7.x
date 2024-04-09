@@ -1,5 +1,56 @@
 # **CHANGELOG**
 
+## v7.4.3
+
+### NewFeatures
+
+- Query management: identify and stop long running query
+- Introducting Network-Probe as mandatory Input Layer
+- Empowered-AI: Real Time processing 
+- Archive: checksum verification on demand
+- License: GUI license upload with automatic distribution in cluster environment
+- Introducing "Status page": showing health check in case of system problem without ability to log in
+- Free space warning on status and login page
+- Free space protection: Enabling Watermarks to keep system running in case of free space issue
+- Audit: enchancements to audit more GUI actions
+
+### Improvements
+
+- Alerts - Blacklist: wrong file name support
+- Alerts: Risk key can be set on non default field - SOAR integration
+- Alerts: secure und insecure webhook support
+- Archive: Date format change to epoch in milisec
+- Input layer uses Logstash-OSS 7.17.18
+- license-service: dedicated API
+- Skimmer: self monitoring of free space on cluster nodes
+- Skimmer: self monitoring of license API status
+- Support for Beats OSS Agents 7.17.18
+
+### BugFixes
+
+- Alerts: cannot select more than one index-pattern when creating/editing a rule
+- Alerts: empty role list when creating a rule without the admin role
+- Alerts: Energy SOAR method wrong WYSIWYG behavior
+- Alerts: errors when creating risks if any already exist
+- Alerts: Manual Incident: user without admin role cannot create an incident
+- Alerts: Manual Incident: user without admin role cannot see his incident
+- Alerts: notifications are not sent as a valid HTML email
+- Alerts: rule name change did not remove the old rule
+- Archive: partial restore
+- Archive: preparing data for archiving
+- Audit: exclusions on _nodes and _stats do not work
+- Audit: missing information about operations on users and roles
+- Audit: missing query content - if selected
+- Intelligence - view in discover: application not found
+- license-service: memory limitations
+- Login: AD login exception for users without mapped roles
+- Login: SSO login duplicate users
+- Reports: short link when creating docx report
+- SIEM Engine: Agent/Client updated to v4.5.4
+- SIEM Engine: permission denied after upgrade
+- status_page: missing branding
+- xlsx-import: fixing bug when writing more than 500 documents
+
 ## v7.4.2
 
 ### NewFeatures

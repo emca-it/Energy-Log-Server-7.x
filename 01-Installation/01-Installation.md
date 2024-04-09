@@ -238,7 +238,7 @@ OPTIONS if one of:
 - configure  Elasticsearch cluster settings
 
   ```bash
-  vi /etc/elaticserach/elasticsearch.yml
+  vi /etc/elasticsearch/elasticsearch.yml
   ```
 
   - add all IPs of Elasticsearch node in the following directive:
