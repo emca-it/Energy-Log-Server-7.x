@@ -35,6 +35,11 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 - Move required directives from `/etc/kibana/kibana.yml` to `/etc/kibana/kibana.yml.rpmnew` and replace `kibana.yml`.
 - Clear browser cache on client side.
 
+**LICENSE-SERVICE**
+
+- If required, configure `elasticsearch_connection` in `/opt/license-service/license-service.conf`.
+- Old configuration should be in `/opt/license-service/license-service.conf.rpmsave`. Do not replace `license-service.conf` with `license-service.conf.rpmsave`
+
 ## Upgrade from version 7.4.1
 
 ### Preferred Upgrade steps
