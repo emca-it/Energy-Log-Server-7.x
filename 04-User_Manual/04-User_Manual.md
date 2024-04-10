@@ -2620,6 +2620,68 @@ Fill in the remaining fields following the convention used for other alert rules
 
 ![](/media/media/multi_difference_alert1.png)
 
+### Default AI Forecasting Rules
+
+In today's rapidly evolving world of technology, the ability to predict and respond to potential IT threats and challenges is crucial for maintaining operational continuity and system security. Our new functionality, **Default Forecasting Rules** within the *Empowered AI* module, has been designed to meet these challenges by offering advanced analysis and forecasting capabilities in the context of syslog data.
+
+The goal of our functionality is simple yet ambitious: to automatically deploy a set of default forecasting rules for the syslog index right after the system starts up. This enables users to immediately make use of advanced analytical tools that help in identifying and responding to data anomalies, potential security threats, and other significant patterns that may impact the system and organizational operations.
+
+By using **Default Forecasting Rules**, users can:
+
+- **Quickly start analyzing data**: Default rules eliminate the need for manual system configuration, allowing users to focus on the analysis and interpretation of data.
+- **Increase the effectiveness of threat detection**: Applying advanced AI algorithms and machine learning in forecasting allows for faster and more precise identification of potential threats.
+- **Improve operational efficiency**: Automating the forecasting process saves time and resources while increasing overall operational efficiency.
+
+Our functionality is designed with ease of use and accessibility in mind, ensuring that organizations of any size or industry can leverage the power of predictive analytics to optimize their IT operations.
+
+### Step-by-Step Guide: How to Use Default Forecasting Rules in the Empowered AI Module
+
+This guide shows how to quickly and easily start using default forecasting rules in our Empowered AI module. By following these simple steps, you will be able to effectively utilize the power of AI for data analysis and forecasting.
+
+#### Prerequisites
+
+Ensure you are logged into the application and have the appropriate permissions to use the Empowered AI module.
+
+#### Step 1: Go to the Empowered AI Module in the Application
+
+Find and open the Empowered AI module in the application. You can do this by selecting the appropriate option in the main menu.
+
+![GoToEmpoweredAIModule](/media/media/go_to_empowered_ai.png)
+
+#### Step 2: Select One of the Default Forecasting Rules
+
+Upon entering the Empowered AI module, you will see a list of available forecasting rules. Select the one that best fits your needs by clicking on it.
+
+![SelectForecastingRule](/media/media/select_default_rule.png)
+
+#### Step 3: Run Forecasting Rule
+
+With the selected rule, click the "run" button to start the data analysis process. This may take some time, depending on the amount of data to be processed.
+
+![LaunchForecasting](/media/media/run_rule.png)
+
+#### Step 4: Check the Results
+
+After forecasting is complete, the results will be displayed in the module. Review them to understand potential patterns and dependencies in the data.
+
+![CheckForecastingResults](/media/media/check_results.png)
+
+#### FAQ
+
+**Q: How often can I run forecasting?**  
+A: Forecasting can be run as often as needed. However, keep in mind that each forecasting run is a computational process and may take some time.
+
+**Q: Can I modify the default forecasting rules?**  
+A: Yes, default rules can be modified.
+
+#### Troubleshooting
+
+- **Problem: Forecasting is not launching.**  
+Solution: Ensure you have the appropriate permissions and that all required data is correctly loaded into the system.
+
+- **Problem: Forecasting results seem to be inaccurate.**  
+Solution: Check if the selected forecasting rule is suitable for the type and character of your data. Consider modifying the rule for better alignment.
+
 ## Archive
 
 The Archive module allows you to create compressed data files ([zstd](https://github.com/facebook/zstd)) from Elasticsearch indices. The archive checks the age of each document in the index and if it is older than defined in the job, it is copied to the archive file.
