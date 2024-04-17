@@ -1,4 +1,4 @@
-# Upgrade guide
+# Upgrades
  You can check the current version using the API command:
 
 ```bash

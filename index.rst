@@ -15,31 +15,31 @@ Energy Logserver 7.x User Guide
 .. toctree::
    :maxdepth: 7
 
-   03-Upgrade/03-Upgrade.md
+   03-User_Manual/04-User_Manual.md
 
 .. toctree::
    :maxdepth: 7
 
-   04-User_Manual/04-User_Manual.md
+   04-Log_Management_Plan/05-Log_Management_Plan.md
 
 .. toctree::
    :maxdepth: 7
 
-   05-Log_Management_Plan/05-Log_Management_Plan.md
+   05-SIEM_Plan/06-SIEM_Plan.md
 
 .. toctree::
    :maxdepth: 7
 
-   06-SIEM_Plan/06-SIEM_Plan.md
+   06-Network_Probe/07-Network_Probe.md
 
 .. toctree::
    :maxdepth: 7
 
-   07-Network_Probe/07-Network_Probe.md
+   07-Upgrade/03-Upgrade.md
 
 .. toctree::
    :maxdepth: 7
-
+   
    08-Troubleshooting/08-Troubleshooting.md
 
 .. toctree::
