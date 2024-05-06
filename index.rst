@@ -40,6 +40,7 @@ Energy Logserver 7.x User Guide
 .. toctree::
    :maxdepth: 7
 
+
    08-Troubleshooting/08-Troubleshooting.md
 
 .. toctree::

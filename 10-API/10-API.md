@@ -1195,7 +1195,7 @@ Result:
 
 ### Reload License API
 
-After changing license files in the Elasticsearch install directory `/usr/share/elasticsearch` (for example if the current license was end) , you must load new license using the following command.
+After changing license files in the Elasticsearch install directory `/usr/share/elasticsearch/license/` (for example if the current license was end) , you must load new license using the following command.
 
 Method: POST
 
