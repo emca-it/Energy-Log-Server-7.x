@@ -2,6 +2,25 @@
 
 The Network Probe plugin allows you to manage and control probes distributed among many hosts, as well as manage logstash's probes.
 
+### About
+
+<span style="font-size:1.3em;"> **Network Probe has built-in tools for capturing and analyzing network traffic (Network Security Monitoring):** </span>
+
+#### IDS and Full Packet Capture
+
+Network probe provides a high performance Network IDS, IPS and Network Security Monitoring engine.
+It allows you to capture anomalies and log network traffic alarms based on defined rules.
+It has the ability to save PCAP of all detected packets.
+
+#### NDR
+
+Network probe acts as a passive network traffic analyzer. Many operators use Network Probe as a network security monitor (NSM) to support investigations of suspicious or malicious activity. It supports a wide range of traffic analysis tasks beyond the security domain, including performance measurement and troubleshooting.
+The first benefit a new user derives from Network Probe NDR is the extensive set of logs describing network activity. These logs include not only a comprehensive record of every connection seen on the wire, but also application-layer transcripts. These include all HTTP sessions with their requested URIs, key headers, MIME types, and server responses; DNS requests with replies; SSL certificates; key content of SMTP sessions; and much more. By default, NDR writes all this information into well-structured tab-separated or JSON log files suitable for post-processing with external software. Users can also choose to have external databases or SIEM products consume, store, process, and present the data for querying.
+
+#### Netflow
+
+Netflow collector is a set of multi-flow accounting feature: it is ready index for NetFlow v5/v9, IPFIX and sFlow packets on one or more interfaces (IPv4 and IPv6). Other than acting as a collector, Network Probe can also replicate to 3rd party collectors. It can account, classify, aggregate, replicate and export forwarding-plane data, i.e. IPv4 and IPv6 traffic
+
 ### System Requirements
 
 
