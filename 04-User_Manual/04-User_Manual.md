@@ -1068,7 +1068,13 @@ object, and the Save button to save the selection.
     ```yml
     http_auth: logserver:"new_logserver_password
     ```
+    - Update the password in the logstash keystore
 
+    ```yml
+    /usr/share/logstash/bin/logstash-keystore --path.settings /etc/logstash add logserver_pass
+    logstash_pass already exists. Overwrite ? [y/N] y
+
+    ```
 2. Account **Intelligence**
 
    - Update */opt/ai/bin/conf.cfg*
@@ -1111,6 +1117,13 @@ object, and the Save button to save the selection.
       }
      }
      ```
+   - Update the password in the logstash keystore
+
+    ```bash
+    /usr/share/logstash/bin/logstash-keystore --path.settings /etc/logstash add logstash_pass
+    logstash_pass already exists. Overwrite ? [y/N] y
+    ```
+
 
 6. Account **License**
 
