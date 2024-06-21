@@ -41,25 +41,30 @@ Energy Logserver 7.x User Guide
    :maxdepth: 7
 
 
-   08-Troubleshooting/08-Troubleshooting.md
+   08-Empowered_AI/08-Empowered_AI.md
 
 .. toctree::
    :maxdepth: 7
 
-   09-Monitoring/09-Monitoring.md
+   09-Troubleshooting/09-Troubleshooting.md
 	   
 .. toctree::
    :maxdepth: 7
 
-   10-API/10-API.md
+   10-Monitoring/10-Monitoring.md
 
 .. toctree::
    :maxdepth: 7
 
-   11-Integration/11-Integration.md
+   11-API/11-API.md
 
 .. toctree::
    :maxdepth: 7
 
-   12-Relase_Notes/12-Relase_Notes.md
+   12-Integration/12-Integration.md
+   
+.. toctree::
+   :maxdepth: 7
+
+   13-Release_Notes/13-Release_Notes.md
 
