@@ -4,8 +4,50 @@
 ```bash
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
-## Upgrade from version 7.4.2
+## Upgrade from version 7.4.3
 
+## Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+### Required post upgrade from version 7.4.3
+
+**Breaking and major changes**
+
+- Network-Probe replaces Logstash: follow the steps below.
+
+**LOGSTASH:**
+
+- Backup `/etc/logstash`
+- Uninstall old version: `# yum versionlock delete logstash-oss-7.17.11-1 && yum remove logstash-oss && rm -rf /etc/logstash /var/lib/logstash /usr/share/logstash`
+- Install current Input Layer from fresh `# ./install.sh -i` - Network-Probe Section
+- Restore from backup custom pipelines to `/etc/logstash/conf.d`
+
+**ELASTICSEARCH**
+
+- `./install.sh` checks indexes compatibility before upgrading, if any problem exist please contact product support to guide you through the upgrade process.
+- Move required directives from `/etc/elasticsearch/elasticsearch.yml` to `/etc/elasticsearch/elasticsearch.yml.rpmnew` and replace `elasticsearch.yml`.
+
+**KIBANA**
+
+- Move required directives from `/etc/kibana/kibana.yml` to `/etc/kibana/kibana.yml.rpmnew` and replace `kibana.yml`.
+- Clear browser cache on client side.
+
+**LICENSE-SERVICE**
+
+- If required, configure `elasticsearch_connection` in `/opt/license-service/license-service.conf`.
+- Old configuration should be in `/opt/license-service/license-service.conf.rpmsave`. Do not replace `license-service.conf` with `license-service.conf.rpmsave`
+
+**EMPOWERED-AI**
+
+- Backup `.intelligence_models`, `.intelligence_rule_configuration` indices - if needed
+- Stop services: `# systemctl stop intelligence intelligence-scheduler`
+- Delete old indices: `# curl -XDELETE '127.0.0.1:9200/.intelligence_rule_configuration,.intelligence_models,.intelligence_results' -u logserver`
+- Start services: `# systemctl start intelligence intelligence-scheduler`
+
+
+## Upgrade from version 7.4.2
 
 ### Preferred Upgrade steps
 

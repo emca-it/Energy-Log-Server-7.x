@@ -1,5 +1,47 @@
 # **CHANGELOG**
 
+## v7.5.0
+
+### NewFeatures
+
+- Empowered AI - anomaly detection in text message - rare words probability
+- Empowered AI - anomaly detection in numbers
+- Empowered AI - anomaly detection in multi dimention numbers
+- Empowered AI - Root Cause tracing based on knowledge model
+- Empowered AI - Relations Mining builds knowledge model
+- Empowered AI - unsupervised data clustering
+- Empowered AI - forecasting alerting method
+- Empowered AI - AI input for network probe
+- Empowered AI - realtime processing for AI rules
+- Empowered AI - Model Library - save, store and upload AI models
+- Empowered AI - Model Library - reuse and retraint saved models
+- Empowered AI - Text Anomaly default alerts
+- Empowered AI - create manual incident based on AI results
+- Empowered AI - easy create alerts tab from AI rules config
+- Empowered AI - progress bar for started rules
+
+### BugFixes
+
+- Alert: added custom arguments to Energy SOAR integration
+- Alert: added support for external_link to Energy SOAR integration
+- Alert: groups management
+- Alert: missing url in alert_text arguments of the Energy SOAR method
+- Archive: clearing issue with empty with non existing file metadata
+- Archive: scrolling in case of visible warnings
+- CMDB: data fetching at the plugin startup
+- Integrations: built-in templates now use wildcards
+- SIEM Engine: improved alias refresh synchronization
+- Network Probe: deleting config files and handling deleted files from disk
+- Network Probe: filtering of probe's statuses has been fixed
+- Network Probe: fixed when probes' services statuses were unavailable
+- Network Probe: layout improvements and readability refinements
+- Network Probe: updated log messages to be more comprehensible
+- Network Probe: fixed permissions problem with external services
+- Reports: improved handling of time fields
+- SIEM Engine: improved RBAC mapping existence verification for non-admin users
+- SIEM Engine: updated to v4.7.4 due cve [CVE-2023-42463, CVE-2024-32038]
+- Task Management: improved filtering tasks by their duration
+
 ## v7.4.3
 
 ### NewFeatures
