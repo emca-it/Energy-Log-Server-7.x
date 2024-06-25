@@ -36,7 +36,7 @@ Query Parameters:
 
 - `force` (optional)
 
-  (boolean) Overwrite any existing objects on id conflict.
+  (boolean) Overwrite any existing objects on id conflict
   
 - `exclude` (optional)
 

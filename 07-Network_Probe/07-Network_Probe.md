@@ -289,7 +289,7 @@ In the table, we can also see warnings in the form of yellow warning icons in th
 ###### Filtering and searching
 
 Files can be filtered based on three parameters:
-- `Valid`/`Invalid` - parsing correctness and if latest revision is up to date
+- `Valid`/`Invalid` - parsing correctness
 - `Enabled`/`Disabled` - current operating status
 - `Directory` - the directory in which they are located
 
@@ -298,10 +298,6 @@ However, in addition to filtering, the search functionality based on its content
 In the example below, a directory filter was used and all files containing the "5044" phrase entered in the search bar were found.
 
 ![](/media/media/07_network_probe/network_probes_page/files/files_filtering.png)
-
-The next example shows the use of the first filter described. After filtering, the table contains only files whose current state is incorrect - either they have invalid content or their revision is out of date.
-
-![](/media/media/07_network_probe/network_probes_page/files/files_filtering_invalid.png)
 
 ###### Create file
 
@@ -343,14 +339,6 @@ The warning icon can be clicked to review the error message and correct it if po
 
 In addition to the previously described `.conf` files, when `.yml` or `.yaml` files are created/edited, the built-in editor checks the correctness of the entered text, signaling any errors. If the file is incorrect, any creation or editing of the file will be blocked until the errors are corrected.
 
-###### Files' revision consistency
-
-If a file managed by the service is accidentally deleted from the system or any inconsistencies are detected between the updates of the monitored files, the following warning will be displayed:
-
-![](/media/media/07_network_probe/network_probes_page/files/files_revision_warning.png)
-
-The warning icon can be clicked to recreate the file and restore it to the system.
-
 ###### Files re-registration
 
 Files can be re-registered using the "Re-register" button. Using this functionality refreshes all monitored files, while simultaneously parsing pipeline configuration files.
@@ -366,14 +354,6 @@ To check probe's logs:
   ```
 
 By default, only errors and warnigs are logged. To change that, and enable for example `debug` level, set `log_level: DEBUG` in the `/opt/license-service/license-service.conf` file.
-
-#### Another operation in progress
-
-The message shown below may be encountered during actions performed on both files and pipelines.
-
-![](/media/media/07_network_probe/troubleshooting/another_operation_error.png)
-
-It means that the system is already performing some actions, and in order to ensure the consistency of files, it is necessary to wait until previous actions are completed. After waiting a while, try again to perform the desired action and it should succeed without any problem.
 
 #### Restarting the probe
 
