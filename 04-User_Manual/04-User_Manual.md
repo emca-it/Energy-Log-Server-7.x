@@ -2601,7 +2601,7 @@ The Archive Search module can search archive files for the specific content and 
    - `Select range of listed archives` - files that matches selected range will be displayed in the list (default **last 14 days**)
    - `Search text` - field for entering the text to be searched
    - `File name` - list of archive files that will be searched
-   - `Enable searching in encrypted archives` - enable option to search in encrypted archives
+   - `Enable searching in encrypted archives` - enable option to search in encrypted archives.
 
 ![](/media/media/04_archive_create-search-task.png)
 
