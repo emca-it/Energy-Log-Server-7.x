@@ -80,6 +80,22 @@ Netflow collector is a set of multi-flow accounting feature: it is ready index f
 
     Moreover, as mentioned in the last row, in order for managed integrations to work properly, it is necessary to open and maintain the ports they use.
 
+
+### Installation
+
+The installation process:
+
+- unpack the archive containing the installer
+`tar xjf energy-logserver-${product-version}.x.x86_64.tar.bz2`
+- copy license to installation directory \
+  `cp es_*.* install/`
+- go to the installation directory (you can run install.sh script from any location)
+- run installation script with interactive install command \
+   `./install.sh -i`
+
+During interactive installation you will be ask about network probe installation. Confirm network probe installation by writing 'yes'
+
+
 ### Licensing
 
 The Network Probe feature is available only for admin users and when it is covered by the license.
