@@ -1,4 +1,4 @@
-# **CHANGELOG** 
+# **CHANGELOG**
 
 ## v7.5.0
 
