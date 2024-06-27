@@ -4,6 +4,83 @@
 
 `Empowered AI` is an ongoing project, continuously improved by a team of mathematicians, data scientists, and security analysts.
 
+## Table of Contents
+1. [AI Rules](#ai-rules)
+   - [Status](#status)
+   - [Actions](#actions)
+2. [Common Elements](#common-elements)
+   - [Settings and Configuration for All Analytical Use Cases](#settings-and-configuration-for-all-analytical-use-cases)
+   - [Step-by-Step Guide: How to Prepare Data and Input it into an Analytical Rule](#step-by-step-guide-how-to-prepare-data-and-input-it-into-an-analytical-rule)
+   - [Using Saved Searches in the Empowered AI Module](#using-saved-searches-in-the-empowered-ai-module)
+   - [Configuring the Analytical Rule](#configuring-the-analytical-rule)
+   - [Configuring the Scheduler](#configuring-the-scheduler)
+   - [Accessing the Performance Tab](#accessing-the-performance-tab)
+   - [Summary](#summary)
+   - [FAQ](#faq)
+   - [Troubleshooting](#troubleshooting)
+3. [Univariate Anomaly Detection](#univariate-anomaly-detection)
+   - [Step-by-Step Guide: How to Configure Univariate Anomaly Detection](#step-by-step-guide-how-to-configure-univariate-anomaly-detection)
+   - [Summary](#summary-1)
+   - [FAQ](#faq-1)
+   - [Troubleshooting](#troubleshooting-1)
+4. [Performance Tab for Univariate Anomaly Detection](#performance-tab-for-univariate-anomaly-detection)
+   - [Understanding the Performance Graph](#understanding-the-performance-graph)
+   - [Key Elements of the Performance Graph](#key-elements-of-the-performance-graph)
+   - [Interpreting the Graph](#interpreting-the-graph)
+   - [Using the Performance Graph](#using-the-performance-graph)
+   - [Summary](#summary-2)
+   - [FAQ](#faq-2)
+   - [Troubleshooting](#troubleshooting-2)
+5. [Multivariate Anomaly Detection](#multivariate-anomaly-detection)
+   - [Step-by-Step Guide: How to Configure Multivariate Anomaly Detection](#step-by-step-guide-how-to-configure-multivariate-anomaly-detection)
+   - [Summary](#summary-3)
+   - [FAQ](#faq-3)
+   - [Troubleshooting](#troubleshooting-3)
+6. [Performance Tab for Multivariate Anomaly Detection](#performance-tab-for-multivariate-anomaly-detection)
+   - [Visualizing Anomalies Over Time](#visualizing-anomalies-over-time)
+   - [Summary](#summary-4)
+   - [FAQ](#faq-4)
+   - [Troubleshooting](#troubleshooting-4)
+7. [Clustering](#clustering)
+   - [Step-by-Step Guide: How to Configure Clustering](#step-by-step-guide-how-to-configure-clustering)
+   - [Summary](#summary-5)
+   - [FAQ](#faq-5)
+   - [Troubleshooting](#troubleshooting-5)
+8. [Performance Tab for Clustering](#performance-tab-for-clustering)
+   - [Elbow Method and Optimal Number of Clusters](#elbow-method-and-optimal-number-of-clusters)
+   - [Cluster Quality Chart](#cluster-quality-chart)
+   - [Cluster Distribution Chart](#cluster-distribution-chart)
+   - [Benefits of the Cluster Distribution Chart](#benefits-of-the-cluster-distribution-chart)
+   - [Understanding the Clustering Result Examples](#understanding-the-clustering-result-examples)
+   - [Summary](#summary-6)
+   - [FAQ](#faq-6)
+   - [Troubleshooting](#troubleshooting-6)
+9. [Forecasting](#forecasting)
+   - [Step-by-Step Guide: How to Configure Forecasting](#step-by-step-guide-how-to-configure-forecasting)
+   - [Summary](#summary-7)
+   - [FAQ](#faq-7)
+   - [Troubleshooting](#troubleshooting-7)
+10. [Performance Tab for Forecasting](#performance-tab-for-forecasting)
+    - [Forecast vs Actual Data Chart](#forecast-vs-actual-data-chart)
+    - [Summary](#summary-8)
+    - [FAQ](#faq-8)
+    - [Troubleshooting](#troubleshooting-8)
+11. [Text Anomaly Detection](#text-anomaly-detection)
+    - [Key Features](#key-features)
+    - [Step-by-Step Guide: How to Use Key Features in Text Anomaly Detection](#step-by-step-guide-how-to-use-key-features-in-text-anomaly-detection)
+    - [Summary](#summary-9)
+    - [FAQ](#faq-9)
+    - [Troubleshooting](#troubleshooting-9)
+12. [Performance Tab for Text Anomaly Detection](#performance-tab-for-text-anomaly-detection)
+    - [Understanding the Performance Graphs](#understanding-the-performance-graphs)
+    - [Anomaly Detection Table](#anomaly-detection-table)
+    - [Distinct Anomaly List Table](#distinct-anomaly-list-table)
+    - [Summary](#summary-10)
+    - [FAQ](#faq-10)
+    - [Troubleshooting](#troubleshooting-10)
+13. [Default AI Rules](#default-ai-rules)
+
+
 ## AI Rules
 
 In the `Empowered AI`  section you will find a summary of the existing rules. At the top, you'll find the total number of rules and the number of scheduled and unscheduled rules. Here is the search field and buttons `Refresh rules list`  and `Create New Rule`  Below is the table. It contains `AI Rule Name`, `Search/Index Name`  -  data source, `Last Executed`  - date, `Last Modified` - date, selected `Use Case`,  `Schedule`  - scheduling frequency, `Status`  and `Action`  icons.
@@ -545,7 +622,7 @@ Proper data preparation and configuration of the forecasting model in the *Empow
 **Skipping Numerical Values**: Skip irrelevant numerical data during analysis.
     ![SkippingNumbers](/media/media/08_empowered_ai/activate_skip_numbers.png)
 
-#### Performance Tab for Text Anomaly Detection
+### Performance Tab for Text Anomaly Detection
 
 ##### Understanding the Performance Graphs
 
