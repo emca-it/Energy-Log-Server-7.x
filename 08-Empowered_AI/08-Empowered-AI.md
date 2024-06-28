@@ -85,7 +85,7 @@
 
 In the `Empowered AI`  section you will find a summary of the existing rules. At the top, you'll find the total number of rules and the number of scheduled and unscheduled rules. Here is the search field and buttons `Refresh rules list`  and `Create New Rule`  Below is the table. It contains `AI Rule Name`, `Search/Index Name`  -  data source, `Last Executed`  - date, `Last Modified` - date, selected `Use Case`,  `Schedule`  - scheduling frequency, `Status`  and `Action`  icons.
 
-![](/media/media/okno.png)
+![](/media/media/08_empowered_ai/rule_table.png)
 
 ### Status
 
