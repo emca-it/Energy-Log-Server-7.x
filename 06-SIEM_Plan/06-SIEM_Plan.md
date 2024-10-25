@@ -8335,11 +8335,11 @@ POST alert/_update/example_document_id
 }
 ```
 
-![](https://user-images.githubusercontent.com/42172770/209844235-390cf973-cda7-41e6-8ff1-5636ba87a75a.png)
+![](/media/media/alert1.png)
 
 You can get the corresponding document id in the discovery section.
 
-![](https://user-images.githubusercontent.com/42172770/209844638-2bb0b6fa-32d6-4430-bb6e-c2d4abef1db6.png)
+![](/media/media/alert2.png)
 
 ## Siem Module
 
@@ -9616,7 +9616,7 @@ Remember to restart the manager to apply the changes.
 
 You can also check the vulnerability dashboards to have an overview of your agents' status.
 
-![](https://user-images.githubusercontent.com/42172770/209840302-f405052b-d03e-430f-a56a-1d5882eaca8f.png)
+![](/media/media/image_vulnerability.png)
 
 ## Tenable.sc
 
