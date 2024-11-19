@@ -1,5 +1,62 @@
 # **CHANGELOG**
 
+## 7.6.0
+
+### NewFeatures
+
+- Energy Logserver SIEM LITE - Initial step into Cyber Security
+- MSSP license provides transparent view to licensed sources
+- Sources Management: identify each source activity
+- UBA: SIEM module for tracking the nature of the user's behaviour and its changes
+- UBA AI: predefinied AI rules to detect anomalies in user behavior
+- Login: Introducing a new user to manage the system's graphical interface: admin (disables logserver account)
+
+### Improvements
+
+- Alert: cross-field-correlation in Logical alert method
+- Alert: improved time tolerance for run_once option
+- Alert: mapping change to be able to search by rule name in alert_error indices
+- Audit: new audit selection - now includes all plugins by default
+- Archive: improved error handling and task resuming
+- Cerebro: HSTS header support
+- Config: configuration-backup.sh includes agent keys and siem-engine config file
+- Config: logserver-password-util.sh: new password management tool changes system passwords easly
+- Empowered AI: create rule with Saved Search or index pattern with query dsl
+- Empowered AI: aggregation preview for univariate rule
+- Empowered AI: improved model encryption
+- Integrations: Dell Avamar added to default integrations
+- Login: status-page link added to top menu
+- Skimmer: output addresses support lists of nodes for fault tolerance
+- Skimmer: support for URI schemes in config file, i.e. http, https
+- Skimmer: migrated to libcurl
+- Skimmer: updated to v1.0.25
+
+### BugFixes
+
+- Alert: adding a note to an incident doesn't work
+- Alert: long_term method does not work for objects
+- Cerebro: fix for permissions verification
+- Cerebro: limit on the used HEAP memory
+- Empowered AI: anomalies increase by zooming in on the graph
+- Empowered AI: cleared placeholder in text anomaly
+- Empowered AI: incorrect handling of state:storeInSessionStorage
+- Empowered AI: name change of the axis in the charts of univariate
+- Empowered AI: performance tab display error for large number of fields in multivariate
+- Empowered AI: rareness threshold does not fill in the scheduled model
+- SIEM Engine: incorrect verification when diskspace thresholds are not enabled
+- SIEM Engine: redirect loop after session expiration
+- SIEM Engine: the list of domains available for logging does not refresh after changing the authorization plugin settings
+- SIEM Engine: cluster does not start after disabling authorization plugin
+- SIEM Engine: filter error messages in AuthService
+- SIEM Engine: task of deleting old tokens now starts automatically
+- Network-Probe: pipeline details are now displayed curectly
+- Reports: banner with information about the expiring license or the diskspce visible on docx reports
+- Reports: fix for executing scheduled reports
+- Reports: visualization selection does not display all of them if there are more than 1000 of them
+- SIEM Engine: on_start inventories disabled by default
+- Task Management: show query duration
+- Task Management: show user matching similar query
+
 ## v7.5.0
 
 ### NewFeatures
