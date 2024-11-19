@@ -6,12 +6,12 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
 ## Upgrade from version 7.5.0
 
-## Preferred Upgrade steps
+### Preferred Upgrade steps
 
 1. Run upgrade script:
    - ./install.sh -u
 
-### Required post upgrade from version 7.5.0
+#### Required post upgrade from version 7.5.0
 
 **Breaking and major changes**
 
@@ -23,12 +23,12 @@ curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 
 ## Upgrade from version 7.4.3
 
-## Preferred Upgrade steps
+### Preferred Upgrade steps
 
 1. Run upgrade script:
    - ./install.sh -u
 
-### Required post upgrade from version 7.4.3
+#### Required post upgrade from version 7.4.3
 
 **Breaking and major changes**
 
