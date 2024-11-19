@@ -515,6 +515,7 @@ https://documentation.wazuh.com/3.13/installation-guide/installing-wazuh-agent/i
 - oauth2_proxy ([https://github.com/pusher/oauth2_proxy/releases](https://github.com/pusher/oauth2_proxy/releases) - 4.0.0)
 
 ### The NGiNX configuration:
+
 1. Copy the [ng_oauth2_proxy.conf](/files/ng_oauth2_proxy.conf) to `/etc/nginx/conf.d/`;
 
    ```bash
@@ -595,7 +596,9 @@ https://documentation.wazuh.com/3.13/installation-guide/installing-wazuh-agent/i
 When SSL is set using nginx proxy, Kibana can be started with http. 
 However, if it is to be run with encryption, you also need to change `proxy_pass` to the appropriate one.
 
-### The [oauth2_proxy](/files/oauth2_proxy.cfg) configuration:
+### The oauth2 proxy configuration:
+
+1. Copy the [oauth2_proxy.cfg](/files/oauth2_proxy.cfg);
 
 1. Create a directory in which the program will be located and its configuration:
 
@@ -604,14 +607,14 @@ However, if it is to be run with encryption, you also need to change `proxy_pass
     mkdir -p /etc/oauth2_proxy/
     ```
 
-2. Copy files to directories:
+1. Copy files to directories:
 
     ```bash
     cp oauth2_proxy /usr/share/oauth2_proxy/
     cp oauth2_proxy.cfg /etc/oauth2_proxy/
     ```
 
-3. Set directives according to OAuth configuration in Google Cloud project
+1. Set directives according to OAuth configuration in Google Cloud project
 
     ```bash
             cfg
@@ -623,13 +626,13 @@ However, if it is to be run with encryption, you also need to change `proxy_pass
         ​	]
     ```
 
-4. Set the following according to the public hostname:
+1. Set the following according to the public hostname:
 
     ```bash
     cookie_domain = "kibana-host.org"
     ```
 
-5. In case 	og-in restrictions for a specific group defined on the Google side:
+1. In case 	og-in restrictions for a specific group defined on the Google side:
 	- Create administrative account: https://developers.google.com/identity/protocols/OAuth2ServiceAccount ; 
 	- Get configuration to JSON file and copy Client ID;
 	- On the dashboard of the Google Cloud select "APIs & Auth" -> "APIs";

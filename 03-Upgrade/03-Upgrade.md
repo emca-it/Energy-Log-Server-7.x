@@ -4,6 +4,23 @@
 ```bash
 curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
+## Upgrade from version 7.5.0
+
+## Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+### Required post upgrade from version 7.5.0
+
+**Breaking and major changes**
+
+- User "logserver" will no longer be able to log into GUI. Use "admin" user instead. Update process will print generated password for this new user.
+
+    In case you have missed it you can run the following command on your main client node to recover the password:
+    \# /usr/share/elasticsearch/utils/logserver-password-util.sh get_password -u admin -q
+
+
 ## Upgrade from version 7.4.3
 
 ## Preferred Upgrade steps

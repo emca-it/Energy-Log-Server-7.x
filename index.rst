@@ -66,9 +66,5 @@ Energy Logserver 7.x User Guide
 .. toctree::
    :maxdepth: 7
 
-   13-MSSP/13-MSSP.md
+   13-Release_Notes/13-Release_Notes.md
 
-.. toctree::
-   :maxdepth: 7
-
-   14-Release_Notes/14-Release_Notes.md

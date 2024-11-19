@@ -11,7 +11,7 @@
    - [Actions](#actions)
 2. [Common Elements](#common-elements)
    - [Settings and Configuration for All Analytical Use Cases](#settings-and-configuration-for-all-analytical-use-cases)
-   - [Using Saved Searches in the Empowered AI Module](#using-saved-searches-in-the-empowered-ai-module)
+   - [Defining Data Source in the Empowered AI Module](#defining-data-source-in-the-empowered-ai-module)
    - [Configuring the Analytical Rule](#configuring-the-analytical-rule)
    - [Configuring the Scheduler](#configuring-the-scheduler)
    - [Accessing the Performance Tab](#accessing-the-performance-tab)
@@ -90,7 +90,7 @@ The first step in the data analysis process in the *Empowered AI* module is to p
 
     ![CreateSavedSearch](/media/media/08_empowered_ai/create_saved_search.png)
 
-#### Using Saved Searches in the Empowered AI Module
+#### Defining Data Source in the Empowered AI Module
 
 1. Go to the **Empowered AI** module.
 
@@ -100,6 +100,10 @@ The first step in the data analysis process in the *Empowered AI* module is to p
 3. In the **Choose Data Source** section, select the saved search you created earlier.
 
     ![SelectSavedSearch](/media/media/08_empowered_ai/select_saved_search.png)
+
+4. After selection Index Pattern and query will be automaticly filled up based on saved search. Alternatyivly you can skip saved search and fill up index pattern and query by yourself.
+
+    ![IndexPatternAndQuery](/media/media/08_empowered_ai/index_pattern_and_query.png)
 
 #### Configuring the Analytical Rule
 

@@ -987,155 +987,117 @@ object, and the Save button to save the selection.
 <table class="tg">
 <thead>
   <tr>
-    <th class="tg-qahb">Address</th>
     <th class="tg-qahb">User</th>
-    <th class="tg-qahb">Password</th>
-    <th class="tg-qahb">Role</th>
     <th class="tg-qahb">Description</th>
-    <th class="tg-qahb">Usage</th>
+    <th class="tg-qahb">Services</th>
   </tr>
 </thead>
 <tbody>
   <tr>
-    <td class="tg-i91a"><a href="https://localhost:5601/" target="_blank" rel="noopener noreferrer"><span style="text-decoration:none">https://localhost:5601</span></a></td>
-    <td class="tg-ie02">logserver</td>
-    <td class="tg-ie02">logserver</td>
     <td class="tg-ie02">logserver</td>
     <td class="tg-ie02">A built-in superuser account</td>
+    <td class="tg-ie02">GUI, cerebro, skimmer, curator, blacklists</td>
+  </tr>
+  <tr>
+    <td class="tg-ie02">admin</td>
+    <td class="tg-ie02">A built-in GUI admin account</td>
     <td class="tg-ie02"></td>
   </tr>
   <tr>
-    <td class="tg-ie02"></td>
-    <td class="tg-ie02">alert</td>
-    <td class="tg-ie02">alert</td>
     <td class="tg-ie02">alert</td>
     <td class="tg-ie02">A built-in account for the Alert module</td>
-    <td class="tg-ie02"></td>
+    <td class="tg-ie02">alert</td>
   </tr>
   <tr>
-    <td class="tg-ie02"></td>
-    <td class="tg-ie02">intelligence</td>
-    <td class="tg-ie02">intelligece</td>
     <td class="tg-ie02">intelligence</td>
     <td class="tg-ie02">A built-in account for the Intelligence module</td>
-    <td class="tg-ie02">authorizing communication with elasticsearch server</td>
+    <td class="tg-ie02">intelligence, intelligence-scheduler</td>
   </tr>
   <tr>
-    <td class="tg-ie02"></td>
-    <td class="tg-ie02">scheduler</td>
-    <td class="tg-ie02">scheduler</td>
-    <td class="tg-ie02">scheduler</td>
-    <td class="tg-ie02">A built-in account for the Scheduler module</td>
-    <td class="tg-ie02"></td>
+    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">A build-in account for the NetworkProbe logstash collector</td>
+    <td class="tg-ie02">logstash</td>
   </tr>
   <tr>
-    <td class="tg-ie02"></td>
-    <td class="tg-ie02">logstash</td>
-    <td class="tg-ie02">logstash</td>
-    <td class="tg-ie02">logstash</td>
-    <td class="tg-ie02">A built-in account for authorized comuunication form Logstash</td>
-    <td class="tg-ie02"></td>
+    <td class="tg-ie02">license</td>
+    <td class="tg-ie02">A build-in account for the NetworkProbe license-service</td>
+    <td class="tg-ie02">license-service</td>
   </tr>
   <tr>
-    <td class="tg-ie02"></td>
-    <td class="tg-ie02">cerebro</td>
-    <td class="tg-ie02"></td>
-    <td class="tg-ie02">system acconut only</td>
-    <td class="tg-ie02">A built-in account for authorized comuunication from Cerebro moudule</td>
-    <td class="tg-ie02"></td>
+    <td class="tg-ie02">e-doc</td>
+    <td class="tg-ie02">A build-in account for the EDoc service</td>
+    <td class="tg-ie02">e-doc</td>
   </tr>
 </tbody>
 </table>
 
-### Changing the password for the system account
+<br>
 
-1. Account **Logserver**
+### Changing the password for the system account with password utility
 
-    - Update */etc/kibana/kibana.yml*Update password in _/_opt/license-service/license-service.conf* file:
+When you want to update credentials for a specific system user you will need to update its credentials as well as all related configuration files, and then restart all corresponding services.
 
-    ```bash
-    elasticsearch_connection:
-    hosts: ["10.4.3.185:9200"]
+This can be complicated and error-prone.
 
-    username: logserver
-    password: "new_logserver_password"
+And so, from version 7.6.0, you can no longer update the password from the GUI interface. Instead, the tool is provided to ease the process and minimize the required work.
 
-    https: true
-    ```
+Depending on the node setup you can find the tool under one or both paths:
 
-    - Update the password in the *curator* configuration file: */usr/share/kibana/curator/curator.yml*
+```bash
+/usr/share/elasticsearch/utils/logserver-password-util.sh
+/etc/logstash/utils/logserver-password-util.sh
+```
 
-    ```yml
-    http_auth: logserver:"new_logserver_password
-    ```
-    - Update the password in the logstash keystore
+The tool can be run only with OS system administrator privileges as it requires permissions to restart services and modify files across the system.
 
-    ```yml
-    /usr/share/logstash/bin/logstash-keystore --path.settings /etc/logstash add logserver_pass
-    logstash_pass already exists. Overwrite ? [y/N] y
+To learn how to use the tools run:
 
-    ```
-2. Account **Intelligence**
+```bash
+/usr/share/elasticsearch/utils/logserver-password-util.sh --help
+```
 
-   - Update */opt/ai/bin/conf.cfg*
+#### Updating a user password (example)
 
-     ```bash
-     vi /opt/ai/bin/conf.cfg
-     password=new_intelligence_password
-     ```
+The following steps will show how to update the password for *logserver* user. Please read it all before using the tool.
 
-3. Account **Alert**
+1. Open a terminal session to your main (first) client node.
 
-   - Update file */opt/alert/config.yaml*
+   Depending on your cluster configuration you can have one or more nodes. The update process should start on your client node (the first one if you have more configured).
 
-     ```yaml
-     vi /opt/alert/config.yaml
-     es_password: alert
-     ```
-
-4. Account **Scheduler**
-
-   - Update */etc/kibana/kibana.yml*
-
-     ```yml
-     vi /etc/kibana/kibana.yml
-     elastscheduler.password: "new_scheduler_password"
-     ```
-
-5. Account **Logstash**
-
-   - Update the Logstash pipeline configuration files (*.conf) in the output sections:
-
-     ```bash
-     vi /etc/logstash/conf.d/*/*.conf
-     output {
-      elasticsearch {
-        hosts => ["localhost:9200"]
-        index => "syslog-%{+YYYY.MM}"
-        user => "logstash"
-        password => "new_password"
-      }
-     }
-     ```
-   - Update the password in the logstash keystore
+2. Use the password tool to update the user password:
 
     ```bash
-    /usr/share/logstash/bin/logstash-keystore --path.settings /etc/logstash add logstash_pass
-    logstash_pass already exists. Overwrite ? [y/N] y
+    /usr/share/elasticsearch/utils/logserver-password-util.sh update_credentials --users logserver
     ```
 
+    - Pay attention to the prompts!
+    - Depending on the configuration, first, you will be prompted to provide administrator credentials to use in the update process
+    - Then you will be prompted for the new password for the selected user
+    - If the update succeeds, you will be informed what files will update and what services will restart. Answer **yes [y]** to continue.
 
-6. Account **License**
+    **Depending on the cluster configuration you may be informed some files or services are missing. Unless you expect otherwise - you can safely ignore those warnings.**
 
-   - Update file **/opt/license-service/license-service.conf**
+3. This step is relevant only if the system has more nodes configured.
 
-     ```bash
-     elasticsearch_connection:
-       hosts: ["127.0.0.1:9200"]
+    1. Open a terminal session to your secondary client node (if you have one) and run:
 
-       username: license
-       password: "new_license_password"
-     ```
+        ```bash
+        /usr/share/elasticsearch/utils/logserver-password-util.sh update_services --user logserver
+        ```
+
+        Now you will be prompted only to provide the new password you have set up on the previous node.
+
+        **Sometimes you may want to update configuration files but without automatic service restart. You can run this instead:**
+
+        ```bash
+        /usr/share/elasticsearch/utils/logserver-password-util.sh update_services --user logserver --no-restart
+        ```
+
+    2. Open a terminal session to the NetworkProbe node (the path to the tool will be different) and run:
+
+        ```bash
+        /etc/logstash/utils/logserver-password-util.sh update_services --user logserver
+        ```
 
 ### Module Access
 
