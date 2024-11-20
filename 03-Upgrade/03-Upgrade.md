@@ -10,7 +10,7 @@
 
 1. Run upgrade script:
 ```bash
-   - ./install.sh -u
+# ./install.sh -u
 ```
 
 #### Required post upgrade from version 7.5.0
