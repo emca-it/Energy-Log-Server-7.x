@@ -1,6 +1,6 @@
 # **CHANGELOG**
 
-## 7.6.0
+## v7.6.0
 
 ### NewFeatures
 
