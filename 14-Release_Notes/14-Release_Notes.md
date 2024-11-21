@@ -10,6 +10,7 @@
 - UBA: SIEM module for tracking the nature of the user's behaviour and its changes
 - UBA AI: predefinied AI rules to detect anomalies in user behavior
 - Login: Introducing a new user to manage the system's graphical interface: admin (disables logserver account)
+- Enhancements in Polish language support
 
 ### Improvements
 
