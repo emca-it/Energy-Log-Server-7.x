@@ -9707,11 +9707,11 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
   )
   ```
 
-# User and Entity Behaviour Analytics (UEBA)
+## User and Entity Behaviour Analytics (UEBA)
 
 The **User and Entity Behaviour Analytics** (**UEBA**) module introduces a new approach to securing an organisation's infrastructure and its employees. Machine learning algorithms, based on data provided by the **UEBA Engine**, learn the behaviour patterns of individual employees and can identify anomalies. The **UEBA Engine** aggregates events occurring on devices used by employees. The results of the analysis are visualised on the **UEBA Dashboards**.
 
-## Events
+### Events
 
 The `Events` tab in the **UEBA Dashboard** presents data received from the **UEBA Engine**, visualised in a clear and structured way. To enhance analytical accuracy, there is the capability to filter data by specific `User`, `Computer name`, `Event`, and `Source` of the data.
 
@@ -9732,7 +9732,7 @@ Data is visualised using the following graphs:
 - **Event actions** - Number of actions for each event based on the user.
 - **Matrix User - Computer Name** - A matrix showing which users are using which devices.
 
-## Empowered AI
+### Empowered AI
 
 The **Empowered AI** tab provides visualisations of AI analysis results.
 
@@ -9754,7 +9754,7 @@ Each case is presented with the following graphs:
 - **Affected users table** - Displays the highest and average `Anomaly_score` for each user and the type of analysis in which that score occurred.
 - **Affected users** - Shows a pie chart highlighting the users most affected by anomalies.
 
-## Raw Logs
+### Raw Logs
 
 The **Raw Logs** tab displays the basic information provided by the UEBA Engine in an organised table. It is possible to verify which specific event occurred at what time, for which user, and on which device.
 
