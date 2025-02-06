@@ -4,9 +4,9 @@
 
 ### Logstash ###
 
-1. In Energy Logserver `naemon_beat.conf` set up `ELASTICSEARCH_HOST`, `ES_PORT`, `FILEBEAT_PORT`
+1. In `naemon_beat.conf` set up `ELASTICSEARCH_HOST`, `ES_PORT`, `FILEBEAT_PORT`
 
-2. Copy Energy Logserver `naemon_beat.conf` to `/etc/logstash/conf.d`
+2. Copy `naemon_beat.conf` to `/etc/logstash/conf.d`
 
 3. Based on "FILEBEAT_PORT" if firewall is running:
 
@@ -20,9 +20,9 @@
 4. Based on amount of data that elasticsearch will receive you can also choose whether you want index creation to be based on moths or days:
 
    ```bash
-   index => "Energy Logserver-naemon-%{+YYYY.MM}"
+   index => "op5-naemon-%{+YYYY.MM}"
    or
-   index => "Energy Logserver-naemon-%{+YYYY.MM.dd}"
+   index => "op5-naemon-%{+YYYY.MM.dd}"
    ```
 
    
@@ -50,9 +50,9 @@
 
 2. Install template by running:
    `./naemon_template.sh`
-### Energy Logserver Monitor ###
+### OP5 Monitor ###
 
-1. On Energy Logserver Monitor host install filebeat (for instance via rpm `https://www.elastic.co/downloads/beats/filebeat`)
+1. On OP5 Monitor host install filebeat (for instance via rpm `https://www.elastic.co/downloads/beats/filebeat`)
 1. In `/etc/filebeat/filebeat.yml` add:
 
 		#=========================== Filebeat inputs =============================
@@ -92,7 +92,7 @@ At this moment there should be a new index on the Elasticsearch node:
 Example output:
 
 		health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-		green  open   Energy Logserver-naemon-2018.11    gO8XRsHiTNm63nI_RVCy8w   1   0      23176            0      8.3mb          8.3mb
+		green  open   op5-naemon-2018.11    gO8XRsHiTNm63nI_RVCy8w   1   0      23176            0      8.3mb          8.3mb
 
 If the index has been created, in order to browse and visualise the data, "index pattern" needs to be added in Kibana.
 
@@ -101,8 +101,8 @@ If the index has been created, in order to browse and visualise the data, "index
 Below instruction requires that between Energy Logserver node and Elasticsearch node is working Logstash instance.
 
 ### Elasticsearch ###
-1.	First, settings section in *Energy Logservertemplate.sh* should be adjusted, either:
-	- there is a default template present on Elasticsearch that already covers shards and replicas then settings sections should be removed from the *Energy Logservertemplate.sh* before executing
+1.	First, settings section in *template.sh* should be adjusted, either:
+	- there is a default template present on Elasticsearch that already covers shards and replicas then settings sections should be removed from the *template.sh* before executing
 	- there is no default template - shards and replicas should be adjusted for you environment (keep in mind replicas can be added later, while changing shards count on existing index requires 
 		reindexing it)
 
@@ -111,7 +111,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 			  "number_of_replicas": 0
 			}
 
-1. In URL *Energy Logserverperfdata* is a name for the template - later it can be search for or modify with it.
+1. In URL *op5-perfdata* is a name for the template - later it can be search for or modify with it.
 
 1. The "*template*" is an index pattern. New indices matching it will have the settings and mapping applied automatically (change it if you index name for *Energy Logserver perfdata* is different).
 
@@ -119,17 +119,17 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
     ```
     "mappings": {
-    	  "Energy Logserverperflogs"
+    	  "op5-perflogs"
     ```
 
-    Running Energy Logservertemplate.sh will create a template (not index) for Energy Logserver perf data documents.
+    Running template.sh will create a template (not index) for Energy Logserver perf data documents.
 
 ### Logstash ###
 
-1.	The *Energy Logserverperflogs.conf* contains example of *input/filter/output* configuration. It has to be copied to */etc/logstash/conf.d/*. Make sure that the *logstash* has permissions to read the configuration files:
+1.	The *perflogs.conf* contains example of *input/filter/output* configuration. It has to be copied to */etc/logstash/conf.d/*. Make sure that the *logstash* has permissions to read the configuration files:
 	
 	```bash
-	chmod 664 /etc/logstash/conf.d/Energy Logserverperflogs.conf
+	chmod 664 /etc/logstash/conf.d/op5/perflogs.conf
 	```
 	
 	
@@ -138,7 +138,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
    ```bash
    port => PORT_NUMBER
-   type => "Energy Logserverperflogs"
+   type => "op5-perflogs"
    ```
 
    
@@ -149,7 +149,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
    ```bash
    hosts => ["127.0.0.1:9200"]
-   index => "Energy Logserver-perflogs-%{+YYYY.MM.dd}"
+   index => "op5-perflogs-%{+YYYY.MM.dd}"
    ```
 
 5. Port has to be opened on a firewall:
@@ -171,7 +171,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
    sudo kill -1 LOGSTASH_PID
    ```
 
-### Energy Logserver Monitor ###
+### op5 Monitor ###
 
 1. You have to decide wether FileBeat or NetCat will be used. In case of Filebeat - skip to the second step. Otherwise:
 
@@ -277,7 +277,7 @@ Below instruction requires that between Energy Logserver node and Elasticsearch 
 
    ### Kibana
 
-At this moment there should be new index on the Elasticsearch node with performance data documents from Energy Logserver Monitor. 
+At this moment there should be new index on the Elasticsearch node with performance data documents from OP5 Monitor. 
 Login to an Elasticsearch node and run: `curl -XGET '127.0.0.1:9200/_cat/indices?v'` Example output:
 
 	health status index                      pri rep docs.count docs.deleted store.size pri.store.size
