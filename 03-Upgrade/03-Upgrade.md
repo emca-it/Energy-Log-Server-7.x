@@ -21,10 +21,10 @@
 - Network-Probe: Move required directives from `/opt/license-service/license-service.conf` to `/opt/license-service/license-service.conf.rpmnew` and replace `license-service.conf` then restart the license-service.
 
 - User "logserver" will no longer be able to log into GUI. Use "admin" user instead. Update process will print generated password for this new user.
-
-    In case you have missed it you can run the following command on your main client node to recover the password:
-    \# /usr/share/elasticsearch/utils/logserver-password-util.sh get_password -u admin -q
-
+  In case you have missed it you can run the following command on your main client node to recover the password:
+```bash
+# /usr/share/elasticsearch/utils/logserver-password-util.sh get_password -u admin -q
+```
 
 ## Upgrade from version 7.5.0
 
