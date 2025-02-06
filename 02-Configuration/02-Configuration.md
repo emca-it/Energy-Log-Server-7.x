@@ -986,6 +986,159 @@ Certificates that have already been generated in a previous run of the tool will
 
 If you just want to create CSRs to submit them to your local CA, you can omit the CA part of the config complete. Just define the `default`, `node`, and `client` section, and run the TLS tool with the `-csr` switch.
 
+### Configuring ciphers for TLS settings
+
+How to enable, disable and/or limit available ciphers for Logserver services.
+
+#### Logserver database
+
+Edit config file `/etc/elasticsearch/elasticsearch.yml`.
+
+Example:
+
+```yaml
+logserverguard.ssl.transport.enabled_ciphers:
+- TLS_AES_256_GCM_SHA384
+- TLS_AES_128_GCM_SHA256
+- TLS_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+- TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+logserverguard.ssl.http.enabled_ciphers:
+- TLS_AES_256_GCM_SHA384
+- TLS_AES_128_GCM_SHA256
+- TLS_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+- TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+```
+
+After editing restart elasticsearch.service. Note that this settings should be updated on all cluster nodes.
+
+#### Logserver GUI
+
+Edit config file `/etc/kibana/kibana.yml`.
+
+Example:
+
+```yaml
+server.ssl.cipherSuites:
+- TLS_AES_256_GCM_SHA384
+- TLS_AES_128_GCM_SHA256
+- TLS_CHACHA20_POLY1305_SHA256
+- ECDHE-ECDSA-AES256-GCM-SHA384
+- ECDHE-RSA-AES256-GCM-SHA384
+- ECDHE-ECDSA-CHACHA20-POLY1305
+- ECDHE-RSA-CHACHA20-POLY1305
+- ECDHE-ECDSA-AES128-GCM-SHA256
+- ECDHE-RSA-AES128-GCM-SHA256
+```
+
+After editing restart kibana.service
+
+#### Cerebro
+
+Since 7.6.1 there is a default configuration for enabled algorithms on path `/opt/cerebro/conf/java.config`.
+
+You can edit it and after restarting cerebro.service, changes will be applied.
+
+##### 7.6.0 and before
+
+1. To recreate current default behavior, create file `/opt/cerebro/conf/java.config` with content:
+
+    ```conf
+    security.useSystemPropertiesFile=false
+    jdk.tls.ephemeralDHKeySize=2048
+    jdk.certpath.disabledAlgorithms=MD2, SHA1, MD5, DSA, RSA keySize < 2048
+    jdk.tls.disabledAlgorithms=DH keySize < 2048, TLSv1.1, TLSv1, SSLv3, SSLv2, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_128_GCM_SHA256, DHE_DSS, RSA_EXPORT, DHE_DSS_EXPORT, DHE_RSA_EXPORT, DH_DSS_EXPORT, DH_RSA_EXPORT, DH_anon, ECDH_anon, DH_RSA, DH_DSS, ECDH, 3DES_EDE_CBC, DES_CBC, RC4_40, RC4_128, DES40_CBC, RC2, HmacMD5, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+    jdk.tls.legacyAlgorithms=
+    ```
+
+1. Edit `ExecStart` definition of `/usr/lib/systemd/system/cerebro.service` like so:
+
+    ```conf
+    ExecStart=/opt/cerebro/bin/cerebro "-Djava.security.properties=/opt/cerebro/conf/java.config" "-Dconfig.file=/opt/cerebro/conf/application.conf"
+    ```
+
+1. Reload systemd and restart cerebro.service
+
+    ```bash
+    systemctl daemon-reload
+    systemctl reenable cerebro
+    systemctl restart cerebro
+    ```
+
+#### E-doc
+
+Since 7.6.1 there is a default configuration for enabled ciphers on path `/opt/e-doc/env.config`.
+
+You can edit it and after restarting e-doc.service, changes will be applied.
+
+##### 7.6.0 and before
+
+1. To recreate current default behavior, create file `/opt/e-doc/env.config` with content:
+
+    ```conf
+    NODE_OPTIONS=--tls-cipher-list='TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA256:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA'
+    ```
+
+1. Edit `/usr/lib/systemd/system/e-doc.service`. Add following under `[Service]` section:
+
+    ```conf
+    EnvironmentFile=-/opt/e-doc/env.config
+    ```
+
+1. Reload systemd and restart e-doc.service
+
+    ```bash
+    systemctl daemon-reload
+    systemctl reenable e-doc
+    systemctl restart e-doc
+    ```
+
+## Network Probe (logstash)
+
+Since 7.6.1 there is a default configuration for enabled algorithms on path `/etc/logstash/java.properties`.
+
+Make sure there is a fallowing definition in `/etc/logstash/jvm.options`:
+
+```conf
+-Djava.security.properties=/etc/logstash/java.properties
+```
+
+You can edit it and after restarting logstash.service, changes will be applied.
+
+##### 7.6.0 and before
+
+1. To recreate current default behavior, create file `/etc/logstash/java.properties` with content:
+
+    ```conf
+    security.useSystemPropertiesFile=false
+    jdk.tls.ephemeralDHKeySize=2048
+    jdk.certpath.disabledAlgorithms=MD2, SHA1, MD5, DSA, RSA keySize < 2048
+    jdk.tls.disabledAlgorithms=DH keySize < 2048, TLSv1.1, TLSv1, SSLv3, SSLv2, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_128_GCM_SHA256, DHE_DSS, RSA_EXPORT, DHE_DSS_EXPORT, DHE_RSA_EXPORT, DH_DSS_EXPORT, DH_RSA_EXPORT, DH_anon, ECDH_anon, DH_RSA, DH_DSS, ECDH, 3DES_EDE_CBC, DES_CBC, RC4_40, RC4_128, DES40_CBC, RC2, HmacMD5, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+    jdk.tls.legacyAlgorithms=
+    ```
+
+1. And add to `/etc/logstash/jvm.options`:
+
+    ```conf
+    -Djava.security.properties=/etc/logstash/java.properties
+    ```
+
+1. After restarting logstash.service, changes will be applied.
+
+#### Masteragent
+
+Since 7.6.1 Masteragent has a predefined strong ciphers already set. Updating is recommended.
+
 ## Browser layer encryption
 
 Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption for data-in-transit. While these terms are often used interchangeably, Energy Logserver GUI supports only TLS, which supersedes the old SSL protocols. Browsers send traffic to Energy Logserver  GUI and Energy Logserver GUI sends traffic to Elasticsearch database. These communication channels are configured separately to use TLS. TLS requires X.509 certificates to authenticate the communicating parties and perform encryption of data-in-transit. Each certificate contains a public key and has an associated — but separate — private key; these keys are used for cryptographic operations. Energy Logserver  GUI supports certificates and private keys in PEM format and supports the TLS 1.3 version.
@@ -1161,7 +1314,9 @@ Since version **7.4.3** of Logserver a feature was added to keep you informed ab
 
 These labels will appear when a certain watermark level is exceeded. Its function is to inform you to take action. Maybe tweak your retention settings or add disk space to your servers.
 
-The "low stage" can be dismissed, but starting with the "high stage", you will be forcibly redirected to the GUI status page, so it is better to act early.
+With the "FLOOD STAGE", non-administrative users will lose the ability to log into GUI, and those already logged in will be redirected to the status page. An administrator will still be able to browse and will have a chance to take action to fix the situation. 
+
+This is because with "FLOOD STAGE", the system switches into a read-only mode. No new documents can be created or updated.
 
 ### What is a watermark
 
@@ -1208,7 +1363,7 @@ While the GUI will always inform you about your disk usage, to take advantage of
 
 3. You can also use percentages for that **but not both - you cannot mix byte values and percentages**.
 
-4. **Important!** Also modify Logserver configuration file `/etc/elasticsearch/elasticsearch.yml`:
+4. You can also modify Logserver configuration file `/etc/elasticsearch/elasticsearch.yml`:
 
     ```yaml
     cluster.routing.allocation.disk.threshold_enabled: true
@@ -1219,8 +1374,17 @@ While the GUI will always inform you about your disk usage, to take advantage of
 
     Take in mind you will have to change those values on all of your cluster nodes this way. Restart is not required as API was used earlier.
 
-    Thanks to that, settings will be protected against a state failure.
+    **Important!** Thanks to that, settings will be protected against a state failure.
 
+### Flood stage and read-only mode
+
+When the cluster reaches the "flood stage", it is automatically put into a read-only mode. It prevents a cluster failure - **reaching 100% disk usage on a Logserver cluster is a critical issue!** 
+
+The best way to remove the read-only mode is to make more disk space available for the cluster - either by adding more space or removing data (indices) from it. When the cluster reaches the "low stage" or below, it will automatically switch from the read-only mode.
+
+Adjusting the levels with the above API examples to suit your installation is another option.
+
+Disabling the threshold checking is not recommended! Also, changing the "threshold_enabled" setting to "false" does not turn the read-only mode off automatically!
 
 ## Authentication with Active Directory
 
