@@ -37,6 +37,7 @@
 - Network-Probe: warning if probe's local time may be misconfigured
 - Network-Probe: warning when probe version does not match the Energy Logserver SIEM version
 - UBA/UEBA: new, sophisticated dashboards & documenation update
+- Skimmer: updated to v1.0.26
 
 ### BugFixes
 - Alert: does not refresh aliases if roles for selected alerts are updated
