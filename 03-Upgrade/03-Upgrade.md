@@ -4,6 +4,28 @@
 ```bash
 # curl -u $USER:$PASSWORD -X GET http://localhost:9200/_logserver/license
 ```
+
+## Upgrade from version 7.6.0
+
+### Preferred Upgrade steps
+
+1. Run upgrade script:
+   - ./install.sh -u
+
+#### Required post upgrade from version 7.6.0
+
+**Breaking and major changes**
+
+- Archive: Changed the default archives location to `/usr/share/kibana/data/archive/archives/` - please adjust external storage resource to this path [if used]. To customize the `archive.archivefolderpath` directive edit the `/etc/logserver-gui/kibana.yml` file and restart the kibana service.
+
+- Network-Probe: Move required directives from `/opt/license-service/license-service.conf` to `/opt/license-service/license-service.conf.rpmnew` and replace `license-service.conf` then restart the license-service.
+
+- User "logserver" will no longer be able to log into GUI. Use "admin" user instead. Update process will print generated password for this new user.
+
+    In case you have missed it you can run the following command on your main client node to recover the password:
+    \# /usr/share/elasticsearch/utils/logserver-password-util.sh get_password -u admin -q
+
+
 ## Upgrade from version 7.5.0
 
 ### Preferred Upgrade steps

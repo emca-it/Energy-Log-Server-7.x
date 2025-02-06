@@ -1,5 +1,61 @@
 # **CHANGELOG**
 
+## 7.7.0
+
+### NewFeatures
+
+- Alert: Wizard from Discovery tab adds possibility to create alert rules
+- Empowered AI: import and export mechanism of rules
+- Empowered AI: rules as Use Cases with Categories!
+- Integrations: Stormshield integration with dedicated dashboard and SIEM alerts
+- OVA Appliance: base image is now Oracle Linux 8
+- Security: force safe cipher/SSL settings for all Energy Logserver components
+
+### Improvements
+
+- Login: system gain extra stability running under data flood state. SIEM will stop indexing before running out of free space. Administrator still log in and clear unnecessary data.
+- Alert: added warning that changing the rule name affects chain and logical rules
+- Archive: added debug logs that will be saved by default if a task has failed with any error
+- Archive: added verification of the number of restored documents
+- Archive: changed the default archives location to `/usr/share/kibana/data/archive/archives/` - breaking change
+- Archive: changed the way the files are recreated - added 'Recreate missing files' option [default: false] that verifies if all archived files exist in the archive folder path
+- Archive: extended the functionality of archive verification on demand - integrity is verified, as well as checksum
+- Archive: introduced `archive.integrityCheck` option [default: true] to verify the integrity of .zstd archive files at the end of the archivization task
+- Archive: optimized the preparation of the archivisation process by checking its document count and .zstd file size instead of always calculating checksum
+- Empowered AI: ability to immediately stop building/scoring
+- Empowered AI: ability to view AI rule while building/scoring
+- Empowered AI: improvements in anomaly spread graph interactions
+- Empowered AI: information that Univariate works on aggregations
+- Installation: better support for multi-node environments
+- Integrations: updated translate{} synax to new format
+- Integrations: redesigned welcome screen
+- Network-Probe: clear info about actions that network probe is performing like enabling pipelines or editing files
+- Network-Probe: option to create label describing probe
+- Network-Probe: option to navigate to pipeline's files directly from the details section
+- Network-Probe: option to remove installed probe directly from the GUI - probe will be stopped as well as its services
+- Network-Probe: template for `.networkprobes` index to create it with correct mapping in case of any problems
+- Network-Probe: warning if probe's local time may be misconfigured
+- Network-Probe: warning when probe version does not match the Energy Logserver SIEM version
+- UBA/UEBA: new, sophisticated dashboards & documenation update
+
+### BugFixes
+- Alert: does not refresh aliases if roles for selected alerts are updated
+- Alert: fixed discover_url feature
+- Archive: fixed restoration of potentially corrupted archives - if any part of the file has been decompressed then an attempt will be made to upload its parts to the index
+- Archive: issue with not using `last_archive_date` from archives metadata
+- Empowered AI: progress bar bugfixes
+- Empowered AI: fixed rules get stuck in Scoring status and never end [intelligence-scheduler]
+- Network-Probe: fixed initialization process
+- Network-Probe: fixed not closing managed services when shutting down [SIEM mode]
+- Network-Probe: fixed time displayed in the pipeline details
+- Network-Probe: logging - redirected some messages to the debug, while emphasizing only the important ones
+- Network-Probe: management - in rare cases old documents from unregistered probes were corrupting the output of some APIs
+- Network-Probe: not checking pipelines statuses when logstash service is not reachable
+- Network-Probe: suricata upgraded to v6.0.20
+- Network-Probe: verification if probe is currently active and available
+- Reports: issues with enabling/disabling scheduled reports
+
+
 ## v7.6.0
 
 ### NewFeatures
