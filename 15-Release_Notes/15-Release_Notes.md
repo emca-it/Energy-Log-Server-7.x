@@ -13,15 +13,15 @@
 
 ### Improvements
 
-- Login: system gain extra stability running under data flood state. SIEM will stop indexing before running out of free space. Administrator still log in and clear unnecessary data.
-- Alert: added warning that changing the rule name affects chain and logical rules
+- Login: system gain extra stability when running under a data flood state. SIEM will stop indexing before running out of free space. Administrator will be still able to log in and clear unnecessary data.
+- Alert: added warning that changing a rule name affects chain and logical rules
 - Archive: added debug logs that will be saved by default if a task has failed with any error
 - Archive: added verification of the number of restored documents
 - Archive: changed the default archives location to `/usr/share/kibana/data/archive/archives/` - breaking change
 - Archive: changed the way the files are recreated - added 'Recreate missing files' option [default: false] that verifies if all archived files exist in the archive folder path
 - Archive: extended the functionality of archive verification on demand - integrity is verified, as well as checksum
 - Archive: introduced `archive.integrityCheck` option [default: true] to verify the integrity of .zstd archive files at the end of the archivization task
-- Archive: optimized the preparation of the archivisation process by checking its document count and .zstd file size instead of always calculating checksum
+- Archive: optimized the preparation of the archivisation process by checking its document counts and .zstd file size instead of always calculating checksum
 - Empowered AI: ability to immediately stop building/scoring
 - Empowered AI: ability to view AI rule while building/scoring
 - Empowered AI: improvements in anomaly spread graph interactions
@@ -29,11 +29,11 @@
 - Installation: better support for multi-node environments
 - Integrations: updated translate{} synax to new format
 - Integrations: redesigned welcome screen
-- Network-Probe: clear info about actions that network probe is performing like enabling pipelines or editing files
+- Network-Probe: clear info about actions that network probe is performing such as enabling pipelines or editing files
 - Network-Probe: option to create label describing probe
 - Network-Probe: option to navigate to pipeline's files directly from the details section
 - Network-Probe: option to remove installed probe directly from the GUI - probe will be stopped as well as its services
-- Network-Probe: template for `.networkprobes` index to create it with correct mapping in case of any problems
+- Network-Probe: template for `.networkprobes` index to ensure correct mapping in case of any issues
 - Network-Probe: warning if probe's local time may be misconfigured
 - Network-Probe: warning when probe version does not match the Energy Logserver SIEM version
 - UBA/UEBA: new, sophisticated dashboards & documenation update
