@@ -116,15 +116,6 @@ The Logserver GUI provides three categories of plugins:
      - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
      - Run the command systemctl restart.
 
- **Managing the `Wazuh` Plugin**:
-
-   - **Disable**:
-     - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
-     - Run the command systemctl restart.
-   - **Enable**:
-     - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
-     - Run the command systemctl restart.
-
  **Managing the `XLSX Import` Plugin**:
 
    - **Disable**:
