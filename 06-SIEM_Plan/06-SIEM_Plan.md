@@ -7927,7 +7927,7 @@ To use this feature, users define the conditions that trigger the scripted actio
 
 In the scenario described above, when the source IP address is recognized as malicious (low reputation), the monitored system is protected by automatically setting up a firewall rule to drop all traffic from the attacker. Depending on the active response, this firewall rule is temporary or permanent.
 
-On Linux systems, the Wazuh agent usually integrates with the local Iptables firewall for this purpose. On Windows systems, instead, it uses the null routing technique (also known as blackholing). Below you can find the configuration to define two scripts that are used for automated connection blocking:
+On Linux systems, the siem agent usually integrates with the local Iptables firewall for this purpose. On Windows systems, instead, it uses the null routing technique (also known as blackholing). Below you can find the configuration to define two scripts that are used for automated connection blocking:
 
 ```xml
     <command>
@@ -8002,7 +8002,7 @@ Windows:
 ```
 
 Windows event logs
-Wazuh can monitor classic Windows event logs, as well as the newer Windows event channels.
+SIEM can monitor classic Windows event logs, as well as the newer Windows event channels.
 Event log:
 
 ```xml
@@ -8038,7 +8038,7 @@ One option is for SIEM to receive syslog logs by a custom port:
 ```
 
 ```<connection>syslog</connection>``` indicates that the manager will accept incoming syslog messages from across the network.
-```<port>513</port>``` defines the port that Wazuh will listen to retrieve the logs. The port must be free.
+```<port>513</port>``` defines the port that SIEM will listen to retrieve the logs. The port must be free.
 ```<protocol>udp</protocol>``` defines the protocol to listen the port. It can be UDP or TCP.
 ```<allowed-ips>192.168.2.0/24</allowed-ips>```defines the network or IP from which syslog messages will be accepted.
 
@@ -8129,7 +8129,7 @@ Windows Eventlog vs Windows Eventchannel \
 Eventlog is supported on every Windows version and can monitor any logs except for particular Applications and Services Logs, this means that the information that can be retrieved is reduced to System, Application and Security channels.
 On the other hand, Eventchannel is maintained since Windows Vista and can monitor the Application and Services logs along with the basic Windows logs. In addition, the use of queries to filter by any field is supported for this log format.
 
-Monitor the Windows Event Log with Wazuh
+Monitor the Windows Event Log with SIEM
 To monitor a Windows event log, it is necessary to provide the format as "eventlog" and the location as the name of the event log.
 
 ```xml
@@ -8141,7 +8141,7 @@ To monitor a Windows event log, it is necessary to provide the format as "eventl
 
 These logs are obtained through Windows API calls and sent to the manager where they will be alerted if they match any rule.
 
-Monitor the Windows Event Channel with Wazuh
+Monitor the Windows Event Channel with SIEM
 Windows event channels can be monitored by placing their name at the location field from the localfile block and "eventchannel" as the log format.
 
 ```xml
@@ -8152,7 +8152,7 @@ Windows event channels can be monitored by placing their name at the location fi
 ```
 
 Available channels and providers
-Table below shows available channels and providers to monitor included in the Wazuh ruleset:
+Table below shows available channels and providers to monitor included in the SIEM ruleset:
 
 <table border="1" class="colwidths-given docutils" id="id1">
 <colgroup>
@@ -8445,7 +8445,7 @@ As in this basic usage example, provide the name of the file to be monitored and
 ```
 
 Monitoring logs using wildcard patterns for file names
-Wazuh supports posix wildcard patterns, just like listing files in a terminal. For example, to analyze every file that ends with a .log inside the ```/var/log``` directory, use the following configuration:
+SIEM supports posix wildcard patterns, just like listing files in a terminal. For example, to analyze every file that ends with a .log inside the ```/var/log``` directory, use the following configuration:
 
 ```xml
 <localfile>
@@ -8515,7 +8515,7 @@ Once the socket is defined, it's possible to add the destination socket for each
 
 The FIM module is located in the SIEM agent, where runs periodic scans of the system and stores the checksums and attributes of the monitored files and Windows registry keys in a local FIM database. The module looks for the modifications by comparing the new files’ checksums to the old checksums. All detected changes are reported to the SIEM manager.
 
-The new FIM synchronization mechanism ensures the file inventory in the SIEM manager is always updated with respect to the SIEM agent, allowing servicing FIM-related API queries regarding the Wazuh agents. The FIM synchronization is based on periodic calculations of integrity between the SIEM agent’s and the SIEM manager’s databases, updating in the SIEM manager only those files that are outdated, optimizing the data transfer of FIM. Anytime the modifications are detected in the monitored files and/or registry keys, an alert is generated.
+The new FIM synchronization mechanism ensures the file inventory in the SIEM manager is always updated with respect to the SIEM agent, allowing servicing FIM-related API queries regarding the SIEM agents. The FIM synchronization is based on periodic calculations of integrity between the SIEM agent’s and the SIEM manager’s databases, updating in the SIEM manager only those files that are outdated, optimizing the data transfer of FIM. Anytime the modifications are detected in the monitored files and/or registry keys, an alert is generated.
 
 By default, each SIEM agent has the syscheck enabled and preconfigured but it is recommended to review and amend the configuration of the monitored host.
 
@@ -8593,7 +8593,7 @@ To report new files added to the system, syscheck can be configured with the ale
 ```
 
 Configuring reporting file changes
-To report the exact content that has been changed in a text file, syscheck can be configured with the ```report_changes``` attribute of the ```directories``` option. ```Report_changes``` should be used with caution as Wazuh copies every single monitored file to a private location.
+To report the exact content that has been changed in a text file, syscheck can be configured with the ```report_changes``` attribute of the ```directories``` option. ```Report_changes``` should be used with caution as SIEM copies every single monitored file to a private location.
 
 ```xml
 <syscheck>
@@ -8773,7 +8773,7 @@ Active responses are configured in the manager by modifying the ossec.conf file 
 
 #### Default Active response scripts
 
-Wazuh is pre-configured with the following scripts for Linux:
+SIEM is pre-configured with the following scripts for Linux:
 
 <table border="1" class="colwidths-given docutils" id="id1">
 <colgroup>
@@ -8882,7 +8882,7 @@ Wazuh is pre-configured with the following scripts for Linux:
 </td>
 <td><p class="first last">restart-ossec.sh</p>
 </td>
-<td><p class="first last">Automatically restarts Wazuh when ossec.conf has been changed</p>
+<td><p class="first last">Automatically restarts SIEM when ossec.conf has been changed</p>
 </td>
 </tr>
 
