@@ -517,9 +517,9 @@ Default Rules automatically deploy a set of rules for the syslog index at startu
 - Syslog Text Anomaly message
 - Windows-winlogbeat Text Anomaly message
 - Httpd Text Anomaly message
-- Wazuh-alerts Text Anomaly full_log
-- Wazuh-alerts Text Anomaly data.win.eventdata.data
-- Wazuh-alerts Text Anomaly data.win.system.message
+- SIEM-alerts Text Anomaly full_log
+- SIEM-alerts Text Anomaly data.win.eventdata.data
+- SIEM-alerts Text Anomaly data.win.system.message
 - Syslog Univariate network.bytes
 - Syslog Univariate network.ttl
 - Syslog Univariate postfix_delay
