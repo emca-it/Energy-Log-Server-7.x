@@ -2,7 +2,7 @@
 
 The component which forms the basis of the Energy Logserver platform. It provides centralization of events and functionalities enabling precise analysis and visibility while maintaining full security of collected data.
 
-Log Management Plan in its basic function is a central point of collection of any data from the IT environment. The database based on the Elasticsearch engine ensures unlimited and efficient collection of any amount of data, without limits on the number of events, gigabytes per day or the number of data sources. Dozens of ready integrations and introduced data standardization ensure a quick implementation process.
+Log Management Plan in its basic function is a central point of collection of any data from the IT environment. The database engine ensures unlimited and efficient collection of any amount of data, without limits on the number of events, gigabytes per day or the number of data sources. Dozens of ready integrations and introduced data standardization ensure a quick implementation process.
 
 Its flexibility makes it ideal for both large environments and small organizations, offering quick results right from the start.
 

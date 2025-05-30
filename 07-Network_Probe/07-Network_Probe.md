@@ -1,6 +1,6 @@
 ## Network Probe
 
-The Network Probe plugin allows you to manage and control probes distributed among many hosts, as well as manage logstash's probes.
+The Network Probe plugin allows you to manage and control probes distributed among many hosts, as well as manage pipelines.
 
 ### About
 
@@ -118,20 +118,7 @@ The first time the probe is started, it will automatically register itself. No a
 
 #### Database connection
 
-The probe requires a connection to the Logserver service to work. Set the appropriate variables in the `/opt/license-service/license-service.conf` file in the `elasticsearch_connection` section. For example:
-
-```yaml
-    elasticsearch_connection:
-        hosts: ["127.0.0.1:9200"]
-
-        username: license
-        password: license
-
-        https: true
-
-        verify_certs: true
-        certificate_path: /etc/elasticsearch/rootCA.crt
-```
+The probe requires a connection to the Logserver service to work. Set the appropriate variables in the `/opt/license-service/license-service.conf` file. 
 
 ### Gui Plugin
 
@@ -224,15 +211,15 @@ Services can be managed individually or by selecting several lines at the same t
 
 ##### Pipelines Section
 
-This section is used to manage pipelines. Here you can observe the status and statistics of pipelines to monitor their functioning. You can also enable or disable a given pipeline, as well as reload logstash configuration files using the reload method. All functionalities will be described below, but first some introduction to pipeline configuration definition.
+This section is used to manage pipelines. Here you can observe the status and statistics of pipelines to monitor their functioning. You can also enable or disable a given pipeline, as well as reload service configuration files using the reload method. All functionalities will be described below, but first some introduction to pipeline configuration definition.
 
 ![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines.png)
 
 ###### Pipeline configuration
 
 By default pipeline can be defined as a set of files consisting of:
-- `definition file` - file with name and path to configuration files directory and possibly some pipeline-specific options. Such a file can define multiple pipelines at once. The default path is: `/etc/logstash/pipelines.d/pipeline_name.yml`.
-- `configuration files` - files containing pipeline plugins configurations. By default, it is: `/etc/logstash/conf.d/pipeline_name/*.conf`, but it can be altered through a definition file.
+- `definition file` - file with name and path to configuration files directory and possibly some pipeline-specific options. Such a file can define multiple pipelines at once. The default path is: `/etc/logserver-probe/pipelines.d/pipeline_name.yml`.
+- `configuration files` - files containing pipeline plugins configurations. By default, it is: `/etc/logserver-probe/conf.d/pipeline_name/*.conf`, but it can be altered through a definition file.
 
 The above settings can be found in the pipeline details, after clicking the arrow on the left.
 
@@ -245,7 +232,7 @@ Pipeline status can be one of the following:
 - **Active** _with warning_ - the pipeline is enabled and running, but some reload error has occurred.
 - **Inactive** - the pipeline should work because it is enabled, but it does not work and its statistics cannot be found.
 - **Disabled** - the pipeline is disabled and is not running.
-- **Unknown** - pipeline has unexpectedly failed, it covers situations such as wrong configuration, corrupted files or not working logstash.
+- **Unknown** - pipeline has unexpectedly failed, it covers situations such as wrong configuration, corrupted files or not working service.
 
 In addition to the status, the adjacent column displays details that specifically describe the current status and may indicate the cause of a hypothetical error.
 
@@ -268,7 +255,7 @@ The list of pipelines can be filtered based on their status using the four butto
 
 ###### Reload pipelines configuration
 
-The logstash configuration can be reloaded directly from this view, with the help of the `Reload` button. Any changes to the configuration files used by logstash will be reloaded, without the need of restarting the service itself.
+The Network Probe configuration can be reloaded directly from this view, with the help of the `Reload` button. Any changes to the configuration files used by Network Probe will be reloaded, without the need of restarting the service itself.
 
 ![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_reload.png)
 
@@ -296,7 +283,7 @@ This section is used to handle files managed by the probe. Here you can create, 
 
 In the file table, we see information about the following:
 - file - file's full path
-- status - status indicates whether the file is being used by the pipeline. If the file resides within the `/etc/logstash/conf.d` directory and has a `.conf` extension, it can be either enabled or disabled.
+- status - status indicates whether the file is being used by the pipeline. If the file resides within the `/etc/logserver-probe/conf.d` directory and has a `.conf` extension, it can be either enabled or disabled.
 - checksum - calculated checksum based on the file content
 - revision - date of the latest file version
 
@@ -347,7 +334,7 @@ A similar confirmation modal will appear for disabling the file operation.
 
 ###### Files parsing
 
-If the file is located in logstash-related directories and has the extension `.conf`, it is parsed to check its correctness.
+If the file is located in related directories and has the extension `.conf`, it is parsed to check its correctness.
 
 If the file cannot be parsed, a warning will appear in the list informing you about the error.
 
@@ -412,7 +399,7 @@ To restart the service enter:
     https://127.0.0.1:5601/app/network_probe/probes/f7fdb48bf5252cb41ab4162d96144a0d463b7ae5330bae6f37f501cb97fb272d199a59cc97bfdc1d2fd46e981ae42a8a59c66a40932c4bce27d786efe1f2dcc3/services
     ```
 
-4. Execute the following query, replacing `$ID` with the value obtained in the previous step, as well as `$USER` and `$PASSWORD` to elasticsearch:
+4. Execute the following query, replacing `$ID` with the value obtained in the previous step, as well as `$USER` and `$PASSWORD` to Data Node:
 
    ```bash
    curl -u$USER:$PASSWORD -XDELETE '127.0.0.1:9200/.networkprobes/_doc/$ID'

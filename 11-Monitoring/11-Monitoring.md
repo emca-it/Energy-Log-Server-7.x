@@ -6,10 +6,10 @@ Energy Logserver uses a monitoring module called Skimmer to monitor the performa
 
 The services that are supported are:
 
-- Elasticsearch data node metric;
-- Elasticsearch indexing rate value;
-- Logstash;
-- Kibana;
+- Data Node metric;
+- Data Node indexing rate value;
+- Network Probe;
+- Logserver GUI;
 - Metricbeat;
 - Pacemaker;
 - Zabbix;
@@ -43,23 +43,23 @@ log_file = /var/log/skimmer/skimmer.log
 
 [Main] - collect stats
 main_enabled = true
-# index name in elasticsearch
+# index name in Data Node
 index_name = skimmer
 index_freq = monthly
 
-# type in elasticsearch index
+# type in Data Node index
 index_type = _doc
 
-# user and password to elasticsearch api
-elasticsearch_auth = logserver:logserver
+# user and password to Data Node api
+auth = logserver:logserver
 
 # available outputs
-elasticsearch_address = 127.0.0.1:9200
-# logstash_address = 127.0.0.1:6110
+Data Node address and port = 127.0.0.1:9200
+Probe address and port = 127.0.0.1:6110
 
 # retrieve from api
-elasticsearch_api = 127.0.0.1:9200
-logstash_api = 127.0.0.1:9600
+Data Node api = 127.0.0.1:9200
+Network Probe api = 127.0.0.1:9600
 
 # monitor kafka
 # kafka_path = /usr/share/kafka/
@@ -78,7 +78,7 @@ os_stats = zombie,vm,fs,swap,net,cpu
 processes = /usr/sbin/sshd,/usr/sbin/rsyslogd
 
 # comma separated systemd services to print their status
-systemd_services = elasticsearch,logstash,alert,cerebro,kibana
+systemd_services = logserver,logserver-probe,logserver-gui,alert,cerebro
 
 # comma separated port numbers to print if address is in use
 port_numbers = 9200,9300,9600,5514,5044,443,5601,5602
@@ -98,15 +98,14 @@ ps_enabled = false
 # ps_path = /opt/skimmer/skimmer.ps1
 
 # available outputs
-# ps_logstash_address = 127.0.0.1:6111
+# Network Probe address and port = 127.0.0.1:6111
 
 ```
 
-In the Skimmer configuration file, set the credentials to communicate with Elasticsearch:
+In the Skimmer configuration file, set the credentials to communicate with Data Node:
 
-```bash
-elasticsearch_auth = $user:$password
-```
+Data Node Auth = $user:$password
+
 
 To monitor the Kafka process and the number of documents in the queues of topics, run Skimmer on the Kafka server and uncheck the following section:
 
@@ -142,31 +141,23 @@ Go to the "**Management**" -> "**Index Patterns**" tab and press the "**Create I
 
 In the "**Discovery**" tab, select the `skimmer- *` index from the list of indexes. A list of collected documents with statistics and statuses will be displayed.
 
-### Skimmer dashboard ###
-
-To use dashboards and visualization of skimmer results, load dashboards delivered with the product:
-
-```bash
-curl -XPOST -ulogserver:<password> -H "osd-xsrf: true" -H "Content-Type: application/json" "https://127.0.0.1:5601/api/opensearch-dashboards/dashboards/import?force=true" -d@/usr/share/kibana/kibana_objects/skimmer_objects.json
-```
-
 The Skimmer dashboard includes the following monitoring parameters:
 
-- `Elasticsearch - Heap usage in percent` -  is the total amount of Java heap memory that's currently being used by the JVM Elasticsearch process in percent
-- `Logstash - Heap usage in percent` -  is the total amount of Java heap memory that's currently being used by the JVM Logstash process in percent
-- `Elasticsearch - Process CPU usage` - is the amount of time for which a central processing unit was used for processing instructions of Elsticsearch process in percent
-- `Elasticsearch - Node CPU usage` - is the amount of time for which a central processing unit was used for processing instructions for specific node of Elasticsearch in percent
-- `Elasticsearch - Current queries` - is the current count of the search query to Elasticsearch indices
-- `Elasticsearch - Current search fetch` - is the current count of the fetch phase for search query to Elasticsearch indices
+- `Data Node - Heap usage in percent` -  is the total amount of Java heap memory that's currently being used by the JVM Data Node process in percent
+- `Network Probe - Heap usage in percent` -  is the total amount of Java heap memory that's currently being used by the JVM Network Probe process in percent
+- `Data Node - Process CPU usage` - is the amount of time for which a central processing unit was used for processing instructions of Elsticsearch process in percent
+- `Data Node - Node CPU usage` - is the amount of time for which a central processing unit was used for processing instructions for specific node of Data Node in percent
+- `Data Node - Current queries` - is the current count of the search query to Data Node indices
+- `Data Node - Current search fetch` - is the current count of the fetch phase for search query to Data Node indices
 - `GC Old collection` - is the duration of Java Garbage Collector for Old collection in milliseconds
 - `GC Young collection` - is the duration of Java Garbage Collector for Young collection in milliseconds
-- `Flush` - is the duration of Elasticsearch Flushing process that permanently save the transaction log in the Lucene index (in milliseconds).
-- `Refresh` -  is the duration of Elasticsearch Refreshing process that prepares new data for searching (in milliseconds).
-- `Indexing` - is the duration of Elasticsearch document Indexing process  (in milliseconds)
-- `Merge` - is the duration of Elasticsearch Merge process that periodically merged smaller segments into larger segments to keep the index size at bay (in milliseconds)
-- `Indexing Rate` - an indicator that counts the number of saved documents in the Elasticsearch index in one second (event per second - EPS)
+- `Flush` - is the duration of Data Node Flushing process that permanently save the transaction log in the Lucene index (in milliseconds).
+- `Refresh` -  is the duration of Data Node Refreshing process that prepares new data for searching (in milliseconds).
+- `Indexing` - is the duration of Data Node document Indexing process  (in milliseconds)
+- `Merge` - is the duration of Data Node Merge process that periodically merged smaller segments into larger segments to keep the index size at bay (in milliseconds)
+- `Indexing Rate` - an indicator that counts the number of saved documents in the Data Node index in one second (event per second - EPS)
 - `Expected DataNodes` - indicator of the number of data nodes that are required for the current load
-- `Free Space` - Total space and Free space in bytes on Elasticsearch cluster
+- `Free Space` - Total space and Free space in bytes on Data Node cluster
 
 ### Expected Data Nodes ###
 

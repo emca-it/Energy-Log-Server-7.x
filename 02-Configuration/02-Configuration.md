@@ -1,232 +1,164 @@
 # Configuration
 
-## Changing default users for services
-
-### Change Kibana User
-
-Edit file */etc/systemd/system/kibana.service*
-
-```bash
-  User=newuser
-  Group= newuser
-```
-
-Edit */etc/default/kibana*
-
-```bash
-  user=" newuser "
-  group=" newuser "
-```
-
-Add appropriate permission:
-
-```bash
-  chown newuser: /usr/share/kibana/ /etc/kibana/ -R
-```
-
-### Change Elasticsearch User
-
-Edit **/usr/lib/tmpfiles.d/elasticsearch.conf* and change user name and group:
-
-```bash
-  d /var/run/elasticsearch 0755 newuser newuser –
-```
-
-Create directory:
-
-```bash
-  mkdir /etc/systemd/system/elasticsearch.service.d/
-```
-
-Edit */etc/systemd/system/elasticsearch.service.d/01-user.conf*
-
-```bash
-  [Service]
-  User=newuser
-  Group= newuser
-```
-
-Add appropriate permission:
-
-```bash
-  chown -R newuser: /var/lib/elasticsearch /usr/share/elasticsearch /etc/elasticsearch /var/log/elasticsearch
-```
-
-### Change Logstash User
-
-Create directory:
-
-  mkdir /etc/systemd/system/logstash.service.d
-
-Edit */etc/systemd/system/logstash.service.d/01-user.conf*
-
-  [Service]
-  User=newuser
-  Group=newuser
-
-Add appropriate permission:
-
-  chown -R newuser: /etc/logstash /var/log/logstash
-
 ## Plugins Management
 
-### GUI/Kibana
+### GUI
 
 Base installation of the Energy Logserver contains the Agents, Alerts, Archive, Automation, CMDB, Index Management, Intelligence, Network Probe, Reports, SQL  plugins - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
-You can extend the basic Kibana functionality by installing custom plugins.
+You can extend the basic GUI functionality by installing custom plugins.
 
 After installation, each node must be restarted before the plugin becomes visible.
 
-The Kibana provides three categories of plugins:
+The Logserver GUI provides three categories of plugins:
 
 - Licenced Plugins - Energy Logserver
-- Core Plugins - it is plugins that are part of the Kibana project.
-- Community-contributed - it is plugins that are external to the Kibana project
+- Core Plugins - it is plugins that are part of the core project.
+- Community-contributed - it is plugins that are external to the core project
 
 #### Enabling/Disabling Plugins
 
  **Managing the `Agents` Plugin**:
 
    - **Disable**:
-     - Add `agents.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `agents.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `agents.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `agents.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Alerts` Plugin**:
 
    - **Disable**:
-     - Change `alerts.enabled: true` to `alerts.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `alerts.enabled: true` to `alerts.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Change `alerts.enabled: false` to `alerts.enabled: true` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `alerts.enabled: false` to `alerts.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Archive` Plugin**:
 
    - **Disable**:
-     - Add `archive.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `archive.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `archive.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `archive.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Automation` Plugin**:
 
    - **Disable**:
-     - Change `automation.enabled: true` to `automation.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `automation.enabled: true` to `automation.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Change `automation.enabled: false` to `automation.enabled: true` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `automation.enabled: false` to `automation.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `CMDB` Plugin**:
 
    - **Disable**:
-     - Add `cmdb.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `cmdb.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `cmdb.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `cmdb.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Console` Plugin**:
 
    - **Disable**:
-     - Change `console.enabled: true` to `console.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `console.enabled: true` to `console.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Change `console.enabled: false` to `console.enabled: true` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `console.enabled: false` to `console.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Index Management` Plugin**:
 
    - **Disable**:
-     - Add `index_management.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `index_management.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `index_management.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `index_management.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Intelligence` Plugin**:
 
    - **Disable**:
-     - Add `intelligence.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `intelligence.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `intelligence.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `intelligence.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Network Probe` Plugin**:
 
    - **Disable**:
-     - Add `network-probe.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `network-probe.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `network-probe.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `network-probe.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Reports` Plugin**:
 
    - **Disable**:
-     - Add `reports.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `reports.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `reports.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `reports.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `vis_type_timeline` Plugin**:
 
    - **Disable**:
-     - Change `vis_type_timeline.enabled: true` to `vis_type_timeline.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `vis_type_timeline.enabled: true` to `vis_type_timeline.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `vis_type_timeline.enabled: false` to `vis_type_timeline.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `Wazuh` Plugin**:
 
    - **Disable**:
-     - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `wazuh.enabled: true` to `wazuh.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Change `wazuh.enabled: false` to `wazuh.enabled: true` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `XLSX Import` Plugin**:
 
    - **Disable**:
-     - Add `xlsx_import.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `xlsx_import.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `xlsx_import.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `xlsx_import.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `SQL` Plugin**:
 
    - **Disable**:
-     - Add `sql.enabled: false` to the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Add `sql.enabled: false` to the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `sql.enabled: false` in the file `/etc/kibana/kibana.yml`.
-     - Run the command `systemctl restart kibana`.
+     - Remove or comment out the line `sql.enabled: false` in the file `/etc/logserver-gui/logserver-gui.yml`.
+     - Run the command systemctl restart.
 
 #### Installing Plugins
 
-Additional GUI/Kibana plugins can be installed as follows:
+Additional GUI plugins can be installed as follows:
 
 ```bash
- cd /usr/share/kibana/
- bin/opensearch-dashboards-plugin install [plugin_name]
+ cd /usr/share/logserver-gui/
+ bin/logserver-gui-plugin install [plugin_name]
 ```
 
 Examples: \
 Plugins from a custom link or filesystem can be installed as follows:
 
 ```bash
- bin/opensearch-dashboards-plugin install file:///path/to/plugin.zip
- bin/opensearch-dashboards-plugin install file:///C:/path/to/plugin.zip
- bin/opensearch-dashboards-plugin install http://some.domain/path/to/plugin.zip
+ bin/logserver-gui-plugin install file:///path/to/plugin.zip
+ bin/logserver-gui-plugin install file:///C:/path/to/plugin.zip
+ bin/logserver-gui-plugin install http://some.domain/path/to/plugin.zip
 ```
 
 #### Listing plugins
@@ -234,84 +166,84 @@ Plugins from a custom link or filesystem can be installed as follows:
 Listing currently loaded plugins:
 
 ```bash
- bin/opensearch-dashboards-plugin list
+ bin/logserver-gui-plugin list
 ```
 
 #### Removing plugins
 
 ```bash
- bin/opensearch-dashboards-plugin remove [pluginname]
+ bin/logserver-gui-plugin remove [pluginname]
 ```
 
 #### Updating plugins
 
 ```bash
- bin/opensearch-dashboards-plugin remove [pluginname]
- bin/opensearch-dashboards-plugin install [pluginname]
+ bin/logserver-gui-plugin remove [pluginname]
+ bin/logserver-gui-plugin install [pluginname]
 ```
 
-### Database/Elasticsearch
+### Data Node
 
 Base installation of the Energy Logserver contains the logserver_auth, join, logserver_quard plugin - These add-ons can be disabled or enabled via the configuration file without having to install or uninstall.
-You can extend the basic Elasticsearch functionality by installing custom plugins.
+You can extend the basic Data Node functionality by installing custom plugins.
 
 Plugins contain JAR files, but may also contain scripts and config files, and must be installed on every node in the cluster.
 
 After installation, each node must be restarted before the plugin becomes visible.
 
-The Elasticsearch provides three categories of plugins:
+The Data Node provides three categories of plugins:
 
 - Licenced Plugins - Energy Logserver
-- Core Plugins - it is plugins that are part of the Elasticsearch project.
-- Community-contributed - it is plugins that are external to the Elasticsearch project
+- Core Plugins - it is plugins that are part of the core project.
+- Community-contributed - it is plugins that are external to the core project
 
 #### Enabling/Disabling Plugins
 
  **Managing the `logserver_auth` Plugin**:
 
    - **Disable**:
-     - Add `plugins.logserver_auth.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Run the command `systemctl restart elasticsearch`.
+     - Add `plugins.logserver_auth.enabled: false` to the file `/etc/logserver/logserver.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `plugins.logserver_auth.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Run the command `systemctl restart elasticsearch`.
+     - Remove or comment out the line `plugins.logserver_auth.enabled: false` in the file `/etc/logserver/logserver.yml`.
+     - Run the command systemctl restart.
 
  **Managing the `logserver_guard` Plugin**:
 
    - **Disable**:
-     - Add `logserverguard.ssl.transport.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Add `logserverguard.ssl.http.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Run the command `systemctl restart elasticsearch`.
+     - Add `logserverguard.ssl.transport.enabled: false` to the file `/etc/logserver/logserver.yml`.
+     - Add `logserverguard.ssl.http.enabled: false` to the file `/etc/logserver/logserver.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `logserverguard.ssl.transport.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Remove or comment out the line `logserverguard.ssl.http.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Run the command `systemctl restart elasticsearch`.
+     - Remove or comment out the line `logserverguard.ssl.transport.enabled: false` in the file `/etc/logserver/logserver.yml`.
+     - Remove or comment out the line `logserverguard.ssl.http.enabled: false` in the file `/etc/logserver/logserver.yml`.
+     - Run the command systemctl restart .
 
  **Managing the `sql` Plugin**:
 
    - **Disable**:
-     - Add `plugins.sql.enabled: false` to the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Run the command `systemctl restart elasticsearch`.
+     - Add `plugins.sql.enabled: false` to the file `/etc/logserver/logserver.yml`.
+     - Run the command systemctl restart.
    - **Enable**:
-     - Remove or comment out the line `plugins.sql.enabled: false` in the file `/etc/elasticsearch/elasticsearch.yml`.
-     - Run the command `systemctl restart elasticsearch`.
+     - Remove or comment out the line `plugins.sql.enabled: false` in the file `/etc/logserver/logserver.yml`.
+     - Run the command systemctl restart.
 
 #### Installing Plugins
 
-Additional Database/Elasticsearch plugins can be installed as follows:
+Additional Data Node plugins can be installed as follows:
 
 ```bash
- cd /usr/share/elasticsearch/
- bin/opensearch-plugin install [plugin_name]
+ cd /usr/share/logserver/
+ bin/logserver-plugin install [plugin_name]
 ```
 
 Examples: \
 Plugins from a custom link or filesystem can be installed as follows:
 
 ```bash
- bin/opensearch-plugin install file:///path/to/plugin.zip
- bin/opensearch-plugin install file:///C:/path/to/plugin.zip
- bin/opensearch-plugin install <http://some.domain/path/to/plugin.zip>
+ bin/logserver-plugin install file:///path/to/plugin.zip
+ bin/logserver-plugin install file:///C:/path/to/plugin.zip
+ bin/logserver-plugin install <http://some.domain/path/to/plugin.zip>
 ```
 
 #### Listing plugins
@@ -319,219 +251,25 @@ Plugins from a custom link or filesystem can be installed as follows:
 Listing currently loaded plugins:
 
 ```bash
- bin/opensearch-plugin list
+ bin/logserver-plugin list
 ```
 
 #### Removing plugins
 
 ```bash
- bin/opensearch-plugin remove [pluginname]
+ bin/logserver-plugin remove [pluginname]
 ```
 
 #### Updating plugins
 
 ```bash
- bin/opensearch-plugin remove [pluginname]
- bin/opensearch-plugin install [pluginname]
+ bin/logserver-plugin remove [pluginname]
+ bin/logserver-plugin install [pluginname]
 ```
 
 ## Transport layer encryption
 
-### Generating Certificates
-
-1. Requirements for certificate configuration:
-
-    - **To encrypt traffic (HTTP and transport layer) of Elasticsearch you have to generate certificate authority which will be used to sign each node certificate of a cluster.**
-    - **The Elasticsearch certificate has to be generated in pkcs8 RSA format.**
-
-1. To generate certificates use tlstool.sh script, which can be found in the `/usr/share/elasticsearch/utils/tlstool` directory. \
-Example certificate configuration for single node environment (certificates will be valid for 10 years) is listed below:
-
-    ```bash
-    ca:
-      root:
-        dn: CN=mylocal.domain.test,OU=Dev,O=EMCA Software,C=Poland
-        keysize: 2048
-        validityDays: 3650
-        pkPassword: none
-        file: rootCA.crt
-
-    defaults:
-      validityDays: 3650
-      pkPassword: none
-      httpsEnabled: true
-      reuseTransportCertificatesForHttp: true
-      verifyHostnames: true
-      resolveHostnames: false
-
-    nodes:
-      - name: node1
-        dn: CN=mylocal.domain.test,OU=Dev,O=EMCA Software,C=Poland
-        ip: 127.0.0.1
-    ```
-
-    Other examples can be found in the `config`` directory of the TLS Tool. More details about the TLS Tool and documented options can be found [here.](#offline-tls-tool)
-
-    To use the above configuration run:
-
-    ```bash
-    cd /usr/share/elasticsearch/utils/tlstool
-    bash tlstool.sh -c config/logserver.yml -ca -crt
-    ```
-
-    It will generate the necessary rootCA and server private key together with its certificate.
-
-1. Right now you should have these files:
-
-    ```bash
-    ls -1 | sort
-    node1.crt
-    node1.key
-    rootCA.crt
-    rootCA.key
-    ```
-
-1. Create a directory to store required files (users: elasticsearch, kibana, and logstash have to be able to read these files):
-
-    ```bash
-    mkdir /etc/elasticsearch/ssl
-    cp out/{node1.*,rootCA.crt} /etc/elasticsearch/ssl
-    chown -R elasticsearch:elasticsearch /etc/elasticsearch/ssl
-    chmod 755 /etc/elasticsearch/ssl
-    chmod 644 /etc/elasticsearch/ssl/*
-    ```
-
-#### Setting up configuration files
-
-1. Append or uncomment below lines in `/etc/elasticsearch/elasticsearch.yml` and change paths to proper values (based on past steps):
-
-    - Transport layer encryption
-
-      ```yml
-      logserverguard.ssl.transport.enabled: true
-      logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/node1.crt"
-      logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/node1.key"
-      logserverguard.ssl.transport.pemkey_password: "password_for_pemkey" # If there is no password leave ""
-      logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
-
-      logserverguard.ssl.transport.enforce_hostname_verification: true
-      logserverguard.ssl.transport.resolve_hostname: true
-
-      logserverguard.ssl.transport.enabled_ciphers:
-        - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-        - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
-
-      logserverguard.ssl.transport.enabled_protocols:
-        - "TLSv1.2"
-      ```
-
-    - HTTP layer encryption
-
-      ```yaml
-      logserverguard.ssl.http.enabled: true
-      logserverguard.ssl.http.pemcert_filepath: "/etc/elasticsearch/ssl/node1.crt"
-      logserverguard.ssl.http.pemkey_filepath: "/etc/elasticsearch/ssl/node1.key"
-      logserverguard.ssl.http.pemkey_password: "password_for_pemkey" # If there is no password leave ""
-      logserverguard.ssl.http.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
-
-      logserverguard.ssl.http.clientauth_mode: OPTIONAL
-      logserverguard.ssl.http.enabled_ciphers:
-        - "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-        - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
-
-      logserverguard.ssl.http.enabled_protocols:
-        - "TLSv1.2"
-      ```
-
-1. Append or uncomment below lines in `/etc/kibana/kibana.yml` and change paths to proper values:
-
-    ```yaml
-    elasticsearch.hosts: ["https://127.0.0.1:8000"]
-    ---
-    # Elasticsearch trafic encryption
-    # There is also an option to use "127.0.0.1/localhost" and to not supply path to CA. Verification Mode should be then changed to "none".
-    elasticsearch.ssl.verificationMode: full
-    elasticsearch.ssl.certificate: "/etc/elasticsearch/ssl/node1.crt"
-    elasticsearch.ssl.key: "/etc/elasticsearch/ssl/node1.key"
-    elasticsearch.ssl.keyPassphrase: "password_for_pemkey" # this line is not required if there is no password
-    elasticsearch.ssl.certificateAuthorities: "/etc/elasticsearch/ssl/rootCA.crt"
-    ```
-
-1. Append or uncomment the below lines in `/opt/alert/config.yaml` and change paths to proper values:
-
-    ```yaml
-    # Connect with TLS to Elasticsearch
-    use_ssl: True
-
-    # Verify TLS certificates
-    verify_certs: True
-
-    # Client certificate
-    client_cert: /etc/elasticsearch/ssl/node1.crt
-    client_key: /etc/elasticsearch/ssl/node1.key
-    ca_certs: /etc/elasticsearch/ssl/rootCA.crt
-    ```
-
-1. For CSV/HTML export to work properly rootCA.crt generated in the first step has to be "installed" on the server. Below are example steps for CentOS 7:
-
-    ```bash
-    # Copy rootCA.crt and update CA trust store
-    cp /etc/elasticsearch/ssl/rootCA.crt /etc/pki/ca-trust/source/anchors/rootCA.crt
-    update-ca-trust
-    ```
-
-1. Intelligence module. Generate pkcs12 keystore/cert:
-
-    ```bash
-    DOMAIN=mylocal.domain.test
-    keytool -import -file /etc/elasticsearch/ssl/rootCA.crt -alias root -keystore root.jks
-    openssl pkcs12 -export -in /etc/elasticsearch/ssl/${DOMAIN}.crt -inkey /etc/elasticsearch/ssl/${DOMAIN}.key -out ${DOMAIN}.p12 -name "${DOMAIN}" -certfile /etc/elasticsearch/ssl/rootCA.crt
-    ```
-
-    ```bash
-    # Configure /opt/ai/bin/conf.cfg
-    https_keystore=/path/to/pk12/mylocal.domain.test.p12
-    https_truststore=/path/to/root.jks
-    https_keystore_pass=bla123
-    https_truststore_pass=bla123
-    ```
-
-#### Logstash/Beats
-
-You can either install CA to allow Logstash and Beats traffic or you can supply the required certificates in config:
-
-1. Logstash:
-
-    ```yml
-    output {
-      logserver {
-        hosts => "https://mylocal.domain.test:9200"
-        ssl => true
-        index => "winlogbeat-%{+YYYY.MM}"
-        user => "logstash"
-        password => "logstash"
-        cacert => "/path/to/cacert/rootCA.crt"
-      }
-    }
-    ```
-
-2. Beats:
-
-    ```yaml
-    output.elasticsearch.hosts: ["https://mylocal.domain.test:9200"]
-    output.elasticsearch.protocol: "https"
-    output.elasticsearch.ssl.enabled: true
-    output.elasticsearch.ssl.certificate_authorities: ["/path/to/cacert/rootCA.crt"]
-    ```
-
-Additionally, for any beats program to be able to write to elasticsearch, you will have to make changes to the "enabled_ciphers" directive in "/etc/elasticsearch/elasticsearch.yml". This is done by commenting:
-  
-  ```yaml
-  logserverguard.ssl.http.enabled_ciphers:
-  - "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-  ```
-
-Otherwise, the beat will not be able to send documents directly and if you want to avoid it you can send a document with Logstash first.
+Guide available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/Transport%20layer%20encryption)
 
 ## Offline TLS Tool
 
@@ -542,7 +280,7 @@ The TLS Tool is a program that can be used for:
   - Generating CSRs,
   - Validating certificates
 
-Besides the actual certificates the tool also generated configuration snippets which you can directly copy and paste into your `elasticsearch.yml`.
+Besides the actual certificates the tool also generated configuration snippets which you can directly copy and paste into your Data Node main .yml file.
 
 ### General usage
 
@@ -555,8 +293,6 @@ You will find the script in:
 ```bash
 <installation directory>/tlstool.sh
 ```
-
-Default `<installation directory>` is `/usr/share/elasticsearch/utils/tlstool`.
 
 ### Command line options
 
@@ -832,7 +568,7 @@ Generated files:
   - `[nodename].crt` - Node certificate
   - `[nodename].key` - Private key of the node certificate
   - `[nodename]_http.crt` - REST certificate, only generated if reuseTransportCertificatesForHttp is false
-  - `[nodename]_logserver_config_snippet.yml` - Logserver Guard configuration snippet for this node, add this to opensearch.yml
+  - `[nodename]_logserver_config_snippet.yml` - Logserver Guard configuration snippet for this node, add this to logserver.yml
 
 Options:
 
@@ -990,9 +726,9 @@ If you just want to create CSRs to submit them to your local CA, you can omit th
 
 How to enable, disable and/or limit available ciphers for Logserver services.
 
-#### Logserver database
+#### Logserver Data Node
 
-Edit config file `/etc/elasticsearch/elasticsearch.yml`.
+Edit config file `/etc/logserver/logserver.yml`.
 
 Example:
 
@@ -1020,11 +756,11 @@ logserverguard.ssl.http.enabled_ciphers:
 - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 ```
 
-After editing restart elasticsearch.service. Note that this settings should be updated on all cluster nodes.
+After editing restart Data Node service. Note that this settings should be updated on all cluster nodes.
 
 #### Logserver GUI
 
-Edit config file `/etc/kibana/kibana.yml`.
+Edit config file `/etc/logserver-gui/logserver-gui.yml`.
 
 Example:
 
@@ -1041,7 +777,7 @@ server.ssl.cipherSuites:
 - ECDHE-RSA-AES128-GCM-SHA256
 ```
 
-After editing restart kibana.service
+After editing restart Logserver GUI service
 
 #### Cerebro
 
@@ -1103,21 +839,21 @@ You can edit it and after restarting e-doc.service, changes will be applied.
     systemctl restart e-doc
     ```
 
-## Network Probe (logstash)
+## Network Probe
 
-Since 7.6.1 there is a default configuration for enabled algorithms on path `/etc/logstash/java.properties`.
+Since 7.6.1 there is a default configuration for enabled algorithms on path `/etc/logserver-probe/java.properties`.
 
-Make sure there is a fallowing definition in `/etc/logstash/jvm.options`:
+Make sure there is a fallowing definition in `/etc/logserver-probe/jvm.options`:
 
 ```conf
--Djava.security.properties=/etc/logstash/java.properties
+-Djava.security.properties=/etc/logserver-probe/java.properties
 ```
 
-You can edit it and after restarting logstash.service, changes will be applied.
+You can edit it and after restarting Network Probe, changes will be applied.
 
 ##### 7.6.0 and before
 
-1. To recreate current default behavior, create file `/etc/logstash/java.properties` with content:
+1. To recreate current default behavior, create file `/etc/logserver-probe/java.properties` with content:
 
     ```conf
     security.useSystemPropertiesFile=false
@@ -1127,13 +863,13 @@ You can edit it and after restarting logstash.service, changes will be applied.
     jdk.tls.legacyAlgorithms=
     ```
 
-1. And add to `/etc/logstash/jvm.options`:
+1. And add to `/etc/logserver-probe/jvm.options`:
 
     ```conf
-    -Djava.security.properties=/etc/logstash/java.properties
+    -Djava.security.properties=/etc/logserver-probe/java.properties
     ```
 
-1. After restarting logstash.service, changes will be applied.
+1. After restarting Network Probe service, changes will be applied.
 
 #### Masteragent
 
@@ -1141,48 +877,13 @@ Since 7.6.1 Masteragent has a predefined strong ciphers already set. Updating is
 
 ## Browser layer encryption
 
-Secure Sockets Layer (SSL) and Transport Layer Security (TLS) provide encryption for data-in-transit. While these terms are often used interchangeably, Energy Logserver GUI supports only TLS, which supersedes the old SSL protocols. Browsers send traffic to Energy Logserver  GUI and Energy Logserver GUI sends traffic to Elasticsearch database. These communication channels are configured separately to use TLS. TLS requires X.509 certificates to authenticate the communicating parties and perform encryption of data-in-transit. Each certificate contains a public key and has an associated — but separate — private key; these keys are used for cryptographic operations. Energy Logserver  GUI supports certificates and private keys in PEM format and supports the TLS 1.3 version.
-
-### Configuration steps
-
-1. Obtain a server certificate and private key for Energy Logserver GUI.
-
-   Kibana will need to use this "server certificate" and the corresponding private key when receiving connections from web browsers.
-
-   When you obtain a server certificate, you must set its subject alternative name (SAN) correctly to ensure that modern web browsers with hostname verification will trust it. You can set one or more SANs to the Energy Logserver GUI server’s fully qualified domain name (FQDN), hostname, or IP address. When choosing the SAN, you should pick whichever attribute you will be using to connect to Kibana in your browser, which is likely the FQDN in a production environment.
-
-2. Configure Energy Logserver GUI to access the server certificate and private key.
-
-   `vi /etc/kibana/kibana.yml`
-
-   ```bash
-   server.ssl.enabled: true
-   server.ssl.supportedProtocols: ["TLSv1.3"]
-   server.ssl.certificate: "/path/to/kibana-server.crt"
-   server.ssl.key: "/path/to/kibana-server.key"
-   ```
-
-3. Set HTTPS in configuration file for the License server:
-
-  ```bash
-  vi /opt/license-service/license-service.conf
-  ```
-
-  ```bash
-  elasticsearch_connection:
-    hosts: ["els_host_IP:9200"]
-
-    username: license
-    password: "license_user_password"
-
-    https: true
-  ```
+Browser layer encryption is available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/Browser%20layer%20encryption)
 
 ## Building a cluster
 
 ### Node roles
 
-Every instance of the Elasticsearch server is called a *node*.
+Every instance of the Data Node server is called a *node*.
 A collection of connected nodes is called a *cluster*.
 All nodes know about all the other nodes in the cluster
 and can forward client requests to the appropriate node.
@@ -1196,34 +897,33 @@ Besides that, each node serves one or more purposes:
 
 ### Naming convention
 
-Elasticsearch requires little configuration before going to work.
+Data Node requires little configuration before going to work.
 
 The following settings must be considered before going to production:
 
-- **path.data** and **path.logs** - default locations of these files are
-`/var/lib/elasticsearch` and `/var/log/elasticsearch`.
+- **path.data** and **path.logs** - default locations of the data.
 - **cluster.name** - A node can only join a cluster when it shares its
 `cluster.name` with all the other nodes in the cluster. The default name
-is "elasticsearch", but you should change it to an appropriate name that describes the purpose of the cluster. You can do this in the `/etc/elasticsearch/elasticsearch.yml` file.
-- **node.name** - By default, Elasticsearch will use the first seven characters of the randomly
+is "logserver", but you should change it to an appropriate name that describes the purpose of the cluster. You can do this in the `/etc/logserver/logserver.yml` file.
+- **node.name** - By default, Data Node will use the first seven characters of the randomly
 generated UUID as the node ID. Node ID is persisted and does not change when a node restarts.
 It is worth configuring a more human-readable name: `node.name: prod-data-2`
-in file `/etc/elstaicsearch/elasticsearch.yml`
-- **network.host** - parameter specifying network interfaces to which Elasticsearch can bind. The default is `network.host`: ["\_local\_", "\_site\_"].
-- **discovery** - Elasticsearch uses a custom discovery implementation called "Zen Discovery".
+in file `/etc/logserver/logserver.yml`
+- **network.host** - parameter specifying network interfaces to which Data Node can bind. The default is `network.host`: ["\_local\_", "\_site\_"].
+- **discovery** - Data Node uses a custom discovery implementation called "Zen Discovery".
 There are two important settings:
   - `discovery.zen.ping.unicast.hosts` - specify a list of other nodes in the cluster that are likely to be live and contactable;
   - `discovery.zen.minimum_master_nodes` - to prevent data loss, you can configure this setting so that each master-eligible node knows the minimum number of master-eligible nodes that must be visible to form a cluster.
-- **heap size** - By default, Elasticsearch tells the JVM to use a heap with a minimum (Xms) and maximum (Xmx)
+- **heap size** - By default, Data Node tells the JVM to use a heap with a minimum (Xms) and maximum (Xmx)
 size of 1 GB. When moving to production, it is important to configure heap size to ensure that
-Elasticsearch has enough heap available
+Data Node has enough heap available
 
 ### Config files
 
-To configure the Elasticsearch cluster you  must specify some parameters
-in the following configuration files on every node that will be connected to the cluster:
+To configure the Data Node cluster you  must specify some parameters
+in the Data Node main .yml configuration file on every node that will be connected to the cluster:
 
-- `/etc/elsticsearch/elasticserach.yml`:
+- `/etc/logserver`:
   - `cluster.name:name_of_the_cluster` - same for every node;
   - `node.name:name_of_the_node` - uniq for every node;
   - `node.master:true_or_false`
@@ -1231,7 +931,7 @@ in the following configuration files on every node that will be connected to the
   - `network.host:["_local_","_site_"]`
   - `discovery.zen.ping.multicast.enabled`
   - `discovery.zen.ping.unicast.hosts`
-- `/etc/elsticsearch/log4j2.properties`:
+- `/etc/logserver/log4j2.properties`:
   - `logger: action: DEBUG` - for easier debugging.
 
 ### TLS Certificates
@@ -1239,18 +939,18 @@ in the following configuration files on every node that will be connected to the
 To generate TLS certificates for each node of the cluster, you can check the `logserver-cluster.yml` config that is provided with the `tlstool.sh`.
 
 ```bash
-cd /usr/share/elasticsearch/utils/tlstool
+cd /usr/share/logserver/utils/tlstool
 bash tlstool.sh -c config/logserver-cluster.yml -ca -crt
 ```
 
 ### Example setup
 
-Example of the Elasticsearch cluster configuration:
+Example of the Data Node cluster configuration:
 
-- file `/etc/elasticsearch/elasticsearch.yml`:
+- file `/etc/logserver/logserver.yml`:
 
   cluster.name: tm-lab
-  node.name: "elk01"
+  node.name: "logserver"
   node.master: true
   node.data: true
   network.host: 127.0.0.1,10.0.0.4
@@ -1258,29 +958,25 @@ Example of the Elasticsearch cluster configuration:
   discovery.zen.ping.multicast.enabled: false
   discovery.zen.ping.unicast.hosts: ["10.0.0.4:9300","10.0.0.5:9300","10.0.0.6:9300"]
 
-- to start the Elasticsearch cluster execute the command:
+- to start the Data Node cluster execute the systemctl restart command:
 
-    ```bash
-    systemctl restart elasticsearch
-    ```
-
-- to check the status of the Elasticsearch cluster execute the command:
-    - check the Elasticsearch cluster nodes status via TCP port:
+- to check the status of the Data Node cluster execute the command:
+    - check the Data Node cluster nodes status via TCP port:
   
         ```bash
          curl -XGET '127.0.0.1:9200/_cat/nodes?v'
 
            host            ip   heap.percent ram.percent load node.role master name
-           10.0.0.4   10.0.0.4     18           91      0.00 -        -       elk01
-           10.0.0.5   10.0.0.5     66           91      0.00 d        *       elk02
-           10.0.0.6   10.0.0.6     43           86      0.65 d        m       elk03
-           10.0.0.7   10.0.0.7     45           77      0.26 d        m       elk04
+           10.0.0.4   10.0.0.4     18           91      0.00 -        -       els01
+           10.0.0.5   10.0.0.5     66           91      0.00 d        *       els02
+           10.0.0.6   10.0.0.6     43           86      0.65 d        m       els03
+           10.0.0.7   10.0.0.7     45           77      0.26 d        m       els04
         ```
 
-    - check the status of the Elasticsearch cluster via the log file:
+    - check the status of the Data Node cluster via the log file:
 
         ```bash
-        tail -f /var/log/elasticsearch/tm-lab.log (cluster.name)
+        tail -f /var/log/logserver/tm-lab.log (cluster.name)
         ```
 
 ### Adding a new node to the existing cluster
@@ -1295,13 +991,10 @@ Change the following parameters in the configuration file:
 - `node.data:`true_or_false
 - `discovery.zen.ping.unicast.hosts:` [ "10.0.0.4:9300", "10.0.0.5:9300", "10.0.0.6:9300" ] - IP addresses and instances of nodes in the cluster.
 
-If you add a node with the role `data`, delete the contents of the `path.data` directory, by default in `/var/lib/elasticsearch`
+If you add a node with the role `data`, delete the contents of the `path.data` directory, by default in `/var/lib/logserver`
 
-Restart the Elasticsearch instance of the new node:
+Restart the Data Node instance of the new node with systemctl restart command
 
-```bash
-systemctl restart elasticsearch
-```
 ## Disk-based shard allocation
 
 Since version **7.4.3** of Logserver a feature was added to keep you informed about your disk usage. Disk-based shard allocation settings are used to determine the GUI behaviour.
@@ -1363,7 +1056,7 @@ While the GUI will always inform you about your disk usage, to take advantage of
 
 3. You can also use percentages for that **but not both - you cannot mix byte values and percentages**.
 
-4. You can also modify Logserver configuration file `/etc/elasticsearch/elasticsearch.yml`:
+4. You can also modify Logserver configuration file `/etc/logserver/logserver.yml`:
 
     ```yaml
     cluster.routing.allocation.disk.threshold_enabled: true
@@ -1388,7 +1081,7 @@ Disabling the threshold checking is not recommended! Also, changing the "thresho
 
 ## Authentication with Active Directory
 
-The AD configuration should be done in the `/etc/elasticsearch/properties.yml`
+The AD configuration should be done in the `/etc/logserver/properties.yml`
 file.
 
 Below is a list of settings to be made in the `properties.yml` file
@@ -1486,7 +1179,7 @@ Give the name a certificate
 ![](/media/media/image84.png)
 
 After the certificate is exported, this certificate should be imported
-into a trusted certificate file that will be used by the Elasticsearch
+into a trusted certificate file that will be used by the Data Node
 plugin.
 
 To import a certificate into a trusted certificate file, a tool called
@@ -1502,7 +1195,7 @@ The values `certificat.cer` and `certificationstore` should be changed according
 
 By doing this, he will ask you to set a password for the trusted
 certificate store. Remember this password, because it must be set in
-the configuration of the Elasticsearch plugin. The following settings
+the configuration of the Data Node plugin. The following settings
 must be set in the `properties.yml` configuration for
 SSL:
 
@@ -1513,15 +1206,15 @@ SSL:
 
 ### Role mapping
 
-In the `/etc/elasticsearch/properties.yml` configuration file you can find
+In the `/etc/logserver/properties.yml` configuration file you can find
 a section for configuring role mapping:
 
 ```bash
 # LDAP ROLE MAPPING FILE
-# rolemapping.file.path: /etc/elasticsearch/role-mappings.yml
+# rolemapping.file.path: /etc/logserver/role-mappings.yml
 ```
 
-This variable points to the file `/etc/elasticsearch/role-mappings.yml`
+This variable points to the file `/etc/logserver/role-mappings.yml`
 Below is the sample content for this file:
 
 ```yaml
@@ -1558,13 +1251,13 @@ To do this use *pass-encrypter.sh* script that is located in the *Utils* directo
 1. Installation of *pass-encrypter*
 
     ```bash
-    cp -pr /instalation_folder/elasticsearch/pass-encrypter /usr/share/elasticsearch/
+    cp -pr /instalation_folder/logserver/pass-encrypter /usr/share/logserver/
     ```
 
 1. Use *pass-encrypter*
 
     ```conf
-    /usr/share/elasticsearch/utils/pass-encrypter/pass-encrypter.sh
+    /usr/share/logserver/utils/pass-encrypter/pass-encrypter.sh
 
     Enter the string for encryption :
     new_password
@@ -1577,7 +1270,7 @@ To use the Radius protocol, install the latest available version of Energy Logse
 
 ### Configuration
 
-The default configuration file is located at /etc/elasticsearch/properties.yml:
+The default configuration file is located at /etc/logserver/properties.yml:
 
 ```yaml
 # Radius opts
@@ -1588,7 +1281,7 @@ The default configuration file is located at /etc/elasticsearch/properties.yml:
 
 Use appropriate secret based on config file in Radius server. The secret is configured on `clients.conf` in the Radius server.
 
-In this case, since the plugin will try to do Radius auth, the client IP address should be the IP address where the Elasticsearch is deployed.
+In this case, since the plugin will try to do Radius auth, the client IP address should be the IP address where the Data Node is deployed.
 
 Every user by default at present gets the admin role
 
@@ -1598,7 +1291,7 @@ To use OpenLDAP authorization, install or update Energy Logserver too at least 7
 
 ### Configuration
 
-The default configuration file is located at `/etc/elasticsearch/properties.yml`:
+The default configuration file is located at `/etc/logserver/properties.yml`:
 
 - ldap_groups_search  - Enable Open LDAP authorization. The `ldap_groups_search` switch with true/false values.
 
@@ -1625,7 +1318,7 @@ The default configuration file is located at `/etc/elasticsearch/properties.yml`
   Sample configuration:
 
   ```bash
-  licenseFilePath: /usr/share/elasticsearch/
+  licenseFilePath: /usr/share/logserver/
   
   ldaps:
       
@@ -1650,7 +1343,7 @@ The default configuration file is located at `/etc/elasticsearch/properties.yml`
   
   ```
 
-    When the password is longer than 20 characters, we recommend using our pass-encrypter, otherwise, the backslash must be escaped with another backslash. Endpoint `role-mapping/_reload` has been changed to `_role-mapping/reload`. This is a unification of API conventions, following Elasticsearch conventions.
+    When the password is longer than 20 characters, we recommend using our pass-encrypter, otherwise, the backslash must be escaped with another backslash. Endpoint `role-mapping/_reload` has been changed to `_role-mapping/reload`. This is a unification of API conventions, following Data Node conventions.
 
 ## Configuring Single Sign On (SSO)
 
@@ -1673,8 +1366,8 @@ To enable SSO on your system, follow the steps below.
 
 ### Configuration steps
 
-1. Create a **User** Account for Elasticsearch auth plugin <br>
-   In this step, a Kerberos Principal representing the Elasticsearch auth plugin is created on the Active Directory. The principal name would be `name@EXAMPLE.COM`, while the `EXAMPLE.COM` is the administrative name of the realm.<br><br>
+1. Create a **User** Account for Data Node auth plugin <br>
+   In this step, a Kerberos Principal representing the Data Node auth plugin is created on the Active Directory. The principal name would be `name@EXAMPLE.COM`, while the `EXAMPLE.COM` is the administrative name of the realm.<br><br>
 
    Create a User in AD. Set "Account never expires" and enable support for Kerberos encryption as shown below.
 
@@ -1702,11 +1395,11 @@ To enable SSO on your system, follow the steps below.
 
     For more details about the `ktpass tool`, please refer to the official documentation: [ktpass details](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ktpass).
 
-    The `esauth.keytab` file should be placed on your elasticsearch node - preferably `/etc/elasticsearch/` with  read permissions for elasticsearch user:
+    The `esauth.keytab` file should be placed on your Data Node node - preferably `/etc/logserver/` with  read permissions for Data Node user:
 
     ```bash
-    chmod 640 /etc/elasticsearch/esauth.keytab
-    chown elasticsearch: /etc/elasticsearch/esauth.keytab
+    chmod 640 /etc/logserver/esauth.keytab
+    chown user: /etc/logserver/esauth.keytab
     ```
 
     <br>
@@ -1718,7 +1411,7 @@ To enable SSO on your system, follow the steps below.
           com.sun.security.auth.module.Krb5LoginModule required
           principal="HTTP/loggui.com@EXAMPLE.COM"
           useKeyTab=true
-          keyTab=/etc/elasticsearch/esauth.keytab
+          keyTab=/etc/logserver/esauth.keytab
           storeKey=true
           debug=true;
         };
@@ -1726,31 +1419,31 @@ To enable SSO on your system, follow the steps below.
         com.sun.security.auth.module.Krb5LoginModule required
         principal="HTTP/loggui.com@EXAMPLE.COM"
         useKeyTab=true
-        keyTab=/etc/elasticsearch/esauth.keytab
+        keyTab=/etc/logserver/esauth.keytab
         storeKey=true
         debug=true;
       };
     ```
 
       The principal user and keyTab location should be changed as per the values created in Step 2. Make sure the domain is in **UPPERCASE** as shown above. \
-      The `krb5Login.conf` file should be placed on your elasticsearch node, for   instance, `/etc/elasticsearch/` with read permissions for the elasticsearch user:
+      The `krb5Login.conf` file should be placed on your Data Node node, for   instance, `/etc/logserver/` with read permissions for the Data Node user:
 
       ```bash
-      sudo chmod 640 /etc/elasticsearch/krb5Login.conf
-      sudo chown elasticsearch: /etc/elasticsearch/krb5Login.conf
+      sudo chmod 640 /etc/logserver/krb5Login.conf
+      sudo chown user: /etc/logserver/krb5Login.conf
       ```
     
       <br>
 
-1. Uncomment and edit JVM arguments, in `/etc/elasticsearch/jvm.options.d/single-sign-logon.options` as shown below:
+1. Uncomment and edit JVM arguments, in `/etc/logserver/jvm.options.d/single-sign-logon.options` as shown below:
     ```
     -Dsun.security.krb5.debug=false \
     -Djava.security.krb5.realm=**EXAMPLE.COM** \
     -Djava.security.krb5.kdc=**192.168.3.111** \
-    -Djava.security.auth.login.config=/etc/elasticsearch/krb5Login.conf \
+    -Djava.security.auth.login.config=/etc/logserver/krb5Login.conf \
     -Djavax.security.auth.useSubjectCredsOnly=false
     ```
-    Change the `.krb5.realm` and `.krb5.kdc` to the appropriate values. `Realm` is defined as used domain (must be in UPPERCASE) realm and `.kdc` is AD's IP address. Those JVM arguments have to be set for the Elasticsearch server.
+    Change the `.krb5.realm` and `.krb5.kdc` to the appropriate values. `Realm` is defined as used domain (must be in UPPERCASE) realm and `.kdc` is AD's IP address. Those JVM arguments have to be set for the Logserver server.
   
     <br>
 
@@ -1792,7 +1485,7 @@ To enable SSO on your system, follow the steps below.
 
    <br>
 
-1. Enable the SSO feature in the `kibana.yml` file:
+1. Enable the SSO feature in the `logserver-gui.yml` file:
 
    ```bash
    login.sso_enabled: true
@@ -1800,11 +1493,7 @@ To enable SSO on your system, follow the steps below.
 
    <br>
 
-1. After that Kibana has to be restarted:
-
-   ```bash
-   sudo systemctl restart kibana.service
-   ```
+1. After that Logserver GUI has to be restarted with systemctl restart command
 
    <br>
 
@@ -2117,30 +1806,6 @@ Update the following config:
   </tr>
 </tbody>
 </table>
-
-## Default home page
-
-To set the default application for the GUI home page, please do the following:
-
-- edit `/etc/kibana/kibana.yml` configuration file:
-
-  ```bash
-  vi /etc/kibana/kibana.yml
-  ```
-
-- change the following directives:
-
-  ```yml
-  # Home Page settings
-  #kibana.defaultAppId: "home"
-  ```
-
-  example:
-
-  ```yml
-  # Home Page settings
-  kibana.defaultAppId: "alerts"
-  ```
 
 ## Configure email delivery
 
@@ -2586,8 +2251,8 @@ Configuration steps
 
 Before use ensure that you have all the required files
 
-- Tool for generating the necessary certificates: `/usr/share/elasticsearch/utils/tlstool/tlstool.sh`;
-- Logstash utilities:
+- Tool for generating the necessary certificates: `/usr/share/logserver/utils/tlstool/tlstool.sh`;
+- Network Probe utilities:
 
     ```conf
       ./integrations/masteragent/conf.d/masteragent {01-input-agents.conf, 050-filter-agents.conf, 100-output-agents.conf}
@@ -2605,13 +2270,13 @@ Before use ensure that you have all the required files
 
 EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 
-1. Generate the certificates using `tlstools.sh` script from `/usr/share/elasticsearch/utils/tlstool/`.
+1. Generate the certificates using `tlstools.sh` script from `/usr/share/logserver/utils/tlstool/`.
 
-    - Update the IP of the node directive, by replacing `<logstash ip address`> with the logstash server ip in the provided masteragent.yml config (`/usr/share/elasticsearch/utils/tlstool/config/masteragent.yml`).
+    - Update the IP of the node directive, by replacing `<Network Probe ip address`> with the Network Probe server ip in the provided masteragent.yml config (`/usr/share/logserver/utils/tlstool/config/masteragent.yml`).
     - Generate certs using masteragent configuration (by default it will be saved to the `out/` dir):
 
         ```bash
-        /usr/share/elasticsearch/utils/tlstool/tlstool.sh -c /usr/share/elasticsearch/utils/tlstool/config/masteragent.yml -ca -crt -t agents/masteragent/certificates
+        /usr/share/logserver/utils/tlstool/tlstool.sh -c /usr/share/logserver/utils/tlstool/config/masteragent.yml -ca -crt -t agents/masteragent/certificates
         ```
 
     - Create KeyStore and TrustStore. Set the KeyStore password of your choice that is utilized to securely store certificates:
@@ -2627,9 +2292,9 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
     - Type 'yes' when "Trust this certificate?" monit will be shown.
     - Set the TrustStore password of your choice that is used to secure CAs. Remember entered passwords - they'll be used later!
 
-1. Configure firewall to enable communication on used ports (defaults: TCP 8080 -> logstash, TCP 8081 -> agent's server).
+1. Configure firewall to enable communication on used ports (defaults: TCP 8080 -> Network Probe, TCP 8081 -> agent's server).
 
-    - These ports can be changed but must reflect "port" and "logstash" directives from an agent.conf file to ensure a connection with the agent.
+    - These ports can be changed but must reflect "port" and "Network Probe" directives from an agent.conf file to ensure a connection with the agent.
     - Commands for default ports:
 
       ```bash
@@ -2637,39 +2302,35 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
       firewall-cmd --permanent --zone public --add-port 8081/tcp
       ```
 
-1. Configure Logstash:
+1. Configure Network Probe:
 
     - Copy files:
 
       ```bash
-      cp -rf ./integrations/masteragent/conf.d/* /etc/logstash/conf.d/
+      cp -rf ./integrations/masteragent/conf.d/* /etc/logserver-probe/conf.d/
       ```
 
     - Copy pipeline configuration:
 
       ```bash
-      cp -rf ./integrations/masteragent/*.yml.off /etc/logstash/pipelines.d/masteragent.yml
-      cat ./integrations/masteragent/masteragent.yml.off >> /etc/logstash/pipelines.yml
+      cp -rf ./integrations/masteragent/*.yml.off /etc/logserver-probe/pipelines.d/masteragent.yml
+      cat ./integrations/masteragent/masteragent.yml.off >> /etc/logserver-probe/pipelines.yml
       ```
 
     - Configure SSL connection, by copying previously generated certificates:
 
       ```bash
-      mkdir -p /etc/logstash/conf.d/masteragent/ssl
-      /bin/cp -rf ./agents/masteragent/certificates/localhost.* ./agents/masteragent/certificates/rootCA.crt /etc/logstash/conf.d/masteragent/ssl/
+      mkdir -p /etc/logserver-probe/conf.d/masteragent/ssl
+      /bin/cp -rf ./agents/masteragent/certificates/localhost.* ./agents/masteragent/certificates/rootCA.crt /etc/logserver-probe/conf.d/masteragent/ssl/
       ```
 
     - Set permissions:
 
       ```bash
-      chown -R logstash:logstash /etc/logstash/conf.d/masteragent
+      chown -R user:group /etc/logserver-probe/conf.d/masteragent
       ```
 
-    - Restart service:
-
-      ```bash
-      systemctl restart logstash
-      ```
+    - Restart service Network Probe service with systemctl restart command
 
 ### Installation of MasterAgent - Server Side
 
@@ -2690,7 +2351,7 @@ EVERY COMMAND HAS TO BE EXECUTED FROM /INSTALL DIRECTORY.
 - Set permissions:
 
     ```bash
-    chown -R kibana:kibana /opt/agents
+    chown -R user:group /opt/agents
     ```
 
 - Update the configuration file with KeyStore/TrustStore paths and passwords. Use your preferred editor eg. vim:
@@ -2727,7 +2388,7 @@ Linux Agent - software installed on clients running on Linux OS:
     /bin/cp -rf ./certificates/node_name.p12 ./certificates/root.jks /opt/masteragent/
     ```
 
-1. Update the configuration file with KeyStore/TrustStore paths and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive. Use your preferred editor eg. vim:
+1. Update the configuration file with KeyStore/TrustStore paths and passwords. Also, update the IP and port (by default 8080 is used) of the Network Probe host that the agent will connect to with the 'Network Probe' directive. Use your preferred editor eg. vim:
 
     ```bash
     vim /opt/masteragent/agent.conf
@@ -2741,7 +2402,7 @@ Linux Agent - software installed on clients running on Linux OS:
     systemctl start masteragent
     ```
 
-1. Finally, verify in the Kibana 'Agents' plugin if a newly added agent is present. Check masteragent logs executing:
+1. Finally, verify in the Logserver GUI 'Agents' plugin if a newly added agent is present. Check masteragent logs executing:
 
     ```bash
     journalctl -fu masteragent
@@ -2768,7 +2429,7 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
 1. Copy node_name.p12 and root.jks files from the `./install/agents/masteragent/certificates` to desired directory.
 
-1. Update the `C:\Program Files\MasterAgent\agent.conf` file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the logstash host that the agent will connect to with the 'logstash' directive.
+1. Update the `C:\Program Files\MasterAgent\agent.conf` file with KeyStore/TrustStore paths from the previous step and passwords. Also, update the IP and port (by default 8080 is used) of the Network Probe host that the agent will connect to with the 'Network Probe' directive.
 
 1. Start PowerShell as an administrator:
 
@@ -2788,7 +2449,7 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
       New-Service -name masteragent -displayName masteragent -binaryPathName "C:\Program Files\MasterAgent\agents.exe"
       ```
 
-1. Finally, verify in the Kibana '`Agents`' plugin if a newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in the `C:\Program Files\MasterAgent` directory after the service starts. Also, check the service status:
+1. Finally, verify in the Logserver GUI '`Agents`' plugin if a newly added agent is present. To check out logs and errors, look for '`agents.out`.log' and '`agents.err.log`' files in the `C:\Program Files\MasterAgent` directory after the service starts. Also, check the service status:
 
       `.\agents.exe status`
 
@@ -2838,20 +2499,18 @@ FOR WINDOWS AND LINUX: `Client requires at least Java 1.8+.
 
 ### Agent module compatibility
 
-The Agents module works with Beats agents in the following versions:
+The Agents module among others is compatible with Beats agents in the following versions:
 
 <table border="1" class="docutils" id="id1">
 <colgroup>
 <col width="3%" />
 <col width="12%" />
 <col width="13%" />
-<col width="71%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">No</th>
 <th class="head">Agent Name</th>
 <th class="head">Beats Version</th>
-<th class="head">Link to download</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -2861,16 +2520,12 @@ The Agents module works with Beats agents in the following versions:
 </td>
 <td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/filebeat-oss-7-17-8</p>
-</td>
 </tr>
 <tr class="row-odd"><td><p class="first last">2</p>
 </td>
 <td><p class="first last">Packetbeat</p>
 </td>
 <td><p class="first last">OSS 7.17.8</p>
-</td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/packetbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">3</p>
@@ -2879,16 +2534,12 @@ The Agents module works with Beats agents in the following versions:
 </td>
 <td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/winlogbeat-oss-7-17-8</p>
-</td>
 </tr>
 <tr class="row-odd"><td><p class="first last">4</p>
 </td>
 <td><p class="first last">Metricbeat</p>
 </td>
 <td><p class="first last">OSS 7.17.8</p>
-</td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/metricbeat-oss-7-17-8</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">5</p>
@@ -2897,8 +2548,6 @@ The Agents module works with Beats agents in the following versions:
 </td>
 <td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/heartbeat-oss-7-17-8</p>
-</td>
 </tr>
 <tr class="row-odd"><td><p class="first last">6</p>
 </td>
@@ -2906,16 +2555,8 @@ The Agents module works with Beats agents in the following versions:
 </td>
 <td><p class="first last">OSS 7.17.8</p>
 </td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/auditbeat-oss-7-17-8</p>
-</td>
 </tr>
 <tr class="row-even"><td><p class="first last">7</p>
-</td>
-<td><p class="first last">Logstash</p>
-</td>
-<td><p class="first last">OSS 7.17.8</p>
-</td>
-<td><p class="first last">https://www.elastic.co/downloads/past-releases/logstash-oss-7-17-8</p>
 </td>
 </tr>
 </table>
@@ -3011,7 +2652,7 @@ Editing the file: `C:\Program Files\Winlogbeat\winlogbeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 1. In section:
@@ -3464,7 +3105,7 @@ Editing the file: `C:\Program Files\Filebeat\filebeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 1. In section:
@@ -3594,7 +3235,7 @@ Editing the file: `C:\Program Files\Merticbeat\metricbeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 1. In section:
@@ -3722,7 +3363,7 @@ Editing the file: `C:\Program Files\Packetbeat\packetbeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 1. In section:
@@ -3865,7 +3506,7 @@ Editing the file: `/etc/filebeat/filebeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 1. In section:
@@ -3974,7 +3615,7 @@ Editing the file: `/etc/metricbeat/metricbeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 5. In section:
@@ -4081,7 +3722,7 @@ Editing the file: `/etc/packetbeat/packetbeat.yml`:
    ```yml
    output.logstash:
      # The Logstash hosts
-     hosts: ["LOGSTASH_IP:5044"]
+     hosts: ["logserver-probe-ip:5044"]
    ```
 
 5. In section:
@@ -4389,7 +4030,7 @@ To install the Kafka, follow the steps below:
 
 ### Configuring Kafka Clients
 
-1. Configure the output section in Logstash based on the following example:
+1. Configure the output section in Network Probe based on the following example:
 
    Complete:
     - Server FQDN;
@@ -4411,7 +4052,7 @@ To install the Kafka, follow the steps below:
    }
    ```
 
-2. Configure the input section in Logstash based on the following example:
+2. Configure the input section in Network Probe based on the following example:
 
    Complete:
     - Server FQDN;
@@ -4557,7 +4198,7 @@ vim server-certopts.cnf
   
   ```
 
-  - set the output for Event Collector to Logstash forwarding:
+  - set the output for Event Collector to Network Probe forwarding:
 
   ```bash
   remote_syslog:
@@ -4708,47 +4349,43 @@ vim server-certopts.cnf
     gpupdate /force
     ```
 
-#### Logstash pipeline configuration
+#### Network Probe pipeline configuration
 
 Create a directory for Event Collector pipeline configuration files:
 
 ```bash
-mkdir /etc/logstash/conf.d/syslog_wec
+mkdir /etc/logserver-probe/conf.d/syslog_wec
 ```
 
-Copy the following Logstash configuration files to the pipeline directory:
+Copy the following Network Probe configuration files to the pipeline directory:
 
 ```bash
-cp 001-input-wec.conf /etc/logstash/conf.d/syslog_wec/
-cp 050-filter-wec.conf /etc/logstash/conf.d/syslog_wec/
-cp 060-filter-wec-siem.conf /etc/logstash/conf.d/syslog_wec/
-cp 100-output-wec.conf /etc/logstash/conf.d/syslog_wec/
+cp 001-input-wec.conf /etc/logserver-probe/conf.d/syslog_wec/
+cp 050-filter-wec.conf /etc/logserver-probe/conf.d/syslog_wec/
+cp 060-filter-wec-siem.conf /etc/logserver-probe/conf.d/syslog_wec/
+cp 100-output-wec.conf /etc/logserver-probe/conf.d/syslog_wec/
 ```
 
-#### Enabling Logstash pipeline
+#### Enabling Network Probe pipeline
 
-To enable the `syslog_wec` Logstash pipeline edit the `pipelie.yml` file:
+To enable the `syslog_wec` Network Probe pipeline edit the `pipelie.yml` file:
 
 ```bash
-vim /etc/logstash/pipeline.yml
+vim /etc/logserver-probe/pipeline.yml
 ```
 
 Add the following section:
 
 ```bash
 - pipeline.id: syslog_wec
-  path.config: "/etc/logstash/conf.d/syslog_wec/*.conf"
+  path.config: "/etc/logserver-probe/conf.d/syslog_wec/*.conf"
 ```
 
-And restart Logstash:
+And restart Network Probe with systemct restart command
 
-```bash
-systemctl restart logstash
-```
+#### Data Node template
 
-#### Elasticsearch template
-
-Install the Elasticsearch template for the Event Collector data index:
+Install the Data Node template for the Event Collector data index:
 
 ```bash
 curl -ulogserver:logserver -X PUT "http://localhost:9200/_template/syslog_wec?pretty" -H 'Content-Type: application/json' -d@template_wec.json
@@ -4816,7 +4453,7 @@ Configuration file: `/opt/cerebro/conf/application.conf`
    }
    ```
 
-- A list of known Elasticsearch hosts
+- A list of known Data Node hosts
 
    ```bash
    hosts = [
@@ -4833,7 +4470,7 @@ Configuration file: `/opt/cerebro/conf/application.conf`
    play.ws.ssl {
      trustManager = {
        stores = [
-         { type = "PEM", path = "/etc/elasticsearch/ssl/rootCA.crt" }
+         { type = "PEM", path = "/etc/logserver/ssl/rootCA.crt" }
        ]
      }
    } 
@@ -4873,19 +4510,19 @@ Configuration file: `/opt/cerebro/conf/application.conf`
     systemctl start cerebro
    ```
 
-- register backup/snapshot repository for Elasticsearch
+- register backup/snapshot repository for Data Node
 
    ```bash
       curl -k -XPUT "https://127.0.0.1:9200/_snapshot/backup?pretty" -H 'Content-Type: plication/      json' -d'
       {
         "type": "fs",
         "settings": {
-          "location": "/var/lib/elasticsearch/backup/"
+          "location": "/var/lib/logserver/backup/"
         }
       }' -u logserver:logserver
    ```
 
-- login using curl/kibana
+- login using curl
 
    ```bash
       curl -k -XPOST 'https://192.168.3.11:5602/auth/login' -H 'mimeType: application/      -www-form-urlencoded' -d 'user=logserver&password=logserver' -c cookie.txt
@@ -4921,7 +4558,7 @@ You can now log in as a user with a new role, the user in the Discovery module s
 
 The GUI language can be changed as follows:
 
-1. Add `.i18nrc.json` to `/usr/share/kibana/` directory:
+1. Add `.i18nrc.json` to `/usr/share/logserver-gui/` directory:
 
    ```json
    {
@@ -4929,19 +4566,17 @@ The GUI language can be changed as follows:
    }
    ```
 
-2. Upload a translation to /usr/share/kibana/translations/ directory
+2. Upload a translation to /usr/share/logserver-gui/translations/ directory
 
 3. Set the permission:
 
-   `# chown -R kibana:kibana /usr/share/kibana/translations/`
+   `# chown -R user:group /usr/share/logserver-gui/translations/`
 
-4. Set in `kibana.yml` file:
+4. Set in `logserver-gui.yml` file:
 
    `i18n.locale: "ja-JP"`
 
-5. Restart:
-
-   `# systemctl restart kibana`
+5. Restart Logserver GUI service
 
 6. Finally, the result should be as shown in the picture:
 
@@ -4949,7 +4584,7 @@ The GUI language can be changed as follows:
 
 ### Preparing translation for GUI
 
-Source file to use as a base for translations: `/usr/share/kibana/translations/en-EN.example.json`
+Source file to use as a base for translations: `/usr/share/logserver-gui/translations/en-EN.example.json`
 
 #### Bullet points for translations
 

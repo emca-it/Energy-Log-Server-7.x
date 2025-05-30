@@ -103,7 +103,7 @@ Also, on this tab, you can recover the alert dashboard, by clicking the "Recover
 ### Alert Types
 
 The various Rule Type classes, defined in Energy Logserver.
-An instance is held in memory for each rule, passed all of the data returned by querying Elasticsearch
+An instance is held in memory for each rule, passed all of the data returned by querying Data Node
 with a given filter, and generates matches based on that data.
 
 #### Any
@@ -454,9 +454,9 @@ Both the certificate and the client key must be provided, otherwise, neither wil
 
    ```yaml
     webhook_verify_ssl: true
-    webhook_ca: /etc/elasticsearch/ssl/rootCA.crt
-    webhook_cert: /etc/elasticsearch/ssl/clientCert.crt
-    webhook_key: /etc/elasticsearch/ssl/clientKey.key
+    webhook_ca: /etc/logserver/ssl/rootCA.crt
+    webhook_cert: /etc/logserver/ssl/clientCert.crt
+    webhook_key: /etc/logserver/ssl/clientKey.key
    ```
 
 #### Slack
@@ -558,7 +558,7 @@ In order to use the recovery functionality, you should add directives to your al
 
 ```yaml
 recovery: true
-recovery_command: "echo \"%{@timestamp_recovery};;${name}_${ci};${alert_severity};RECOVERY;${ci};${alert_group};${alert_subgroup};${summary};${additional_info_1};${additional_info_2};${additional_info_3};\" >>/opt/elasticsearch/em_integration/events.log"
+recovery_command: "echo \"%{@timestamp_recovery};;${name}_${ci};${alert_severity};RECOVERY;${ci};${alert_group};${alert_subgroup};${summary};${additional_info_1};${additional_info_2};${additional_info_3};\" >>/var/log/em_integration/events.log"
 ```
 
 It is possible to close the incident in the external system using a parameter added to the alert rule.
@@ -703,7 +703,7 @@ With ``alert_text_type: aggregation_summary_only``:
 
 ruletype_text is the string returned by RuleType.get_match_str.
 
-field_values will contain every key value pair included in the results from Elasticsearch. These fields include "@timestamp" (or the value of ``timestamp_field``),
+field_values will contain every key value pair included in the results from Data Node. These fields include "@timestamp" (or the value of ``timestamp_field``),
 every key in ``include``, every key in ``top_count_keys``, ``query_key``, and ``compare_key``. If the alert spans multiple events, these values may
 come from an individual event, usually the one which triggers the alert.
 
@@ -901,34 +901,7 @@ We have the following algorithms for calculating the alert risk (Aggregation typ
 
 #### Adding a new risk calculation algorithm
 
-The new algorithm should be added in the `./elastalert_modules/playbook_util.py` file in the `calculate_risk` method. There is a sequence of conditional statements for already defined algorithms:
-
-```python
-#aggregate values by risk_key_aggregation for rule
-  if risk_key_aggregation == "MIN":
-    value_agg = min(values)
-  elif risk_key_aggregation == "MAX":
-    value_agg = max(values)
-  elif risk_key_aggregation == "SUM":
-    value_agg = sum(values)
-  elif risk_key_aggregation == "AVG":
-    value_agg = sum(values)/len(values)
-  else:
-    value_agg = max(values)
-```
-
-To add a new algorithm, add a new sequence as shown in the above code:
-
-```python
-  elif risk_key_aggregation == "AVG":
-    value_agg = sum(values)/len(values)
-  elif risk_key_aggregation == "AAA":
-    value_agg = BBB
-  else:
-    value_agg = max(values)
-```
-
-where **AAA** is the algorithm code, **BBB** is a risk calculation function.
+Guide available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/New%20risk%20calculation%20algorithm/)
 
 #### Using the new algorithm
 
@@ -1020,202 +993,9 @@ escalate_after:
   - hours: 6
 ```
 
-#### Context menu for Alerts::Incidents
+#### Context menu for Alerts::Incidents (WARNING: DEPRECATED)
 
-In this section, you will find steps and examples that will allow you to add custom items in the actions context menu for the Incidents table. This allows you to expand on the functionalities of the system.
-
-##### Important file paths
-
-- `/usr/share/kibana/plugins/alerts/public/reactui/incidenttab.js`
-- `/usr/share/kibana/optimize/bundles/`
-
-##### List element template
-
-```javascript
-{
-  name: 'Name of the Action to add',
-  icon: 'Name of the chosen icon',
-  type: 'icon',
-  onClick: this.runActionFunction,
-}
-```
-
-You should pick the icon from available choices. After listing `ls /usr/share/kibana/built_assets/dlls/icon*` if you want to use:
-
-- `icon.editor_align_center-js.bundle.dll.js`
-   The for `icon:` you should set:
-- `editorAlignCenter`
-   Use the same transformation for each icon.
-
-##### Action function template
-
-```javascript
-runActionFunction = item => {
-  // Functino logic to run => information from "item" object can be used here
-};
-```
-
-Object "item" contains information about the incident that action was used on.
-
-##### Steps to add the first custom action to the codebase
-
-1. Create backup of a file you are about to modify:
-
-   ```bash
-   cp /usr/share/kibana/plugins/alerts/public/reactui/incidenttab.js ~/incidenttab.js.bak
-   ```
-
-2. Working example for the onClick function and action item:
-
-   ```javascript
-   showMyLocation = () => {
-     const opt = {
-       enableHighAccuracy: true,
-       timeout: 5000,
-       maximumAge: 0
-     };
-     const success = pos => {
-       const crd = pos.coords;
-       alert(`Your current position is:\nLatitude: ${
-         crd.latitude
-       }\nLongitude: ${
-         crd.longitude
-       }\nMore or less ${
-         crd.accuracy
-       } meters.`);
-     }
-     const err = err => {
-       alert(`ERROR(${err.code}): ${err.message}`);
-     }
-     navigator.geolocation.getCurrentPosition(success, err, opt);
-   }
-
-   const customActions = [
-     {
-       name: 'Show my location',
-       icon: 'broom',
-       type: 'icon',
-       onClick: this.showMyLocation,
-     }
-   ];
-   incidentactions.push(...customActions);
-   ```
-
-3. The "showMyLocation" function code should be placed in `/usr/share/kibana/plugins/alerts/public/reactui/incidenttab.js` under:
-
-   ```javascript
-     showIncidentModal = incident => {
-       const updateIncident = incident;
-       this.setState({ showIncidentModal: true, updateIncident });
-     };
-
-     // paste function here
-
-     render() {
-   ```
-
-4. Custom action with a `push` function should be placed:
-
-   ```javascript
-         {
-           name: 'Note',
-           icon: 'pencil',
-           type: 'icon',
-           isPrimary: true,
-           color: 'danger',
-           onClick: this.note,
-         },
-       ];
-
-       // insert HERE your action with function 'push'
-
-       const incidentcolumns = [
-   ```
-
-5. For the changes to take effect run below commands on the client serwer (as root or with sudo):
-
-   ```bash
-   systemctl stop kibana
-   rm -rf /usr/share/kibana/optimize/bundles
-   systemctl start kibana
-   # verify that process runs correctly afterwards
-   journalctl -fu kibana
-   # in case of errors restore backup
-   ```
-
-6. You should now be able to see an additional item in the action context menu in GUI Alerts::Incidents:
-
-   ![](/media/media/image202.png)
-
-7. Running the action will resolve into an alert:
-
-   ![](/media/media/image203.png)
-
-##### Steps to add a second and subsequent custom actions
-
-1. Execute identicly as in the last section.
-
-2. Example of a function that uses `item` object. It will open a new tab in the browser with the default [Alert] dashboard with a custom filter and time set, based on information from the passed `item` variable:
-
-   ```javascript
-   openAlertDashboardWithFilter = item => {
-     const ruleName = `"${item.rule_name}"`;
-     const startT = new Date(item.match_time);
-     startT.setHours(0);
-     const endT = new Date(item.match_time);
-     endT.setHours(24);
-     const alertDashboardPath =
-       '/app/kibana#/dashboard/777ace50-d200-11e8-98f8-31520a7f9701';
-     const timeQuery =
-       `_g=(time:(from:'${startT.toISOString()}',to:'${endT.toISOString()}'))`;
-     const nameQuery =
-       `_a=(query:(language:lucene,query:'rule_name:${encodeURIComponent(
-         ruleName
-       )}'))`;
-     const dashboardLocation = `${alertDashboardPath}?${timeQuery}&${nameQuery}`;
-     window.open(dashboardLocation, '_blank');
-   };
-   ```
-
-3. Execute identicly as in the last section.
-
-4. The difference in adding subsequent action is that you append a new one to `customActions` array variable. The rest should stay the same:
-
-   ```javascript
-   const customActions = [
-     {
-       name: 'Show my location',
-       icon: 'broom',
-       type: 'icon',
-       onClick: this.showMyLocation,
-     },
-     {
-       name: 'Show on Dashboard',
-       icon: 'arrowRight',
-       type: 'icon',
-       onClick: this.openAlertDashboardWithFilter,
-     },
-   ];
-   incidentactions.push(...customActions);
-   ```
-
-5. Execute identicly as in the last section.
-
-6. Now both actions should be present on the context menu:
-
-   ![](/media/media/image204.png)
-
-7. Using it will open dashboard in new tab:
-
-   ![](/media/media/image205.png)
-
-##### System update
-
-When updating the system your changes might be overwritten. You should in that case save a backup of your changes and restore them after the update with the use of this instruction. Or for instance, with `vimdiff` compare your changes with the original file:
-
-```bash
-vimdiff ~/incidenttab.js.bak /usr/share/kibana/plugins/alerts/public/reactui/incidenttab.js
-```
+Context menu for alerts available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/Context%20menu%20for%20alerts/)
 
 ### Indicators of compromise (IoC)
 
@@ -1223,32 +1003,30 @@ Energy Logserver  has the Indicators of compromise (IoC) functionality, which is
 IoC observes the logs sent to the system and marks documents if their content is in MISP signature.
 Based on IoC markings, you can build alert rules or track incident behavior.
 
-#### Configuration
-
 ##### Bad IP list update
 
 To update bad reputation lists and to create `.blacklists` index, you have to run following scripts:
 
 ```bash
-/etc/logstash/lists/bin/misp_threat_lists.sh
+/etc/logserver-probe/lists/bin/misp_threat_lists.sh
 ```
 
 ##### Scheduling bad IP lists update
 
-This can be done in `cron` (host with Logstash installed):
+This can be done in `cron` (host with Network Probe installed):
 
 ```bash
-0 6 * * * logstash /etc/logstash/lists/bin/misp_threat_lists.sh
+0 6 * * * user /etc/logserver-probe/lists/bin/misp_threat_lists.sh
 ```
 
-or with Kibana Scheduller app (**only if Logstash is running on the same host**).
+or with GUI Scheduller app (**only if Network Probe is running on the same host**).
 
 - Prepare script path:
 
 ```bash
-/bin/ln -sfn /etc/logstash/lists/bin /opt/ai/bin/lists
-chown logstash:kibana /etc/logstash/lists/
-chmod g+w /etc/logstash/lists/
+/bin/ln -sfn /etc/logserver-probe/lists/bin /opt/ai/bin/lists
+chown user:group /etc/logserver-probe/lists/
+chmod g+w /etc/logserver-probe/lists/
 ```
 
 - Log in to Energy Logserver GUI and go to **Scheduler** app. Set it up with below options and push "Submit" button:
@@ -1257,7 +1035,7 @@ chmod g+w /etc/logstash/lists/
 Name:           MispThreatList
 Cron pattern:   0 1 * * *
 Command:        lists/misp_threat_lists.sh
-Category:       logstash
+Category:       network-probe
 ```
 
 After a couple of minutes check for blacklists index:
@@ -1440,49 +1218,22 @@ If `aggregation` is used in the alert definition, remember that the aggregation 
 
 #### Netflow analyzis
 
-The Logstash collector receives and decodes Network Flows using the provided decoders. During decoding, IP address reputation analysis is performed and the result is added to the event document.
+The Network Probe collector receives and decodes Network Flows using the provided decoders. During decoding, IP address reputation analysis is performed and the result is added to the event document.
 
-#### Installation
-
-##### Install/update logstash codec plugins for netflox and sflow
+##### Enable Network Probe pipeline
 
 ```bash
-/usr/share/logstash/bin/logstash-plugin install file:///etc/logstash/plugins/logstash-codec-sflow-2.1.3.gem.zip
-/usr/share/logstash/bin/logstash-plugin install file:///etc/logstash/plugins/logstash-codec-netflow-4.2.1.gem.zip
-/usr/share/logstash/bin/logstash-plugin install file:///etc/logstash/plugins/logstash-input-udp-3.3.4.gem.zip
-/usr/share/logstash/bin/logstash-plugin update logstash-input-tcp
-/usr/share/logstash/bin/logstash-plugin update logstash-filter-translate
-/usr/share/logstash/bin/logstash-plugin update logstash-filter-geoip
-/usr/share/logstash/bin/logstash-plugin update logstash-filter-dns
-```
-
-#### Configuration
-
-##### Enable Logstash pipeline
-
-```bash
-vim /etc/logstash/pipeline.yml
+vim /etc/logserver-probe/pipeline.yml
 
 - pipeline.id: flows
-  path.config: "/etc/logstash/conf.d/netflow/*.conf"
+  path.config: "/etc/logserver-probe/conf.d/netflow/*.conf"
 ```
 
-##### Elasticsearch template installation
+##### Data Node template installation
 
 ```bash
-curl -XPUT -H 'Content-Type: application/json' -u logserver:logserver 'http://127.0.0.1:9200/_template/netflow' -d@/etc/logstash/templates.d/netflow-template.json
+curl -XPUT -H 'Content-Type: application/json' -u logserver:logserver 'http://127.0.0.1:9200/_template/netflow' -d@/etc/logserver-probe/templates.d/netflow-template.json
 ```
-
-##### Importing Kibana dashboards
-
-```bash
-curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@overview.json
-curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@security.json
-curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@sources.json
-curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@history.json
-curl -k -X POST -ulogserver:logserver "https://localhost:5601/api/kibana/dashboards/import" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d@destinations.json
-```
-
 ##### Enable reverse dns lookup
 
 To enbled revere DNS lookup set the **USE_DNS:false** to **USE_DNS:true** in **13-filter-dns-geoip.conf**
@@ -1545,47 +1296,47 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
   <tr class="row-even">
     <td ><p class="first last">5</p></td>
     <td ><p class="first last">Skimmer</p></td>
-    <td ><p class="first last">Logstach Stats CPU Load Average 15M</p></td>
+    <td ><p class="first last">Network Probe Stats CPU Load Average 15M</p></td>
     <td ><p class="first last">skimmer-*</p></td>
     <td ><p class="first last">15m -&gt; Fifteen-minute load average on the system (field is not present if fifteen-minute load average is not available).</p></td>
     <td ><p class="first last">metric_aggregation</p></td>
-    <td ><p class="first last">metric_agg_key: "logstash_stats_cpu_load_average_15m" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 5 buffer_time:   minutes: 1</p></td>
+    <td ><p class="first last">metric_agg_key: "stats_cpu_load_average_15m" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 5 buffer_time:   minutes: 1</p></td>
   </tr>
   <tr class="row-odd">
     <td ><p class="first last">6</p></td>
     <td ><p class="first last">Skimmer</p></td>
-    <td ><p class="first last">Logstash Stats Cpu Percent</p></td>
+    <td ><p class="first last">Network Probe Stats Cpu Percent</p></td>
     <td ><p class="first last">skimmer-*</p></td>
     <td ><p class="first last">Properties of cpu -&gt; percent -&gt; Recent CPU usage for the whole system, or -1 if not supported.</p></td>
     <td ><p class="first last">metric_aggregation</p></td>
-    <td ><p class="first last">metric_agg_key: "logstash_stats_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 20 buffer_time:   minutes: 1</p></td>
+    <td ><p class="first last">metric_agg_key: "stats_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 20 buffer_time:   minutes: 1</p></td>
   </tr>
   <tr class="row-even">
     <td ><p class="first last">7</p></td>
     <td ><p class="first last">Skimmer</p></td>
-    <td ><p class="first last">Logstash Stats Events Queue Push Duration In Millis</p></td>
+    <td ><p class="first last">Network Probe Stats Events Queue Push Duration In Millis</p></td>
     <td ><p class="first last">skimmer-*</p></td>
     <td ><p class="first last"> queue_push_duration_in_millis is the accumulative time the input are waiting to push events into the queue.</p></td>
     <td ><p class="first last">metric_aggregation</p></td>
-    <td ><p class="first last">metric_agg_key: "logstash_stats_events_queue_push_duration_in_millis" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 140000000 buffer_time:   minutes: 1</p></td>
+    <td ><p class="first last">metric_agg_key: "stats_events_queue_push_duration_in_millis" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 140000000 buffer_time:   minutes: 1</p></td>
   </tr>
   <tr class="row-odd">
     <td ><p class="first last">8</p></td>
     <td ><p class="first last">Skimmer</p></td>
-    <td ><p class="first last">Logstash Stats Mem Heap Used Percent</p></td>
+    <td ><p class="first last">Network Probe Stats Mem Heap Used Percent</p></td>
     <td ><p class="first last">skimmer-*</p></td>
     <td ><p class="first last">Memory currently in use by the heap</p></td>
     <td ><p class="first last">any</p></td>
-    <td ><p class="first last">metric_agg_key: "logstash_stats_mem_heap_used_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 80 buffer_time:   minutes: 1</p></td>
+    <td ><p class="first last">metric_agg_key: "stats_mem_heap_used_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 80 buffer_time:   minutes: 1</p></td>
   </tr>
   <tr class="row-even">
     <td ><p class="first last">9</p></td>
     <td ><p class="first last">Skimmer</p></td>
-    <td ><p class="first last">Logstash Stats Persisted Queue Size</p></td>
+    <td ><p class="first last">Network Probe Stats Persisted Queue Size</p></td>
     <td ><p class="first last">skimmer-*</p></td>
-    <td ><p class="first last">A Logstash persistent queue helps protect against data loss during abnormal termination by storing the in-flight message queue to disk.</p></td>
+    <td ><p class="first last">A Network Probe persistent queue helps protect against data loss during abnormal termination by storing the in-flight message queue to disk.</p></td>
     <td ><p class="first last">metric_aggregation</p></td>
-    <td ><p class="first last">type: metric_aggregation metric_agg_key: node_stats_/var/lib/logstash/queue_disk_usage query_key: source_node_host metric_agg_type: max doc_type: _doc max_threshold: 734003200 realert:   minutes: 15</p></td>
+    <td ><p class="first last">type: metric_aggregation metric_agg_key: node_stats_/var/lib/logserver-probe/queue_disk_usage query_key: source_node_host metric_agg_type: max doc_type: _doc max_threshold: 734003200 realert:   minutes: 15</p></td>
   </tr>
   <tr class="row-odd">
     <td ><p class="first last">10</p></td>
@@ -1646,7 +1397,7 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
     <td ><p class="first last">Skimmer</p></td>
     <td ><p class="first last">Node Stats Process Cpu Percent</p></td>
     <td ><p class="first last">skimmer-*</p></td>
-    <td ><p class="first last"> process.cpu.percent informs how much CPU Elasticsearch is using.</p></td>
+    <td ><p class="first last"> process.cpu.percent informs how much CPU Data Node is using.</p></td>
     <td ><p class="first last">metric_aggregation</p></td>
     <td ><p class="first last">metric_agg_key: "node_stats_process_cpu_percent" metric_agg_type: "cardinality" doc_type: "_doc" max_threshold: 90 buffer_time:   minutes: 1</p></td>
   </tr>
@@ -1772,13 +1523,13 @@ Optionally set both dns servers ${DNS_SRV:8.8.8.8} to your local dns
 </td>
 <td><p class="first last">Alert when admin task is initiated by regular user.
 Windows event id 4732 is verified towards static admin list. If the user does not belong to admin list AND the event is seen than we generate alert.
-Static Admin list is a logstash  disctionary file that needs to be created manually. During Logstash lookup a field user.role:admin is added to an event.
+Static Admin list is a Network Probe disctionary file that needs to be created manually. During Network Probe lookup a field user.role:admin is added to an event.
 4732: A member was added to a security-enabled local group</p>
 </td>
 <td><p class="first last">winlogbeat-*</p>
 </td>
 <td><p class="first last">winlogbeat
-Logstash admin dicstionary lookup file</p>
+Network Probe admin dicstionary lookup file</p>
 </td>
 <td><p class="first last">Widnows Security Eventlog</p>
 </td>
@@ -3097,7 +2848,7 @@ filter:
 </td>
 <td><p class="first last">compare_key: “domain_ip”
 blacklist-ioc:
- - “!yaml /etc/logstash/lists/misp_ip.yml”</p>
+ - “!yaml /etc/logserver-probe/lists/misp_ip.yml”</p>
 </td>
 </tr>
 </tbody>
@@ -3140,7 +2891,7 @@ blacklist-ioc:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with Antivirus, IPS, Fortisandbox modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with Antivirus, IPS, Fortisandbox modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3161,7 +2912,7 @@ blacklist-ioc:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with waf, IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with waf, IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3186,7 +2937,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3211,7 +2962,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3232,7 +2983,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3257,7 +3008,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3278,7 +3029,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3299,7 +3050,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3324,7 +3075,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3345,7 +3096,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3366,7 +3117,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3391,7 +3142,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3412,7 +3163,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3437,7 +3188,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3458,7 +3209,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3483,7 +3234,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -3504,7 +3255,7 @@ filter:
 </td>
 <td><p class="first last">fortigate*</p>
 </td>
-<td><p class="first last">FortiOS with IPS,  modules, Logstash KV filter, default-base-template</p>
+<td><p class="first last">FortiOS with IPS,  modules, Network Probe KV filter, default-base-template</p>
 </td>
 <td><p class="first last">syslog from Forti devices</p>
 </td>
@@ -4729,16 +4480,7 @@ alert_text_args:
   - Analyzed_by
   - user
   - Source
-  - Destination
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “Severity:HIGH”</p>
+  - Destination</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">2</p>
@@ -4764,16 +4506,7 @@ alert_text_args:
   - Analyzed_by
   - user
   - Source
-  - Destination
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “Severity:MEDIUM”</p>
+  - Destination</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">3</p>
@@ -4799,16 +4532,7 @@ alert_text_args:
   - Analyzed_by
   - user
   - Source
-  - Destination
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “Severity:LOW”</p>
+  - Destination</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">4</p>
@@ -4834,16 +4558,7 @@ alert_text_args:
   - Analyzed_by
   - File_Name
   - Source
-  - Destination
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “Action:Blocked and Channel:Endpoint Email”</p>
+  - Destination</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">5</p>
@@ -4869,16 +4584,7 @@ alert_text_args:
   - Analyzed_by
   - File_Name
   - Source
-  - Destination
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “Action:Blocked and Channel:Endpoint Removable Media”</p>
+  - Destination</p>
 </td>
 </tr>
 </tbody>
@@ -7442,16 +7148,7 @@ alert_text: “System error\n\n When: {}\n Device IP: {}\n From: {}\n\n{}\n”
 alert_text_args:
   - timestamp_timezone
   - host
-  - login.ip
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “topic2:error and topic3:critical”</p>
+  - login.ip</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">2</p>
@@ -7477,16 +7174,7 @@ alert_text_args:
   - host
   - login.ip
   - login.method
-  - user
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “topic2:error and topic3:critical and login.status:login failure”</p>
+  - user</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">3</p>
@@ -7512,16 +7200,7 @@ alert_text_args:
   - host
   - interface
   - wlan.mac
-  - wlan.ACL
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “wlan.status:reject or wlan.action:banned”</p>
+  - wlan.ACL</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">4</p>
@@ -7546,16 +7225,7 @@ alert_text_args:
   - timestamp_timezone
   - dhcp.ip
   - dhcp.mac
-  - dhcp.mac2
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “dhcp.status:without success”</p>
+  - dhcp.mac2</p>
 </td>
 </tr>
 </tbody>
@@ -7610,16 +7280,7 @@ alert_text: “Logon error\n\n When: {}\n Error code: {}\n Severity: {}\n\n{}\n�
 alert_text_args:
   - timestamp_timezone
   - mssql.error.code
-  - mssql.error.severity
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “mssql.error.code:* and mssql.error.severity:*”</p>
+  - mssql.error.severity</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">2</p>
@@ -7644,16 +7305,7 @@ alert_text_args:
   - timestamp_timezone
   - mssql.login.user
   - mssql.error.reason
-  - mssql.error.client
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “mssql.login.status:failed and mssql.login.user:*”</p>
+  - mssql.error.client</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">3</p>
@@ -7675,16 +7327,7 @@ kibana4_end_timedelta:
 <td><p class="first last">alert_text_type: alert_text_only
 alert_text: “Server is going down\n\n When: {}\n\n{}\n”
 alert_text_args:
-  - timestamp_timezone
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “mssql.server.status:shutdown”</p>
+  - timestamp_timezone</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first last">4</p>
@@ -7706,16 +7349,7 @@ kibana4_end_timedelta:
 <td><p class="first last">alert_text_type: alert_text_only
 alert_text: “NET Framework runtime has been stopped.\n\n When: {}\n\n{}\n”
 alert_text_args:
-  - timestamp_timezone
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “mssql.net.status:stopped”</p>
+  - timestamp_timezone</p>
 </td>
 </tr>
 <tr class="row-even"><td><p class="first last">5</p>
@@ -7737,16 +7371,7 @@ kibana4_end_timedelta:
 <td><p class="first last">alert_text_type: alert_text_only
 alert_text: “Database Mirroring endpoint is in stopped state.\n\n When: {}\n\n{}\n”
 alert_text_args:
-  - timestamp_timezone
-  - kibana_link
-use_kibana4_dashboard: “link do saved search”
-kibana4_start_timedelta:
- minutes: 5
-kibana4_end_timedelta:
- minutes: 0
- filter:
- - query_string:
-        query: “mssql.db.status:stopped”</p>
+  - timestamp_timezone</p>
 </td>
 </tr>
 </tbody>
@@ -7827,7 +7452,7 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7848,7 +7473,7 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7869,7 +7494,7 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7890,7 +7515,7 @@ kibana4_end_timedelta:
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7917,7 +7542,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7938,7 +7563,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7959,7 +7584,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -7980,7 +7605,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -8001,7 +7626,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -8022,7 +7647,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">postgres-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, PostgreSQL</p>
+<td><p class="first last">Filebeat, Network Probe, PostgreSQL</p>
 </td>
 <td><p class="first last">pg_log</p>
 </td>
@@ -8073,7 +7698,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8094,7 +7719,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8115,7 +7740,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8136,7 +7761,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8157,7 +7782,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8184,7 +7809,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8205,7 +7830,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8226,7 +7851,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8247,7 +7872,7 @@ doc_type: doc</p>
 </td>
 <td><p class="first last">mysql-*</p>
 </td>
-<td><p class="first last">Filebeat, Logstash, MySQL</p>
+<td><p class="first last">Filebeat, Network Probe, MySQL</p>
 </td>
 <td><p class="first last">mysql-general.log</p>
 </td>
@@ -8265,61 +7890,6 @@ doc_type: doc</p>
 
 The Energy Logserver allows you to keep track of the time and actions taken in the incident you created.
 A detected alert incident has the date the incident occurred `match_body.@timestamp` and the date and time the incident was detected `alert.time`.
-
-In addition, it is possible to enrich the alert event with the date and time of incident resolution `alert_solvedtime` using the following pipeline:
-
-```conf
-  input {
-      elasticsearch {
-          hosts => "http://localhost:9200"
-          user => logserver
-          password => logserver
-          index => "alert*"
-          size => 500
-          scroll => "5m"
-          docinfo => true
-          schedule => "*/5 * * * *"
-          query => '{ "query": {     "bool": {
-        "must": [
-          {
-            "match_all": {}
-          }
-        ],
-        "filter": [
-          {
-            "match_phrase": {
-              "alert_info.status": {
-                "query": "solved"
-              }
-            }
-          }
-        ],
-        "should": [],
-        "must_not": [{
-            "exists": {
-              "field": "alert_solvedtime"
-            }
-          }]
-      }
-  }, "sort": [ "_doc" ] }'
-      }
-  }
-  filter {
-          ruby {
-                  code => "event.set('alert_solvedtime', Time.now());"
-          }
-  }
-  output {
-      elasticsearch {
-          hosts => "http://localhost:9200"
-          user => logserver
-          password => logserver
-          action => "update"
-          document_id => "%{[@metadata][_id]}"
-          index => "%{[@metadata][_index]}"
-      }
-  }
-```
 
 ### Adding a tag to an existing alert
 
@@ -9620,75 +9190,75 @@ You can also check the vulnerability dashboards to have an overview of your agen
 
 ## Tenable.sc
 
-Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
+Tenable.sc is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Network Probe can connect to Tebable.sc API to get results of the vulnerability scan and send it to the Data Node index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
 
 ![](/media/media/image166.png)
 
 ### Configuration
 
-- enable pipeline in Logstash configuration:
+- enable pipeline in Network Probe configuration:
 
   ```bash
-  vim /etc/logstash/pipelines.yml
+  vim /etc/logserver-probe/pipelines.yml
   ```
 
   uncomment following lines:
 
   ```bash
   - pipeline.id: tenable.sc
-    path.config: "/etc/logstash/conf.d/tenable.sc/*.conf"
+    path.config: "/etc/logserver-probe/conf.d/tenable.sc/*.conf"
   ```
 
 - configure connection to Tenable.sc manager:
 
   ```bash
-  vim /etc/logstash/conf.d/tenable.sc/venv/main.py
+  vim /etc/logserver-probe/conf.d/tenable.sc/venv/main.py
   ```
 
   set of the connection parameters:
 
   - TENABLE_ADDR - IP address and port Tenable.sc manger;
   - TENABLE_CRED - user and password;
-  - LOGSTASH_ADDR = IP addresss and port Logstash collector;
+  - NETWORK_PROBE_ADDR = IP addresss and port of Network Probe;
 
   example:
 
   ```bash
   TENABLE_ADDR = ('10.4.3.204', 443)
   TENABLE_CRED = ('admin', 'passowrd')
-  LOGSTASH_ADDR = ('127.0.0.1', 10000)
+  NETWORK_PROBE_ADDR = ('127.0.0.1', 10000)
   ```
 
 ## Qualys Guard
 
-Qualys Guard is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Logstash collector can connect to Qualys Guard API to get results of the vulnerability scan and send it to the Elasticsarch index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
+Qualys Guard is vulnerability management tool, which make a scan systems and environments to find vulnerabilities. The Network Probe collector can connect to Qualys Guard API to get results of the vulnerability scan and send it to the Data Node index. Reporting and analysis of the collected data is carried out using a prepared dashboard `[Vulnerability] Overview Tenable`
 
 ![](/media/media/image166.png)
 
 ### Configuration
 
-- enable pipeline in Logstash configuration:
+- enable pipeline in Network Probe configuration:
 
   ```bash
-  vim /etc/logstash/pipelines.yml
+  vim /etc/logserver-probe/pipelines.yml
   ```
 
   uncomment following lines:
 
   ```bash
   - pipeline.id: qualys
-    path.config: "/etc/logstash/conf.d/qualys/*.conf"
+    path.config: "/etc/logserver-probe/conf.d/qualys/*.conf"
   ```
 
 - configure connection to Qualys Guard manager:
 
   ```bash
-  vim /etc/logstash/conf.d/qualys/venv/main.py
+  vim /etc/logserver-probe/conf.d/qualys/venv/main.py
   ```
 
   set of the connection parameters:
 
-  - LOGSTASH_ADDR - IP address and port of the Logstash collector;
+  - NETWORK_PROBE_ADDR - IP address and port of the Network Probe collector;
 
   - hostname - IP address and port of the Qualys Guard manger;
   - username - user have access to Qualys Guard manger;
@@ -9697,7 +9267,7 @@ Qualys Guard is vulnerability management tool, which make a scan systems and env
   example:
 
   ```bash
-  LOGSTASH_ADDR = ('127.0.0.1', 10001)
+  NETWORK_PROBE_ADDR = ('127.0.0.1', 10001)
 
   # connection settings
   conn = qualysapi.connect(
@@ -9783,20 +9353,10 @@ To start the custom integration, the `ossec.conf` file, including the block inte
 
 License service configuration is required when using the SIEM Plan license. To configure the License Service, set the following parameters in the configuration file:
 
-hosts - Elasticsearch cluster hosts IP,
+hosts - Logserver cluster hosts IP,
 password - password for Logserver  user,
 https - true or false.
 
 ```bash
 vi /opt/license-service/license-service.conf
-```
-
-```bash
-elasticsearch_connection:
-  hosts: ["els_host_IP:9200"]
-
-  username: logserver
-  password: "logserver_password"
-
-  https: true
 ```

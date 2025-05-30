@@ -6,8 +6,7 @@ Energy Logserver is an innovation solution allowing for centralized IT
 systems events. It allows for an immediate review, analysis, and
 reporting of system logs - the amount of data does not matter.
 Energy Logserver is a response to the huge demand for the storage and analysis of large amounts of data from IT systems.Energy Logserver is an innovation solution that responds to the need to effectively process large amounts of data coming from the IT
-environments of today's organizations. Based on the open-source
-project Elasticsearch valued on the market, we have created an
+environments of today's organizations. We have created an
 efficient solution with powerful data storage and searching
 capabilities. The System has been enriched with functionality that
 ensures the security of stored information, verification of users,
@@ -23,29 +22,29 @@ the scope expected by the customer even with a very large volume of
 data. At the same time, the innovation architecture allows for
 servicing a large portion of data, which cannot be dedicated to solutions with limited scalability.
 
-### Elasticsearch ##
+### Data Node ##
 
-Elasticsearch is a NoSQL database solution that is the heart of our
+Data Node is a NoSQL database solution that is the heart of our
 system. Text information sent to the system, application, and system
-logs are processed by Logstash filters and directed to Elasticsearch.
+logs are processed by Network Probe filters and directed to Data Node.
 This storage environment creates, based on the received data, their
 respective layout in a binary form, called a data index. The Index is
-kept on Elasticsearch nodes, implementing the appropriate assumptions
+kept on Data Nodes, implementing the appropriate assumptions
 from the configuration, such as:
 
 - Replication index between nodes,
 - Distribution index between nodes.
 
-The Elasticsearch environment consists of nodes:
+The Data Node environment consists of nodes:
 
 - Data node - responsible for storing documents in indexes,
 - Master node - responsible for the supervision of nodes,
 - Client node - responsible for cooperation with the client.
 
 Data, Master, and Client elements are found even in the smallest
-Elasticsearch installations, therefore often the environment is
+Logserver installations, therefore often the environment is
 referred to as a cluster, regardless of the number of nodes
-configured. Within the cluster, Elasticsearch decides which data
+configured. Within the cluster, master Data Node decides which data
 portions are held on a specific node.
 
 Index layout, their name, and set of fields are arbitrary and depend on the form of system usage. It is common practice to put data of a
@@ -57,37 +56,30 @@ index can have its rotation convention, name convention, construction scheme, an
 
 The Indexes are built with elementary parts called shards. It is good
 practice to create Indexes with the number of shards that is the
-multiple of the Elasticsearch data nodes number. Elasticsearch in the 7.x version has a new feature called Sequence IDs that guarantees more successful and efficient shard recovery. \
+multiple of the data nodes number. Energy Logserver in the 7.x version has a new feature called Sequence IDs that guarantees more successful and efficient shard recovery. \
 
-Elasticsearch uses *mapping* to describe the fields or properties that documents of that type may have. Elasticsearch in the 7.x version restricts indices to a single type.
+Energy Logserver uses *mapping* to describe the fields or properties that documents of that type may have. Energy Logserver in the 7.x version restricts indices to a single type.
 
-### Kibana
+### Logserver GUI
 
-Kibana lets you visualize your Elasticsearch data and navigate the Elastic Stack. Kibana gives you the freedom to select the way you give
-shape to your data. And you don’t always have to know what you're looking for. Kibana core ships with the classics: histograms, line
-graphs, pie charts, sunbursts, and more. Plus, you can use Vega grammar to design your visualizations. All leverage the full
-aggregation capabilities of Elasticsearch.  Perform advanced time series analysis on your Elasticsearch data with our curated time series
-UIs. Describe queries, transformations, and visualizations with powerful, easy-to-learn expressions. Kibana 7.x has two new features - a new "Full-screen" mode for viewing dashboards, and a new "Dashboard-only" mode which enables administrators to share dashboards safely.
+GUI lets you visualize your data and navigate the Logserver UI modules. GUI gives you the freedom to select the way you give
+shape to your data. And you don’t always have to know what you're looking for. GUI core ships with the classics: histograms, line
+graphs, pie charts, and more. Plus, you can use Vega grammar to design your visualizations. All leverage the full
+aggregation capabilities of Energy Logserver.  Perform advanced time series analysis on your data with our curated time series
+UIs. Describe queries, transformations, and visualizations with powerful, easy-to-learn expressions. Energy Logserver 7.x has two new features - a new "Full-screen" mode for viewing dashboards, and a new "Dashboard-only" mode which enables administrators to share dashboards safely.
 
-### Logstash
+### Network Probe
 
-Logstash is an open-source data collection engine with real-time pipelining capabilities. Logstash can dynamically unify data from
+Network Probe is a data collection engine with real-time pipelining capabilities. Network Probe can dynamically unify data from
 disparate sources and normalize the data into destinations of your choice. Cleanse and democratize all your data for diverse advanced
 downstream analytics and visualization use cases.
 
-While Logstash originally drove innovation in log collection, its capabilities extend well beyond that use case. Any type of event can be
+While Network Probe originally drove innovation in log collection, its capabilities extend well beyond that use case. Any type of event can be
 enriched and transformed with a broad array of input, filter, and output plugins, with many native codecs further simplifying the
-ingestion process. Logstash accelerates your insights by harnessing a greater volume and variety of data.
+ingestion process. Network Probe accelerates your insights by harnessing a greater volume and variety of data.
 
-Logstash 7.x version supports native support for multiple pipelines. These pipelines are defined in a *pipelines.yml* file which is loaded by default.
-Users will be able to manage multiple pipelines within Kibana. This solution uses Elasticsearch to store pipeline configurations and allows for on-the-fly reconfiguration of Logstash pipelines.
-
-### ELK
-
-"ELK" is the acronym for three open-source projects: Elasticsearch, Logstash, and Kibana. Elasticsearch is a search and analytics
-engine. Logstash is a server‑side data processing pipeline that ingests data from multiple sources simultaneously, transforms it,
-and then sends it to a "stash" like Elasticsearch. Kibana lets users visualize data with charts and graphs in Elasticsearch.
-The Elastic Stack is the next evolution of the ELK Stack.
+Network Probe 7.x version supports native support for multiple pipelines. These pipelines are defined in a *pipelines.yml* file which is loaded by default.
+Users will be able to manage multiple pipelines within UI. This solution uses Data Node to store pipeline configurations and allows for on-the-fly reconfiguration of the Network Probe pipelines.
 
 ## Data source
 
@@ -96,12 +88,12 @@ Where does the data come from?
 Energy Logserver is a solution allowing effective data processing
 from the IT environment that exists in the organization.
 
-The Elsasticsearch engine allows the building database in which large amounts of data are stored in ordered indexes. The Logstash module is responsible for loading data into Indexes, whose function is to collect
-data on specific TCP/UDP ports, filter them, normalize them, and place them in the appropriate index. Additional plugins, that we can use in
-Logstash reinforce the work of the module and increase its efficiency,
+The Energy Logserver engine allows the building database in which large amounts of data are stored in ordered indexes. The Network Probe module is responsible for loading data into indices, which function is to collect
+data on specific TCP/UDP ports, filter them, normalize them, and place them in the appropriate indices. Additional plugins, that we can use in
+Network Probe reinforce the work of the module and increase its efficiency,
 enabling the module to quickly interpret data and parse it.
 
-Below is an example of several of the many available Logstash plugins:
+Below is an example of several of the many available Network Probe plugins:
 
 **exec** - receive an output of the shell function as an event;
 
@@ -111,62 +103,50 @@ Below is an example of several of the many available Logstash plugins:
 
 **jms** - create events from Jms broker;
 
-Both Elasticsearch and Logstash are free Open-Source solutions.
-
-More information about the Elasticsearch module can be found at:
-[https://github.com/elastic/elasticsearch](https://github.com/elastic/elasticsearch)
-
-List of available Logstash plugins:
-[https://github.com/elastic/logstash-docs/tree/master/docs/plugins](https://github.com/elastic/logstash-docs/tree/master/docs/plugins)
-
 ## System services
 
 For proper operation, Energy Logserver requires starting the following system services:
 
-- elasticsearch.service -
+- Data Node service -
   we can run it with a command:
 
 ```bash
-systemctl start elasticsearch.service
+systemctl start logserver
 ```
 
   we can check its status with a command:
 
   ```bash
-systemctl status elasticsearch.service
+systemctl status logserver
   ```
 
-![](/media/media/image86.PNG)
 
-- kibana.service -
+- Logserver GUI service -
   we can run it with a command:
 
 ```bash
-systemctl start kibana.service
+systemctl start logserver-gui
 ```
 
   we can check its status with a command:
 
 ```bash
-systemctl status kibana.service
+systemctl status logserver-gui
 ```
 
-![](/media/media/image87.PNG)
 
-- logstash.service -
+- Network Probe service -
    we can run it with a command:
 
 ```bash
-systemctl start logstash.service
+systemctl start logserver-probe
 ```
 
    we can check its status with a command:
 
 ```bash
-systemctl status logstash.service
+systemctl status logserver-probe
 ```
-
-![](/media/media/image88.PNG)
 
 ## First login
 
@@ -178,7 +158,7 @@ logserver/password:logserver).
 
 ![](/media_base/image3.png)
 
-After logging in to the application click the button "Set up index pattern" to add a new index pattern in Kibana:
+After logging in to the application click the button "Set up index pattern" to add a new index pattern:
 
 ![](/media/media/image3_js.png)
 
@@ -324,13 +304,11 @@ Regular expression patterns can be embedded in the query string by wrapping them
 
 `name:/joh?n(ath[oa]n)/`
 
-The supported regular expression syntax is explained in Regular expression syntax [https://www.elastic.co/guide/en/elasticsearch/reference/7.10/regexp-syntax.html](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/regexp-syntax.html)
-
 #### Fuzziness
 
 You can run fuzzy queries using the ~ operator:
 
-`quikc~ brwn~ foks~`
+`quikc~ brwn~ fox~`
 
 For these queries, the query string is normalized. If present, only certain filters from the analyzer are applied. For a list of applicable filters, see Normalizers.
 
@@ -449,23 +427,6 @@ For a manual incident, you can save the following parameters:
 After saving the manual incident, you can go to the Incident tab in the Alert module to perform the incident handling procedure.
 
 ![](/media/media/image142.png)
-
-### Change the default width of columns
-
-To improve the readability of values in Discovery columns, you can set a minimum column width. The column width setting is in the CSS style files:
-
-```bash
-/usr/share/kibana/built_assets/css/plugins/kibana/index.dark.css
-/usr/share/kibana/built_assets/css/plugins/kibana/index.light.css
-```
-
-To set the minimum width for the columns, e.g. 150px, add the following entry `min-width: 150px` in the CSS style files:
-
-```css
-.kbnDocTableCell__dataField {
-   min-width: 150px;
-   white-space: pre-wrap; }
-```
 
 ## Visualizations
 
@@ -680,58 +641,6 @@ Check Your „Shared link” and copy it
 
 ----------
 
-Select Alerting module
-
-![](/media/media/image129.png)
-
-----------
-
-Once Alert is created use `ANY` frame to add the following directives:
-
-```yaml
-Use_kibana4_dashboard: paste Your „shared link” here
-```
-
-`use_kibana_dashboard:` - The name of a Kibana dashboard to link to. Instead of generating a dashboard from a template, Alert can use an existing dashboard. It will set the time range on the dashboard to around the match time, upload it as a temporary dashboard, add a filter to the query_key of the alert if applicable, and put the URL to the dashboard in the alert. (Optional, string, no default).
-
-----------
-
-```yaml
-Kibana4_start_timedelta
-```
-
-`kibana4_start_timedelta:` Defaults to 10 minutes. This option allows you to specify the start time for the generated kibana4 dashboard. This value is added in front of the event. For example,
-
-```yaml
-kibana4_start_timedelta: minutes: 2
-```
-
-----------
-
-```yaml
-Kibana4_end_timedelta
-```
-
-`kibana4_end_timedelta:` Defaults to 10 minutes. This option allows you to specify the end time for the generated kibana4 dashboard. This value is added to the back of the event. For example,
-
-```yaml
-kibana4_end_timedelta: minutes: 2
-```
-
-----------
-Sample:
-![](/media/media/image130.png)
-
-----------
-Search for triggered alerts in the Discovery tab.
-
-Use alert* search pattern.
-
-![](/media/media/image131.png)
-
-Refresh the alert that should contain url for the dashboard.
-Once available, the kibana_dashboard field can be exposed to dashboards giving You a real drill-down feature.
-
 ## Reports
 
 ### CSV Report
@@ -937,7 +846,6 @@ Fresh installation of the application has sewn solid roles, which grant users sp
 - admin - this role gives unlimited permissions to administer/manage
 the application
 - alert - a role for users who want to see the Alert module
-- kibana - a role for users who want to see the application GUI
 - Intelligence - a role for users who are to see the Intelligence moduleObject access permissions (Objects permissions)
 
 In the User Manager tab, we can parameterize access to the newly
@@ -1014,9 +922,9 @@ object, and the Save button to save the selection.
     <td class="tg-ie02">intelligence, intelligence-scheduler</td>
   </tr>
   <tr>
-    <td class="tg-ie02">logstash</td>
-    <td class="tg-ie02">A build-in account for the NetworkProbe logstash collector</td>
-    <td class="tg-ie02">logstash</td>
+    <td class="tg-ie02">probe</td>
+    <td class="tg-ie02">A build-in account for the collector if you're using it</td>
+    <td class="tg-ie02">probe</td>
   </tr>
   <tr>
     <td class="tg-ie02">license</td>
@@ -1044,8 +952,8 @@ And so, from version 7.6.0, you can no longer update the password from the GUI i
 Depending on the node setup you can find the tool under one or both paths:
 
 ```bash
-/usr/share/elasticsearch/utils/logserver-password-util.sh
-/etc/logstash/utils/logserver-password-util.sh
+/usr/share/logserver/utils/logserver-password-util.sh
+/etc/logserver-probe/utils/logserver-password-util.sh
 ```
 
 The tool can be run only with OS system administrator privileges as it requires permissions to restart services and modify files across the system.
@@ -1053,7 +961,7 @@ The tool can be run only with OS system administrator privileges as it requires 
 To learn how to use the tools run:
 
 ```bash
-/usr/share/elasticsearch/utils/logserver-password-util.sh --help
+/usr/share/logserver/utils/logserver-password-util.sh --help
 ```
 
 #### Updating a user password (example)
@@ -1067,7 +975,7 @@ The following steps will show how to update the password for *logserver* user. P
 2. Use the password tool to update the user password:
 
     ```bash
-    /usr/share/elasticsearch/utils/logserver-password-util.sh update_credentials --users logserver
+    /usr/share/logserver/utils/logserver-password-util.sh update_credentials --users logserver
     ```
 
     - Pay attention to the prompts!
@@ -1082,7 +990,7 @@ The following steps will show how to update the password for *logserver* user. P
     1. Open a terminal session to your secondary client node (if you have one) and run:
 
         ```bash
-        /usr/share/elasticsearch/utils/logserver-password-util.sh update_services --user logserver
+        /usr/share/logserver/utils/logserver-password-util.sh update_services --user logserver
         ```
 
         Now you will be prompted only to provide the new password you have set up on the previous node.
@@ -1090,13 +998,13 @@ The following steps will show how to update the password for *logserver* user. P
         **Sometimes you may want to update configuration files but without automatic service restart. You can run this instead:**
 
         ```bash
-        /usr/share/elasticsearch/utils/logserver-password-util.sh update_services --user logserver --no-restart
+        /usr/share/logserver/utils/logserver-password-util.sh update_services --user logserver --no-restart
         ```
 
     2. Open a terminal session to the NetworkProbe node (the path to the tool will be different) and run:
 
         ```bash
-        /etc/logstash/utils/logserver-password-util.sh update_services --user logserver
+        /etc/logserver-probe/utils/logserver-password-util.sh update_services --user logserver
         ```
 
 ### Module Access
@@ -1234,11 +1142,11 @@ account, which corresponds to, among others for generating reports
 
 ### Backing up
 
-The backup bash script is located on the hosts with Elasticsearch in the location: ```/usr/share/elasticsearch/utils/configuration-backup.sh```.
+The backup bash script is located on the hosts with Data Node in the location: ```/usr/share/logserver/utils/configuration-backup.sh```.
 
-The script is responsible for backing up the basic data in the Logserver system (these data are the system indexes found in Elasticsearch of those starting with a dot  '.'  in the name),  the configuration of the entire cluster, the set of templates used in the cluster and all the components.
+The script is responsible for backing up the basic data in the Logserver system (these data are the system indexes found in logserver of those starting with a dot  '.'  in the name),  the configuration of the entire cluster, the set of templates used in the cluster and all the components.
 
-These components include the Logstash configuration located in ```/etc/logstash``` and the Kibana configuration located in ```/etc/kibana```.
+These components include the Network Probe configuration located in ```/etc/logserver-probe``` and the Logserver GUI configuration located in ```/etc/logserver-gui```.
 
 All data is stored in the ```/tmp``` folder and then packaged using the ```/usr/bin/tar``` utility to ```tar.gz``` format with the exact date and time of execution in the target location, then the files from ```/tmp``` are deleted.
 
@@ -1247,11 +1155,11 @@ It is recommended to configure ```crontab```.
 
 - Before executing the following commands, you need to create a crontab file, set the path to backup, and direct them there.
 
-In the below example, the task was configured on hosts with the Elasticsearch module on the root.
+In the below example, the task was configured on hosts with the Data Node module on the root.
 
 ```bash
 # crontab -l #Printing the Crontab file for the currently logged in user
-0 1 * * * /bin/bash /usr/share/elasticsearch/utils/configuration-backup.sh
+0 1 * * * /bin/bash /usr/share/logserver/utils/configuration-backup.sh
 ```
 
 - The client-node host saves the backup in the /archive/configuration-backup/ folder.
@@ -1259,63 +1167,8 @@ In the below example, the task was configured on hosts with the Elasticsearch mo
 
 ### Restoration from backup
 
-To restore the data, extract the contents of the created archive, e.g.
+Backup and Restore guide is available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/Backup%20and%20Restore)
 
-```bash
-# tar -xzf /archive/configuration-backup/backup_name-000000-00000.tar.gz -C /tmp/restore
-```
-
-Then display the contents and select the files to restore (this will look similar to the following):
-
-```bash
-# ls -al /tmp/restore/00000-11111/
-drwxr-xr-x 2 root root    11111 01-08 10:29 .
-drwxr-xr-x 3 root root     2222 01-08 10:41 ..
--rw-r--r-- 1 root root  3333333 01-08 10:28 .file1.json
--rw-r--r-- 1 root root     4444 01-08 10:28 .file_number2.json
--rw-r--r-- 1 root root     5555 01-08 10:29 .file3.json
--rw-r--r-- 1 root root      666 01-08 10:29 .file4.json
--rw-r--r-- 1 root root     7777 01-08 10:29 .file5.json
--rw-r--r-- 1 root root       87 01-08 10:29 .file6.json
--rw-r--r-- 1 root root        1 01-08 10:29  file6.json
--rw-r--r-- 1 root root       11 01-08 10:29 .file7.json
--rw-r--r-- 1 root root     1234 01-08 10:29  file8.tar.gz
--rw-r--r-- 1 root root     0000 01-08 10:29 .file9.json
-```
-
-To restore any of the system indexes, e.g. ```.security```, execute the commands:
-
-```bash
-# /usr/share/kibana/elasticdump/elasticdump  --output="http://logserver:password@127.0.0.1:9200/.kibana" --input="/root/restore/20210108-102848/.security.json" –type=data
-# /usr/share/kibana/elasticdump/elasticdump  --output="http://logserver:password@127.0.0.1:9200/.kibana" --input="/root/restore/20210108-102848/.security_mapping.json" --type=mapping
-```
-
-To restore any of the configurations e.g. ```kibana/logstash/elastic/wazuh```, follow the steps below:
-
-```bash
-# systemctl stop kibana
-# tar -xvf /tmp/restore/20210108-102848/kibana_conf.tar.gz -C / --overwrite
-```
-
-```bash
-# systemctl start kibana
-```
-
-To restore any of the templates, perform the following steps for each template:
-
-- Select from the ```templates.json``` file the template you are interested in, omitting its name
-- Move it to a new ```json``` file, e.g. ```test.json```
-- Load by specifying the name of the target template in the link
-
-```bash
-# curl -s -XPUT -H 'Content-Type: application/json' -u logserver '127.0.0.1:9200/_template/test -d@/root/restore/20210108-102848/test.json
-```
-
-To restore the cluster settings, execute the following command:
-
-```bash
-# curl -s -XPUT -H 'Content-Type: application/json' -u logserver '127.0.0.1:9200/_cluster/settings' -d@/root/restore/20210108-102848/cluster_settings.json
-```
 ## Audit actions
 
 ### AUTHORIZATION PLUGIN
@@ -1362,7 +1215,7 @@ To restore the cluster settings, execute the following command:
 </tr>
 <tr data-sourcepos="7:1-7:40">
 <td data-sourcepos="7:2-7:7">OBJECTS</td>
-<td data-sourcepos="7:9-7:15">.kibana</td>
+<td data-sourcepos="7:9-7:15"></td>
 <td data-sourcepos="7:17-7:39">whole body if enabled</td>
 </tr>
 </tbody>
@@ -1880,7 +1733,7 @@ To restore the cluster settings, execute the following command:
 </table>
 
 
-### ELASTSCHEDULER
+### SCHEDULER
 
 <table class="tg">
 <thead>
@@ -1893,12 +1746,12 @@ To restore the cluster settings, execute the following command:
 <tbody>
 <tr data-sourcepos="139:1-139:124">
 <td data-sourcepos="139:2-139:69">[<code data-sourcepos="139:5-139:11">ARCHIVE</code>|<code data-sourcepos="139:15-139:30">INDEX_MANAGEMENT</code>|<code data-sourcepos="139:34-139:37">SYNC</code>] ACTION [enabled|disabled]</td>
-<td data-sourcepos="139:71-139:108">put:/api/elastscheduler/schedulerjob</td>
+<td data-sourcepos="139:71-139:108">put:/api/logserver/schedulerjob</td>
 <td data-sourcepos="139:110-139:123">payload.name</td>
 </tr>
 <tr data-sourcepos="140:1-140:94">
 <td data-sourcepos="140:2-140:39">SCHEDULER ACTION [enabled|disabled]</td>
-<td data-sourcepos="140:41-140:78">put:/api/elastscheduler/schedulerjob</td>
+<td data-sourcepos="140:41-140:78">put:/api/logserver/schedulerjob</td>
 <td data-sourcepos="140:80-140:93">payload.name</td>
 </tr>
 </tbody>
@@ -1907,7 +1760,7 @@ To restore the cluster settings, execute the following command:
 ## Index management
 
 **Note** \
-**Before using the *Index Management* module is necessary to set an appropriate password for the *Log Server* user in the following file: ```/usr/share/kibana/curator/curator.yml```***
+**Before using the *Index Management* module is necessary to set an appropriate password for the *Logserver* user in the following file: ```/usr/share/logserver-gui/curator/curator.yml```***
 
 The Index Management module allows you to manage indexes and perform activities such as:
 
@@ -2038,7 +1891,7 @@ Optional settings:
 
 ### Rollover action
 
-This action uses the Elasticsearch Rollover API to create a new index if any of the described conditions are met.
+This action uses the Data Node Rollover API to create a new index if any of the described conditions are met.
 
 Settings required:
 
@@ -2071,8 +1924,6 @@ You can set the following retention parameters for the above indexes:
 
 ### Custom action
 
-Additionally, the module allows you to define your own actions in line with the Curator documentation: https://www.elastic.co/guide/en/elasticsearch/client/curator/current/actions.html
-
 To create a Custom action, select *Custom* from *Select Action*, enter a name in the *Action Name* field, and set the schedule in the *Schedule Cron Pattern* field. In the edit field, enter the definition of a custom action:
 
 ![](/media/media/image226.png)
@@ -2087,7 +1938,7 @@ actions:
     action: open
     description: >-
       Open indices older than 30 days but younger than 60 days (based on index
-      name), for logstash- prefixed indices.
+      name), for syslog- prefixed indices.
     options:
       timeout_override:
       continue_if_exception: False
@@ -2095,7 +1946,7 @@ actions:
     filters:
     - filtertype: pattern
       kind: prefix
-      value: logstash-
+      value: syslog-
       exclude:
     - filtertype: age
       source: name
@@ -2121,7 +1972,7 @@ actions:
   1:
     action: replicas
     description: >-
-      Reduce the replica count to 0 for logstash- prefixed indices older than
+      Reduce the replica count to 0 for syslog- prefixed indices older than
       10 days (based on index creation_date)
     options:
       count: 0
@@ -2132,7 +1983,7 @@ actions:
     filters:
     - filtertype: pattern
       kind: prefix
-      value: logstash-
+      value: syslog-
       exclude:
     - filtertype: age
       source: creation_date
@@ -2150,7 +2001,7 @@ actions:
     action: allocation
     description: >-
       Apply shard allocation routing to 'require' 'tag=cold' for hot/cold node
-      setup for logstash- indices older than 3 days, based on index_creation
+      setup for syslog- indices older than 3 days, based on index_creation
       date
     options:
       key: tag
@@ -2160,7 +2011,7 @@ actions:
     filters:
     - filtertype: pattern
       kind: prefix
-      value: logstash-
+      value: syslog-
     - filtertype: age
       source: creation_date
       direction: older
@@ -2219,7 +2070,7 @@ This action closes the selected indices older than 93 days and optionally delete
 
 #### Close-Monthly
 
-This action closes the selected indices older than 93 days (3 months)and optionally deletes associated aliases beforehand. If it today is 21 December, this action will close or optionally delete every index older than Oktober the same year, the action starts every day at 01:00 AM.
+This action closes the selected indices older than 93 days (3 months)and optionally deletes associated aliases beforehand. If it today is 21 December, this action will close or optionally delete every index older than October the same year, the action starts every day at 01:00 AM.
 
 `Action type`:    CLOSE \
 `Action name`:     Close-Daily \
@@ -2426,7 +2277,7 @@ actions:
       This action works on default logtrail indices. It is recommended to enable
       it.
     options:
-      name: logtrail-elasticsearch
+      name: logtrail-data-node
       conditions:
         max_size: 5GB
       continue_if_exception: true
@@ -2437,7 +2288,7 @@ actions:
       This action works on default logtrail indices. It is recommended to enable
       it.
     options:
-      name: logtrail-kibana
+      name: logtrail-gui
       conditions:
         max_size: 5GB
       continue_if_exception: true
@@ -2448,7 +2299,7 @@ actions:
       This action works on default logtrail indices. It is recommended to enable
       it.
     options:
-      name: logtrail-logstash
+      name: logtrail-probe
       conditions:
         max_size: 5GB
       continue_if_exception: true
@@ -2488,28 +2339,28 @@ Expanding the details column provides more information about a given task. (Note
 
 ## Archive
 
-The Archive module allows you to create compressed data files ([zstd](https://github.com/facebook/zstd)) from Elasticsearch indices. The archive checks the age of each document in the index and if it is older than defined in the job, it is copied to the archive file.
+The Archive module allows you to create compressed data files ([zstd](https://github.com/facebook/zstd)) from Data Node indices. The archive checks the age of each document in the index and if it is older than defined in the job, it is copied to the archive file.
 
 ### Configuration
 
 #### Enabling module
 
-To configure the module edit the `kibana.yml` configuration file end set path to the archive directory - location where the archive files will be stored:
+To configure the module edit the UI main configuration file end set path to the archive directory - location where the archive files will be stored:
 
 ```bash
-vim /etc/kibana/kibana.yml
+vim /etc/logserver-gui/logserver-gui.yml
 ```
 
 remove the comment from the following line and set the correct path to the archive directory:
 
 ```vim
-archive.archivefolderpath: '/var/lib/elastic_archive_test'
+archive.archivefolderpath: '/var/lib/logserver_archive_test'
 ```
 
 Archives will be saved inside above directory in the subdirectories that describes year and month of its creation. For example:
 
 ```bash
-/var/lib/elastic_archive_test
+/var/lib/logserver_archive_test
 ├── 2022
 │   └── 08
 │       ├── enc3_2022-08-15.json.zstd
@@ -2577,7 +2428,7 @@ The searching process can take a long time. On the `Task List`, you can follow t
 
 ### Archive Restore
 
-The Archive Restore module moves data from the archive to the Elasticsearch index and make it online.
+The Archive Restore module moves data from the archive to the Data Node index and make it online.
 
 #### Create Restore task
 
@@ -2587,7 +2438,7 @@ The Archive Restore module moves data from the archive to the Elasticsearch inde
 
   - `Select range of listed archives` - files that matches selected range will be displayed in the list (default **last 14 days**)
   - `Destination index` - If a destination index does not exist it will be created. If exists data will be appended
-  - `File name` - list of archive files that will be recovered to Elasticsearch index
+  - `File name` - list of archive files that will be recovered to the Data Node index
   - `Enable restoring from encrypted archives` - enable option to restore data from encrypted archives
 
 ![](/media/media/04_archive_create-restore-task.png)
@@ -2596,7 +2447,7 @@ The table footer shows the total number of found files for the specified date ra
 
 #### Task List
 
-The process will index data back into Elasticsearch. Depend on archive size the process can take long time. On the `Task List` you can follow the status of the recovery process. Also you can view result and delete tasks.
+The process will index data back into the Data Node. Depend on archive size the process can take long time. On the `Task List` you can follow the status of the recovery process. Also you can view result and delete tasks.
 
 ![](/media/media/04_archive_restore-task-list.png)
 
@@ -2625,7 +2476,7 @@ That archive cannot be used for task creation and so cannot be selected.
 
 ### Archive Directory Structure
 
-New archives will be created in the configured archive.archivefolderpath (kibana.yml) in a systematic order. They can be found under a path based on the date the archive was created: /$archivefolderpath/$year/$month. This method of storing archives ensures better readability and significantly simplifies viewing large numbers of files.
+New archives will be created in the configured archive.archivefolderpath in a systematic order. They can be found under a path based on the date the archive was created: /$archivefolderpath/$year/$month. This method of storing archives ensures better readability and significantly simplifies viewing large numbers of files.
 The final directory is determined by the last segment of the archive name, which contains the archive creation date. For example, assuming that the root archivefolderpath is set to /download, archive sample-archive_2023-11-01.json.zstd will be saved to the /download/2023/11/ automatically created directory.
 Archives once saved to the root directory will be displayed normally in the GUI and will be accessible in the same way as those saved in a sorted manner.
 
@@ -2681,7 +2532,7 @@ As mentioned before, there is an option to hover over the color dot that indicat
 
 ### Identifying progress of archivisation/restoration process
 
-The `/usr/share/kibana/data/archive/tasks` directory contains metadata files, that indicates the current status of the task. That files contains informations about all indices, that:
+The `/usr/share/logserver-gui/data/archive/tasks` directory contains metadata files, that indicates the current status of the task. That files contains informations about all indices, that:
 
   - are about to be processed (**"Waiting"** status)
   - are processing (**"Running"** status)
@@ -2699,7 +2550,7 @@ Moreover, in the metadata files can be found current process id (`pid`), total d
 
     ```bash
     ls -la /archivefolderpath/
-    -rw-r--r--. 1 kibana kibana          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
+    -rw-r--r--. 1 user group          13 Mar 21 10:07 prd-srv-win-ad-2022.12.
     21_2022-12-21.json.zstd
     ```
 
@@ -3191,7 +3042,7 @@ Module CMDB have two tabs:
 
 ## Cerebro - Cluster Health
 
-Cerebro is the Elasticsearch administration tool that allows you to perform the following tasks:
+Cerebro is the cluster administration tool that allows you to perform the following tasks:
 
 - monitoring and management of indexing nodes, indexes and shards:
 
@@ -3211,667 +3062,13 @@ Access to the `Cluster` module is possible through the button in the upper right
 
 To configure cerebro see to *Configuration* section.
 
-## Elasticdump
+## Data dump
 
-Elasticdump is a tool for moving and saving indices.
+Data dump guide is available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/Data%20dump/)
 
-### Location
+## Data Node index management tool
 
-```bash
-/usr/share/kibana/elasticdump/elasticdump
-```
-
-### Examples of use
-
-#### Copy an index from production to staging with analyzer and mapping
-
-```bash
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=http://staging.es.com:9200/my_index \
-  --type=analyzer
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=http://staging.es.com:9200/my_index \
-  --type=mapping
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=http://staging.es.com:9200/my_index \
-  --type=data
-```
-
-#### Backup index data to a file:
-
-```bash
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=/data/my_index_mapping.json \
-  --type=mapping
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=/data/my_index.json \
-  --type=data
-```
-
-#### Backup and index to a gzip using stdout
-
-```bash
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=$ \
-  | gzip > /data/my_index.json.gz
-```
-
-#### Backup the results of a query to a file
-
-```bash
-elasticdump \
-  --input=http://production.es.com:9200/my_index \
-  --output=query.json \
-  --searchBody="{\"query\":{\"term\":{\"username\": \"admin\"}}}"
-```
-
-#### Copy a single shard data
-
-```bash
-elasticdump \
-  --input=http://es.com:9200/api \
-  --output=http://es.com:9200/api2 \
-  --params="{\"preference\":\"_shards:0\"}"
-```
-
-#### Backup aliases to a file
-
-```bash
-elasticdump \
-  --input=http://es.com:9200/index-name/alias-filter \
-  --output=alias.json \
- ```
-#### Copy a single type:
-
-```bash
-elasticdump \
-  --input=http://es.com:9200/api/search \
-  --input-index=my_index/my_type \
-  --output=http://es.com:9200/api/search \
-  --output-index=my_index \
-  --type=mapping
-```
-
-### Usage
-
-```bash
-elasticdump --input SOURCE --output DESTINATION [OPTIONS]
-```
-
-### All parameters
-
-```bash
-
---input
-                    Source location (required)
---input-index
-                    Source index and type
-                    (default: all, example: index/type)
---output
-                    Destination location (required)
---output-index
-                    Destination index and type
-                    (default: all, example: index/type)
---overwrite
-                    Overwrite output file if it exists
-                    (default: false)
---limit
-                    How many objects to move in batch per operation
-                    limit is approximate for file streams
-                    (default: 100)
-
---size
-                    How many objects to retrieve
-                    (default: -1 -> no limit)
-
---concurrency
-                    How many concurrent request is sent to a specified transport
-                    (default: 1)
-
---concurrencyInterval
-                    The length of time in milliseconds before the interval count resets. Must be finite.
-                    (default: 5000)
-
---intervalCap
-                    The max number of transport request in the given interval of time.
-                    (default: 5)
-
---carryoverConcurrencyCount
-                    Whether the task must finish in the given concurrencyInterval
-                    (intervalCap will reset to the default whether the request is completed or not)
-                    or will be carried over into the next interval count,
-                    which will effectively reduce the number of new requests created in the next interval
-                    i.e. intervalCap -= <num of carried over requests>
-                    (default: true)
-
---throttleInterval
-                    The length of time in milliseconds to delay between getting data from an inputTransport and sending it to an outputTransport
-                    (default: 1)
-
---debug
-                    Display the elasticsearch commands being used
-                    (default: false)
-
---quiet
-                    Suppress all messages except for errors
-                    (default: false)
-
---type
-                    What are we exporting?
-                    (default: data, options: [settings, analyzer, data, mapping, alias, template, component_template, index_template])
---filterSystemTemplates
-                    Whether to remove metrics-*-* and logs-*-* system templates
-                    (default: true])
---templateRegex
-                    Regex used to filter templates before passing to the output transport
-                    (default: (metrics|logs|\\..+)(-.+)?)
---delete
-                    Delete documents one-by-one from the input as they are
-                    moved.  Will not delete the source index
-                    (default: false)
---headers
-                    Add custom headers to Elastisearch requests (helpful when
-                    your Elasticsearch instance sits behind a proxy)
-                    (default: '{"User-Agent": "elasticdump"}')
---params
-                    Add custom parameters to Elastisearch requests uri. Helpful when you for example
-                    want to use elasticsearch preference
-                    (default: null)
---searchBody
-                    Preform a partial extract based on search results
-                    (when ES is the input, default values are
-                      if ES > 5
-                        `'{"query": { "match_all": {} }, "stored_fields": ["*"], "_source": true }'`
-                      else
-                        `'{"query": { "match_all": {} }, "fields": ["*"], "_source": true }'`
---searchWithTemplate
-                    Enable to use Search Template when using --searchBody
-                    If using Search Template then searchBody has to consist of "id" field and "params" objects
-                    If "size" field is defined within Search Template, it will be overridden by --size parameter
-                    See https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html for
-                    further information
-                    (default: false)
---sourceOnly
-                    Output only the json contained within the document _source
-                    Normal: {"_index":"","_type":"","_id":"", "_source":{SOURCE}}
-                    sourceOnly: {SOURCE}
-                    (default: false)
---ignore-errors
-                    Will continue the read/write loop on write error
-                    (default: false)
---scrollId
-                    The last scroll Id returned from elasticsearch.
-                    This will allow dumps to be resumed used the last scroll Id &
-                    `scrollTime` has not expired.
---scrollTime
-                    Time the nodes will hold the requested search in order.
-                    (default: 10m)
---maxSockets
-                    How many simultaneous HTTP requests can we process make?
-                    (default:
-                      5 [node <= v0.10.x] /
-                      Infinity [node >= v0.11.x] )
---timeout
-                    Integer containing the number of milliseconds to wait for
-                    a request to respond before aborting the request. Passed
-                    directly to the request library. Mostly used when you don't
-                    care too much if you lose some data when importing
-                    but rather have speed.
---offset
-                    Integer containing the number of rows you wish to skip
-                    ahead from the input transport.  When importing a large
-                    index, things can go wrong, be it connectivity, crashes,
-                    someone forgetting to `screen`, etc.  This allows you
-                    to start the dump again from the last known line written
-                    (as logged by the `offset` in the output).  Please be
-                    advised that since no sorting is specified when the
-                    dump is initially created, there's no real way to
-                    guarantee that the skipped rows have already been
-                    written/parsed.  This is more of an option for when
-                    you want to get most data as possible in the index
-                    without concern for losing some rows in the process,
-                    similar to the `timeout` option.
-                    (default: 0)
---noRefresh
-                    Disable input index refresh.
-                    Positive:
-                      1. Much increase index speed
-                      2. Much less hardware requirements
-                    Negative:
-                      1. Recently added data may not be indexed
-                    Recommended to use with big data indexing,
-                    where speed and system health in a higher priority
-                    than recently added data.
---inputTransport
-                    Provide a custom js file to use as the input transport
---outputTransport
-                    Provide a custom js file to use as the output transport
---toLog
-                    When using a custom outputTransport, should log lines
-                    be appended to the output stream?
-                    (default: true, except for `$`)
---awsChain
-                    Use [standard](https://aws.amazon.com/blogs/security/a-new-and-standardized-way-to-manage-credentials-in-the-aws-sdks/) location and ordering for resolving credentials including environment variables, config files, EC2 and ECS metadata locations
-                    _Recommended option for use with AWS_
---awsAccessKeyId
---awsSecretAccessKey
-                    When using Amazon Elasticsearch Service protected by
-                    AWS Identity and Access Management (IAM), provide
-                    your Access Key ID and Secret Access Key
---awsIniFileProfile
-                    Alternative to --awsAccessKeyId and --awsSecretAccessKey,
-                    loads credentials from a specified profile in aws ini file.
-                    For greater flexibility, consider using --awsChain
-                    and setting AWS_PROFILE and AWS_CONFIG_FILE
-                    environment variables to override defaults if needed
---awsService
-                    Sets the AWS service that the signature will be generated for
-                    (default: calculated from hostname or host)
---awsRegion
-                    Sets the AWS region that the signature will be generated for
-                    (default: calculated from hostname or host)
---awsUrlRegex
-                    Regular expression that defined valied AWS urls that should be signed
-                    (default: ^https?:\\.*.amazonaws.com.*$)
---transform
-                    A javascript, which will be called to modify documents
-                    before writing it to destination. global variable 'doc'
-                    is available.
-                    Example script for computing a new field 'f2' as doubled
-                    value of field 'f1':
-                        doc._source["f2"] = doc._source.f1 * 2;
-
---httpAuthFile
-                    When using http auth provide credentials in ini file in form
-                    `user=<username>
-                    password=<password>`
-
---support-big-int
-                    Support big integer numbers
---retryAttempts
-                    Integer indicating the number of times a request should be automatically re-attempted before failing
-                    when a connection fails with one of the following errors `ECONNRESET`, `ENOTFOUND`, `ESOCKETTIMEDOUT`,
-                    ETIMEDOUT`, `ECONNREFUSED`, `EHOSTUNREACH`, `EPIPE`, `EAI_AGAIN`
-                    (default: 0)
-
---retryDelay
-                    Integer indicating the back-off/break period between retry attempts (milliseconds)
-                    (default : 5000)
---parseExtraFields
-                    Comma-separated list of meta-fields to be parsed
---maxRows
-                    supports file splitting.  Files are split by the number of rows specified
---fileSize
-                    supports file splitting.  This value must be a string supported by the **bytes** module.
-                    The following abbreviations must be used to signify size in terms of units
-                    b for bytes
-                    kb for kilobytes
-                    mb for megabytes
-                    gb for gigabytes
-                    tb for terabytes
-
-                    e.g. 10mb / 1gb / 1tb
-                    Partitioning helps to alleviate overflow/out of memory exceptions by efficiently segmenting files
-                    into smaller chunks that then be merged if needs be.
---fsCompress
-                    gzip data before sending output to file.
-                    On import the command is used to inflate a gzipped file
---s3AccessKeyId
-                    AWS access key ID
---s3SecretAccessKey
-                    AWS secret access key
---s3Region
-                    AWS region
---s3Endpoint
-                    AWS endpoint can be used for AWS compatible backends such as
-                    OpenStack Swift and OpenStack Ceph
---s3SSLEnabled
-                    Use SSL to connect to AWS [default true]
-
---s3ForcePathStyle  Force path style URLs for S3 objects [default false]
-
---s3Compress
-                    gzip data before sending to s3
---s3ServerSideEncryption
-                    Enables encrypted uploads
---s3SSEKMSKeyId
-                    KMS Id to be used with aws:kms uploads
---s3ACL
-                    S3 ACL: private | public-read | public-read-write | authenticated-read | aws-exec-read |
-                    bucket-owner-read | bucket-owner-full-control [default private]
---retryDelayBase
-                    The base number of milliseconds to use in the exponential backoff for operation retries. (s3)
---customBackoff
-                    Activate custom customBackoff function. (s3)
---tlsAuth
-                    Enable TLS X509 client authentication
---cert, --input-cert, --output-cert
-                    Client certificate file. Use --cert if source and destination are identical.
-                    Otherwise, use the one prefixed with --input or --output as needed.
---key, --input-key, --output-key
-                    Private key file. Use --key if source and destination are identical.
-                    Otherwise, use the one prefixed with --input or --output as needed.
---pass, --input-pass, --output-pass
-                    Pass phrase for the private key. Use --pass if source and destination are identical.
-                    Otherwise, use the one prefixed with --input or --output as needed.
---ca, --input-ca, --output-ca
-                    CA certificate. Use --ca if source and destination are identical.
-                    Otherwise, use the one prefixed with --input or --output as needed.
---inputSocksProxy, --outputSocksProxy
-                    Socks5 host address
---inputSocksPort, --outputSocksPort
-                    Socks5 host port
---handleVersion
-                    Tells elastisearch transport to handle the `_version` field if present in the dataset
-                    (default : false)
---versionType
-                    Elasticsearch versioning types. Should be `internal`, `external`, `external_gte`, `force`.
-                    NB : Type validation is handle by the bulk endpoint and not elasticsearch-dump
---csvDelimiter
-                    The delimiter that will separate columns.
-                    (default : ',')
---csvFirstRowAsHeaders
-                    If set to true the first row will be treated as the headers.
-                    (default : true)
---csvRenameHeaders
-                    If you want the first line of the file to be removed and replaced by the one provided in the `csvCustomHeaders` option
-                    (default : true)
---csvCustomHeaders  A comma-seperated listed of values that will be used as headers for your data. This param must
-                    be used in conjunction with `csvRenameHeaders`
-                    (default : null)
---csvWriteHeaders   Determines if headers should be written to the csv file.
-                    (default : true)
---csvIgnoreEmpty
-                    Set to true to ignore empty rows.
-                    (default : false)
---csvSkipLines
-                    If number is > 0 the specified number of lines will be skipped.
-                    (default : 0)
---csvSkipRows
-                    If number is > 0 then the specified number of parsed rows will be skipped
-                    (default : 0)
---csvTrim
-                    Set to true to trim all white space from columns.
-                    (default : false)
---csvRTrim
-                    Set to true to right trim all columns.
-                    (default : false)
---csvLTrim
-                    Set to true to left trim all columns.
-                    (default : false)
---csvHandleNestedData
-                    Set to true to handle nested JSON/CSV data.
-                    NB : This is a very optioninated implementaton !
-                    (default : false)
---csvIdColumn
-                    Name of the column to extract the record identifier (id) from
-                    When exporting to CSV this column can be used to override the default id (@id) column name
-                    (default : null)
---csvIndexColumn
-                    Name of the column to extract the record index from
-                    When exporting to CSV this column can be used to override the default index (@index) column name
-                    (default : null)
---csvTypeColumn
-                    Name of the column to extract the record type from
-                    When exporting to CSV this column can be used to override the default type (@type) column name
-                    (default : null)
---help
-                    This page
-
-```
-
-### Elasticsearch's Scroll API
-
-Elasticsearch provides a scroll API to fetch all documents of an index starting from (and keeping) a consistent snapshot in time, which we use under the hood. This method is safe to use for large exports since it will maintain the result set in cache for the given period of time.
-
-NOTE: only works for --output
-
-### Bypassing self-sign certificate errors
-
-Set the environment NODE_TLS_REJECT_UNAUTHORIZED=0 before running elasticdump
-
-### An alternative method of passing environment variables before execution
-
-NB : This only works with linux shells
-
-NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump --input="https://localhost:9200" --output myfile
-
-## Curator - Elasticsearch index management tool
-
-Curator is a tool that allows you to perform index management tasks, such as:
-
-- Close Indices
-- Delete Indices
-- Delete Snapshots
-- Forcemerge segments
-- Changing Index Settings
-- Open Indices
-- Reindex data
-
-And other.
-
-### Curator installation
-
-Curator is delivered with the client node installer.
-
-### Curator configuration
-
-Create directory for configuration:
-
-```bash
-mkdir /etc/curator
-```
-
-Create directory for Curator logs file:
-
-```bash
-mkdir /var/log/curator
-```
-
-### Running Curator
-
-The curator executable is located in the directory:
-
-```bash
-/usr/share/kibana/curator/bin/curator
-```
-
-Curator requires two parameters:
-
-- config - path to configuration file for Curator
-- path to action file for Curator
-
-Example running command:
-
-```bash
-/usr/share/kibana/curator/bin/curator --config /etc/curator/curator.conf /etc/curator/close_indices.yml
-```
-
-### Sample configuration file
-
-----------
-
-Remember, leave a key empty if there is no value.  None will be a string, not a Python "NoneType"
-
-```bash
-client:
-  hosts:
-    - 127.0.0.1
-  port: 9200
-#  url_prefix:
-#  use_ssl: False
-#  certificate:
-  client_cert:
-  client_key:
-  ssl_no_validate: False
-  http_auth: $user:$passowrd
-  timeout: 30
-  master_only: True
-
-logging:
-  loglevel: INFO
-  logfile: /var/log/curator/curator.log
-  logformat: default
-  blacklist: ['elasticsearch', 'urllib3']
-```
-
-### Sample action file
-
-- close indices
-
-  ```yaml
-  actions:
-    1:
-      action: close
-      description: >-
-        Close indices older than 30 days (based on index name), for logstash-
-        prefixed indices.
-      options:
-        delete_aliases: False
-        timeout_override:
-        continue_if_exception: False
-        disable_action: True
-      filters:
-      - filtertype: pattern
-        kind: prefix
-        value: logstash-
-        exclude:
-      - filtertype: age
-        source: name
-        direction: older
-        timestring: '%Y.%m.%d'
-        unit: days
-        unit_count: 30
-        exclude:
-  ```
-
-- delete indices
-
-  ```yaml
-  actions:
-    1:
-      action: delete_indices
-      description: >-
-        Delete indices older than 45 days (based on index name), for logstash-
-        prefixed indices. Ignore the error if the filter does not result in an
-        actionable list of indices (ignore_empty_list) and exit cleanly.
-      options:
-        ignore_empty_list: True
-        timeout_override:
-        continue_if_exception: False
-        disable_action: True
-      filters:
-      - filtertype: pattern
-        kind: prefix
-        value: logstash-
-        exclude:
-      - filtertype: age
-        source: name
-        direction: older
-        timestring: '%Y.%m.%d'
-        unit: days
-        unit_count: 45
-        exclude:
-  ```
-
-- forcemerge segments
-
-  ```yaml
-  actions:
-    1:
-      action: forcemerge
-      description: >-
-        forceMerge logstash- prefixed indices older than 2 days (based on index
-        creation_date) to 2 segments per shard.  Delay 120 seconds between each
-        forceMerge operation to allow the cluster to quiesce.
-        This action will ignore indices already forceMerged to the same or fewer
-        number of segments per shard, so the 'forcemerged' filter is unneeded.
-      options:
-        max_num_segments: 2
-        delay: 120
-        timeout_override:
-        continue_if_exception: False
-        disable_action: True
-      filters:
-      - filtertype: pattern
-        kind: prefix
-        value: logstash-
-        exclude:
-      - filtertype: age
-        source: creation_date
-        direction: older
-        unit: days
-        unit_count: 2
-        exclude:
-  ```
-
-- open indices
-
-  ```yaml
-  actions:
-    1:
-      action: open
-      description: >-
-        Open indices older than 30 days but younger than 60 days (based on index
-        name), for logstash- prefixed indices.
-      options:
-        timeout_override:
-        continue_if_exception: False
-        disable_action: True
-      filters:
-      - filtertype: pattern
-        kind: prefix
-        value: logstash-
-        exclude:
-      - filtertype: age
-        source: name
-        direction: older
-        timestring: '%Y.%m.%d'
-        unit: days
-        unit_count: 30
-        exclude:
-      - filtertype: age
-        source: name
-        direction: younger
-        timestring: '%Y.%m.%d'
-        unit: days
-        unit_count: 60
-        exclude:
-  ```
-
-- replica reduce
-
-  ```yaml
-  actions:
-    1:
-      action: replicas
-      description: >-
-        Reduce the replica count to 0 for logstash- prefixed indices older than
-        10 days (based on index creation_date)
-      options:
-        count: 0
-        wait_for_completion: False
-        timeout_override:
-        continue_if_exception: False
-        disable_action: True
-      filters:
-      - filtertype: pattern
-        kind: prefix
-        value: logstash-
-        exclude:
-      - filtertype: age
-        source: creation_date
-        direction: older
-        unit: days
-        unit_count: 10
-        exclude:
-  ```
+Tool guide is available under this [link](https://energylogserver.com/portal-manage/#data/AOK_KnowledgeBase/list/Index%20Management%20tool/)
 
 ## Cross-cluster Search
 
@@ -3929,27 +3126,27 @@ logging:
    }'
    ```
 
-4. Configure index pattern in Kibana GUI to discover data from multiple clusters:
+4. Configure index pattern in GUI to discover data from multiple clusters:
 
    ```bash
-   cluster_one:logstash-*,cluster_two:logstash-*
+   cluster_one:syslog-*,cluster_two:syslog-*
    ```
 
    ![](/media/media/image133.png)
 
 ### Security
 
-Cross-cluster search uses the Elasticsearch transport layer (default 9300/tcp port) to exchange data.  To secure the transmission, encryption must be enabled for the transport layer.
+Cross-cluster search uses the Data Node transport layer (default 9300/tcp port) to exchange data.  To secure the transmission, encryption must be enabled for the transport layer.
 
-Configuration is in the `/etc/elasticsearch/elastisearch.yml` file:
+Configuration is in the `/etc/logserver/logserver.yml` file:
 
 ```bash
 # Transport layer encryption
 logserverguard.ssl.transport.enabled: true
-logserverguard.ssl.transport.pemcert_filepath: "/etc/elasticsearch/ssl/certificate.crt"
-logserverguard.ssl.transport.pemkey_filepath: "/etc/elasticsearch/ssl/certificate.key"
+logserverguard.ssl.transport.pemcert_filepath: "/etc/logserver/ssl/certificate.crt"
+logserverguard.ssl.transport.pemkey_filepath: "/etc/logserver/ssl/certificate.key"
 logserverguard.ssl.transport.pemkey_password: ""
-logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/elasticsearch/ssl/rootCA.crt"
+logserverguard.ssl.transport.pemtrustedcas_filepath: "/etc/logserver/ssl/rootCA.crt"
 
 logserverguard.ssl.transport.enforce_hostname_verification: false
 logserverguard.ssl.transport.resolve_hostname: false
@@ -3960,7 +3157,7 @@ logserverguard.ssl.transport.resolve_hostname: false
 
 ## Sync/Copy
 
-The Sync/Copy module allows you to synchronize or copy data between two Elasticsearch clusters.
+The Sync/Copy module allows you to synchronize or copy data between two Energy Logserver clusters.
 You can copy or synchronize selected indexes or indicate index pattern.
 
 ### Configuration
@@ -4035,7 +3232,6 @@ The XLSX Import module allow to import your `xlsx` and `csv` file to indices.
    ![](/media/media/image139.png)
 
 5. Select the `Configure your own mapping` for every field. You can choose the type and apply more options with the advanced JSON.
-   The list of parameters can be found here, https://www.elastic.co/guide/en/elasticsearch/reference/7.x/mapping-params.html
 
 6. After the import configuration is complete, select the `Import` button to start the import process.
 
@@ -4044,162 +3240,13 @@ The XLSX Import module allow to import your `xlsx` and `csv` file to indices.
    ![](/media/media/image140.png)
 
 
-## Logtrail
+## Network Probe 
 
-LogTrail module allow to view, analyze, search and tail log events from multiple indices in realtime. Main features of this module are:
-
-- View, analyze and search log events from a centralized interface
-- Clean & simple devops friendly interface
-- Live tail
-- Filter aggregated logs by hosts and program
-- Quickly seek to logs based on time
-- Supports highlighting of search matches
-- Supports multiple Elasticsearch index patterns each with different  schemas
-- Can be extended by adding additional fields to log event
-- Color coding of messages based on field values
-
-Default Logtrail configuration, keeps track of event logs for Elasticsearch, Logstash, Kibana and Alert processes.
-The module allows you to track events from any index stored in Elasticsearch.
-
-### Configuration
-
-The LogTrail module uses the Logstash pipeline to retrieve data from any of the event log files and save its contents to the Elasticsearch index.
-
-### Logstash configuration
-
-Example for the file `/var/log/messages`
-
-1. Add the Logstash configuration file in the correct pipline (default is "logtrail"):
-
-    ```bash
-    vi /etc/logstash/conf.d/logtrail/messages.conf
-    ```
-
-    ```bash
-    input {
-        file {
-            path => "/var/log/messages"
-            start_position => beginning
-            tags => "logtrail_messages"
-        }
-    }
-    filter {
-            if "logtrail_messages" in [tags] {
-                    grok {
-                            match => {
-                                    #"message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:hostname} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:syslog_message}"
-    # If syslog is format is "<%PRI%><%syslogfacility%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg:::sp-if-no-1st-sp%%msg:::drop-last-lf%\n"
-                                    "message" => "<?%{NONNEGINT:priority}><%{NONNEGINT:facility}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:hostname} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:syslog_message}"
-                                    }
-                            }
-                    date {
-                            match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
-                    }
-                    ruby {
-                            code =>  "event.set('level',event.get('priority').to_i - ( event.get('facility').to_i * 8 ))"
-                    }
-            }
-    }
-    output {
-        if "logtrail_messages" in [tags] {
-            elasticsearch {
-                hosts => "http://localhost:9200"
-                index => "logtrail-messages-%{+YYYY.MM}"
-                user => "logstash"
-                password => "logstash"
-            }
-        }
-    }
-    ```
-
-2. Restart the Logstash service
-
-   ```bahs
-   systemctl restart logstash
-   ```
-
-### Kibana configuration
-
-1. Set up a new pattern index `logtrail-messages*`  in the Energy Logserver configuration. The procedure is described in the chapter [First login](/02-00-00-Data_source_and_application_management/02-00-00-Data_source_and_application_management.md).
-
-2. Add a new configuration section in the LogTrail configuration file:
-
-   ```bash
-   vi /usr/share/kibana/plugins/logtrail/logtrail.json
-   ```
-
-   ```bash
-   {
-     "index_patterns" : [
-       {
-         "es": {
-           "default_index": "logstash-message-*",
-           "allow_url_parameter": false
-         },
-         "tail_interval_in_seconds": 10,
-         "es_index_time_offset_in_seconds": 0,
-         "display_timezone": "Etc/UTC",
-         "display_timestamp_format": "MMM DD HH:mm:ss",
-         "max_buckets": 500,
-         "default_time_range_in_days" : 0,
-         "max_hosts": 100,
-         "max_events_to_keep_in_viewer": 5000,
-         "fields" : {
-           "mapping" : {
-               "timestamp" : "@timestamp",
-               "display_timestamp" : "@timestamp",
-               "hostname" : "hostname",
-               "program": "program",
-               "message": "syslog_message"
-           },
-           "message_format": "{{{syslog_message}}}"
-         },
-         "color_mapping" : {
-           "field": "level",
-           "mapping" : {
-             "0": "#ff0000",
-             "1": "#ff3232",
-             "2": "#ff4c4c",
-             "3": "#ff7f24",
-             "4": "#ffb90f",
-             "5": "#a2cd5a"
-           }
-         }
-       }
-     ]
-   }
-
-   ```
-
-3. Restate the Kibana service
-
-   ```bash
-   systemctl restart kibana
-   ```
-
-### Using Logtrail
-
-To access of the LogTrail module, click the tile icon from the main menu bar and then go to the „LogTrail” icon.
-
-![](/media/media/image144.png)
-
-The main module window contains the content of messages that are automatically updated.
-
-![](/media/media/image145.png)
-
-Below is the search and options bar.
-
-![](/media/media/image146.png)
-
-It allows you to search for event logs, define the systems from which events will be displayed, define the time range for events and define the index pattern.
-
-## Logstash 
-
-The Energy Logserver use Logstash service to dynamically unify data
+The Energy Logserver use Network Probe service to dynamically unify data
 from disparate sources and normalize the data into destination of your
-choose. A Logstash pipeline has two required elements, *input* and *output*,
+choose. A Network Probe pipeline has two required elements, *input* and *output*,
 and one optional element *filter*. The input plugins consume data from a source, the filter plugins modify the data as you specify, and the output plugins write the data to a destination.
-The default location of the Logstash plugin files is: */etc/logstash/conf.d/*. This location contain following Energy Logserver
+The default location of the Network Probe plugin files is: */etc/logserver-probe/conf.d/*. This location contain following Energy Logserver
 
 Energy Logserver default plugins:
 
@@ -4212,11 +3259,11 @@ Energy Logserver default plugins:
 - `020-filter-beats-syslog.conf`
 - `020-filter-network.conf`
 - `099-filter-geoip.conf`
-- `100-output-elasticsearch.conf`
+- `100-output-logserver.conf`
 - `naemon_beat.example`
 - `perflogs.example`
 
-### Logstash - Input "beats" ##
+### Input "beats" ##
 
 This plugin wait for receiving data from remote beats services. It use tcp
 /5044 port for communication:
@@ -4300,7 +3347,7 @@ Connection to remote resources should be done as follows:
   mount -t cifs //remoate.host.or.ip/freigabe /mnt -o username=testuser
   ```
 
-### Logstash - Input "network" ##
+### Input "network" ##
 
 This plugin read events over a TCP or UDP socket assigns the appropriate tags:
 
@@ -4328,7 +3375,7 @@ firewall-cmd --reload
 systemctl restart firewalld
 ```
 
-### Logstash - Input SNMP
+### Input SNMP
 
 The SNMP input polls network devices using Simple Network Management Protocol (SNMP) to gather information related to the current state of the devices operation:
 
@@ -4341,9 +3388,9 @@ input {
 }
 ```
 
-### Logstash - Input HTTP / HTTPS
+### Input HTTP / HTTPS
 
-Using this input you can receive single or multiline events over http(s). Applications can send an HTTP request to the endpoint started by this input and Logstash will convert it into an event for subsequent processing. Sample definition:
+Using this input you can receive single or multiline events over http(s). Applications can send an HTTP request to the endpoint started by this input and Network Probe will convert it into an event for subsequent processing. Sample definition:
 
 ```bash
 input {
@@ -4368,11 +3415,7 @@ input {
 }
 ```
 
-### Logstash - Input Relp
-
-#### Installation
-
-For plugins not bundled by default, it is easy to install by running bin/logstash-plugin install logstash-input-relp.
+### Input Relp
 
 #### Description
 
@@ -4566,11 +3609,11 @@ The following configuration options are supported by all input plugins:
 
 ```add_field``` - Add a field to an event
 
-```codec``` - The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+```codec``` - The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Network Probe pipeline.
 
 ```enable_metric``` - Disable or enable metric logging for this specific plugin instance by default we record all the metrics we can, but you can disable metrics collection for a specific plugin.
 
-```id``` - Add a unique ID to the plugin configuration. If no ID is specified, Logstash will generate one. It is strongly recommended to set this ID in your configuration. This is particularly useful when you have two or more plugins of the same type, for example, if you have 2 relp inputs. Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+```id``` - Add a unique ID to the plugin configuration. If no ID is specified, Network Probe will generate one. It is strongly recommended to set this ID in your configuration. This is particularly useful when you have two or more plugins of the same type, for example, if you have 2 relp inputs. Adding a named ID in this case will help in monitoring Network Probe when using the monitoring APIs.
 
 ```bash
 input {
@@ -4586,11 +3629,11 @@ input {
 
 Types are used mainly for filter activation.
 
-The type is stored as part of the event itself, so you can also use the type to search for it in Kibana.
+The type is stored as part of the event itself, so you can also use the type to search for it in GUI.
 
-If you try to set a type on an event that already has one (for example when you send an event from a shipper to an indexer) then a new input will not override the existing type. A type set at the shipper stays with that event for its life even when sent to another Logstash server.
+If you try to set a type on an event that already has one (for example when you send an event from a shipper to an indexer) then a new input will not override the existing type. A type set at the shipper stays with that event for its life even when sent to another Network Probe server.
 
-### Logstash - Input Kafka
+### Input Kafka
 
 This input will read events from a Kafka topic.
 
@@ -4605,7 +3648,7 @@ input {
     topics => ["example"]
     codec => json
     client_id => "hostname"
-    group_id => "logstash"
+    group_id => "logserver"
     max_partition_fetch_bytes => "30000000"
     max_poll_records => "1000"
 
@@ -4624,13 +3667,13 @@ input {
 
 ```consumer_threads``` - Ideally you should have as many threads as the number of partitions for a perfect balance — more threads than partitions means that some threads will be idle
 
-```topics``` - A list of topics to subscribe to, defaults to ["logstash"].
+```topics``` - A list of topics to subscribe to, defaults to ["logserver"].
 
-```codec``` - The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+```codec``` - The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Network Probe pipeline.
 
 ```client_id``` - The id string to pass to the server when making requests. The purpose of this is to be able to track the source of requests beyond just ip/port by allowing a logical application name to be included.
 
-```group_id``` - The identifier of the group this consumer belongs to. Consumer group is a single logical subscriber that happens to be made up of multiple processors. Messages in a topic will be distributed to all Logstash instances with the same group_id.
+```group_id``` - The identifier of the group this consumer belongs to. Consumer group is a single logical subscriber that happens to be made up of multiple processors. Messages in a topic will be distributed to all Network Probe instances with the same group_id.
 
 ```max_partition_fetch_bytes``` - The maximum amount of data per-partition the server will return. The maximum total memory used for a request will be #partitions * max.partition.fetch.bytes. This size must be at least as large as the maximum message size the server allows or else it is possible for the producer to send messages larger than the consumer can fetch. If that happens, the consumer can get stuck trying to fetch a large message on a certain partition.
 
@@ -4644,7 +3687,7 @@ input {
 
 ```check_crcs``` - Automatically check the CRC32 of the records consumed. This ensures no on-the-wire or on-disk corruption to the messages occurred. This check adds some overhead, so it may be disabled in cases seeking extreme performance.
 
-### Logstash - Input File
+### Input File
 
 This plugin stream events from files, normally by tailing them in a manner similar to tail -0F but optionally reading them from the beginning. Sample definition:
 
@@ -4655,11 +3698,11 @@ file {
 }
 ```
 
-### Logstash - Input database
+### Input database
 
-This plugin can read data in any database with a JDBC interface into Logstash. You can periodically schedule ingestion using a cron syntax (see schedule setting) or run the query one time to load data into Logstash. Each row in the resultset becomes a single event. Columns in the resultset are converted into fields in the event.
+This plugin can read data in any database with a JDBC interface into Network Probe. You can periodically schedule ingestion using a cron syntax (see schedule setting) or run the query one time to load data into Network Probe. Each row in the resultset becomes a single event. Columns in the resultset are converted into fields in the event.
 
-#### Logasth input - MySQL
+#### Input MySQL
 
 Download jdbc driver: [https://dev.mysql.com/downloads/connector/j/](https://dev.mysql.com/downloads/connector/j/)
 
@@ -4680,7 +3723,7 @@ input {
 }
 ```
 
-#### Logasth input - MSSQL
+#### Input MSSQL
 
 Download jdbc driver: [https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15](https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver15)
 
@@ -4695,7 +3738,7 @@ input {
     jdbc_user => "mssql"
     jdbc_password => "mssql"
     jdbc_default_timezone => "UTC"
-    statement_filepath => "/usr/share/logstash/plugin/query"
+    statement_filepath => "/usr/share/logserver-probe/plugin/query"
     schedule => "*/5 * * * *"
     sql_log_level => "warn"
     record_last_run => "false"
@@ -4704,7 +3747,7 @@ input {
 }
 ```
 
-#### Logstash input - Oracle
+#### Input Oracle
 
 Download jdbc driver: [https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
 
@@ -4725,7 +3768,7 @@ input {
 }
 ```
 
-#### Logstash input - PostgreSQL
+#### Input PostgreSQL
 
 Download jdbc driver: [https://jdbc.postgresql.org/download.html](https://jdbc.postgresql.org/download.html)
 
@@ -4744,7 +3787,7 @@ input {
 }
 ```
 
-### Logstash - Input CEF
+### Input CEF
 
 The common event format (CEF) is a standard for the interoperability of event or log generating devices and applications. The standard defines a syntax for log records. It comprises of a standard prefix and a variable extension that is formatted as key-value pairs.
 
@@ -4762,7 +3805,7 @@ This setting allows the following character sequences to have special meaning:
 - `\r` (backslash "r") - means carriage return (ASCII 0x0D)
 - `\n` (backslash "n") - means newline (ASCII 0x0A)
 
-### Logstash - Input OPSEC
+### Input OPSEC
 
 FW1-LogGrabber is a Linux command-line tool to grab logfiles from remote Checkpoint devices. It makes extensive use of OPSEC Log Export APIs (LEA) from Checkpoint's [OPSEC SDK 6.0 for Linux 50](http://supportcontent.checkpoint.com/file_download?id=48148).
 
@@ -5236,21 +4279,9 @@ lea_server ip 10.1.1.1
 lea_server port 50001
 ```
 
-### Logstash - Input SDEE
+###  Input SDEE
 
-This [Logstash](https://github.com/elasticsearch/logstash) input plugin allows you to call a Cisco SDEE/CIDEE HTTP API, decode the output of it into event(s), and send them on their merry way. The idea behind this plugins came from a need to gather events from Cisco security devices and feed them to ELK stack
-
-#### Download
-
-Only support for Logstash core 5.6.4.
-
-Download link: https://rubygems.org/gems/logstash-input-sdee
-
-#### Installation
-
-```bash
-gem install logstash-input-sdee-0.7.8.gem
-```
+This input plugin allows you to call a Cisco SDEE/CIDEE HTTP API, decode the output of it into event(s), and send them on their merry way. The idea behind this plugins came from a need to gather events from Cisco security devices and feed them to Energy Logserver.
 
 #### Configuration
 
@@ -5274,7 +4305,7 @@ You need to import host SSL certificate in Java trust store to be able to connec
   $JAVA_HOME/bin/keytool -keystore $JAVA_HOME/lib/security/cacerts -list
   ```
 
-- Setup the Logstash input config with SSL connection:
+- Setup the Network Probe input config with SSL connection:
 
   ```bash
   input {
@@ -5292,13 +4323,13 @@ You need to import host SSL certificate in Java trust store to be able to connec
   }
   ```
 
-### Logstash - Input XML
+### Input XML
 
-To download xml files via Logstash use input "file", and set the location of the files in the configuration file:
+To download xml files via Network Probe use input "file", and set the location of the files in the configuration file:
 
 ```bash
 file {
-       path => [ "/etc/logstash/files/*.xml" ]
+       path => [ "/path/to/files/*.xml" ]
        mode => "read"
   }
 ```
@@ -5313,17 +4344,9 @@ filter {
     }
 ```
 
-More configuration options you can find: https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-xml.html#plugins-filters-xml-options
+### Input WMI
 
-### Logstash - Input WMI
-
-The Logstash input **wmi** allow to collect data from WMI query. This is useful for collecting performance metrics and other data which is accessible via WMI on a Windows host.
-
-#### Installation
-
-For plugins not bundled by default, it is easy to install by running:
-
-`/usr/share/logstash/bin/logstash-plugin install logstash-input-wmi`
+The input **wmi** allow to collect data from WMI query. This is useful for collecting performance metrics and other data which is accessible via WMI on a Windows host.
 
 #### Configuration
 
@@ -5347,9 +4370,7 @@ input {
     }
 ```
 
-More about parameters: [https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-wmi.html#plugins-inputs-wmi-options](https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-wmi.html#plugins-inputs-wmi-options)
-
-### Logstash - Filter "beats syslog" ##
+### Filter "beats syslog" ##
 
 This filter processing an event data with syslog type:
 
@@ -5406,7 +4427,7 @@ filter {
 }
 ```
 
-### Logstash - Filter "network" ##
+### Filter "network" ##
 
 This filter processing event data with network type:
 
@@ -5439,7 +4460,7 @@ filter {
 
     if [severity_level] {
       translate {
-        dictionary_path => "/etc/logstash/dictionaries/cisco_syslog_severity.yml"
+        dictionary_path => "/etc/logserver-probe/dictionaries/cisco_syslog_severity.yml"
         field => "severity_level"
         destination => "severity_level_descr"
       }
@@ -5447,7 +4468,7 @@ filter {
 
     if [facility] {
       translate {
-        dictionary_path => "/etc/logstash/dictionaries/cisco_syslog_facility.yml"
+        dictionary_path => "/etc/logserver-probe/dictionaries/cisco_syslog_facility.yml"
         field => "facility"
         destination => "facility_full_descr"
       }
@@ -5506,7 +4527,7 @@ filter {
 }
 ```
 
-### Logstash - Filter "geoip" ##
+### Filter "geoip" ##
 
 This filter processing an events data with IP address and check localization:
 
@@ -5517,7 +4538,7 @@ filter {
     geoip {
       source => "[src][ip]"
       target => "[src][geoip]"
-      database => "/etc/logstash/geoipdb/GeoLite2-City.mmdb"
+      database => "/etc/logserver-probe/geoipdb/GeoLite2-City.mmdb"
       fields => [ "city_name", "country_name", "continent_code", "country_code2", "location" ]
       remove_field => [ "[src][geoip][ip]" ]
     }
@@ -5525,7 +4546,7 @@ filter {
     geoip {
       source => "[src][ip]"
       target => "[src][geoip]"
-      database => "/etc/logstash/geoipdb/GeoLite2-ASN.mmdb"
+      database => "/etc/logserver-probe/geoipdb/GeoLite2-ASN.mmdb"
       remove_field => [ "[src][geoip][ip]" ]
     }
 
@@ -5536,7 +4557,7 @@ filter {
     geoip {
       source => "[dst][ip]"
       target => "[dst][geoip]"
-      database => "/etc/logstash/geoipdb/GeoLite2-City.mmdb"
+      database => "/etc/logserver-probe/geoipdb/GeoLite2-City.mmdb"
       fields => [ "city_name", "country_name", "continent_code", "country_code2", "location" ]
       remove_field =>  [ "[dst][geoip][ip]" ]
     }
@@ -5544,7 +4565,7 @@ filter {
     geoip {
       source => "[dst][ip]"
       target => "[dst][geoip]"
-      database => "/etc/logstash/geoipdb/GeoLite2-ASN.mmdb"
+      database => "/etc/logserver-probe/geoipdb/GeoLite2-ASN.mmdb"
       remove_field => [ "[dst][geoip][ip]" ]
     }
   }
@@ -5552,11 +4573,11 @@ filter {
 }
 ```
 
-### Logstash - avoiding duplicate documents
+### Avoiding duplicate documents
 
-To avoid duplicating the same documents, e.g. if the collector receives the entire event log file on restart, prepare the Logstash filter as follows:
+To avoid duplicating the same documents, e.g. if the collector receives the entire event log file on restart, prepare the Network Probe filter as follows:
 
-1. Use the **fingerprint** Logstash filter to create consistent hashes of one or more fields whose values are unique for the document and store the result in a new field, for example:
+1. Use the **fingerprint** filter to create consistent hashes of one or more fields whose values are unique for the document and store the result in a new field, for example:
 
    ```bash
    fingerprint {
@@ -5571,28 +4592,28 @@ To avoid duplicating the same documents, e.g. if the collector receives the enti
    - target - The name of the field where the generated fingerprint will be stored. Any current contents of that field will be overwritten.
    - method - If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` and a key is set, the cryptographic hash function with the same name will be used to generate the fingerprint. When a key set, the keyed-hash (HMAC) digest function will be used.
 
-2. In the **elasticsearch** output set the **document_id** as the value of the **generated_id** field:
+2. In the **logserver** output set the **document_id** as the value of the **generated_id** field:
 
    ```bash
-   elasticsearch {
+   logserver {
                    hosts => ["http://localhost:9200"]
-                   user => "logserver"
-                   password => "logserver"
+                   user => "user"
+                   password => "password"
                    index => "syslog_wec-%{+YYYY.MM.dd}"
                    document_id => "%{generated_id}"
            }
    ```
 
-   - document_id - The document ID for the index. Useful for overwriting existing entries in Elasticsearch with the same ID.
+   - document_id - The document ID for the index.
 
 Documents having the same document_id will be indexed only once.
 
-### Logstash data enrichment
+### Data enrichment
 
-It is possible to enrich the events that go to the logstash filters with additional fields, the values of which come from the following sources:
+It is possible to enrich the events that go to the filters with additional fields, the values of which come from the following sources:
 
 - databases, using the `jdbc` plugin;
-- Active Directory or OpenLdap, using the `logstash-filter-ldap` plugin;
+- Active Directory or OpenLdap, using plugin;
 - dictionary files, using the `translate` plugin;
 - external systems using their API, e.g. OP5 Monitor/Nagios
 
@@ -5616,18 +4637,11 @@ filter {
   }
 }
 ```
-
-More about `jdbc` plugin parameters: [https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html](https://www.elastic.co/guide/en/logstash/6.8/plugins-filters-jdbc_streaming.html#plugins-filters-jdbc_streaming-prepared_statements)
-
-#### Filter `logstash-filter-ldap`
-
-#### Download and installation
-
-[https://github.com/Transrian/logstash-filter-ldap](https://github.com/Transrian/logstash-filter-ldap)
+#### Filter ldap
 
 #### Configuration
 
-The **logstash-filter-ldap** filter will add fields queried from a ldap server to the event.
+The **ldap** filter will add fields queried from a ldap server to the event.
 The fields will be stored in a variable called **target**, that you can modify in the configuration file.
 
 If an error occurs during the process tha **tags** array of the event is updated with either:
@@ -5648,7 +4662,7 @@ It will contain more details about the problem.
 }
 ```
 
-#### Logstash filter
+#### Filter
 
 ```ruby
 filter {
@@ -5761,12 +4775,12 @@ filter {
     }
 ```
 
-- An external file (readable by logstash) may be specified in the `dictionary_path` configuration item:
+- An external file (readable by Network Probe) may be specified in the `dictionary_path` configuration item:
 
 ```ruby
 filter {
   translate {
-    dictionary_path => "/etc/logstash/lists/instance_cpu.yml"
+    dictionary_path => "/etc/logserver-probe/lists/instance_cpu.yml"
     field => "InstanceType"
     destination => "InstanceCPUCount"
     refresh_behaviour => "replace"
@@ -5822,7 +4836,7 @@ grok {
 
 #### Mathematical calculations
 
-Using Logstash filters, you can perform mathematical calculations for field values and save the results to a new field.
+Using filters, you can perform mathematical calculations for field values and save the results to a new field.
 
 Application example:
 
@@ -5832,24 +4846,24 @@ filter {
 }
 ```
 
-### Logstash - Output to Elasticsearch
+### Output to Data Node
 
-This output plugin sends all data to the local Elasticsearch instance and create indexes:
+This output plugin sends all data to the local Data Node instance and create indexes:
 
 ```bash
 output {
-  elasticsearch {
+  logserver {
     hosts => [ "127.0.0.1:9200" ]
     index => "%{type}-%{+YYYY.MM.dd}"
-    user => "logstash"
-    password => "logstash"
+    user => "user"
+    password => "password"
   }
 }
 ```
 
-### Logstash plugin for "naemon beat"
+### naemon beat
 
-This Logstash plugin has example of complete configuration for integration with *naemon* application:
+This plugin has example of complete configuration for integration with *naemon* application:
 
 ```bash
 input {
@@ -5862,7 +4876,7 @@ input {
 filter {
     if [type] == "naemon" {
         grok {
-            patterns_dir => [ "/etc/logstash/patterns" ]
+            patterns_dir => [ "/etc/logserver-probe/patterns" ]
             match => { "message" => "%{NAEMONLOGLINE}" }
             remove_field => [ "message" ]
         }
@@ -5877,33 +4891,39 @@ filter {
 output {
   # Single index
 #    if [type] == "naemon" {
-#        elasticsearch {
-#            hosts => ["ELASTICSEARCH_HOST:ES_PORT"]
+#        logserver {
+#            hosts => ["logserver-ip:logserver-port"]
 #            index => "naemon-%{+YYYY.MM.dd}"
+#            user => "user"
+#            password => "password"
 #        }
 #    }
 
   # Separate indexes
   if [type] == "naemon" {
     if "_grokparsefailure" in [tags] {
-      elasticsearch {
-        hosts => ["ELASTICSEARCH_HOST:ES_PORT"]
+      logserver {
+        hosts => ["logserver-ip:logserver-port"]
         index => "naemongrokfailure"
+		user => "user"
+        password => "password"
       }
     }
     else {
-      elasticsearch {
-        hosts => ["ELASTICSEARCH_HOST:ES_PORT"]
+      logserver {
+        hosts => ["logserver-ip:logserver-port"]
         index => "naemon-%{+YYYY.MM.dd}"
+        user => "user"
+        password => "password"
       }
     }
   }
 }
 ```
 
-### Logstash plugin for "perflog"
+### perflog
 
-This Logstash plugin has an example of a complete configuration for integration with perflog:
+This plugin has an example of a complete configuration for integration with perflog:
 
 ```bash
 input {
@@ -5946,27 +4966,17 @@ filter {
 
 output {
   if [type] == "perflogs" {
-    elasticsearch {
+    logserver {
       hosts => ["127.0.0.1:9200"]
       index => "perflogs-%{+YYYY.MM.dd}"
+	  user => "user"
+      password => "password"
     }
   }
 }
 ```
 
-### Logstash plugin for LDAP data enrichement
-
-1. Download logstash plugin with dependencies ![logstash-filter-ldap-0.2.4.zip](/files/logstash-filter-ldap-0.2.4.zip) and upload files to your server.
-
-2. Unzip file.
-
-3. Install logstash plugin.
-
-    ```/usr/share/logstash/bin/logstash-plugin install /directory/to/file/logstash-filter-ldap-0.2.4.gem```
-
-4. Create new file in beats pipeline. To do this, go to beats folder (/etc/logstash/conf.d/beats) and create new config file, for example ```031-filter-ldap-enrichement.conf```
-
-5. Below is an example of the contents of the configuration file:
+### LDAP data enrichement
 
     ```bash
     filter {
@@ -5998,41 +5008,6 @@ output {
     search_dn - Domain name in which search inside the ldap database (usually your userdn or groupdn).
     enable_error_logging - When there is a problem with the connection with the LDAP database, write reason in the event.
     attributes - List of attributes to get. If not set, all attributes available will be get.
-    ```
-
-### Single password in all Logstash outputs
-
-You can set passwords and other Logstash pipeline settings as environment variables. This can be useful if the password was changed for the `logastash` user and it must be to update in the configuration files.
-
-Configuration steps:
-
-1. Create the service file:
-
-    ```bash
-    mkdir –p /etc/systemd/system/logstash.service.d
-    vi /etc/systemd/system/logstash.service.d/logstash.conf
-
-    [Service]
-    Environment="ELASTICSEARCH_ES_USER=logserver"
-    Environment="ELASTICSEARCH_ES_PASSWD=logserver"
-    ```
-
-1. Reload systemctl daemon:
-
-    ```bash
-    systemctl daemon-reload
-    ```
-
-1. Sample definition of Logstash output pipline seciotn:
-
-    ```bash
-    output  {
-      elasticsearch {
-        index => "test-%{+YYYY.MM.dd}"
-        user => "${ELASTICSEARCH_ES_USER:elastic}"
-        password => "${ELASTICSEARCH_ES_PASSWD:changeme}"
-      }
-    }
     ```
 
 ### Multiline codec
@@ -6094,13 +5069,13 @@ Result:
 Query:
 
 ```sql
-SELECT syslog.host.ip, syslog.host.name, zeek.server_addr, zeek.mac
-FROM syslog-2024.02.23 syslog JOIN stream-zeek-2024.02.23 zeek ON zeek.server_addr = syslog.host.ip
+SELECT syslog.host.ip, syslog.host.name, server_addr, mac
+FROM syslog-2024.02.23 syslog JOIN stream-2024.02.23 ON server_addr = syslog.host.ip
 ```
 Result:
 
 ```
-	syslog.host.ip	syslog.host.name	zeek.server_addr	zeek.mac
+	syslog.host.ip	syslog.host.name	server_addr	mac
 	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
 	192.168.10.1	   example-hostname-1	192.168.10.1	bc:24:11:0g:f9:28
 	192.168.10.2	   example-hostname-2	192.168.10.2	bs:12:18:0g:f2:66
@@ -6116,7 +5091,7 @@ Query:
 
 POST /_plugins/_sql
 {
-  "query" : "SELECT mac, client_addr FROM stream-zeek-2024.02.20 WHERE netflow.zeek.type ='dhcp'"
+  "query" : "SELECT mac, client_addr FROM stream-2024.02.20 WHERE netflow.type ='dhcp'"
 }
 ```
 
@@ -6454,28 +5429,6 @@ POST _plugins/_sql/_explain
 }
 ```
 
-##### Sample SQL query explain response
-
-```json
-{
-  "root": {
-    "name": "ProjectOperator",
-    "description": {
-      "fields": "[firstname, lastname]"
-    },
-    "children": [
-      {
-        "name": "OpenSearchIndexScan",
-        "description": {
-          "request": """OpenSearchQueryRequest(indexName=accounts, sourceBuilder={"from":0,"size":200,"timeout":"1m","query":{"range":{"age":{"from":20,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}},"_source":{"includes":["firstname","lastname"],"excludes":[]},"sort":[{"_doc":{"order":"asc"}}]}, searchDone=false)"""
-        },
-        "children": []
-      }
-    ]
-  }
-}
-```
-
 ##### Sample explain request for a PPL query
 
 ```json
@@ -6496,9 +5449,9 @@ POST _plugins/_ppl/_explain
     },
     "children": [
       {
-        "name": "OpenSearchIndexScan",
+        "name": "IndexScan",
         "description": {
-          "request": """OpenSearchQueryRequest(indexName=accounts, sourceBuilder={"from":0,"size":200,"timeout":"1m","_source":{"includes":["firstname","lastname"],"excludes":[]}}, searchDone=false)"""
+          "request": """QueryRequest(indexName=accounts, sourceBuilder={"from":0,"size":200,"timeout":"1m","_source":{"includes":["firstname","lastname"],"excludes":[]}}, searchDone=false)"""
         },
         "children": []
       }
@@ -8628,12 +7581,12 @@ Result set:
 
 #### Functions
 
-The SQL language supports all SQL plugin [common functions](https://opensearch.org/docs/latest/search-plugins/sql/functions/), including [relevance search](https://opensearch.org/docs/latest/search-plugins/sql/full-text/), but also introduces a few function synonyms, which are available in SQL only.
-These synonyms are provided by the `V1` engine. For more information, see [Limitations](https://opensearch.org/docs/latest/search-plugins/sql/limitation).
+The SQL language supports all SQL plugin common functions, including relevance search, but also introduces a few function synonyms, which are available in SQL only.
+These synonyms are provided by the `V1` engine.
 
 ##### Match query
 
-The `MATCHQUERY` and `MATCH_QUERY` functions are synonyms for the [`MATCH`](https://opensearch.org/docs/latest/search-plugins/sql/full-text#match) relevance function. They don't accept additional arguments but provide an alternate syntax.
+The `MATCHQUERY` and `MATCH_QUERY` functions are synonyms for the MATCH relevance function. They don't accept additional arguments but provide an alternate syntax.
 
 ###### Syntax
 
@@ -10199,7 +9152,7 @@ search source=accounts account_number=1 or gender=\"F\";
 
 #### Commands
 
-`PPL` supports all [`SQL` common](#functions) functions, including [relevance search](#full-text-search), but also introduces few more functions (called `commands`) which are available in `PPL` only.
+`PPL` supports all [`SQL` common](#functions) functions, including relevance search, but also introduces few more functions (called `commands`) which are available in `PPL` only.
 
 ##### dedup
 
@@ -12087,8 +11040,8 @@ Whitespace and other special characters are also not allowed.
 
 Energy Logserver supports the following regular identifiers:
 
-1. Identifiers prefixed by a dot `.` sign. Use to hide an index. For example `.opensearch-dashboards`.
-1. Identifiers prefixed by an `@` sign. Use for meta fields generated by Logstash ingestion.
+1. Identifiers prefixed by a dot `.` sign. Use to hide an index. For example `.sample-dashboards`.
+1. Identifiers prefixed by an `@` sign. Use for meta fields generated by Network Probe ingestion.
 1. Identifiers with hyphen `-` in the middle. Use for index names with date information.
 1. Identifiers with star `*` present. Use for wildcard match of index patterns.
 
@@ -14168,7 +13121,7 @@ You can do it in multiple ways. You can use those nodes:
 
 #### Example If usage
 
-If you receive messages from Logstash then you have fields like host.name. You can use if condition to filter known host.
+If you receive messages from Network Probe then you have fields like host.name. You can use if condition to filter known host.
 
 1. Create If node
 2. Click Add condition
@@ -14641,18 +13594,10 @@ Energy Logserver utilizes a high disk I/O throughput for its typical indexing ta
 When running Energy Logserver or its component on a computer with antivirus software installed, it is necessary to exclude all Energy software processes, including directories such as the installation directory, from any kind of scanning when accessing application resources.
 	
 **Directories to exclude:**
--        /usr/share/elasticsearch
-- 		 /usr/share/kibana
-- 		 /usr/share/logstash
-- 		 /var/lib/kibana
-- 		 Data directory (default /var/lib/elasticsearch )
-- 		 /etc/elasticsearch
-- 		 /etc/kibana
-- 		 /etc/logstash
-- 		 /var/log/elasticsearch
-- 		 /var/log/kibana
-- 		 /var/log/logstash
-- 		 Kibana archive directory (default /usr/share/kibana/plugins/archive/archives/ )
+-        /usr/share/
+- 		 /var/lib/
+- 		 /etc/
+- 		 /var/log/
 - 		 /opt/ai
 - 		 /opt/alert
 - 		 /opt/cerebro
@@ -14662,19 +13607,15 @@ When running Energy Logserver or its component on a computer with antivirus soft
 - 		 /opt/plugins
 - 		 /opt/skimmer
 - 		 /opt/wiki
-- 		 Elasticsearch temp directory
-- 		 /var/ossec
 		
 **Exclude processes related to :**
 	
-- 		 Elasticsearch
 - 		 java
-- 		 Logstash
 - 		 node
-- 		 kibana
+- 		 logserver
+- 		 logserver-gui
 - 	     alert
 - 		 License-service
-- 		 Wazuh-manager
 - 		 Cerebro
 - 		 E-doc
 - 		 Intelligence
