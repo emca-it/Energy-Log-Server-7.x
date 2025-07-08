@@ -6,50 +6,81 @@
 
 ## Table of Contents
 
-1. [AI Rules](#ai-rules)
-   - [Status](#status)
-   - [Actions](#actions)
-2. [Common Elements](#common-elements)
-   - [Settings and Configuration for All Analytical Use Cases](#settings-and-configuration-for-all-analytical-use-cases)
-   - [Defining Data Source in the Empowered AI Module](#defining-data-source-in-the-empowered-ai-module)
-   - [Configuring the Analytical Rule](#configuring-the-analytical-rule)
-   - [Configuring the Scheduler](#configuring-the-scheduler)
-   - [Accessing the Performance Tab](#accessing-the-performance-tab)
-3. [Univariate Anomaly Detection](#univariate-anomaly-detection)
-4. [Performance Tab for Univariate Anomaly Detection](#performance-tab-for-univariate-anomaly-detection)
-   - [Understanding the Performance Graph](#understanding-the-performance-graph)
-   - [Key Elements of the Performance Graph](#key-elements-of-the-performance-graph)
-   - [Interpreting the Graph](#interpreting-the-graph)
-   - [Using the Performance Graph](#using-the-performance-graph)
-5. [Multivariate Anomaly Detection](#multivariate-anomaly-detection)
-6. [Performance Tab for Multivariate Anomaly Detection](#performance-tab-for-multivariate-anomaly-detection)
-   - [Visualizing Anomalies Over Time](#visualizing-anomalies-over-time)
-7. [Clustering](#clustering)
-8. [Performance Tab for Clustering](#performance-tab-for-clustering)
-   - [Elbow Method and Optimal Number of Clusters](#elbow-method-and-optimal-number-of-clusters)
-   - [Cluster Quality Chart](#cluster-quality-chart)
-   - [Cluster Distribution Chart](#cluster-distribution-chart)
-   - [Benefits of the Cluster Distribution Chart](#benefits-of-the-cluster-distribution-chart)
-   - [Understanding the Clustering Result Examples](#understanding-the-clustering-result-examples)
-9. [Forecasting](#forecasting)
-10. [Performance Tab for Forecasting](#performance-tab-for-forecasting)
+- [Empowered AI](#empowered-ai)
+  - [Table of Contents](#table-of-contents)
+  - [AI Rules](#ai-rules)
+    - [Status](#status)
+    - [Actions](#actions)
+  - [Common Elements](#common-elements)
+    - [Settings and Configuration for all Analytical Use Cases](#settings-and-configuration-for-all-analytical-use-cases)
+      - [Defining Data Source in the Empowered AI Module](#defining-data-source-in-the-empowered-ai-module)
+      - [Configuring the Analytical Rule](#configuring-the-analytical-rule)
+      - [Configuring the Scheduler](#configuring-the-scheduler)
+      - [Accessing the Performance Tab](#accessing-the-performance-tab)
+    - [Summary](#summary)
+  - [Univariate Anomaly Detection](#univariate-anomaly-detection)
+    - [Step 1: Configuring the Univariate Anomaly Detection Rule](#step-1-configuring-the-univariate-anomaly-detection-rule)
+    - [Step 2: Running the Rule](#step-2-running-the-rule)
+    - [Summary](#summary-1)
+  - [Performance Tab for Univariate Anomaly Detection](#performance-tab-for-univariate-anomaly-detection)
+    - [Understanding the Performance Graph](#understanding-the-performance-graph)
+      - [Key Elements of the Performance Graph](#key-elements-of-the-performance-graph)
+      - [Interpreting the Graph](#interpreting-the-graph)
+      - [Using the Performance Graph](#using-the-performance-graph)
+    - [Summary](#summary-2)
+  - [Multivariate Anomaly Detection](#multivariate-anomaly-detection)
+    - [Step 1: Configuring the Multivariate Anomaly Detection Rule](#step-1-configuring-the-multivariate-anomaly-detection-rule)
+    - [Step 2: Running the Rule](#step-2-running-the-rule-1)
+    - [Summary](#summary-3)
+  - [Performance Tab for Multivariate Anomaly Detection](#performance-tab-for-multivariate-anomaly-detection)
+    - [Visualizing Anomalies Over Time](#visualizing-anomalies-over-time)
+    - [Summary](#summary-4)
+  - [Clustering](#clustering)
+    - [Step 1: Configuring the Clustering Rule](#step-1-configuring-the-clustering-rule)
+    - [Step 2: Running the Rule](#step-2-running-the-rule-2)
+    - [Summary](#summary-5)
+  - [Performance Tab for Clustering](#performance-tab-for-clustering)
+    - [Elbow Method and Optimal Number of Clusters](#elbow-method-and-optimal-number-of-clusters)
+    - [Cluster Quality Chart](#cluster-quality-chart)
+    - [Cluster Distribution Chart](#cluster-distribution-chart)
+      - [Benefits of the Cluster Distribution Chart](#benefits-of-the-cluster-distribution-chart)
+    - [Clustering Result Examples](#clustering-result-examples)
+      - [Understanding the Clustering Result Examples](#understanding-the-clustering-result-examples)
+      - [Benefits of Viewing Clustering Result Examples](#benefits-of-viewing-clustering-result-examples)
+    - [Summary](#summary-6)
+  - [Forecasting](#forecasting)
+    - [Step 1: Data Aggregation](#step-1-data-aggregation)
+    - [Step 2: Forecast Time Frame](#step-2-forecast-time-frame)
+    - [Summary](#summary-7)
+  - [Performance Tab for Forecasting](#performance-tab-for-forecasting)
     - [Forecast vs Actual Data Chart](#forecast-vs-actual-data-chart)
-11. [Text Anomaly Detection](#text-anomaly-detection)
+    - [Performance Analysis Over Time](#performance-analysis-over-time)
+    - [Summary](#summary-8)
+  - [Text Anomaly Detection](#text-anomaly-detection)
     - [Key Features](#key-features)
-12. [Performance Tab for Text Anomaly Detection](#performance-tab-for-text-anomaly-detection)
-    - [Understanding the Performance Graphs](#understanding-the-performance-graphs)
-    - [Anomaly Detection Table](#anomaly-detection-table)
+    - [Summary](#summary-9)
+  - [Performance Tab for Text Anomaly Detection](#performance-tab-for-text-anomaly-detection)
+      - [Understanding the Performance Graphs](#understanding-the-performance-graphs)
+      - [Using the Performance Graphs](#using-the-performance-graphs)
+      - [Anomaly Detection Table](#anomaly-detection-table)
+      - [Information in the Anomaly Detection Table:](#information-in-the-anomaly-detection-table)
+      - [Expanding a Row](#expanding-a-row)
+      - [Filtering by Rare Words](#filtering-by-rare-words)
+      - [Actions in the Table](#actions-in-the-table)
     - [Distinct Anomaly List Table](#distinct-anomaly-list-table)
-13. [Default AI Rules](#default-ai-rules)
-14. [FAQ](#faq)
-15. [Troubleshooting](#troubleshooting)
+    - [Summary](#summary-10)
+  - [Conclusion](#conclusion)
+  - [AI Store](#ai-store)
+  - [Default AI Rules](#default-ai-rules)
+  - [FAQ](#faq)
+  - [Troubleshooting](#troubleshooting)
 
 
 ## AI Rules
 
 In the `Empowered AI`  section you will find a summary of the existing rules. At the top, you'll find the total number of rules and the number of scheduled and unscheduled rules. Here is the search field and buttons `Refresh rules list`  and `Create New Rule`, below is the table. It contains `AI Rule Name`, `Search/Index Name`  -  data source, `Last Executed`  - date, `Last Modified` - date, selected `Use Case`,  `Schedule`  - scheduling frequency, `Status`  and `Action`  icons.
 
-![](/media/media/08_empowered_ai/rule_table.png)
+![](/media/08_empowered_ai/rule_table.png)
 
 ### Status
 
@@ -84,33 +115,35 @@ The first step in the data analysis process in the *Empowered AI* module is to p
 3. **Set filters** and search criteria to narrow down relevant data (kql/oql not supported).
 4. **Add a field as a column**, which allows selecting the field during rule creation.
 
-    ![AddFieldAsColumn](/media/media/08_empowered_ai/add_field_as_column.png)
+    ![AddFieldAsColumn](/media/08_empowered_ai/add_field_as_column.png)
 
 5. **Save the search** by clicking the **Save** button, naming your search, and clicking **Save** again.
 
-    ![CreateSavedSearch](/media/media/08_empowered_ai/create_saved_search.png)
+    ![CreateSavedSearch](/media/08_empowered_ai/create_saved_search.png)
 
 #### Defining Data Source in the Empowered AI Module
 
 1. Go to the **Empowered AI** module.
 
-    ![GoToEmpoweredAIModule](/media/media/08_empowered_ai/go_to_empowered_ai.png)
+    ![GoToEmpoweredAIModule](/media/08_empowered_ai/go_to_empowered_ai.png)
 
 2. Select the **AI Rules** tab and click **Create New Rule** or edit an existing rule.
 3. In the **Choose Data Source** section, select the saved search you created earlier.
 
-    ![SelectSavedSearch](/media/media/08_empowered_ai/select_saved_search.png)
+    ![SelectSavedSearch](/media/08_empowered_ai/select_saved_search.png)
 
 4. After selection Index Pattern and query will be automaticly filled up based on saved search. Alternatyivly you can skip saved search and fill up index pattern and query by yourself.
 
-    ![IndexPatternAndQuery](/media/media/08_empowered_ai/index_pattern_and_query.png)
+    ![IndexPatternAndQuery](/media/08_empowered_ai/index_pattern_and_query.png)
+5. Time Field will be fetched automatically from your Index Pattern.
+![TimeField](/media/08_empowered_ai/time_field.png)
 
 #### Configuring the Analytical Rule
 
 1. **Name your rule** in the **AI Rule Name** section.
 2. In the **Field to Analyse** section, select the data field you want to analyze.
 
-    ![ConfigureRule](/media/media/08_empowered_ai/configure_rule.png)
+    ![ConfigureRule](/media/08_empowered_ai/configure_rule.png)
 
 #### Configuring the Scheduler
 
@@ -118,17 +151,17 @@ The rule can be run immediately using the Run Once option or cyclically using th
 
 1. For **Run Once** analysis, provide the "Build Time Frame" learning period and the analysis start time using the trained model "Start Date".
 
-    ![RunOnce](/media/media/08_empowered_ai/run_once.png)
-    ![BuildTimeFrame](/media/media/08_empowered_ai/build_time_frame.png)
-    ![StartDate](/media/media/08_empowered_ai/start_date.png)
+    ![RunOnce](/media/08_empowered_ai/run_once.png)
+    ![BuildTimeFrame](/media/08_empowered_ai/build_time_frame.png)
+    ![StartDate](/media/08_empowered_ai/start_date.png)
 
 2. For **Scheduled** analysis, choose the run frequency (e.g., every hour, day, week, or month). Specify the learning period and the "Start Date Offset" for the data range to be analyzed.
 
-    ![StartDateOffset](/media/media/08_empowered_ai/start_date_offset.png)
+    ![StartDateOffset](/media/08_empowered_ai/start_date_offset.png)
 
 3. **Actual Log Count**: Displays the number of logs to be analyzed.
 
-    ![ActualLogCount](/media/media/08_empowered_ai/configure_actual_log_count.png)
+    ![ActualLogCount](/media/08_empowered_ai/configure_actual_log_count.png)
 
 #### Accessing the Performance Tab
 
@@ -151,12 +184,12 @@ This basic configuration is common to all analytical models. Some models require
 
   - **Contamination Factor**: This setting defines the approximate percentage of data considered anomalous. The suggested value lower than 5%.
 
-    ![ContaminationFactor](/media/media/08_empowered_ai/contamination_factor.png)
+    ![ContaminationFactor](/media/08_empowered_ai/contamination_factor.png)
 
 
   - **Data Aggregation**: Select the aggregation interval to be used for training the model. Available intervals are 30 minutes, 1 hour, 2 hours, 4 hours, 8 hours, 12 hours, and 1 day.
 
-    ![DataAggregation](/media/media/08_empowered_ai/data_aggregation.png)
+    ![DataAggregation](/media/08_empowered_ai/data_aggregation.png)
 
 
   - Complete the configuration of other settings, such as **Start Date**, **Build Time Frame**, **Scheduler options**, and **Field to Analyse**. These settings are the same as those described in the common configuration guide.
@@ -179,7 +212,7 @@ The Performance Tab provides a visual representation of the model's performance,
 
 The performance graph displays the actual values of the monitored data and highlights detected anomalies. The x-axis represents the timeline, while the y-axis shows the values of the selected data field, such as `netflow.bytes` in the given example.
 
-![ModelPerformanceGraph](/media/media/08_empowered_ai/model_performance_graph.png)
+![ModelPerformanceGraph](/media/08_empowered_ai/model_performance_graph.png)
 
 #### Key Elements of the Performance Graph
 
@@ -215,12 +248,12 @@ The performance graph in the Performance Tab of the Univariate Anomaly Detection
 **Choose Between Analyzing Single and Multiple Signals**
   - **Multi Values**: Ensure the toggle for analyzing multiple signals is enabled. This setting defines how the data is ingested. Single value analysis operates on the numeric aggregation of a selected field, while multi-value analysis uses raw data. Field selection in the former is defined by saved search columns.
 
-  ![MultiValues](/media/media/08_empowered_ai/multi_values.png)
+  ![MultiValues](/media/08_empowered_ai/multi_values.png)
 
 
 - **Contamination Factor**: This setting defines the approximate percentage of data that is considered anomalous.The suggested value lower than 5%.
 
-![ContaminationFactor](/media/media/08_empowered_ai/contamination_factor.png)
+![ContaminationFactor](/media/08_empowered_ai/contamination_factor.png)
 
 - Complete the configuration of other settings, such as **Start Date**, **Build Time Frame**, **Scheduler options**, and **Field to Analyse**. These settings are the same as those described in the common configuration guide.
 
@@ -242,11 +275,11 @@ The Performance Tab provides comprehensive visualizations and detailed informati
 
 - **Anomalies Over Time Chart**: Displays detected anomalies over time. The X-axis represents time, while the Y-axis represents the anomaly score. Each red vertical line indicates an anomaly detected by the model at a specific time. This visualization helps in identifying periods of high anomaly activity.
 
-    ![Anomalies Over Time](/media/media/08_empowered_ai/anomalies_over_time.png)
+    ![Anomalies Over Time](/media/08_empowered_ai/anomalies_over_time.png)
 
 - **Spread of Anomalies Chart**: Shows the distribution of anomaly scores across the entire dataset. Each dot represents an anomaly score, and this chart helps to understand the spread and severity of anomalies in the data.
 
-    ![Spread of Anomalies](/media/media/08_empowered_ai/spread_of_anomalies.png)
+    ![Spread of Anomalies](/media/08_empowered_ai/spread_of_anomalies.png)
 
 - **List of Anomalies**: Below the charts is a detailed table listing the detected anomalies. The table includes the following columns:
     - **Time**: Timestamp of the detected anomaly.
@@ -256,7 +289,7 @@ The Performance Tab provides comprehensive visualizations and detailed informati
 
     This table allows users to review anomaly details and gain insights into specific instances of unusual behavior.
 
-    ![List of Anomalies](/media/media/08_empowered_ai/list_of_anomalies.png)
+    ![List of Anomalies](/media/08_empowered_ai/list_of_anomalies.png)
 
 ### Summary
 
@@ -274,7 +307,7 @@ The performance tab for multivariate anomaly detection in the *Empowered AI* mod
 **Number of clusters**
 - In the **Clusters** section, specify the number of clusters to be created. This number depends on the nature of your data and the objectives of your analysis.
 
-![Clusters](/media/media/08_empowered_ai/clusters.png)
+![Clusters](/media/08_empowered_ai/clusters.png)
 
 - Complete the configuration of other settings, such as **Start Date**, **Build Time Frame**, **Scheduler options**, and **Field to Analyse**. These settings are the same as those described in the common configuration guide.
 
@@ -300,7 +333,7 @@ The elbow method is a commonly used technique in clustering analysis to determin
 
 The **Cluster Quality Chart** visualizes the relationship between the number of clusters and the cluster quality. The x-axis represents the number of clusters, and the y-axis represents the cluster quality score. The goal is to identify the point where adding more clusters does not significantly improve quality, which is the optimal number of clusters.
 
-![Cluster Quality Chart](/media/media/08_empowered_ai/cluster_quality_chart.png)
+![Cluster Quality Chart](/media/08_empowered_ai/cluster_quality_chart.png)
 
 In this example, the optimal number of clusters is 3, as indicated on the chart.
 
@@ -311,7 +344,7 @@ Below the elbow method chart in the **Performance** tab, there is a cluster dist
 
 - **Clicking on a Dot**: Clicking on any dot on the chart will display a preview of the document it represents. The preview contains detailed information about the document, such as the message content.
   
-![ClusterDistributionChart](/media/media/08_empowered_ai/cluster_distribution_chart.png)
+![ClusterDistributionChart](/media/08_empowered_ai/cluster_distribution_chart.png)
 
 - **Indicative Number of Documents**: The chart shows an indicative number of documents, meaning it does not display the entire dataset. This is done to avoid overcrowding the chart and to provide better readability and data analysis.
 
@@ -331,7 +364,7 @@ Below the cluster distribution chart, the **Performance** tab displays example d
 
 - **Document Representation**: Each cluster section shows a list of example documents that belong to that cluster. The documents are represented by their content, such as log messages or text data.
 
-    ![ClusteringResultExamples](/media/media/08_empowered_ai/clustering_result_examples.png)
+    ![ClusteringResultExamples](/media/08_empowered_ai/clustering_result_examples.png)
 
 - **Sample Data**: The documents shown are not exhaustive. Only a sample is displayed to give an idea of the type of data grouped into each cluster. This helps in understanding the nature and characteristics of the clusters without overwhelming the user with too much data.
 
@@ -360,13 +393,13 @@ Proper use of the Performance tab for clustering analysis in the *Empowered AI* 
 
 - **Data Aggregation**: Select the aggregation interval to be used for training the model. Available intervals are 30 minutes, 1 hour, 2 hours, 4 hours, 8 hours, 12 hours, and 1 day. This setting defines how the data will be grouped over time to build the forecasting model.
 
-    ![Data Aggregation](/media/media/08_empowered_ai/data_aggregation.png)
+    ![Data Aggregation](/media/08_empowered_ai/data_aggregation.png)
 
 ### Step 2: Forecast Time Frame
 
 - **Forecast Time Frame**: Choose the future time period for which the model will attempt to predict values. Available options are 4 hours, 8 hours, 12 hours, 1 day, 2 days, 3 days, 1 week, and 1 month. This setting determines the period for which the model's forecasts will be applied.
 
-    ![Forecast Time Frame](/media/media/08_empowered_ai/forecast_time_frame.png)
+    ![Forecast Time Frame](/media/08_empowered_ai/forecast_time_frame.png)
 
 ### Summary
 
@@ -382,7 +415,7 @@ The Performance Tab provides detailed visualizations and insights into the accur
 
 - **Forecast vs Actual Data Chart**: This chart shows forecasted data compared to actual data over time. The chart uses different colors to distinguish between forecasted data (purple) and actual data (yellow).
 
-    ![ForecastVsActual](/media/media/08_empowered_ai/forecast_vs_actual_data.png)
+    ![ForecastVsActual](/media/08_empowered_ai/forecast_vs_actual_data.png)
 
 ### Performance Analysis Over Time
 
@@ -411,24 +444,24 @@ The performance tab for forecasting in the *Empowered AI* module provides crucia
 
 **Create Alert**: Automatically create alerts for detected anomalies.
     
-![CreateAlert](/media/media/08_empowered_ai/create_alert.png)
+![CreateAlert](/media/08_empowered_ai/create_alert.png)
 
 **Exclude Pattern & Words**: Define patterns and words to be excluded from the analysis.
     
-![ExcludePatternAndWords](/media/media/08_empowered_ai/exclude_pattern_and_words.png)
+![ExcludePatternAndWords](/media/08_empowered_ai/exclude_pattern_and_words.png)
 
 
 **Rareness Threshold**: Set thresholds for detecting rare words.
     
-![RarenessThreshold](/media/media/08_empowered_ai/configure_rareness_threshold.png)
+![RarenessThreshold](/media/08_empowered_ai/configure_rareness_threshold.png)
 
 **Sampling Rate**: Adjust the percentage of documents to be sampled for analysis.
     
-![SamplingRate](/media/media/08_empowered_ai/configure_sampling_rate.png)
+![SamplingRate](/media/08_empowered_ai/configure_sampling_rate.png)
 
 **Skipping Numerical Values**: Skip irrelevant numerical data during analysis.
     
-![SkippingNumbers](/media/media/08_empowered_ai/activate_skip_numbers.png)
+![SkippingNumbers](/media/08_empowered_ai/activate_skip_numbers.png)
 
 ### Summary
 
@@ -442,7 +475,7 @@ Proper configuration and utilization of these features enable effective monitori
 #### Understanding the Performance Graphs
 
 
-![ModelPerformance](/media/media/08_empowered_ai/model_performance_graphs.png)
+![ModelPerformance](/media/08_empowered_ai/model_performance_graphs.png)
 
 - **Anomalies Over Time Chart**: Displays detected anomalies over time. The X-axis represents time, while the Y-axis represents the number of detected anomalies.
 - **Spread of Anomalies Chart**: Shows the distribution of detected anomalies across the dataset. Each dot represents an anomaly score.
@@ -458,7 +491,7 @@ Proper configuration and utilization of these features enable effective monitori
 At the bottom of the **Performance** tab, there is an anomaly detection table that provides detailed information about each detected case.
 
 **Anomaly Detection Table**
-![AnomalyDetectionTable](/media/media/08_empowered_ai/anomaly_table.png)
+![AnomalyDetectionTable](/media/08_empowered_ai/anomaly_table.png)
 
 #### Information in the Anomaly Detection Table:
 
@@ -473,13 +506,13 @@ At the bottom of the **Performance** tab, there is an anomaly detection table th
 
 Click the arrow icon next to a specific row to expand detailed information about the anomaly. After expanding the row, you will see the full text containing the anomaly and the list of rare words that have been identified.
 
-![ExpandingRow](/media/media/08_empowered_ai/expand_row.png)
+![ExpandingRow](/media/08_empowered_ai/expand_row.png)
 
 #### Filtering by Rare Words
 
 At the top of the table, there is a **Rare Words Filters** section that allows you to filter anomalies based on rare words. You can enter a rare word to see only the logs that contain that word. To add a filter, click the **+** icon next to the word. To remove a filter, click the **-** icon.
 
-![FilteringRareWords](/media/media/08_empowered_ai/rare_words_filter.png)
+![FilteringRareWords](/media/08_empowered_ai/rare_words_filter.png)
 
 #### Actions in the Table
 
@@ -500,6 +533,28 @@ The **Performance Tab** in Text Anomaly Detection provides key information about
 
 The *Empowered AI* module offers comprehensive tools for data analysis, including anomaly detection, clustering, and forecasting. Proper data preparation and rule configuration are crucial for effective analysis. Use the provided guides to leverage the full capabilities of this module.
 
+## AI Store
+
+ The **AI Store** allows you to download an **AI Use Case** that matches your index patterns and upload it to your own infrastructure. A short description of each model is available in the drop-down list.
+
+ AI Use Case models can be accessed through the [Energy Logserver webpage](https://energylogserver.com/ai-store/) and the **Energy Logserver** app in the `AI Cases` => `Online Store` section.
+
+To upload the selected model through webpage, follow the steps below:
+
+1. `Download` the model you are interested in.
+![](/media/08_empowered_ai/AI_STORE.png)
+1. Open the **Energy Logserver** app and navigate to the `AI Cases` tab.
+2. Click `Upload New Model` and select the downloaded model from the file explorer.
+![](/media/08_empowered_ai/AI_STORE_UPLOAD.png)
+3. Press `Save & Run` to start the model.
+
+To upload the selected model via the **Energy Logserver** app, follow the steps below:
+
+1. Navigate to `AI Cases` => `Online Store` tab.
+![](/media/08_empowered_ai/AI_CASE_OS.png)
+2. Select the model that you are intrested in and press `Fetch` button.
+![](/media/08_empowered_ai/AI_CASES_FETCH.png)
+3. Press `Save & Run` to start the model.
 
 ---
 
@@ -605,10 +660,18 @@ A: Yes, the text analysis system supports multiple languages, making it a versat
   - Ensure that the number of logs is correctly set and that the available data meets the analysis criteria.
 
 - **Problem: Delays in text analysis.**
-  - Verify system resources and configuration to increase processing efficiency.
+  - Verify system resources and configuration to increase processing efficiency. 
 
 - **Problem: Incorrect mapping for indices when starting a rule.**
 
-   ![StartRuleIndicesMappingWarning](/media/media/08_empowered_ai/start_rule_warning.png)
+   ![StartRuleIndicesMappingWarning](/media/08_empowered_ai/start_rule_warning.png)
 
   - This indicates that the new mapping required for analysis has not yet been applied. The new mapping will be applied when a new index is created, which occurs on the next day for daily indices (e.g., index_name-2024.03.03) or on the next month for monthly indices (e.g., index_name-2024.03). 
+
+- **Problem: The rule shows `ERROR` after the run or the results of the analysis are unsatisfactory.**
+  - This probably means that it is necessary to adjust the learning parameters. We recommend the following steps:
+
+  1. Press the `Edit` button
+  2. Set new `Build Time Frame` to a period where the data occurs (7 days recommended)
+  3. Set the new `Start Date` as the start date of the analysis (we recommend setting this parameter to the day when the `Build Time Frame` starts).
+  4. Click `Save and Run` to start the process.

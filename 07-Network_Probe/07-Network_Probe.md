@@ -102,11 +102,11 @@ The Network Probe feature is available only for admin users and when it is cover
 
 There is always a banner at the top of the page showing how many probes are currently in use and how many probes can be registered at most. This number is defined in the license. For example, the banner below indicates that 3 probes are currently registered, for a total of 11 probes purchased - 8 more can be registered.
 
-![](/media/media/07_network_probe/license/license_banner.png)
+![](/media/07_network_probe/license/license_banner.png)
 
 If something has gone wrong, the license can be restored by clicking the "Refresh license" text. However, if the problem persists, please contact support.
 
-![](/media/media/07_network_probe/license/license_banner_fail.png)
+![](/media/07_network_probe/license/license_banner_fail.png)
 
 If the license has expired, you will not be able to use the module, and the services managed by the probe will be stopped permanently, until a correct license is retrieved.
 
@@ -128,7 +128,7 @@ This plugin consist of two main sections - `Pipelines Management` and `Network P
 
 This tab allows you to manage pipelines on all probes simultaneously. The list below presents a list of available pipelines that can be assigned appropriately after clicking the button on the right.
 
-![](/media/media/07_network_probe/pipelines_management_page/all_pipelines_list.png)
+![](/media/07_network_probe/pipelines_management_page/all_pipelines_list.png)
 
 Each row of the table describes a pipeline that can be used by the probe. There we can find data such as:
 - name of the pipeline
@@ -136,6 +136,30 @@ Each row of the table describes a pipeline that can be used by the probe. There 
 - how many probes utilize the pipeline
 
 The described list is searchable in two ways: the pipeline can be found by its name or the hostname of the assigned probe to it.
+
+##### New Pipeline Creator
+
+The **New Pipeline Creator** is a tool that allows pipeline creation to be done from the GUI.
+
+Follow these steps to create a new pipeline:
+
+1. Click the `New pipeline` button in the `Network Probe` tab.
+   
+![](/media/07_network_probe/pipelines_management_page/New_pipeline.png)
+
+2. When the **Pipeline Creator** window pops up, enter your new pipeline name in the designated field.
+   
+![](/media/07_network_probe/pipelines_management_page/pipeline_creator_name.png)
+
+3. Select or drag and drop the configuration files into the designated field. These files must be in the format `*.conf` and be no larger than 1 MB.  You can select more than one file.
+
+![](/media/07_network_probe/pipelines_management_page/Config_files.png)
+
+4. Select where the pipeline will be enabled and ready to collect data. If the pipeline is not enabled, it will be installed, but will not be used for data ingestion.
+
+![](/media/07_network_probe/Probes_new_pipeline.png)
+
+5. Press the `Submit` button to save your pipeline setup.
 
 ##### Pipeline Details
 
@@ -145,7 +169,7 @@ Clicking on a probe in the assigned probes column redirects to the statuses of p
 
 More details of pipelines can be expanded by clicking on the arrow on the left.
 
-![](/media/media/07_network_probe/pipelines_management_page/all_pipelines_details.png)
+![](/media/07_network_probe/pipelines_management_page/all_pipelines_details.png)
 
 In the details, we can find data about the hostname, address, and status of the probes.
 
@@ -153,7 +177,7 @@ In the details, we can find data about the hostname, address, and status of the 
 
 After clicking the pencil icon on the right, a following pipeline configuration window will appear.
 
-![](/media/media/07_network_probe/pipelines_management_page/manage_modal/modal.png)
+![](/media/07_network_probe/pipelines_management_page/manage_modal/modal.png)
 
 The list shows the assignment of this pipeline to available probes. If a given row is unchecked, it means that the pipeline is not assigned to this probe. Similarly, if the line is selected, the pipeline already works.
 
@@ -161,7 +185,7 @@ If a given probe cannot be selected, it means that the probe is not working and 
 
 After making any changes to the table, pipelines will be highlighted and their status will change after clicking the submit button. In the lower-left corner, there is precise information about what operations will be performed.
 
-![](/media/media/07_network_probe/pipelines_management_page/manage_modal/before_submit.png)
+![](/media/07_network_probe/pipelines_management_page/manage_modal/before_submit.png)
 
 For example, the above photo shows a situation in which the `custom` pipeline will be activated on the first probe. In turn, no operation will be performed for the rest.
 
@@ -169,11 +193,11 @@ The process of activation or deactivation of the pipeline can be monitored based
 
 After the operation has been completed, an appropriate icon will be displayed - green if everything went well or red if something went wrong.
 
-![](/media/media/07_network_probe/pipelines_management_page/manage_modal/after_submit.png)
+![](/media/07_network_probe/pipelines_management_page/manage_modal/after_submit.png)
 
 When you hover over the result icon, an error message can be seen, such as presented below:
 
-![](/media/media/07_network_probe/pipelines_management_page/manage_modal/after_submit_failure.png)
+![](/media/07_network_probe/pipelines_management_page/manage_modal/after_submit_failure.png)
 
 Following the changes, clicking the close button, and refreshing the pipeline lists, the change should be visible.
 
@@ -189,31 +213,31 @@ This tab shows all registered probes. Here you can check data, such as:
 - installed services
 - pipelines status
 
-![](/media/media/07_network_probe/network_probes_page/probes_list.png)
+![](/media/07_network_probe/network_probes_page/probes_list.png)
 
 After hovering over one of the columns regarding services or pipelines, a table with more details will be displayed.
 
-![](/media/media/07_network_probe/network_probes_page/probes_list_details.png)
+![](/media/07_network_probe/network_probes_page/probes_list_details.png)
 
 To open more details of the probe and use the ability to manage services, pipelines, or files click on the eye icon on the right, as shown below.
 
-![](/media/media/07_network_probe/network_probes_page/probes_list_go_to_details.png)
+![](/media/07_network_probe/network_probes_page/probes_list_go_to_details.png)
 
 ##### Services Section
 
 This section is used to manage defined services. Here you can view their status and, depending on the situation, enable, disable, or restart the service.
 
-![](/media/media/07_network_probe/network_probes_page/services/services_list.png)
+![](/media/07_network_probe/network_probes_page/services/services_list.png)
 
 Services can be managed individually or by selecting several lines at the same time.
 
-![](/media/media/07_network_probe/network_probes_page/services/services_stop.png)
+![](/media/07_network_probe/network_probes_page/services/services_stop.png)
 
 ##### Pipelines Section
 
 This section is used to manage pipelines. Here you can observe the status and statistics of pipelines to monitor their functioning. You can also enable or disable a given pipeline, as well as reload service configuration files using the reload method. All functionalities will be described below, but first some introduction to pipeline configuration definition.
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines.png)
 
 ###### Pipeline configuration
 
@@ -223,7 +247,7 @@ By default pipeline can be defined as a set of files consisting of:
 
 The above settings can be found in the pipeline details, after clicking the arrow on the left.
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_status_disabled.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_status_disabled.png)
 
 ###### Pipeline status
 
@@ -241,23 +265,23 @@ The arrow on the left can be clicked to view more details. Configuration details
 - queue details
 - utilized plugins (input, filter, output, and codecs)
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_status_active.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_status_active.png)
 
 If a reload error has occurred, it will also be visible there, as shown below.
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_status_active_warning.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_status_active_warning.png)
 
 ###### Filtering by status
 
 The list of pipelines can be filtered based on their status using the four buttons next to the search bar. Thanks to this, only pipelines with the same status can be displayed, increasing the readability of the table. Below only disabled pipelines are shown:
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_filtering.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_filtering.png)
 
 ###### Reload pipelines configuration
 
 The Network Probe configuration can be reloaded directly from this view, with the help of the `Reload` button. Any changes to the configuration files used by Network Probe will be reloaded, without the need of restarting the service itself.
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_reload.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_reload.png)
 
 In the case of enabling/disabling pipelines, this operation is performed automatically.
 
@@ -265,21 +289,21 @@ In the case of enabling/disabling pipelines, this operation is performed automat
 
 Depending on the status of the pipeline, it can be enabled or disabled. This can be achieved either for each of them individually or using a multi-selector to select many at once (then all selected must have the same state).
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_multi_start.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_multi_start.png)
 
 If one configuration file contains definitions for many pipelines at the same time, then, for example, despite selecting one, a given action will be performed for all pipelines defined in it, and an appropriate message will be displayed. Below is the message that will be displayed when clicking one of the 4 pipelines defined in the `aws.yml` file:
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_start.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_start.png)
 
 However, when stopping a single pipeline, the message may look like the following:
 
-![](/media/media/07_network_probe/network_probes_page/pipelines/pipelines_stop.png)
+![](/media/07_network_probe/network_probes_page/pipelines/pipelines_stop.png)
 
 ##### Files Section
 
 This section is used to handle files managed by the probe. Here you can create, update, or delete files, and in some cases check their validation results.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_list.png)
+![](/media/07_network_probe/network_probes_page/files/files_list.png)
 
 In the file table, we see information about the following:
 - file - file's full path
@@ -300,35 +324,35 @@ However, in addition to filtering, the search functionality based on its content
 
 In the example below, a directory filter was used and all files containing the "5044" phrase entered in the search bar were found.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_filtering.png)
+![](/media/07_network_probe/network_probes_page/files/files_filtering.png)
 
 The next example shows the use of the first filter described. After filtering, the table contains only files whose current state is incorrect - either they have invalid content or their revision is out of date.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_filtering_invalid.png)
+![](/media/07_network_probe/network_probes_page/files/files_filtering_invalid.png)
 
 ###### Create file
 
 To create a new file, click the "New File" button. The file can be created in two ways: it can be created completely from scratch, or you can upload an existing file using the form in the lower left corner - the file name and its content will be uploaded. The available directories are directories managed by the probe - you cannot create a file in a place other than the allowed location.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_create_new.png)
+![](/media/07_network_probe/network_probes_page/files/files_create_new.png)
 
 ###### Update file
 
 A previously created file can also be edited. As with creation, a file can be overwritten by uploading an existing one, or individual elements of the file can be edited, (such as name, or content).
 
-![](/media/media/07_network_probe/network_probes_page/files/files_edit_yaml.png)
+![](/media/07_network_probe/network_probes_page/files/files_edit_yaml.png)
 
 ###### Delete file
 
 An existing file can be deleted using the button to the right of the table row.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_delete.png)
+![](/media/07_network_probe/network_probes_page/files/files_delete.png)
 
 ###### Enable/disable file
 
 Pipeline configuration files can be either enabled or disabled. When a file is enabled it is being used by the corresponding pipeline. It can be disabled so that they are not taken into account, for example for testing purposes.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_enable_file.png)
+![](/media/07_network_probe/network_probes_page/files/files_enable_file.png)
 
 A similar confirmation modal will appear for disabling the file operation.
 
@@ -338,11 +362,11 @@ If the file is located in related directories and has the extension `.conf`, it 
 
 If the file cannot be parsed, a warning will appear in the list informing you about the error.
 
-![](/media/media/07_network_probe/network_probes_page/files/files_list_with_warning.png)
+![](/media/07_network_probe/network_probes_page/files/files_list_with_warning.png)
 
 The warning icon can be clicked to review the error message and correct it if possible. After clicking, the following modal will show up:
 
-![](/media/media/07_network_probe/network_probes_page/files/files_details_modal_with_error.png)
+![](/media/07_network_probe/network_probes_page/files/files_details_modal_with_error.png)
 
 In addition to the previously described `.conf` files, when `.yml` or `.yaml` files are created/edited, the built-in editor checks the correctness of the entered text, signaling any errors. If the file is incorrect, any creation or editing of the file will be blocked until the errors are corrected.
 
@@ -350,7 +374,7 @@ In addition to the previously described `.conf` files, when `.yml` or `.yaml` fi
 
 If a file managed by the service is accidentally deleted from the system or any inconsistencies are detected between the updates of the monitored files, the following warning will be displayed:
 
-![](/media/media/07_network_probe/network_probes_page/files/files_revision_warning.png)
+![](/media/07_network_probe/network_probes_page/files/files_revision_warning.png)
 
 The warning icon can be clicked to recreate the file and restore it to the system.
 
@@ -374,7 +398,7 @@ By default, only errors and warnigs are logged. To change that, and enable for e
 
 The message shown below may be encountered during actions performed on both files and pipelines.
 
-![](/media/media/07_network_probe/troubleshooting/another_operation_error.png)
+![](/media/07_network_probe/troubleshooting/another_operation_error.png)
 
 It means that the system is already performing some actions, and in order to ensure the consistency of files, it is necessary to wait until previous actions are completed. After waiting a while, try again to perform the desired action and it should succeed without any problem.
 

@@ -428,6 +428,26 @@ After saving the manual incident, you can go to the Incident tab in the Alert mo
 
 ![](/media/media/image142.png)
 
+### Quick Data Export Wizard
+
+The Quick Export wizard allows you to download the currently viewed data frame to your local machine. The data is processed into a `CSV` or `HTML` file.
+
+To use the Quick Export Wizard:
+1. Select the `Report` tab from the top bar and go to `Quick` tab.
+
+![](/media/04_user_manual/quick_export.png)
+
+2. Type the name of the task in the special field, which will also serve as the file name.
+   
+3. Select the file extension that you are interested in (`HTML` or `CSV`).
+   
+4. Press the `Export` button and wait for the file to be ready to download.
+   
+5. When the `Download` button appears, click on it to download the file to your local machine.
+
+![](/media/04_user_manual/quick_export2.png) ![](/media/04_user_manual/quick_export_download.png)
+
+
 ## Visualizations
 
 Visualize enables you to create visualizations of the data
@@ -450,7 +470,7 @@ visualization.
 To load previously created and saved visualization, you
 must select it from the list.
 
-![](/media/media/image89.PNG)
+![](/media/media/image89.png)
 
 To create a new visualization, you should choose the preferred method of data presentation.
 
@@ -2473,6 +2493,15 @@ On the other hand, when metadata is present, but archive itself could not be loc
 
 That archive cannot be used for task creation and so cannot be selected.
 
+### Archive Clean
+
+The `Clean` tab allows you to delete data from the archive.
+
+To do so, go to the `Clean` section in the `Archive` tab.
+
+Then, check the boxes next to the files you want to delete and press the `Delete` button in the top right corner.
+
+![](/media/04_user_manual/Clean_archive.png)
 
 ### Archive Directory Structure
 
@@ -12929,6 +12958,10 @@ source=accounts | where match_bool_prefix(address, 'Bristol Stre') | fields firs
   </tr>
 </tbody>
 </table>
+
+## Integrations
+
+The `Integrations` plugin automates the process of uploading integrations.
 
 ## Automation
 
