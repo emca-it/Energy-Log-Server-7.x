@@ -447,6 +447,38 @@ To use the Quick Export Wizard:
 
 ![](/media/04_user_manual/quick_export2.png) ![](/media/04_user_manual/quick_export_download.png)
 
+## AI Assistant 
+
+Log analysis is empowered with AI Assistant. For each log entry user can run predefined prompts or use own prompts for deeper analysis. 
+
+![](/media/04_user_manual/ai_assistant01.png)
+AI Assistant comes with three sections:
+ - User prompts on the list
+ - Embeded prompts
+ - Default user prompts as buttons
+
+ All User prompts can be configured in Empowered AI - Assistant Wizzard.
+
+Empeded prompts are immutable. 
+
+Description:
+- ***Explan log*** : gives detailed information about the meaning of log entry
+- ***Detect Thread*** : AI will semanticly try to understand the meaning of log entry and try to detect possible security thread. Detection is done on a language level, not with regexp
+- ***Create Alert*** : AI will generate Alert rule, trying to match context of the message and not exact message value
+
+Default prompts are deployed as buttons and can be modyfied in Empowered AI Assistant Wizzard. 
+
+Description:
+- ***Assignment*** : match IT department / team with the problem defined - prompt can be adjusted to map team members to departments allwing quick incident escalation
+- ***Classify*** : match event category
+- ***Extract IOCs*** : easy way to copy all artefact like ip, username, program, etc
+- ***MITRE*** : describe thread using MITRE metodology
+- ***Responsibility*** : indentify responsible team
+- ***Priority*** : analise the entry estimating its priority in details
+- ***Privacy*** : check for sensitive, private data
+- ***Recommend*** : check for recommendations AI can provide for the problem
+
+
 
 ## Visualizations
 
